@@ -4,12 +4,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/Z:/collabenergy/EMMS/Meter_2.1/Code/BF/ChangeLog_Display_UI.txt</file>
-            <file>file:/Z:/collabenergy/EMMS/Meter_2.1/Code/BF/BFDisplayPIC.X/DisplayMenu.c</file>
-            <file>file:/Z:/collabenergy/EMMS/Meter_2.1/Code/BF/BFDisplayPIC.X/Makefile</file>
-            <file>file:/Z:/collabenergy/EMMS/Meter_2.1/Code/BF/BFDisplayPIC.X/DisplayDefinitions.h</file>
-            <file>file:/Z:/collabenergy/EMMS/Meter_2.1/Code/BF/BFDisplayPIC.X/SharedDefinitions.h</file>
-            <file>file:/Z:/collabenergy/EMMS/Meter_2.1/Code/BF/BFDisplayPIC.X/DisplayMain.c</file>
+            <file>file:/D:/My_Documents/Tom/MessiahCollaboratory/EMMS/2017-03-02_GitHub_Mod_Testing/_EMMS_Code_UserInterface/BFDisplayPIC.X/SharedCommunication.c</file>
+            <file>file:/D:/My_Documents/Tom/MessiahCollaboratory/EMMS/2017-03-02_GitHub_Mod_Testing/_EMMS_Code_UserInterface/BFDisplayPIC.X/ExternSharedDefinitions.h</file>
+            <file>file:/D:/My_Documents/Tom/MessiahCollaboratory/EMMS/2017-03-02_GitHub_Mod_Testing/_EMMS_Code_UserInterface/BFDisplayPIC.X/SharedDefinitions.h</file>
         </group>
     </open-files>
 </project-private>
