@@ -4,5 +4,4 @@ DisplayMain.c  \
 DisplayPinDefinitions.h  \
 SharedDefinitions.h  \
  SharedCommunication.c  \
-ExternSharedDefinitions.h  \
-
+ExternSharedDefinitions.h 
