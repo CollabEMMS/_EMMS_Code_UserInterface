@@ -481,7 +481,9 @@ void menuHomeBasic(void) {
         writeToDisplay(barGraph, 40, 0);
     } else {
         writeToDisplay("Current Load:", 20, 0);
-        writeToDisplay(itoa(buffer1, currentLoad, 10), 33, -5);
+//        writeToDisplay(itoa(buffer1, currentLoad, 10), 33, -5);
+        ultoa(buffer1, currentLoad, 10);
+        writeToDisplay(buffer1, 33, -5);
         writeToDisplay(" W", 38, 0);
 
         writeToDisplay("Time left:", 40, 12);
@@ -516,7 +518,9 @@ void menuHomeDetail(void) {
     writeToDisplay("Wh Remaining:     ", 17, 0);
     writeToDisplay(itoa(buffer, percentRem, 10), 35, -3);
     writeToDisplay("% Load:       ", 38, 0);
-    writeToDisplay(itoa(buffer2, currentLoad, 10), 52, -5);
+//    writeToDisplay(itoa(buffer2, currentLoad, 10), 52, -5);
+    ultoa(buffer2, currentLoad, 10);
+    writeToDisplay(buffer2, 52, -5);
     writeToDisplay(" W Menu           Basic", 57, 0);
 
     if (!enablePeriodicUpdate) {

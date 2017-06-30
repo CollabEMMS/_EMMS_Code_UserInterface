@@ -1,26 +1,20 @@
-Microchip Technology Inc, vv1.23 (A)
+Microchip Technology Inc, v1.31 (A)
 
 Tool Name:
-  c:\program files (x86)\microchip\xc16\v1.23\bin\bin\..\bin/elf-ld.exe
+  c:\program files (x86)\microchip\xc16\v1.31\bin\bin\..\bin/elf-ld.exe
 
 Command:
   -p24FV32KA301 \
   -o \
   dist/default/production/BFDisplayPIC.X.production.elf \
-  -Lc:/program files (x86)/microchip/xc16/v1.23/bin/bin/.. \
-  -Lc:/program files (x86)/microchip/xc16/v1.23/bin/bin/../../lib \
-  -Lc:/program files (x86)/microchip/xc16/v1.23/bin/bin/../../lib/PIC24E \
-  -Lc:/program files (x86)/microchip/xc16/v1.23/bin/bin/../../support/PIC24E/gld \
-  -Lc:/program files (x86)/microchip/xc16/v1.23/bin/bin/../../lib/PIC24F \
-  -Lc:/program files (x86)/microchip/xc16/v1.23/bin/bin/../../support/PIC24F/gld \
-  -Lc:/program files (x86)/microchip/xc16/v1.23/bin/bin/../../lib/PIC24H \
-  -Lc:/program files (x86)/microchip/xc16/v1.23/bin/bin/../../support/PIC24H/gld \
-  -Lc:/program files (x86)/microchip/xc16/v1.23/bin/bin/../../lib/dsPIC30F \
-  -Lc:/program files (x86)/microchip/xc16/v1.23/bin/bin/../../support/dsPIC30F/gld \
-  -Lc:/program files (x86)/microchip/xc16/v1.23/bin/bin/../../lib/dsPIC33E \
-  -Lc:/program files (x86)/microchip/xc16/v1.23/bin/bin/../../support/dsPIC33E/gld \
-  -Lc:/program files (x86)/microchip/xc16/v1.23/bin/bin/../../lib/dsPIC33F \
-  -Lc:/program files (x86)/microchip/xc16/v1.23/bin/bin/../../support/dsPIC33F/gld \
+  -Lc:/program files (x86)/microchip/xc16/v1.31/bin/bin/.. \
+  -Lc:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib \
+  -Lc:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../support/PIC24E/gld \
+  -Lc:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../support/PIC24F/gld \
+  -Lc:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../support/PIC24H/gld \
+  -Lc:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../support/dsPIC30F/gld \
+  -Lc:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../support/dsPIC33E/gld \
+  -Lc:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../support/dsPIC33F/gld \
   build/default/production/DisplayMain.o \
   build/default/production/DisplayConfiguration.o \
   build/default/production/DisplayMenu.o \
@@ -43,51 +37,104 @@ Command:
   --smart-io \
   -Map=dist/default/production/BFDisplayPIC.X.production.map \
   --report-mem \
+  --memorysummary \
+  dist/default/production/memoryfile.xml \
   -start-group \
   --library=pic30-elf \
   --library=m-elf \
   --library=c-elf \
   -end-group \
 
+
+Optional library libpPIC24Fxxx.a not found
 Archive member included because of file (symbol)
 
-c:/program files (x86)/microchip/xc16/v1.23/bin/bin/../../lib\libpic30-elf.a(crt0_standard.o)
+c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libpic30-elf.a(crt0_standard.o)
                               (__resetPRI)
-c:/program files (x86)/microchip/xc16/v1.23/bin/bin/../../lib\libpic30-elf.a(data_init_standard.o)
-                              c:/program files (x86)/microchip/xc16/v1.23/bin/bin/../../lib\libpic30-elf.a(crt0_standard.o) (__data_init_standard)
-c:/program files (x86)/microchip/xc16/v1.23/bin/bin/../../lib\libm-elf.a(udivsi3.eo)
+c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libpic30-elf.a(data_init_standard.o)
+                              c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libpic30-elf.a(crt0_standard.o) (__data_init_standard)
+c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libpic30-elf.a(crt_start_mode_normal.eo)
+                              (__crt_start_mode_normal)
+c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libm-elf.a(udivsi3.eo)
                               build/default/production/DisplayMain.o (___udivsi3)
-c:/program files (x86)/microchip/xc16/v1.23/bin/bin/../../lib\libm-elf.a(umodsi3.eo)
+c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libm-elf.a(umodsi3.eo)
                               build/default/production/DisplayMenu.o (___umodsi3)
-c:/program files (x86)/microchip/xc16/v1.23/bin/bin/../../lib\libc-elf.a(atoi.eo)
+c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libc-elf.a(atoi.eo)
                               build/default/production/DisplayMain.o (_atoi)
-c:/program files (x86)/microchip/xc16/v1.23/bin/bin/../../lib\libc-elf.a(itoa.eo)
+c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libc-elf.a(itoa.eo)
                               build/default/production/DisplayMain.o (_utoa)
-c:/program files (x86)/microchip/xc16/v1.23/bin/bin/../../lib\libc-elf.a(ltoa.eo)
-                              build/default/production/DisplayMenu.o (_ltoa)
+c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libc-elf.a(ltoa.eo)
+                              build/default/production/DisplayMenu.o (_ultoa)
+c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libc-elf.a(strtol.eo)
+                              build/default/production/DisplayMain.o (_strtoul)
+c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libc-elf.a(errno.elo)
+                              c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libc-elf.a(strtol.eo) (_errno)
+c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libc-elf.a(isalpha.eso)
+                              c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libc-elf.a(strtol.eo) (_isalpha)
+c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libc-elf.a(isspace.eso)
+                              c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libc-elf.a(strtol.eo) (_isspace)
+c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libc-elf.a(toupper.eso)
+                              c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libc-elf.a(strtol.eo) (_toupper)
+c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libm-elf.a(mulsi3.eo)
+                              c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libc-elf.a(strtol.eo) (___mulsi3)
 
+
+Selected CodeGuard Options:
+  FGS:GWRP:OFF
+  FGS:GSS0:OFF
+  FBS:BWRP:OFF
+  FBS:BSS:OFF
+
+CodeGuard FLASH Memory:
+  boot    (none)
+  secure  (none)
+  general 0x200 to 0x57fe
+
+CodeGuard RAM Memory:
+  general 0x800 to 0xfff
+  secure  (none)
+  boot    (none)
+
+CodeGuard EEPROM Memory:
+  general 0x7ffe00 to 0x7fffff
+  secure  (none)
+  boot    (none)
+
+
+xc16-ld 1.31 (A)
 
 Program Memory  [Origin = 0x200, Length = 0x5600]
 
 section                    address   length (PC units)   length (bytes) (dec)
 -------                    -------   -----------------   --------------------
-.text                        0x200               0x1be           0x29d  (669)
-.const                       0x3be               0x99e           0xe6d  (3693)
-.text                        0xd5c              0x406c          0x60a2  (24738)
-.dinit                      0x4dc8                0x12            0x1b  (27)
-.text                       0x4dda                 0x8             0xc  (12)
+.text                        0x200               0x3c0           0x5a0  (1440)
+.const                       0x5c0               0x99e           0xe6d  (3693)
+.text                        0xf5e              0x3640          0x5160  (20832)
+.dinit                      0x459e                0x18            0x24  (36)
+.text                       0x45b6                 0x8             0xc  (12)
 
-                     Total program memory used (bytes):         0x71d3  (29139) 88%
+                 Total program memory used (bytes):         0x659d  (26013) 78%
+
+
+Ivt Memory  [Origin = 0x4, Length = 0xfc]
+
+section                    address   length (PC units)   length (bytes) (dec)
+-------                    -------   -----------------   --------------------
+.ivt._T1Interrupt             0x1a                 0x2             0x3  (3)
+.ivt._T2Interrupt             0x22                 0x2             0x3  (3)
+.ivt._U2RXInterrupt           0x50                 0x2             0x3  (3)
+.ivt._U2ErrInterrupt          0x98                 0x2             0x3  (3)
 
 
 Data Memory  [Origin = 0x800, Length = 0x800]
 
 section                    address      alignment gaps    total length  (dec)
 -------                    -------      --------------    -------------------
-.nbss                        0x800                   0           0x55e  (1374)
-.ndata                       0xd5e                   0             0x4  (4)
+.nbss                        0x800                   0           0x566  (1382)
+.ndata                       0xd66                   0             0x4  (4)
+.bss                         0xd6a                   0             0x2  (2)
 
-                        Total data memory used (bytes):          0x562  (1378) 67%
+                 Total data memory used (bytes):          0x56c  (1388) 67%
 
 
 Dynamic Memory Usage
@@ -95,9 +142,9 @@ Dynamic Memory Usage
 region                     address                      maximum length  (dec)
 ------                     -------                      ---------------------
 heap                             0                                   0  (0)
-stack                        0xd62                               0x29e  (670)
+stack                        0xd6c                               0x294  (660)
 
-                        Maximum dynamic memory (bytes):          0x29e  (670)
+                 Maximum dynamic memory (bytes):          0x294  (660)
 
 
 External Symbols in Data Memory (by address):
@@ -220,56 +267,57 @@ External Symbols in Data Memory (by address):
                     0x0c88                  _tempClockStr
                     0x0c92                  _tempCalStr
                     0x0ca1                  _buffer1
-                    0x0cac                  _buffer2
-                    0x0cb7                  _buffer3
-                    0x0cc2                  _buffer4
-                    0x0ccd                  _buffer5
-                    0x0cd8                  _buffer6
-                    0x0ce3                  _buffer7
-                    0x0cee                  _buffer8
-                    0x0cf9                  _audibleAlarm
-                    0x0cfa                  _alarmOneEnabled
-                    0x0cfb                  _alarmTwoEnabled
-                    0x0cfc                  _alarmOnePower
-                    0x0cfd                  _alarmTwoPower
-                    0x0cfe                  _passwordSet
-                    0x0d04                  _emerButtonEnable
-                    0x0d06                  _emerButtonAlloc
-                    0x0d08                  _powerBoxCodeVersion
-                    0x0d0c                  _powerBoxCodeVersionString
-                    0x0d15                  _resetHour
-                    0x0d16                  _resetMinute
-                    0x0d17                  _relayActive
-                    0x0d18                  _totalUsed
-                    0x0d1c                  _previousDayUsed
-                    0x0d20                  _isHigh
-                    0x0d22                  _extraPower
-                    0x0d26                  _reset
-                    0x0d5e                  _displayBoxCodeVersion
+                    0x0cad                  _buffer2
+                    0x0cb9                  _buffer3
+                    0x0cc5                  _buffer4
+                    0x0cd1                  _buffer5
+                    0x0cdd                  _buffer6
+                    0x0ce9                  _buffer7
+                    0x0cf5                  _buffer8
+                    0x0d01                  _audibleAlarm
+                    0x0d02                  _alarmOneEnabled
+                    0x0d03                  _alarmTwoEnabled
+                    0x0d04                  _alarmOnePower
+                    0x0d05                  _alarmTwoPower
+                    0x0d06                  _passwordSet
+                    0x0d0c                  _emerButtonEnable
+                    0x0d0e                  _emerButtonAlloc
+                    0x0d10                  _powerBoxCodeVersion
+                    0x0d14                  _powerBoxCodeVersionString
+                    0x0d1d                  _resetHour
+                    0x0d1e                  _resetMinute
+                    0x0d1f                  _relayActive
+                    0x0d20                  _totalUsed
+                    0x0d24                  _previousDayUsed
+                    0x0d28                  _isHigh
+                    0x0d2a                  _extraPower
+                    0x0d2e                  _reset
+                    0x0d66                  _displayBoxCodeVersion
+                    0x0d6a                  _errno
 
 External Symbols in Data Memory (by name):
 
                     0x08da                  _activeAlarm
                     0x0807                  _alarmEnd
-                    0x0cfa                  _alarmOneEnabled
+                    0x0d02                  _alarmOneEnabled
                     0x0941                  _alarmOneHit
-                    0x0cfc                  _alarmOnePower
+                    0x0d04                  _alarmOnePower
                     0x0806                  _alarmPulse
                     0x08db                  _alarmToResume
-                    0x0cfb                  _alarmTwoEnabled
+                    0x0d03                  _alarmTwoEnabled
                     0x0942                  _alarmTwoHit
-                    0x0cfd                  _alarmTwoPower
-                    0x0cf9                  _audibleAlarm
+                    0x0d05                  _alarmTwoPower
+                    0x0d01                  _audibleAlarm
                     0x08fe                  _barGraph
                     0x08ac                  _buffer
                     0x0ca1                  _buffer1
-                    0x0cac                  _buffer2
-                    0x0cb7                  _buffer3
-                    0x0cc2                  _buffer4
-                    0x0ccd                  _buffer5
-                    0x0cd8                  _buffer6
-                    0x0ce3                  _buffer7
-                    0x0cee                  _buffer8
+                    0x0cad                  _buffer2
+                    0x0cb9                  _buffer3
+                    0x0cc5                  _buffer4
+                    0x0cd1                  _buffer5
+                    0x0cdd                  _buffer6
+                    0x0ce9                  _buffer7
+                    0x0cf5                  _buffer8
                     0x0801                  _button0Flag
                     0x0802                  _button1Flag
                     0x0803                  _button2Flag
@@ -280,19 +328,20 @@ External Symbols in Data Memory (by name):
                     0x0bf7                  _commErrorTime
                     0x080a                  _currentDisplay
                     0x08e4                  _currentLoad
-                    0x0d5e                  _displayBoxCodeVersion
+                    0x0d66                  _displayBoxCodeVersion
                     0x0bf8                  _emerAllocNow
                     0x0bfa                  _emerAllocSend
-                    0x0d06                  _emerButtonAlloc
+                    0x0d0e                  _emerButtonAlloc
                     0x08e2                  _emerButtonAllocTemp
-                    0x0d04                  _emerButtonEnable
+                    0x0d0c                  _emerButtonEnable
                     0x08c3                  _enablePeriodicUpdate
-                    0x0d22                  _extraPower
+                    0x0d6a                  _errno
+                    0x0d2a                  _extraPower
                     0x08f4                  _highAlloc
                     0x0809                  _highNibble
                     0x08fd                  _homeBasicAlternate
                     0x0940                  _isBooting
-                    0x0d20                  _isHigh
+                    0x0d28                  _isHigh
                     0x0943                  _lastSendSec
                     0x08c2                  _lastUpdateMinute
                     0x08c1                  _lastUpdateSecond
@@ -309,15 +358,15 @@ External Symbols in Data Memory (by name):
                     0x08c0                  _oldMenuState
                     0x091c                  _oldPowerMenuState
                     0x08c4                  _passwordInput
-                    0x0cfe                  _passwordSet
+                    0x0d06                  _passwordSet
                     0x08fc                  _percentRem
                     0x08ec                  _powerAllocated
-                    0x0d08                  _powerBoxCodeVersion
-                    0x0d0c                  _powerBoxCodeVersionString
+                    0x0d10                  _powerBoxCodeVersion
+                    0x0d14                  _powerBoxCodeVersionString
                     0x0bfc                  _powerDownTime
                     0x0c08                  _powerUpTime
                     0x08e8                  _powerUsed
-                    0x0d1c                  _previousDayUsed
+                    0x0d24                  _previousDayUsed
                     0x08d6                  _pwLength
                     0x0bf3                  _readyToProcess
                     0x0b2a                  _receiveBlackHole
@@ -337,11 +386,11 @@ External Symbols in Data Memory (by name):
                     0x0b53                  _receivedCommand
                     0x0a34                  _receivedToProcess
                     0x0bb7                  _receivedValue
-                    0x0d17                  _relayActive
+                    0x0d1f                  _relayActive
                     0x08d7                  _remainingSets
-                    0x0d26                  _reset
-                    0x0d15                  _resetHour
-                    0x0d16                  _resetMinute
+                    0x0d2e                  _reset
+                    0x0d1d                  _resetHour
+                    0x0d1e                  _resetMinute
                     0x0805                  _resetTime
                     0x0c6b                  _resetTimeMinute
                     0x08de                  _rightArrow
@@ -392,283 +441,303 @@ External Symbols in Data Memory (by name):
                     0x0c82                  _timeSetPos
                     0x0c7e                  _timeWeekday
                     0x0c7b                  _timeYear
-                    0x0d18                  _totalUsed
+                    0x0d20                  _totalUsed
 
 External Symbols in Program Memory (by address):
 
                   0x000200                  __resetPRI
-                  0x00022c                  __psv_init
-                  0x00023c                  __data_init
-                  0x00023c                  __data_init_standard
-                  0x00029a                  __DefaultInterrupt
-                  0x00029e                  ___udivsi3
-                  0x0002be                  ___umodsi3
-                  0x0002c4                  _atoi
-                  0x000302                  _utoa
-                  0x000336                  _itoa
-                  0x000352                  _ultoa
-                  0x00039e                  _ltoa
-                  0x0003be                  _softKeys0
-                  0x0003d3                  _softKeys1
-                  0x0003e8                  _softKeys2
-                  0x000d5c                  _dspCommand
-                  0x000d92                  _dspWrite
-                  0x000dc4                  _dspWriteMessage
-                  0x000de4                  _dspNibble
-                  0x000df2                  _initDisplay
-                  0x000e7a                  _dspSetP1
-                  0x000ef8                  _writeToDisplay
-                  0x001000                  _updateMenu
-                  0x00124c                  _menuButtonRead
-                  0x00130e                  _menuError
-                  0x001346                  _menuDebug
-                  0x00135e                  _menuHomeBasic
-                  0x001568                  _menuHomeDetail
-                  0x001630                  _menuAlarm
-                  0x0016b0                  _menuMain1
-                  0x0016ea                  _menuMain2
-                  0x001728                  _menuMain3
-                  0x0017a0                  _menuMain4
-                  0x0017d4                  _menuMain5
-                  0x001808                  _menuMain6
-                  0x00183c                  _menuAlarm1
-                  0x0018da                  _menuAlarm2
-                  0x001980                  _menuAlarm3
-                  0x001aca                  _menuAlarm4
-                  0x001b70                  _menuAlarm5
-                  0x001cba                  _menuStatistics
-                  0x001d0e                  _menuPowerFailTimes
-                  0x001d4e                  _menuAbout
-                  0x001d94                  _menuAdminLogin
-                  0x001eec                  _menuAdmin1
-                  0x001f56                  _menuAdmin2
-                  0x001fa8                  _menuAdmin3
-                  0x001fd2                  _menuAdmin4
-                  0x00206a                  _menuAdmin5
-                  0x0020ac                  _menuAdmin6
-                  0x0020ec                  _menuSetTime
-                  0x002388                  _menuSetPower
-                  0x002582                  _menuSetResetTime
-                  0x002698                  _menuEmergency1
-                  0x002714                  _menuEmergency2
-                  0x002784                  _menuEmergency3
-                  0x00286a                  _menuEmergency4
-                  0x00291c                  _menuHighLow
-                  0x0029f2                  _menuSetRelay
-                  0x002a86                  _menuBadDate
-                  0x002ab6                  _menuShutOffWarning
-                  0x002b0e                  _menuPasswordChange
-                  0x002c94                  _menuPowerReset
-                  0x002d34                  _writeBarGraph
-                  0x002d9e                  _calcPercentRem
-                  0x002e0a                  _calcTimeRemaining
-                  0x002fe8                  __T1Interrupt
-                  0x00316e                  _commFunctions
-                  0x003178                  _splitReceivedCommand
-                  0x00344c                  _sendCommands
-                  0x00359e                  _sendBuffer
-                  0x00360c                  _receiveBuffer
-                  0x00367a                  _flushBuffer
-                  0x00369e                  _stringCopy
-                  0x0036d6                  _stringConcat
-                  0x00371a                  _stringCompare
-                  0x003760                  _stringLength
-                  0x003788                  _commandBuilder1
-                  0x0037ce                  _commandBuilder2
-                  0x003800                  _commandBuilder3
-                  0x003836                  _commandBuilder4
-                  0x003870                  _commandBuilder5
-                  0x0038ae                  _commandExpander
-                  0x003944                  _processReceivedCommand
-                  0x003d26                  _setRemoteTime
-                  0x003e36                  _setRemotePower
-                  0x003e78                  _setRemoteAlarm
-                  0x003ee8                  _setRemotePassword
-                  0x003f16                  _setRemoteEmergency
-                  0x003f56                  _setRemoteResetTime
-                  0x003f8a                  _setRemoteRelay
-                  0x003faa                  _setRemoteStats
-                  0x003fe8                  _setRemoteHL
-                  0x004008                  _doReset
-                  0x004016                  _readRemoteTime
-                  0x004024                  _readRemotePower
-                  0x004032                  _readRemoteAlarm
-                  0x004040                  _readRemotePassword
-                  0x00404e                  _readRemoteEmergency
-                  0x00405c                  _readRemoteVersion
-                  0x00406a                  _readRemoteResetTime
-                  0x004078                  _readRemoteRelay
-                  0x004086                  _readRemoteStats
-                  0x004094                  _readRemoteHL
-                  0x0040a2                  _readRemotePowerDownUpTime
-                  0x0040b0                  _readUpdate
-                  0x0040be                  _main
-                  0x0040fe                  _init
-                  0x00414a                  _initVars
-                  0x0041d0                  _initPorts
-                  0x0041fa                  _enablePullDownResistors
-                  0x004208                  _enableInterrupts
-                  0x004216                  _disableInterrupts
-                  0x004224                  _enableAlarm
-                  0x0043c4                  _startAlarm
-                  0x004444                  _nextDot
-                  0x004464                  _initDisplayBox
-                  0x00449e                  _periodicUpdate
-                  0x004528                  _checkCommFailure
-                  0x004562                  _initRTCCDisplay
-                  0x00457e                  _initTimer
-                  0x0045a4                  _writeClockStrings
-                  0x0046a8                  _writeTempClockStrings
-                  0x004876                  __T2Interrupt
-                  0x004a86                  _readTime
-                  0x004b24                  _writeTime
-                  0x004c08                  _BcdToDec
-                  0x004c32                  _DecToBcd
-                  0x004c5a                  _initUART
-                  0x004cac                  __U2RXInterrupt
-                  0x004d54                  __U2ErrInterrupt
-                  0x004d6a                  _delayFourUS
-                  0x004d82                  _delayMS
-                  0x004dae                  _commDelay
-                  0x004dda                  _resetWDT
+                  0x00023c                  __psv_init
+                  0x000252                  __data_init_standard
+                  0x000252                  __data_init
+                  0x0002c8                  __DefaultInterrupt
+                  0x0002cc                  _isalpha
+                  0x0002e0                  _isspace
+                  0x0002f0                  _toupper
+                  0x000300                  ___udivsi3
+                  0x000320                  ___umodsi3
+                  0x000326                  _atoi
+                  0x000364                  _utoa
+                  0x000398                  _itoa
+                  0x0003b4                  _ultoa
+                  0x000400                  _ltoa
+                  0x000420                  _strtoul
+                  0x000524                  _strtol
+                  0x0005b4                  ___mulsi3
+                  0x0005b4                  ___mulp32peds3
+                  0x0005b4                  ___mulp32eds3
+                  0x0005c0                  _softKeys0
+                  0x0005d5                  _softKeys1
+                  0x0005ea                  _softKeys2
+                  0x000f5e                  _dspCommand
+                  0x000f86                  _dspWrite
+                  0x000faa                  _dspWriteMessage
+                  0x000fc8                  _dspNibble
+                  0x000fd6                  _initDisplay
+                  0x001050                  _dspSetP1
+                  0x0010c2                  _writeToDisplay
+                  0x0011ca                  _updateMenu
+                  0x001414                  _menuButtonRead
+                  0x00149c                  _menuError
+                  0x0014ce                  _menuDebug
+                  0x0014e6                  _menuHomeBasic
+                  0x0016be                  _menuHomeDetail
+                  0x00176c                  _menuAlarm
+                  0x0017c8                  _menuMain1
+                  0x0017fc                  _menuMain2
+                  0x001834                  _menuMain3
+                  0x0018a2                  _menuMain4
+                  0x0018d4                  _menuMain5
+                  0x001906                  _menuMain6
+                  0x001938                  _menuAlarm1
+                  0x0019be                  _menuAlarm2
+                  0x001a4e                  _menuAlarm3
+                  0x001b4c                  _menuAlarm4
+                  0x001bdc                  _menuAlarm5
+                  0x001cda                  _menuStatistics
+                  0x001d26                  _menuPowerFailTimes
+                  0x001d66                  _menuAbout
+                  0x001da8                  _menuAdminLogin
+                  0x001ed8                  _menuAdmin1
+                  0x001f28                  _menuAdmin2
+                  0x001f78                  _menuAdmin3
+                  0x001fa0                  _menuAdmin4
+                  0x002006                  _menuAdmin5
+                  0x00203e                  _menuAdmin6
+                  0x002078                  _menuSetTime
+                  0x002262                  _menuSetPower
+                  0x002434                  _menuSetResetTime
+                  0x0024fc                  _menuEmergency1
+                  0x002564                  _menuEmergency2
+                  0x0025c2                  _menuEmergency3
+                  0x002684                  _menuEmergency4
+                  0x002724                  _menuHighLow
+                  0x0027d6                  _menuSetRelay
+                  0x002854                  _menuBadDate
+                  0x00287e                  _menuShutOffWarning
+                  0x0028be                  _menuPasswordChange
+                  0x0029ea                  _menuPowerReset
+                  0x002a74                  _writeBarGraph
+                  0x002ad0                  _calcPercentRem
+                  0x002b26                  _calcTimeRemaining
+                  0x002ca4                  __T1Interrupt
+                  0x002e22                  _commFunctions
+                  0x002e2c                  _splitReceivedCommand
+                  0x00308c                  _sendCommands
+                  0x00318e                  _sendBuffer
+                  0x0031dc                  _receiveBuffer
+                  0x00322a                  _flushBuffer
+                  0x00324e                  _stringCopy
+                  0x003286                  _stringConcat
+                  0x0032c8                  _stringCompare
+                  0x00330c                  _stringLength
+                  0x003332                  _commandBuilder1
+                  0x003376                  _commandBuilder2
+                  0x0033a8                  _commandBuilder3
+                  0x0033de                  _commandBuilder4
+                  0x003418                  _commandBuilder5
+                  0x003456                  _commandExpander
+                  0x0034ea                  _processReceivedCommand
+                  0x0037dc                  _setRemoteTime
+                  0x0038e0                  _setRemotePower
+                  0x00391c                  _setRemoteAlarm
+                  0x003978                  _setRemotePassword
+                  0x0039a6                  _setRemoteEmergency
+                  0x0039de                  _setRemoteResetTime
+                  0x003a0a                  _setRemoteRelay
+                  0x003a28                  _setRemoteStats
+                  0x003a5e                  _setRemoteHL
+                  0x003a7c                  _doReset
+                  0x003a8a                  _readRemoteTime
+                  0x003a98                  _readRemotePower
+                  0x003aa6                  _readRemoteAlarm
+                  0x003ab4                  _readRemotePassword
+                  0x003ac2                  _readRemoteEmergency
+                  0x003ad0                  _readRemoteVersion
+                  0x003ade                  _readRemoteResetTime
+                  0x003aec                  _readRemoteRelay
+                  0x003afa                  _readRemoteStats
+                  0x003b08                  _readRemoteHL
+                  0x003b16                  _readRemotePowerDownUpTime
+                  0x003b24                  _readUpdate
+                  0x003b32                  _main
+                  0x003b64                  _init
+                  0x003b92                  _initVars
+                  0x003bdc                  _initPorts
+                  0x003bfa                  _enablePullDownResistors
+                  0x003c08                  _enableInterrupts
+                  0x003c16                  _disableInterrupts
+                  0x003c24                  _enableAlarm
+                  0x003d40                  _startAlarm
+                  0x003dae                  _nextDot
+                  0x003dc8                  _initDisplayBox
+                  0x003e02                  _periodicUpdate
+                  0x003e70                  _checkCommFailure
+                  0x003ea0                  _initRTCCDisplay
+                  0x003ebc                  _initTimer
+                  0x003ede                  _writeClockStrings
+                  0x003fb4                  _writeTempClockStrings
+                  0x004102                  __T2Interrupt
+                  0x0042b4                  _readTime
+                  0x004316                  _writeTime
+                  0x0043e0                  _BcdToDec
+                  0x00440e                  _DecToBcd
+                  0x00443c                  _initUART
+                  0x00448e                  __U2RXInterrupt
+                  0x00452e                  __U2ErrInterrupt
+                  0x004540                  _delayFourUS
+                  0x004558                  _delayMS
+                  0x004584                  _commDelay
+                  0x0045b6                  _resetWDT
+                  0xf80000                  __FBS.sec
+                  0xf80004                  __FGS.sec
 
 External Symbols in Program Memory (by name):
 
-                  0x004c08                  _BcdToDec
-                  0x004c32                  _DecToBcd
-                  0x00029a                  __DefaultInterrupt
-                  0x002fe8                  __T1Interrupt
-                  0x004876                  __T2Interrupt
-                  0x004d54                  __U2ErrInterrupt
-                  0x004cac                  __U2RXInterrupt
-                  0x00029e                  ___udivsi3
-                  0x0002be                  ___umodsi3
-                  0x00023c                  __data_init
-                  0x00023c                  __data_init_standard
-                  0x00022c                  __psv_init
+                  0x0043e0                  _BcdToDec
+                  0x00440e                  _DecToBcd
+                  0x0002c8                  __DefaultInterrupt
+                  0xf80000                  __FBS.sec
+                  0xf80004                  __FGS.sec
+                  0x002ca4                  __T1Interrupt
+                  0x004102                  __T2Interrupt
+                  0x00452e                  __U2ErrInterrupt
+                  0x00448e                  __U2RXInterrupt
+                  0x0005b4                  ___mulp32eds3
+                  0x0005b4                  ___mulp32peds3
+                  0x0005b4                  ___mulsi3
+                  0x000300                  ___udivsi3
+                  0x000320                  ___umodsi3
+                  0x000252                  __data_init
+                  0x000252                  __data_init_standard
+                  0x00023c                  __psv_init
                   0x000200                  __resetPRI
-                  0x0002c4                  _atoi
-                  0x002d9e                  _calcPercentRem
-                  0x002e0a                  _calcTimeRemaining
-                  0x004528                  _checkCommFailure
-                  0x004dae                  _commDelay
-                  0x00316e                  _commFunctions
-                  0x003788                  _commandBuilder1
-                  0x0037ce                  _commandBuilder2
-                  0x003800                  _commandBuilder3
-                  0x003836                  _commandBuilder4
-                  0x003870                  _commandBuilder5
-                  0x0038ae                  _commandExpander
-                  0x004d6a                  _delayFourUS
-                  0x004d82                  _delayMS
-                  0x004216                  _disableInterrupts
-                  0x004008                  _doReset
-                  0x000d5c                  _dspCommand
-                  0x000de4                  _dspNibble
-                  0x000e7a                  _dspSetP1
-                  0x000d92                  _dspWrite
-                  0x000dc4                  _dspWriteMessage
-                  0x004224                  _enableAlarm
-                  0x004208                  _enableInterrupts
-                  0x0041fa                  _enablePullDownResistors
-                  0x00367a                  _flushBuffer
-                  0x0040fe                  _init
-                  0x000df2                  _initDisplay
-                  0x004464                  _initDisplayBox
-                  0x0041d0                  _initPorts
-                  0x004562                  _initRTCCDisplay
-                  0x00457e                  _initTimer
-                  0x004c5a                  _initUART
-                  0x00414a                  _initVars
-                  0x000336                  _itoa
-                  0x00039e                  _ltoa
-                  0x0040be                  _main
-                  0x001d4e                  _menuAbout
-                  0x001eec                  _menuAdmin1
-                  0x001f56                  _menuAdmin2
-                  0x001fa8                  _menuAdmin3
-                  0x001fd2                  _menuAdmin4
-                  0x00206a                  _menuAdmin5
-                  0x0020ac                  _menuAdmin6
-                  0x001d94                  _menuAdminLogin
-                  0x001630                  _menuAlarm
-                  0x00183c                  _menuAlarm1
-                  0x0018da                  _menuAlarm2
-                  0x001980                  _menuAlarm3
-                  0x001aca                  _menuAlarm4
-                  0x001b70                  _menuAlarm5
-                  0x002a86                  _menuBadDate
-                  0x00124c                  _menuButtonRead
-                  0x001346                  _menuDebug
-                  0x002698                  _menuEmergency1
-                  0x002714                  _menuEmergency2
-                  0x002784                  _menuEmergency3
-                  0x00286a                  _menuEmergency4
-                  0x00130e                  _menuError
-                  0x00291c                  _menuHighLow
-                  0x00135e                  _menuHomeBasic
-                  0x001568                  _menuHomeDetail
-                  0x0016b0                  _menuMain1
-                  0x0016ea                  _menuMain2
-                  0x001728                  _menuMain3
-                  0x0017a0                  _menuMain4
-                  0x0017d4                  _menuMain5
-                  0x001808                  _menuMain6
-                  0x002b0e                  _menuPasswordChange
-                  0x001d0e                  _menuPowerFailTimes
-                  0x002c94                  _menuPowerReset
-                  0x002388                  _menuSetPower
-                  0x0029f2                  _menuSetRelay
-                  0x002582                  _menuSetResetTime
-                  0x0020ec                  _menuSetTime
-                  0x002ab6                  _menuShutOffWarning
-                  0x001cba                  _menuStatistics
-                  0x004444                  _nextDot
-                  0x00449e                  _periodicUpdate
-                  0x003944                  _processReceivedCommand
-                  0x004032                  _readRemoteAlarm
-                  0x00404e                  _readRemoteEmergency
-                  0x004094                  _readRemoteHL
-                  0x004040                  _readRemotePassword
-                  0x004024                  _readRemotePower
-                  0x0040a2                  _readRemotePowerDownUpTime
-                  0x004078                  _readRemoteRelay
-                  0x00406a                  _readRemoteResetTime
-                  0x004086                  _readRemoteStats
-                  0x004016                  _readRemoteTime
-                  0x00405c                  _readRemoteVersion
-                  0x004a86                  _readTime
-                  0x0040b0                  _readUpdate
-                  0x00360c                  _receiveBuffer
-                  0x004dda                  _resetWDT
-                  0x00359e                  _sendBuffer
-                  0x00344c                  _sendCommands
-                  0x003e78                  _setRemoteAlarm
-                  0x003f16                  _setRemoteEmergency
-                  0x003fe8                  _setRemoteHL
-                  0x003ee8                  _setRemotePassword
-                  0x003e36                  _setRemotePower
-                  0x003f8a                  _setRemoteRelay
-                  0x003f56                  _setRemoteResetTime
-                  0x003faa                  _setRemoteStats
-                  0x003d26                  _setRemoteTime
-                  0x0003be                  _softKeys0
-                  0x0003d3                  _softKeys1
-                  0x0003e8                  _softKeys2
-                  0x003178                  _splitReceivedCommand
-                  0x0043c4                  _startAlarm
-                  0x00371a                  _stringCompare
-                  0x0036d6                  _stringConcat
-                  0x00369e                  _stringCopy
-                  0x003760                  _stringLength
-                  0x000352                  _ultoa
-                  0x001000                  _updateMenu
-                  0x000302                  _utoa
-                  0x002d34                  _writeBarGraph
-                  0x0045a4                  _writeClockStrings
-                  0x0046a8                  _writeTempClockStrings
-                  0x004b24                  _writeTime
-                  0x000ef8                  _writeToDisplay
+                  0x000326                  _atoi
+                  0x002ad0                  _calcPercentRem
+                  0x002b26                  _calcTimeRemaining
+                  0x003e70                  _checkCommFailure
+                  0x004584                  _commDelay
+                  0x002e22                  _commFunctions
+                  0x003332                  _commandBuilder1
+                  0x003376                  _commandBuilder2
+                  0x0033a8                  _commandBuilder3
+                  0x0033de                  _commandBuilder4
+                  0x003418                  _commandBuilder5
+                  0x003456                  _commandExpander
+                  0x004540                  _delayFourUS
+                  0x004558                  _delayMS
+                  0x003c16                  _disableInterrupts
+                  0x003a7c                  _doReset
+                  0x000f5e                  _dspCommand
+                  0x000fc8                  _dspNibble
+                  0x001050                  _dspSetP1
+                  0x000f86                  _dspWrite
+                  0x000faa                  _dspWriteMessage
+                  0x003c24                  _enableAlarm
+                  0x003c08                  _enableInterrupts
+                  0x003bfa                  _enablePullDownResistors
+                  0x00322a                  _flushBuffer
+                  0x003b64                  _init
+                  0x000fd6                  _initDisplay
+                  0x003dc8                  _initDisplayBox
+                  0x003bdc                  _initPorts
+                  0x003ea0                  _initRTCCDisplay
+                  0x003ebc                  _initTimer
+                  0x00443c                  _initUART
+                  0x003b92                  _initVars
+                  0x0002cc                  _isalpha
+                  0x0002e0                  _isspace
+                  0x000398                  _itoa
+                  0x000400                  _ltoa
+                  0x003b32                  _main
+                  0x001d66                  _menuAbout
+                  0x001ed8                  _menuAdmin1
+                  0x001f28                  _menuAdmin2
+                  0x001f78                  _menuAdmin3
+                  0x001fa0                  _menuAdmin4
+                  0x002006                  _menuAdmin5
+                  0x00203e                  _menuAdmin6
+                  0x001da8                  _menuAdminLogin
+                  0x00176c                  _menuAlarm
+                  0x001938                  _menuAlarm1
+                  0x0019be                  _menuAlarm2
+                  0x001a4e                  _menuAlarm3
+                  0x001b4c                  _menuAlarm4
+                  0x001bdc                  _menuAlarm5
+                  0x002854                  _menuBadDate
+                  0x001414                  _menuButtonRead
+                  0x0014ce                  _menuDebug
+                  0x0024fc                  _menuEmergency1
+                  0x002564                  _menuEmergency2
+                  0x0025c2                  _menuEmergency3
+                  0x002684                  _menuEmergency4
+                  0x00149c                  _menuError
+                  0x002724                  _menuHighLow
+                  0x0014e6                  _menuHomeBasic
+                  0x0016be                  _menuHomeDetail
+                  0x0017c8                  _menuMain1
+                  0x0017fc                  _menuMain2
+                  0x001834                  _menuMain3
+                  0x0018a2                  _menuMain4
+                  0x0018d4                  _menuMain5
+                  0x001906                  _menuMain6
+                  0x0028be                  _menuPasswordChange
+                  0x001d26                  _menuPowerFailTimes
+                  0x0029ea                  _menuPowerReset
+                  0x002262                  _menuSetPower
+                  0x0027d6                  _menuSetRelay
+                  0x002434                  _menuSetResetTime
+                  0x002078                  _menuSetTime
+                  0x00287e                  _menuShutOffWarning
+                  0x001cda                  _menuStatistics
+                  0x003dae                  _nextDot
+                  0x003e02                  _periodicUpdate
+                  0x0034ea                  _processReceivedCommand
+                  0x003aa6                  _readRemoteAlarm
+                  0x003ac2                  _readRemoteEmergency
+                  0x003b08                  _readRemoteHL
+                  0x003ab4                  _readRemotePassword
+                  0x003a98                  _readRemotePower
+                  0x003b16                  _readRemotePowerDownUpTime
+                  0x003aec                  _readRemoteRelay
+                  0x003ade                  _readRemoteResetTime
+                  0x003afa                  _readRemoteStats
+                  0x003a8a                  _readRemoteTime
+                  0x003ad0                  _readRemoteVersion
+                  0x0042b4                  _readTime
+                  0x003b24                  _readUpdate
+                  0x0031dc                  _receiveBuffer
+                  0x0045b6                  _resetWDT
+                  0x00318e                  _sendBuffer
+                  0x00308c                  _sendCommands
+                  0x00391c                  _setRemoteAlarm
+                  0x0039a6                  _setRemoteEmergency
+                  0x003a5e                  _setRemoteHL
+                  0x003978                  _setRemotePassword
+                  0x0038e0                  _setRemotePower
+                  0x003a0a                  _setRemoteRelay
+                  0x0039de                  _setRemoteResetTime
+                  0x003a28                  _setRemoteStats
+                  0x0037dc                  _setRemoteTime
+                  0x0005c0                  _softKeys0
+                  0x0005d5                  _softKeys1
+                  0x0005ea                  _softKeys2
+                  0x002e2c                  _splitReceivedCommand
+                  0x003d40                  _startAlarm
+                  0x0032c8                  _stringCompare
+                  0x003286                  _stringConcat
+                  0x00324e                  _stringCopy
+                  0x00330c                  _stringLength
+                  0x000524                  _strtol
+                  0x000420                  _strtoul
+                  0x0002f0                  _toupper
+                  0x0003b4                  _ultoa
+                  0x0011ca                  _updateMenu
+                  0x000364                  _utoa
+                  0x002a74                  _writeBarGraph
+                  0x003ede                  _writeClockStrings
+                  0x003fb4                  _writeTempClockStrings
+                  0x004316                  _writeTime
+                  0x0010c2                  _writeToDisplay
 
 Memory Configuration
 
@@ -700,8 +769,8 @@ LOAD build/default/production/DisplayUART.o
 LOAD build/default/production/Delays.o
 LOAD build/default/production/Watchdog.o
                     0x0001                  __MPLAB_BUILD = 0x1
-LOAD c:/program files (x86)/microchip/xc16/v1.23/bin/bin/../../lib/PIC24F\libpPIC24Fxxx-elf.a
-LOAD c:/program files (x86)/microchip/xc16/v1.23/bin/bin/../../lib\libfx-elf.a
+LOAD pPIC24Fxxx
+LOAD c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libfx-elf.a
                     0xf80000                  __FBS = 0xf80000
                     0xf80004                  __FGS = 0xf80004
                     0xf80006                  __FOSCSEL = 0xf80006
@@ -724,47 +793,69 @@ LOAD c:/program files (x86)/microchip/xc16/v1.23/bin/bin/../../lib\libfx-elf.a
                   0x000002          0x2 SHORT 0x0 ((ABSOLUTE (__reset) >> 0x10) & 0x7f)
                   0x000003          0x2 SHORT 0x0
 
-.text             0x000200        0x1be
+.text             0x000200        0x3c0
  *(.init)
- .init            0x000200         0x3c c:/program files (x86)/microchip/xc16/v1.23/bin/bin/../../lib\libpic30-elf.a(crt0_standard.o)
+ .init            0x000200         0x4c c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libpic30-elf.a(crt0_standard.o)
                   0x000200                  __resetPRI
                   0x000200                  __reset
-                  0x00022c                  __psv_init
- .init            0x00023c         0x5e c:/program files (x86)/microchip/xc16/v1.23/bin/bin/../../lib\libpic30-elf.a(data_init_standard.o)
-                  0x00023c                  __data_init_standard
-                  0x00023c                  __data_init
+                  0x00023c                  __psv_init
+ .init            0x00024c         0x7c c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libpic30-elf.a(data_init_standard.o)
+                  0x000252                  __data_init_standard
+                  0x000252                  __data_init
  *(.user_init)
  *(.handle)
  *(.isr*)
- .isr             0x00029a          0x4 default_isr
-                  0x00029a                  __DefaultInterrupt
+ .isr             0x0002c8          0x4 default_isr
+                  0x0002c8                  __DefaultInterrupt
  *(.libc)
+ .libc            0x0002cc         0x14 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libc-elf.a(isalpha.eso)
+                  0x0002cc                  _isalpha
+ .libc            0x0002e0         0x10 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libc-elf.a(isspace.eso)
+                  0x0002e0                  _isspace
+ .libc            0x0002f0          0xe c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libc-elf.a(toupper.eso)
+                  0x0002f0                  _toupper
  *(.libm)
  *(.libdsp)
  *(.lib*)
- .libm.udivsi3    0x00029e         0x20 c:/program files (x86)/microchip/xc16/v1.23/bin/bin/../../lib\libm-elf.a(udivsi3.eo)
-                  0x00029e                  ___udivsi3
- .libm.umodsi3    0x0002be          0x6 c:/program files (x86)/microchip/xc16/v1.23/bin/bin/../../lib\libm-elf.a(umodsi3.eo)
-                  0x0002be                  ___umodsi3
- .libc.atoi       0x0002c4         0x3e c:/program files (x86)/microchip/xc16/v1.23/bin/bin/../../lib\libc-elf.a(atoi.eo)
-                  0x0002c4                  _atoi
- .libc.utoa       0x000302         0x34 c:/program files (x86)/microchip/xc16/v1.23/bin/bin/../../lib\libc-elf.a(itoa.eo)
-                  0x000302                  _utoa
- .libc.itoa       0x000336         0x1c c:/program files (x86)/microchip/xc16/v1.23/bin/bin/../../lib\libc-elf.a(itoa.eo)
-                  0x000336                  _itoa
- .libc.ultoa      0x000352         0x4c c:/program files (x86)/microchip/xc16/v1.23/bin/bin/../../lib\libc-elf.a(ltoa.eo)
-                  0x000352                  _ultoa
- .libc.ltoa       0x00039e         0x20 c:/program files (x86)/microchip/xc16/v1.23/bin/bin/../../lib\libc-elf.a(ltoa.eo)
-                  0x00039e                  _ltoa
+ .libpic30_crt_start_mode
+                  0x0002fe          0x2 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libpic30-elf.a(crt_start_mode_normal.eo)
+                  0x0002fe                  __crt_start_mode
+                  0x0002fe                  __crt_start_mode_normal
+ .libm.udivsi3    0x000300         0x20 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libm-elf.a(udivsi3.eo)
+                  0x000300                  ___udivsi3
+ .libm.umodsi3    0x000320          0x6 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libm-elf.a(umodsi3.eo)
+                  0x000320                  ___umodsi3
+ .libc.atoi       0x000326         0x3e c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libc-elf.a(atoi.eo)
+                  0x000326                  _atoi
+ .libc.utoa       0x000364         0x34 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libc-elf.a(itoa.eo)
+                  0x000364                  _utoa
+ .libc.itoa       0x000398         0x1c c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libc-elf.a(itoa.eo)
+                  0x000398                  _itoa
+ .libc.ultoa      0x0003b4         0x4c c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libc-elf.a(ltoa.eo)
+                  0x0003b4                  _ultoa
+ .libc.ltoa       0x000400         0x20 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libc-elf.a(ltoa.eo)
+                  0x000400                  _ltoa
+ .libc.strtoul    0x000420        0x104 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libc-elf.a(strtol.eo)
+                  0x000420                  _strtoul
+ .libc.strtol     0x000524         0x90 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libc-elf.a(strtol.eo)
+                  0x000524                  _strtol
+ .libm.mulsi3     0x0005b4          0xc c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libm-elf.a(mulsi3.eo)
+                  0x0005b4                  ___mulp32peds3
+                  0x0005b4                  ___mulsi3
+                  0x0005b4                  ___mulp32eds3
 
 usercode
  *(usercode)
 
-__FBS
+__FBS             0xf80000          0x2
  *(__FBS.sec*)
+ __FBS.sec        0xf80000          0x2 FBS
+                  0xf80000                  __FBS.sec
 
-__FGS
+__FGS             0xf80004          0x2
  *(__FGS.sec*)
+ __FGS.sec        0xf80004          0x2 FGS
+                  0xf80004                  __FGS.sec
 
 __FOSCSEL
  *(__FOSCSEL.sec*)
@@ -787,44 +878,44 @@ __FDS
 .comment
  *(.comment)
 
-.debug_info       0x000000       0x57c3
+.debug_info       0x000000       0x5662
  *(.debug_info)
- .debug_info      0x000000       0x2eb7 build/default/production/DisplayMain.o
- .debug_info      0x002eb7       0x1632 build/default/production/DisplayMenu.o
- .debug_info      0x0044e9        0x52f build/default/production/DisplayRTCC.o
- .debug_info      0x004a18        0xb19 build/default/production/DisplayUART.o
- .debug_info      0x005531        0x191 build/default/production/Delays.o
- .debug_info      0x0056c2        0x101 build/default/production/Watchdog.o
+ .debug_info      0x000000       0x2e7d build/default/production/DisplayMain.o
+ .debug_info      0x002e7d       0x15f7 build/default/production/DisplayMenu.o
+ .debug_info      0x004474        0x4f2 build/default/production/DisplayRTCC.o
+ .debug_info      0x004966        0xae4 build/default/production/DisplayUART.o
+ .debug_info      0x00544a        0x154 build/default/production/Delays.o
+ .debug_info      0x00559e         0xc4 build/default/production/Watchdog.o
  *(.gnu.linkonce.wi.*)
 
-.debug_abbrev     0x000000        0x6b9
+.debug_abbrev     0x000000        0x64d
  *(.debug_abbrev)
- .debug_abbrev    0x000000        0x23f build/default/production/DisplayMain.o
- .debug_abbrev    0x00023f          0x1 build/default/production/DisplayConfiguration.o
- .debug_abbrev    0x000240        0x1a4 build/default/production/DisplayMenu.o
- .debug_abbrev    0x0003e4        0x113 build/default/production/DisplayRTCC.o
- .debug_abbrev    0x0004f7        0x125 build/default/production/DisplayUART.o
- .debug_abbrev    0x00061c         0x69 build/default/production/Delays.o
- .debug_abbrev    0x000685         0x34 build/default/production/Watchdog.o
+ .debug_abbrev    0x000000        0x228 build/default/production/DisplayMain.o
+ .debug_abbrev    0x000228          0x1 build/default/production/DisplayConfiguration.o
+ .debug_abbrev    0x000229        0x173 build/default/production/DisplayMenu.o
+ .debug_abbrev    0x00039c        0x113 build/default/production/DisplayRTCC.o
+ .debug_abbrev    0x0004af        0x101 build/default/production/DisplayUART.o
+ .debug_abbrev    0x0005b0         0x69 build/default/production/Delays.o
+ .debug_abbrev    0x000619         0x34 build/default/production/Watchdog.o
 
-.debug_line       0x000000       0x4359
+.debug_line       0x000000        0xc5e
  *(.debug_line)
- .debug_line      0x000000       0x19a3 build/default/production/DisplayMain.o
- .debug_line      0x0019a3         0x24 build/default/production/DisplayConfiguration.o
- .debug_line      0x0019c7       0x239a build/default/production/DisplayMenu.o
- .debug_line      0x003d61        0x277 build/default/production/DisplayRTCC.o
- .debug_line      0x003fd8        0x277 build/default/production/DisplayUART.o
- .debug_line      0x00424f         0xb6 build/default/production/Delays.o
- .debug_line      0x004305         0x54 build/default/production/Watchdog.o
+ .debug_line      0x000000        0x43d build/default/production/DisplayMain.o
+ .debug_line      0x00043d         0x1a build/default/production/DisplayConfiguration.o
+ .debug_line      0x000457        0x5ad build/default/production/DisplayMenu.o
+ .debug_line      0x000a04         0xf1 build/default/production/DisplayRTCC.o
+ .debug_line      0x000af5         0xee build/default/production/DisplayUART.o
+ .debug_line      0x000be3         0x42 build/default/production/Delays.o
+ .debug_line      0x000c25         0x39 build/default/production/Watchdog.o
 
-.debug_frame      0x000000        0x7f8
+.debug_frame      0x000000        0xe00
  *(.debug_frame)
- .debug_frame     0x000000        0x3a4 build/default/production/DisplayMain.o
- .debug_frame     0x0003a4        0x354 build/default/production/DisplayMenu.o
- .debug_frame     0x0006f8         0x54 build/default/production/DisplayRTCC.o
- .debug_frame     0x00074c         0x44 build/default/production/DisplayUART.o
- .debug_frame     0x000790         0x44 build/default/production/Delays.o
- .debug_frame     0x0007d4         0x24 build/default/production/Watchdog.o
+ .debug_frame     0x000000        0x662 build/default/production/DisplayMain.o
+ .debug_frame     0x000662        0x5e8 build/default/production/DisplayMenu.o
+ .debug_frame     0x000c4a         0x8a build/default/production/DisplayRTCC.o
+ .debug_frame     0x000cd4         0x94 build/default/production/DisplayUART.o
+ .debug_frame     0x000d68         0x68 build/default/production/Delays.o
+ .debug_frame     0x000dd0         0x30 build/default/production/Watchdog.o
 
 .debug_str        0x000000        0xa97
  *(.debug_str)
@@ -872,262 +963,6 @@ __FDS
                   0x000060         0x18 build/default/production/Delays.o
  .debug_aranges
                   0x000078         0x18 build/default/production/Watchdog.o
-
-.ivt              0x000004         0xfc
-                  0x000004          0x4 LONG 0x29a DEFINED (__ReservedTrap0)?ABSOLUTE (__ReservedTrap0):ABSOLUTE (__DefaultInterrupt)
-                  0x000006          0x4 LONG 0x29a DEFINED (__OscillatorFail)?ABSOLUTE (__OscillatorFail):ABSOLUTE (__DefaultInterrupt)
-                  0x000008          0x4 LONG 0x29a DEFINED (__AddressError)?ABSOLUTE (__AddressError):ABSOLUTE (__DefaultInterrupt)
-                  0x00000a          0x4 LONG 0x29a DEFINED (__StackError)?ABSOLUTE (__StackError):ABSOLUTE (__DefaultInterrupt)
-                  0x00000c          0x4 LONG 0x29a DEFINED (__MathError)?ABSOLUTE (__MathError):ABSOLUTE (__DefaultInterrupt)
-                  0x00000e          0x4 LONG 0x29a DEFINED (__ReservedTrap5)?ABSOLUTE (__ReservedTrap5):ABSOLUTE (__DefaultInterrupt)
-                  0x000010          0x4 LONG 0x29a DEFINED (__ReservedTrap6)?ABSOLUTE (__ReservedTrap6):ABSOLUTE (__DefaultInterrupt)
-                  0x000012          0x4 LONG 0x29a DEFINED (__ReservedTrap7)?ABSOLUTE (__ReservedTrap7):ABSOLUTE (__DefaultInterrupt)
-                  0x000014          0x4 LONG 0x29a DEFINED (__INT0Interrupt)?ABSOLUTE (__INT0Interrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x000016          0x4 LONG 0x29a DEFINED (__IC1Interrupt)?ABSOLUTE (__IC1Interrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x000018          0x4 LONG 0x29a DEFINED (__OC1Interrupt)?ABSOLUTE (__OC1Interrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x00001a          0x4 LONG 0x2fe8 DEFINED (__T1Interrupt)?ABSOLUTE (__T1Interrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x00001c          0x4 LONG 0x29a DEFINED (__Interrupt4)?ABSOLUTE (__Interrupt4):ABSOLUTE (__DefaultInterrupt)
-                  0x00001e          0x4 LONG 0x29a DEFINED (__IC2Interrupt)?ABSOLUTE (__IC2Interrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x000020          0x4 LONG 0x29a DEFINED (__OC2Interrupt)?ABSOLUTE (__OC2Interrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x000022          0x4 LONG 0x4876 DEFINED (__T2Interrupt)?ABSOLUTE (__T2Interrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x000024          0x4 LONG 0x29a DEFINED (__T3Interrupt)?ABSOLUTE (__T3Interrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x000026          0x4 LONG 0x29a DEFINED (__SPI1ErrInterrupt)?ABSOLUTE (__SPI1ErrInterrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x000028          0x4 LONG 0x29a DEFINED (__SPI1Interrupt)?ABSOLUTE (__SPI1Interrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x00002a          0x4 LONG 0x29a DEFINED (__U1RXInterrupt)?ABSOLUTE (__U1RXInterrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x00002c          0x4 LONG 0x29a DEFINED (__U1TXInterrupt)?ABSOLUTE (__U1TXInterrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x00002e          0x4 LONG 0x29a DEFINED (__ADC1Interrupt)?ABSOLUTE (__ADC1Interrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x000030          0x4 LONG 0x29a DEFINED (__Interrupt14)?ABSOLUTE (__Interrupt14):ABSOLUTE (__DefaultInterrupt)
-                  0x000032          0x4 LONG 0x29a DEFINED (__NVMInterrupt)?ABSOLUTE (__NVMInterrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x000034          0x4 LONG 0x29a DEFINED (__SI2C1Interrupt)?ABSOLUTE (__SI2C1Interrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x000036          0x4 LONG 0x29a DEFINED (__MI2C1Interrupt)?ABSOLUTE (__MI2C1Interrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x000038          0x4 LONG 0x29a DEFINED (__CompInterrupt)?ABSOLUTE (__CompInterrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x00003a          0x4 LONG 0x29a DEFINED (__CNInterrupt)?ABSOLUTE (__CNInterrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x00003c          0x4 LONG 0x29a DEFINED (__INT1Interrupt)?ABSOLUTE (__INT1Interrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x00003e          0x4 LONG 0x29a DEFINED (__Interrupt21)?ABSOLUTE (__Interrupt21):ABSOLUTE (__DefaultInterrupt)
-                  0x000040          0x4 LONG 0x29a DEFINED (__Interrupt22)?ABSOLUTE (__Interrupt22):ABSOLUTE (__DefaultInterrupt)
-                  0x000042          0x4 LONG 0x29a DEFINED (__Interrupt23)?ABSOLUTE (__Interrupt23):ABSOLUTE (__DefaultInterrupt)
-                  0x000044          0x4 LONG 0x29a DEFINED (__Interrupt24)?ABSOLUTE (__Interrupt24):ABSOLUTE (__DefaultInterrupt)
-                  0x000046          0x4 LONG 0x29a DEFINED (__OC3Interrupt)?ABSOLUTE (__OC3Interrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x000048          0x4 LONG 0x29a DEFINED (__Interrupt26)?ABSOLUTE (__Interrupt26):ABSOLUTE (__DefaultInterrupt)
-                  0x00004a          0x4 LONG 0x29a DEFINED (__T4Interrupt)?ABSOLUTE (__T4Interrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x00004c          0x4 LONG 0x29a DEFINED (__T5Interrupt)?ABSOLUTE (__T5Interrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x00004e          0x4 LONG 0x29a DEFINED (__INT2Interrupt)?ABSOLUTE (__INT2Interrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x000050          0x4 LONG 0x4cac DEFINED (__U2RXInterrupt)?ABSOLUTE (__U2RXInterrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x000052          0x4 LONG 0x29a DEFINED (__U2TXInterrupt)?ABSOLUTE (__U2TXInterrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x000054          0x4 LONG 0x29a DEFINED (__SPI2ErrInterrupt)?ABSOLUTE (__SPI2ErrInterrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x000056          0x4 LONG 0x29a DEFINED (__SPI2Interrupt)?ABSOLUTE (__SPI2Interrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x000058          0x4 LONG 0x29a DEFINED (__Interrupt34)?ABSOLUTE (__Interrupt34):ABSOLUTE (__DefaultInterrupt)
-                  0x00005a          0x4 LONG 0x29a DEFINED (__Interrupt35)?ABSOLUTE (__Interrupt35):ABSOLUTE (__DefaultInterrupt)
-                  0x00005c          0x4 LONG 0x29a DEFINED (__Interrupt36)?ABSOLUTE (__Interrupt36):ABSOLUTE (__DefaultInterrupt)
-                  0x00005e          0x4 LONG 0x29a DEFINED (__IC3Interrupt)?ABSOLUTE (__IC3Interrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x000060          0x4 LONG 0x29a DEFINED (__Interrupt38)?ABSOLUTE (__Interrupt38):ABSOLUTE (__DefaultInterrupt)
-                  0x000062          0x4 LONG 0x29a DEFINED (__Interrupt39)?ABSOLUTE (__Interrupt39):ABSOLUTE (__DefaultInterrupt)
-                  0x000064          0x4 LONG 0x29a DEFINED (__Interrupt40)?ABSOLUTE (__Interrupt40):ABSOLUTE (__DefaultInterrupt)
-                  0x000066          0x4 LONG 0x29a DEFINED (__Interrupt41)?ABSOLUTE (__Interrupt41):ABSOLUTE (__DefaultInterrupt)
-                  0x000068          0x4 LONG 0x29a DEFINED (__Interrupt42)?ABSOLUTE (__Interrupt42):ABSOLUTE (__DefaultInterrupt)
-                  0x00006a          0x4 LONG 0x29a DEFINED (__Interrupt43)?ABSOLUTE (__Interrupt43):ABSOLUTE (__DefaultInterrupt)
-                  0x00006c          0x4 LONG 0x29a DEFINED (__Interrupt44)?ABSOLUTE (__Interrupt44):ABSOLUTE (__DefaultInterrupt)
-                  0x00006e          0x4 LONG 0x29a DEFINED (__Interrupt45)?ABSOLUTE (__Interrupt45):ABSOLUTE (__DefaultInterrupt)
-                  0x000070          0x4 LONG 0x29a DEFINED (__Interrupt46)?ABSOLUTE (__Interrupt46):ABSOLUTE (__DefaultInterrupt)
-                  0x000072          0x4 LONG 0x29a DEFINED (__Interrupt47)?ABSOLUTE (__Interrupt47):ABSOLUTE (__DefaultInterrupt)
-                  0x000074          0x4 LONG 0x29a DEFINED (__Interrupt48)?ABSOLUTE (__Interrupt48):ABSOLUTE (__DefaultInterrupt)
-                  0x000076          0x4 LONG 0x29a DEFINED (__SI2C2Interrupt)?ABSOLUTE (__SI2C2Interrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x000078          0x4 LONG 0x29a DEFINED (__MI2C2Interrupt)?ABSOLUTE (__MI2C2Interrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x00007a          0x4 LONG 0x29a DEFINED (__Interrupt51)?ABSOLUTE (__Interrupt51):ABSOLUTE (__DefaultInterrupt)
-                  0x00007c          0x4 LONG 0x29a DEFINED (__Interrupt52)?ABSOLUTE (__Interrupt52):ABSOLUTE (__DefaultInterrupt)
-                  0x00007e          0x4 LONG 0x29a DEFINED (__Interrupt53)?ABSOLUTE (__Interrupt53):ABSOLUTE (__DefaultInterrupt)
-                  0x000080          0x4 LONG 0x29a DEFINED (__Interrupt54)?ABSOLUTE (__Interrupt54):ABSOLUTE (__DefaultInterrupt)
-                  0x000082          0x4 LONG 0x29a DEFINED (__Interrupt55)?ABSOLUTE (__Interrupt55):ABSOLUTE (__DefaultInterrupt)
-                  0x000084          0x4 LONG 0x29a DEFINED (__Interrupt56)?ABSOLUTE (__Interrupt56):ABSOLUTE (__DefaultInterrupt)
-                  0x000086          0x4 LONG 0x29a DEFINED (__Interrupt57)?ABSOLUTE (__Interrupt57):ABSOLUTE (__DefaultInterrupt)
-                  0x000088          0x4 LONG 0x29a DEFINED (__Interrupt58)?ABSOLUTE (__Interrupt58):ABSOLUTE (__DefaultInterrupt)
-                  0x00008a          0x4 LONG 0x29a DEFINED (__Interrupt59)?ABSOLUTE (__Interrupt59):ABSOLUTE (__DefaultInterrupt)
-                  0x00008c          0x4 LONG 0x29a DEFINED (__Interrupt60)?ABSOLUTE (__Interrupt60):ABSOLUTE (__DefaultInterrupt)
-                  0x00008e          0x4 LONG 0x29a DEFINED (__Interrupt61)?ABSOLUTE (__Interrupt61):ABSOLUTE (__DefaultInterrupt)
-                  0x000090          0x4 LONG 0x29a DEFINED (__RTCCInterrupt)?ABSOLUTE (__RTCCInterrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x000092          0x4 LONG 0x29a DEFINED (__Interrupt63)?ABSOLUTE (__Interrupt63):ABSOLUTE (__DefaultInterrupt)
-                  0x000094          0x4 LONG 0x29a DEFINED (__Interrupt64)?ABSOLUTE (__Interrupt64):ABSOLUTE (__DefaultInterrupt)
-                  0x000096          0x4 LONG 0x29a DEFINED (__U1ErrInterrupt)?ABSOLUTE (__U1ErrInterrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x000098          0x4 LONG 0x4d54 DEFINED (__U2ErrInterrupt)?ABSOLUTE (__U2ErrInterrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x00009a          0x4 LONG 0x29a DEFINED (__CRCInterrupt)?ABSOLUTE (__CRCInterrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x00009c          0x4 LONG 0x29a DEFINED (__Interrupt68)?ABSOLUTE (__Interrupt68):ABSOLUTE (__DefaultInterrupt)
-                  0x00009e          0x4 LONG 0x29a DEFINED (__Interrupt69)?ABSOLUTE (__Interrupt69):ABSOLUTE (__DefaultInterrupt)
-                  0x0000a0          0x4 LONG 0x29a DEFINED (__Interrupt70)?ABSOLUTE (__Interrupt70):ABSOLUTE (__DefaultInterrupt)
-                  0x0000a2          0x4 LONG 0x29a DEFINED (__Interrupt71)?ABSOLUTE (__Interrupt71):ABSOLUTE (__DefaultInterrupt)
-                  0x0000a4          0x4 LONG 0x29a DEFINED (__LVDInterrupt)?ABSOLUTE (__LVDInterrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x0000a6          0x4 LONG 0x29a DEFINED (__Interrupt73)?ABSOLUTE (__Interrupt73):ABSOLUTE (__DefaultInterrupt)
-                  0x0000a8          0x4 LONG 0x29a DEFINED (__Interrupt74)?ABSOLUTE (__Interrupt74):ABSOLUTE (__DefaultInterrupt)
-                  0x0000aa          0x4 LONG 0x29a DEFINED (__Interrupt75)?ABSOLUTE (__Interrupt75):ABSOLUTE (__DefaultInterrupt)
-                  0x0000ac          0x4 LONG 0x29a DEFINED (__Interrupt76)?ABSOLUTE (__Interrupt76):ABSOLUTE (__DefaultInterrupt)
-                  0x0000ae          0x4 LONG 0x29a DEFINED (__CTMUInterrupt)?ABSOLUTE (__CTMUInterrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x0000b0          0x4 LONG 0x29a DEFINED (__Interrupt78)?ABSOLUTE (__Interrupt78):ABSOLUTE (__DefaultInterrupt)
-                  0x0000b2          0x4 LONG 0x29a DEFINED (__Interrupt79)?ABSOLUTE (__Interrupt79):ABSOLUTE (__DefaultInterrupt)
-                  0x0000b4          0x4 LONG 0x29a DEFINED (__ULPWUInterrupt)?ABSOLUTE (__ULPWUInterrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x0000b6          0x4 LONG 0x29a DEFINED (__Interrupt81)?ABSOLUTE (__Interrupt81):ABSOLUTE (__DefaultInterrupt)
-                  0x0000b8          0x4 LONG 0x29a DEFINED (__Interrupt82)?ABSOLUTE (__Interrupt82):ABSOLUTE (__DefaultInterrupt)
-                  0x0000ba          0x4 LONG 0x29a DEFINED (__Interrupt83)?ABSOLUTE (__Interrupt83):ABSOLUTE (__DefaultInterrupt)
-                  0x0000bc          0x4 LONG 0x29a DEFINED (__Interrupt84)?ABSOLUTE (__Interrupt84):ABSOLUTE (__DefaultInterrupt)
-                  0x0000be          0x4 LONG 0x29a DEFINED (__Interrupt85)?ABSOLUTE (__Interrupt85):ABSOLUTE (__DefaultInterrupt)
-                  0x0000c0          0x4 LONG 0x29a DEFINED (__Interrupt86)?ABSOLUTE (__Interrupt86):ABSOLUTE (__DefaultInterrupt)
-                  0x0000c2          0x4 LONG 0x29a DEFINED (__Interrupt87)?ABSOLUTE (__Interrupt87):ABSOLUTE (__DefaultInterrupt)
-                  0x0000c4          0x4 LONG 0x29a DEFINED (__Interrupt88)?ABSOLUTE (__Interrupt88):ABSOLUTE (__DefaultInterrupt)
-                  0x0000c6          0x4 LONG 0x29a DEFINED (__Interrupt89)?ABSOLUTE (__Interrupt89):ABSOLUTE (__DefaultInterrupt)
-                  0x0000c8          0x4 LONG 0x29a DEFINED (__Interrupt90)?ABSOLUTE (__Interrupt90):ABSOLUTE (__DefaultInterrupt)
-                  0x0000ca          0x4 LONG 0x29a DEFINED (__Interrupt91)?ABSOLUTE (__Interrupt91):ABSOLUTE (__DefaultInterrupt)
-                  0x0000cc          0x4 LONG 0x29a DEFINED (__Interrupt92)?ABSOLUTE (__Interrupt92):ABSOLUTE (__DefaultInterrupt)
-                  0x0000ce          0x4 LONG 0x29a DEFINED (__Interrupt93)?ABSOLUTE (__Interrupt93):ABSOLUTE (__DefaultInterrupt)
-                  0x0000d0          0x4 LONG 0x29a DEFINED (__Interrupt94)?ABSOLUTE (__Interrupt94):ABSOLUTE (__DefaultInterrupt)
-                  0x0000d2          0x4 LONG 0x29a DEFINED (__Interrupt95)?ABSOLUTE (__Interrupt95):ABSOLUTE (__DefaultInterrupt)
-                  0x0000d4          0x4 LONG 0x29a DEFINED (__Interrupt96)?ABSOLUTE (__Interrupt96):ABSOLUTE (__DefaultInterrupt)
-                  0x0000d6          0x4 LONG 0x29a DEFINED (__Interrupt97)?ABSOLUTE (__Interrupt97):ABSOLUTE (__DefaultInterrupt)
-                  0x0000d8          0x4 LONG 0x29a DEFINED (__Interrupt98)?ABSOLUTE (__Interrupt98):ABSOLUTE (__DefaultInterrupt)
-                  0x0000da          0x4 LONG 0x29a DEFINED (__Interrupt99)?ABSOLUTE (__Interrupt99):ABSOLUTE (__DefaultInterrupt)
-                  0x0000dc          0x4 LONG 0x29a DEFINED (__Interrupt100)?ABSOLUTE (__Interrupt100):ABSOLUTE (__DefaultInterrupt)
-                  0x0000de          0x4 LONG 0x29a DEFINED (__Interrupt101)?ABSOLUTE (__Interrupt101):ABSOLUTE (__DefaultInterrupt)
-                  0x0000e0          0x4 LONG 0x29a DEFINED (__Interrupt102)?ABSOLUTE (__Interrupt102):ABSOLUTE (__DefaultInterrupt)
-                  0x0000e2          0x4 LONG 0x29a DEFINED (__Interrupt103)?ABSOLUTE (__Interrupt103):ABSOLUTE (__DefaultInterrupt)
-                  0x0000e4          0x4 LONG 0x29a DEFINED (__Interrupt104)?ABSOLUTE (__Interrupt104):ABSOLUTE (__DefaultInterrupt)
-                  0x0000e6          0x4 LONG 0x29a DEFINED (__Interrupt105)?ABSOLUTE (__Interrupt105):ABSOLUTE (__DefaultInterrupt)
-                  0x0000e8          0x4 LONG 0x29a DEFINED (__Interrupt106)?ABSOLUTE (__Interrupt106):ABSOLUTE (__DefaultInterrupt)
-                  0x0000ea          0x4 LONG 0x29a DEFINED (__Interrupt107)?ABSOLUTE (__Interrupt107):ABSOLUTE (__DefaultInterrupt)
-                  0x0000ec          0x4 LONG 0x29a DEFINED (__Interrupt108)?ABSOLUTE (__Interrupt108):ABSOLUTE (__DefaultInterrupt)
-                  0x0000ee          0x4 LONG 0x29a DEFINED (__Interrupt109)?ABSOLUTE (__Interrupt109):ABSOLUTE (__DefaultInterrupt)
-                  0x0000f0          0x4 LONG 0x29a DEFINED (__Interrupt110)?ABSOLUTE (__Interrupt110):ABSOLUTE (__DefaultInterrupt)
-                  0x0000f2          0x4 LONG 0x29a DEFINED (__Interrupt111)?ABSOLUTE (__Interrupt111):ABSOLUTE (__DefaultInterrupt)
-                  0x0000f4          0x4 LONG 0x29a DEFINED (__Interrupt112)?ABSOLUTE (__Interrupt112):ABSOLUTE (__DefaultInterrupt)
-                  0x0000f6          0x4 LONG 0x29a DEFINED (__Interrupt113)?ABSOLUTE (__Interrupt113):ABSOLUTE (__DefaultInterrupt)
-                  0x0000f8          0x4 LONG 0x29a DEFINED (__Interrupt114)?ABSOLUTE (__Interrupt114):ABSOLUTE (__DefaultInterrupt)
-                  0x0000fa          0x4 LONG 0x29a DEFINED (__Interrupt115)?ABSOLUTE (__Interrupt115):ABSOLUTE (__DefaultInterrupt)
-                  0x0000fc          0x4 LONG 0x29a DEFINED (__Interrupt116)?ABSOLUTE (__Interrupt116):ABSOLUTE (__DefaultInterrupt)
-                  0x0000fe          0x4 LONG 0x29a DEFINED (__Interrupt117)?ABSOLUTE (__Interrupt117):ABSOLUTE (__DefaultInterrupt)
-
-.aivt             0x000104         0xfc
-                  0x000104          0x4 LONG 0x29a DEFINED (__AltReservedTrap0)?ABSOLUTE (__AltReservedTrap0):DEFINED (__ReservedTrap0)?ABSOLUTE (__ReservedTrap0):ABSOLUTE (__DefaultInterrupt)
-                  0x000106          0x4 LONG 0x29a DEFINED (__AltOscillatorFail)?ABSOLUTE (__AltOscillatorFail):DEFINED (__OscillatorFail)?ABSOLUTE (__OscillatorFail):ABSOLUTE (__DefaultInterrupt)
-                  0x000108          0x4 LONG 0x29a DEFINED (__AltAddressError)?ABSOLUTE (__AltAddressError):DEFINED (__AddressError)?ABSOLUTE (__AddressError):ABSOLUTE (__DefaultInterrupt)
-                  0x00010a          0x4 LONG 0x29a DEFINED (__AltStackError)?ABSOLUTE (__AltStackError):DEFINED (__StackError)?ABSOLUTE (__StackError):ABSOLUTE (__DefaultInterrupt)
-                  0x00010c          0x4 LONG 0x29a DEFINED (__AltMathError)?ABSOLUTE (__AltMathError):DEFINED (__MathError)?ABSOLUTE (__MathError):ABSOLUTE (__DefaultInterrupt)
-                  0x00010e          0x4 LONG 0x29a DEFINED (__AltReservedTrap5)?ABSOLUTE (__AltReservedTrap5):DEFINED (__ReservedTrap5)?ABSOLUTE (__ReservedTrap5):ABSOLUTE (__DefaultInterrupt)
-                  0x000110          0x4 LONG 0x29a DEFINED (__AltReservedTrap6)?ABSOLUTE (__AltReservedTrap6):DEFINED (__ReservedTrap6)?ABSOLUTE (__ReservedTrap6):ABSOLUTE (__DefaultInterrupt)
-                  0x000112          0x4 LONG 0x29a DEFINED (__AltReservedTrap7)?ABSOLUTE (__AltReservedTrap7):DEFINED (__ReservedTrap7)?ABSOLUTE (__ReservedTrap7):ABSOLUTE (__DefaultInterrupt)
-                  0x000114          0x4 LONG 0x29a DEFINED (__AltINT0Interrupt)?ABSOLUTE (__AltINT0Interrupt):DEFINED (__INT0Interrupt)?ABSOLUTE (__INT0Interrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x000116          0x4 LONG 0x29a DEFINED (__AltIC1Interrupt)?ABSOLUTE (__AltIC1Interrupt):DEFINED (__IC1Interrupt)?ABSOLUTE (__IC1Interrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x000118          0x4 LONG 0x29a DEFINED (__AltOC1Interrupt)?ABSOLUTE (__AltOC1Interrupt):DEFINED (__OC1Interrupt)?ABSOLUTE (__OC1Interrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x00011a          0x4 LONG 0x2fe8 DEFINED (__AltT1Interrupt)?ABSOLUTE (__AltT1Interrupt):DEFINED (__T1Interrupt)?ABSOLUTE (__T1Interrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x00011c          0x4 LONG 0x29a DEFINED (__AltInterrupt4)?ABSOLUTE (__AltInterrupt4):DEFINED (__Interrupt4)?ABSOLUTE (__Interrupt4):ABSOLUTE (__DefaultInterrupt)
-                  0x00011e          0x4 LONG 0x29a DEFINED (__AltIC2Interrupt)?ABSOLUTE (__AltIC2Interrupt):DEFINED (__IC2Interrupt)?ABSOLUTE (__IC2Interrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x000120          0x4 LONG 0x29a DEFINED (__AltOC2Interrupt)?ABSOLUTE (__AltOC2Interrupt):DEFINED (__OC2Interrupt)?ABSOLUTE (__OC2Interrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x000122          0x4 LONG 0x4876 DEFINED (__AltT2Interrupt)?ABSOLUTE (__AltT2Interrupt):DEFINED (__T2Interrupt)?ABSOLUTE (__T2Interrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x000124          0x4 LONG 0x29a DEFINED (__AltT3Interrupt)?ABSOLUTE (__AltT3Interrupt):DEFINED (__T3Interrupt)?ABSOLUTE (__T3Interrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x000126          0x4 LONG 0x29a DEFINED (__AltSPI1ErrInterrupt)?ABSOLUTE (__AltSPI1ErrInterrupt):DEFINED (__SPI1ErrInterrupt)?ABSOLUTE (__SPI1ErrInterrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x000128          0x4 LONG 0x29a DEFINED (__AltSPI1Interrupt)?ABSOLUTE (__AltSPI1Interrupt):DEFINED (__SPI1Interrupt)?ABSOLUTE (__SPI1Interrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x00012a          0x4 LONG 0x29a DEFINED (__AltU1RXInterrupt)?ABSOLUTE (__AltU1RXInterrupt):DEFINED (__U1RXInterrupt)?ABSOLUTE (__U1RXInterrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x00012c          0x4 LONG 0x29a DEFINED (__AltU1TXInterrupt)?ABSOLUTE (__AltU1TXInterrupt):DEFINED (__U1TXInterrupt)?ABSOLUTE (__U1TXInterrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x00012e          0x4 LONG 0x29a DEFINED (__AltADC1Interrupt)?ABSOLUTE (__AltADC1Interrupt):DEFINED (__ADC1Interrupt)?ABSOLUTE (__ADC1Interrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x000130          0x4 LONG 0x29a DEFINED (__AltInterrupt14)?ABSOLUTE (__AltInterrupt14):DEFINED (__Interrupt14)?ABSOLUTE (__Interrupt14):ABSOLUTE (__DefaultInterrupt)
-                  0x000132          0x4 LONG 0x29a DEFINED (__AltNVMInterrupt)?ABSOLUTE (__AltNVMInterrupt):DEFINED (__NVMInterrupt)?ABSOLUTE (__NVMInterrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x000134          0x4 LONG 0x29a DEFINED (__AltSI2C1Interrupt)?ABSOLUTE (__AltSI2C1Interrupt):DEFINED (__SI2C1Interrupt)?ABSOLUTE (__SI2C1Interrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x000136          0x4 LONG 0x29a DEFINED (__AltMI2C1Interrupt)?ABSOLUTE (__AltMI2C1Interrupt):DEFINED (__MI2C1Interrupt)?ABSOLUTE (__MI2C1Interrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x000138          0x4 LONG 0x29a DEFINED (__AltCompInterrupt)?ABSOLUTE (__AltCompInterrupt):DEFINED (__CompInterrupt)?ABSOLUTE (__CompInterrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x00013a          0x4 LONG 0x29a DEFINED (__AltCNInterrupt)?ABSOLUTE (__AltCNInterrupt):DEFINED (__CNInterrupt)?ABSOLUTE (__CNInterrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x00013c          0x4 LONG 0x29a DEFINED (__AltINT1Interrupt)?ABSOLUTE (__AltINT1Interrupt):DEFINED (__INT1Interrupt)?ABSOLUTE (__INT1Interrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x00013e          0x4 LONG 0x29a DEFINED (__AltInterrupt21)?ABSOLUTE (__AltInterrupt21):DEFINED (__Interrupt21)?ABSOLUTE (__Interrupt21):ABSOLUTE (__DefaultInterrupt)
-                  0x000140          0x4 LONG 0x29a DEFINED (__AltInterrupt22)?ABSOLUTE (__AltInterrupt22):DEFINED (__Interrupt22)?ABSOLUTE (__Interrupt22):ABSOLUTE (__DefaultInterrupt)
-                  0x000142          0x4 LONG 0x29a DEFINED (__AltInterrupt23)?ABSOLUTE (__AltInterrupt23):DEFINED (__Interrupt23)?ABSOLUTE (__Interrupt23):ABSOLUTE (__DefaultInterrupt)
-                  0x000144          0x4 LONG 0x29a DEFINED (__AltInterrupt24)?ABSOLUTE (__AltInterrupt24):DEFINED (__Interrupt24)?ABSOLUTE (__Interrupt24):ABSOLUTE (__DefaultInterrupt)
-                  0x000146          0x4 LONG 0x29a DEFINED (__AltOC3Interrupt)?ABSOLUTE (__AltOC3Interrupt):DEFINED (__OC3Interrupt)?ABSOLUTE (__OC3Interrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x000148          0x4 LONG 0x29a DEFINED (__AltInterrupt26)?ABSOLUTE (__AltInterrupt26):DEFINED (__Interrupt26)?ABSOLUTE (__Interrupt26):ABSOLUTE (__DefaultInterrupt)
-                  0x00014a          0x4 LONG 0x29a DEFINED (__AltT4Interrupt)?ABSOLUTE (__AltT4Interrupt):DEFINED (__T4Interrupt)?ABSOLUTE (__T4Interrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x00014c          0x4 LONG 0x29a DEFINED (__AltT5Interrupt)?ABSOLUTE (__AltT5Interrupt):DEFINED (__T5Interrupt)?ABSOLUTE (__T5Interrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x00014e          0x4 LONG 0x29a DEFINED (__AltINT2Interrupt)?ABSOLUTE (__AltINT2Interrupt):DEFINED (__INT2Interrupt)?ABSOLUTE (__INT2Interrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x000150          0x4 LONG 0x4cac DEFINED (__AltU2RXInterrupt)?ABSOLUTE (__AltU2RXInterrupt):DEFINED (__U2RXInterrupt)?ABSOLUTE (__U2RXInterrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x000152          0x4 LONG 0x29a DEFINED (__AltU2TXInterrupt)?ABSOLUTE (__AltU2TXInterrupt):DEFINED (__U2TXInterrupt)?ABSOLUTE (__U2TXInterrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x000154          0x4 LONG 0x29a DEFINED (__AltSPI2ErrInterrupt)?ABSOLUTE (__AltSPI2ErrInterrupt):DEFINED (__SPI2ErrInterrupt)?ABSOLUTE (__SPI2ErrInterrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x000156          0x4 LONG 0x29a DEFINED (__AltSPI2Interrupt)?ABSOLUTE (__AltSPI2Interrupt):DEFINED (__SPI2Interrupt)?ABSOLUTE (__SPI2Interrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x000158          0x4 LONG 0x29a DEFINED (__AltInterrupt34)?ABSOLUTE (__AltInterrupt34):DEFINED (__Interrupt34)?ABSOLUTE (__Interrupt34):ABSOLUTE (__DefaultInterrupt)
-                  0x00015a          0x4 LONG 0x29a DEFINED (__AltInterrupt35)?ABSOLUTE (__AltInterrupt35):DEFINED (__Interrupt35)?ABSOLUTE (__Interrupt35):ABSOLUTE (__DefaultInterrupt)
-                  0x00015c          0x4 LONG 0x29a DEFINED (__AltInterrupt36)?ABSOLUTE (__AltInterrupt36):DEFINED (__Interrupt36)?ABSOLUTE (__Interrupt36):ABSOLUTE (__DefaultInterrupt)
-                  0x00015e          0x4 LONG 0x29a DEFINED (__AltIC3Interrupt)?ABSOLUTE (__AltIC3Interrupt):DEFINED (__IC3Interrupt)?ABSOLUTE (__IC3Interrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x000160          0x4 LONG 0x29a DEFINED (__AltInterrupt38)?ABSOLUTE (__AltInterrupt38):DEFINED (__Interrupt38)?ABSOLUTE (__Interrupt38):ABSOLUTE (__DefaultInterrupt)
-                  0x000162          0x4 LONG 0x29a DEFINED (__AltInterrupt39)?ABSOLUTE (__AltInterrupt39):DEFINED (__Interrupt39)?ABSOLUTE (__Interrupt39):ABSOLUTE (__DefaultInterrupt)
-                  0x000164          0x4 LONG 0x29a DEFINED (__AltInterrupt40)?ABSOLUTE (__AltInterrupt40):DEFINED (__Interrupt40)?ABSOLUTE (__Interrupt40):ABSOLUTE (__DefaultInterrupt)
-                  0x000166          0x4 LONG 0x29a DEFINED (__AltInterrupt41)?ABSOLUTE (__AltInterrupt41):DEFINED (__Interrupt41)?ABSOLUTE (__Interrupt41):ABSOLUTE (__DefaultInterrupt)
-                  0x000168          0x4 LONG 0x29a DEFINED (__AltInterrupt42)?ABSOLUTE (__AltInterrupt42):DEFINED (__Interrupt42)?ABSOLUTE (__Interrupt42):ABSOLUTE (__DefaultInterrupt)
-                  0x00016a          0x4 LONG 0x29a DEFINED (__AltInterrupt43)?ABSOLUTE (__AltInterrupt43):DEFINED (__Interrupt43)?ABSOLUTE (__Interrupt43):ABSOLUTE (__DefaultInterrupt)
-                  0x00016c          0x4 LONG 0x29a DEFINED (__AltInterrupt44)?ABSOLUTE (__AltInterrupt44):DEFINED (__Interrupt44)?ABSOLUTE (__Interrupt44):ABSOLUTE (__DefaultInterrupt)
-                  0x00016e          0x4 LONG 0x29a DEFINED (__AltInterrupt45)?ABSOLUTE (__AltInterrupt45):DEFINED (__Interrupt45)?ABSOLUTE (__Interrupt45):ABSOLUTE (__DefaultInterrupt)
-                  0x000170          0x4 LONG 0x29a DEFINED (__AltInterrupt46)?ABSOLUTE (__AltInterrupt46):DEFINED (__Interrupt46)?ABSOLUTE (__Interrupt46):ABSOLUTE (__DefaultInterrupt)
-                  0x000172          0x4 LONG 0x29a DEFINED (__AltInterrupt47)?ABSOLUTE (__AltInterrupt47):DEFINED (__Interrupt47)?ABSOLUTE (__Interrupt47):ABSOLUTE (__DefaultInterrupt)
-                  0x000174          0x4 LONG 0x29a DEFINED (__AltInterrupt48)?ABSOLUTE (__AltInterrupt48):DEFINED (__Interrupt48)?ABSOLUTE (__Interrupt48):ABSOLUTE (__DefaultInterrupt)
-                  0x000176          0x4 LONG 0x29a DEFINED (__AltSI2C2Interrupt)?ABSOLUTE (__AltSI2C2Interrupt):DEFINED (__SI2C2Interrupt)?ABSOLUTE (__SI2C2Interrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x000178          0x4 LONG 0x29a DEFINED (__AltMI2C2Interrupt)?ABSOLUTE (__AltMI2C2Interrupt):DEFINED (__MI2C2Interrupt)?ABSOLUTE (__MI2C2Interrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x00017a          0x4 LONG 0x29a DEFINED (__AltInterrupt51)?ABSOLUTE (__AltInterrupt51):DEFINED (__Interrupt51)?ABSOLUTE (__Interrupt51):ABSOLUTE (__DefaultInterrupt)
-                  0x00017c          0x4 LONG 0x29a DEFINED (__AltInterrupt52)?ABSOLUTE (__AltInterrupt52):DEFINED (__Interrupt52)?ABSOLUTE (__Interrupt52):ABSOLUTE (__DefaultInterrupt)
-                  0x00017e          0x4 LONG 0x29a DEFINED (__AltInterrupt53)?ABSOLUTE (__AltInterrupt53):DEFINED (__Interrupt53)?ABSOLUTE (__Interrupt53):ABSOLUTE (__DefaultInterrupt)
-                  0x000180          0x4 LONG 0x29a DEFINED (__AltInterrupt54)?ABSOLUTE (__AltInterrupt54):DEFINED (__Interrupt54)?ABSOLUTE (__Interrupt54):ABSOLUTE (__DefaultInterrupt)
-                  0x000182          0x4 LONG 0x29a DEFINED (__AltInterrupt55)?ABSOLUTE (__AltInterrupt55):DEFINED (__Interrupt55)?ABSOLUTE (__Interrupt55):ABSOLUTE (__DefaultInterrupt)
-                  0x000184          0x4 LONG 0x29a DEFINED (__AltInterrupt56)?ABSOLUTE (__AltInterrupt56):DEFINED (__Interrupt56)?ABSOLUTE (__Interrupt56):ABSOLUTE (__DefaultInterrupt)
-                  0x000186          0x4 LONG 0x29a DEFINED (__AltInterrupt57)?ABSOLUTE (__AltInterrupt57):DEFINED (__Interrupt57)?ABSOLUTE (__Interrupt57):ABSOLUTE (__DefaultInterrupt)
-                  0x000188          0x4 LONG 0x29a DEFINED (__AltInterrupt58)?ABSOLUTE (__AltInterrupt58):DEFINED (__Interrupt58)?ABSOLUTE (__Interrupt58):ABSOLUTE (__DefaultInterrupt)
-                  0x00018a          0x4 LONG 0x29a DEFINED (__AltInterrupt59)?ABSOLUTE (__AltInterrupt59):DEFINED (__Interrupt59)?ABSOLUTE (__Interrupt59):ABSOLUTE (__DefaultInterrupt)
-                  0x00018c          0x4 LONG 0x29a DEFINED (__AltInterrupt60)?ABSOLUTE (__AltInterrupt60):DEFINED (__Interrupt60)?ABSOLUTE (__Interrupt60):ABSOLUTE (__DefaultInterrupt)
-                  0x00018e          0x4 LONG 0x29a DEFINED (__AltInterrupt61)?ABSOLUTE (__AltInterrupt61):DEFINED (__Interrupt61)?ABSOLUTE (__Interrupt61):ABSOLUTE (__DefaultInterrupt)
-                  0x000190          0x4 LONG 0x29a DEFINED (__AltRTCCInterrupt)?ABSOLUTE (__AltRTCCInterrupt):DEFINED (__RTCCInterrupt)?ABSOLUTE (__RTCCInterrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x000192          0x4 LONG 0x29a DEFINED (__AltInterrupt63)?ABSOLUTE (__AltInterrupt63):DEFINED (__Interrupt63)?ABSOLUTE (__Interrupt63):ABSOLUTE (__DefaultInterrupt)
-                  0x000194          0x4 LONG 0x29a DEFINED (__AltInterrupt64)?ABSOLUTE (__AltInterrupt64):DEFINED (__Interrupt64)?ABSOLUTE (__Interrupt64):ABSOLUTE (__DefaultInterrupt)
-                  0x000196          0x4 LONG 0x29a DEFINED (__AltU1ErrInterrupt)?ABSOLUTE (__AltU1ErrInterrupt):DEFINED (__U1ErrInterrupt)?ABSOLUTE (__U1ErrInterrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x000198          0x4 LONG 0x4d54 DEFINED (__AltU2ErrInterrupt)?ABSOLUTE (__AltU2ErrInterrupt):DEFINED (__U2ErrInterrupt)?ABSOLUTE (__U2ErrInterrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x00019a          0x4 LONG 0x29a DEFINED (__AltCRCInterrupt)?ABSOLUTE (__AltCRCInterrupt):DEFINED (__CRCInterrupt)?ABSOLUTE (__CRCInterrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x00019c          0x4 LONG 0x29a DEFINED (__AltInterrupt68)?ABSOLUTE (__AltInterrupt68):DEFINED (__Interrupt68)?ABSOLUTE (__Interrupt68):ABSOLUTE (__DefaultInterrupt)
-                  0x00019e          0x4 LONG 0x29a DEFINED (__AltInterrupt69)?ABSOLUTE (__AltInterrupt69):DEFINED (__Interrupt69)?ABSOLUTE (__Interrupt69):ABSOLUTE (__DefaultInterrupt)
-                  0x0001a0          0x4 LONG 0x29a DEFINED (__AltInterrupt70)?ABSOLUTE (__AltInterrupt70):DEFINED (__Interrupt70)?ABSOLUTE (__Interrupt70):ABSOLUTE (__DefaultInterrupt)
-                  0x0001a2          0x4 LONG 0x29a DEFINED (__AltInterrupt71)?ABSOLUTE (__AltInterrupt71):DEFINED (__Interrupt71)?ABSOLUTE (__Interrupt71):ABSOLUTE (__DefaultInterrupt)
-                  0x0001a4          0x4 LONG 0x29a DEFINED (__AltLVDInterrupt)?ABSOLUTE (__AltLVDInterrupt):DEFINED (__LVDInterrupt)?ABSOLUTE (__LVDInterrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x0001a6          0x4 LONG 0x29a DEFINED (__AltInterrupt73)?ABSOLUTE (__AltInterrupt73):DEFINED (__Interrupt73)?ABSOLUTE (__Interrupt73):ABSOLUTE (__DefaultInterrupt)
-                  0x0001a8          0x4 LONG 0x29a DEFINED (__AltInterrupt74)?ABSOLUTE (__AltInterrupt74):DEFINED (__Interrupt74)?ABSOLUTE (__Interrupt74):ABSOLUTE (__DefaultInterrupt)
-                  0x0001aa          0x4 LONG 0x29a DEFINED (__AltInterrupt75)?ABSOLUTE (__AltInterrupt75):DEFINED (__Interrupt75)?ABSOLUTE (__Interrupt75):ABSOLUTE (__DefaultInterrupt)
-                  0x0001ac          0x4 LONG 0x29a DEFINED (__AltInterrupt76)?ABSOLUTE (__AltInterrupt76):DEFINED (__Interrupt76)?ABSOLUTE (__Interrupt76):ABSOLUTE (__DefaultInterrupt)
-                  0x0001ae          0x4 LONG 0x29a DEFINED (__AltCTMUInterrupt)?ABSOLUTE (__AltCTMUInterrupt):DEFINED (__CTMUInterrupt)?ABSOLUTE (__CTMUInterrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x0001b0          0x4 LONG 0x29a DEFINED (__AltInterrupt78)?ABSOLUTE (__AltInterrupt78):DEFINED (__Interrupt78)?ABSOLUTE (__Interrupt78):ABSOLUTE (__DefaultInterrupt)
-                  0x0001b2          0x4 LONG 0x29a DEFINED (__AltInterrupt79)?ABSOLUTE (__AltInterrupt79):DEFINED (__Interrupt79)?ABSOLUTE (__Interrupt79):ABSOLUTE (__DefaultInterrupt)
-                  0x0001b4          0x4 LONG 0x29a DEFINED (__AltULPWUInterrupt)?ABSOLUTE (__AltULPWUInterrupt):DEFINED (__ULPWUInterrupt)?ABSOLUTE (__ULPWUInterrupt):ABSOLUTE (__DefaultInterrupt)
-                  0x0001b6          0x4 LONG 0x29a DEFINED (__AltInterrupt81)?ABSOLUTE (__AltInterrupt81):DEFINED (__Interrupt81)?ABSOLUTE (__Interrupt81):ABSOLUTE (__DefaultInterrupt)
-                  0x0001b8          0x4 LONG 0x29a DEFINED (__AltInterrupt82)?ABSOLUTE (__AltInterrupt82):DEFINED (__Interrupt82)?ABSOLUTE (__Interrupt82):ABSOLUTE (__DefaultInterrupt)
-                  0x0001ba          0x4 LONG 0x29a DEFINED (__AltInterrupt83)?ABSOLUTE (__AltInterrupt83):DEFINED (__Interrupt83)?ABSOLUTE (__Interrupt83):ABSOLUTE (__DefaultInterrupt)
-                  0x0001bc          0x4 LONG 0x29a DEFINED (__AltInterrupt84)?ABSOLUTE (__AltInterrupt84):DEFINED (__Interrupt84)?ABSOLUTE (__Interrupt84):ABSOLUTE (__DefaultInterrupt)
-                  0x0001be          0x4 LONG 0x29a DEFINED (__AltInterrupt85)?ABSOLUTE (__AltInterrupt85):DEFINED (__Interrupt85)?ABSOLUTE (__Interrupt85):ABSOLUTE (__DefaultInterrupt)
-                  0x0001c0          0x4 LONG 0x29a DEFINED (__AltInterrupt86)?ABSOLUTE (__AltInterrupt86):DEFINED (__Interrupt86)?ABSOLUTE (__Interrupt86):ABSOLUTE (__DefaultInterrupt)
-                  0x0001c2          0x4 LONG 0x29a DEFINED (__AltInterrupt87)?ABSOLUTE (__AltInterrupt87):DEFINED (__Interrupt87)?ABSOLUTE (__Interrupt87):ABSOLUTE (__DefaultInterrupt)
-                  0x0001c4          0x4 LONG 0x29a DEFINED (__AltInterrupt88)?ABSOLUTE (__AltInterrupt88):DEFINED (__Interrupt88)?ABSOLUTE (__Interrupt88):ABSOLUTE (__DefaultInterrupt)
-                  0x0001c6          0x4 LONG 0x29a DEFINED (__AltInterrupt89)?ABSOLUTE (__AltInterrupt89):DEFINED (__Interrupt89)?ABSOLUTE (__Interrupt89):ABSOLUTE (__DefaultInterrupt)
-                  0x0001c8          0x4 LONG 0x29a DEFINED (__AltInterrupt90)?ABSOLUTE (__AltInterrupt90):DEFINED (__Interrupt90)?ABSOLUTE (__Interrupt90):ABSOLUTE (__DefaultInterrupt)
-                  0x0001ca          0x4 LONG 0x29a DEFINED (__AltInterrupt91)?ABSOLUTE (__AltInterrupt91):DEFINED (__Interrupt91)?ABSOLUTE (__Interrupt91):ABSOLUTE (__DefaultInterrupt)
-                  0x0001cc          0x4 LONG 0x29a DEFINED (__AltInterrupt92)?ABSOLUTE (__AltInterrupt92):DEFINED (__Interrupt92)?ABSOLUTE (__Interrupt92):ABSOLUTE (__DefaultInterrupt)
-                  0x0001ce          0x4 LONG 0x29a DEFINED (__AltInterrupt93)?ABSOLUTE (__AltInterrupt93):DEFINED (__Interrupt93)?ABSOLUTE (__Interrupt93):ABSOLUTE (__DefaultInterrupt)
-                  0x0001d0          0x4 LONG 0x29a DEFINED (__AltInterrupt94)?ABSOLUTE (__AltInterrupt94):DEFINED (__Interrupt94)?ABSOLUTE (__Interrupt94):ABSOLUTE (__DefaultInterrupt)
-                  0x0001d2          0x4 LONG 0x29a DEFINED (__AltInterrupt95)?ABSOLUTE (__AltInterrupt95):DEFINED (__Interrupt95)?ABSOLUTE (__Interrupt95):ABSOLUTE (__DefaultInterrupt)
-                  0x0001d4          0x4 LONG 0x29a DEFINED (__AltInterrupt96)?ABSOLUTE (__AltInterrupt96):DEFINED (__Interrupt96)?ABSOLUTE (__Interrupt96):ABSOLUTE (__DefaultInterrupt)
-                  0x0001d6          0x4 LONG 0x29a DEFINED (__AltInterrupt97)?ABSOLUTE (__AltInterrupt97):DEFINED (__Interrupt97)?ABSOLUTE (__Interrupt97):ABSOLUTE (__DefaultInterrupt)
-                  0x0001d8          0x4 LONG 0x29a DEFINED (__AltInterrupt98)?ABSOLUTE (__AltInterrupt98):DEFINED (__Interrupt98)?ABSOLUTE (__Interrupt98):ABSOLUTE (__DefaultInterrupt)
-                  0x0001da          0x4 LONG 0x29a DEFINED (__AltInterrupt99)?ABSOLUTE (__AltInterrupt99):DEFINED (__Interrupt99)?ABSOLUTE (__Interrupt99):ABSOLUTE (__DefaultInterrupt)
-                  0x0001dc          0x4 LONG 0x29a DEFINED (__AltInterrupt100)?ABSOLUTE (__AltInterrupt100):DEFINED (__Interrupt100)?ABSOLUTE (__Interrupt100):ABSOLUTE (__DefaultInterrupt)
-                  0x0001de          0x4 LONG 0x29a DEFINED (__AltInterrupt101)?ABSOLUTE (__AltInterrupt101):DEFINED (__Interrupt101)?ABSOLUTE (__Interrupt101):ABSOLUTE (__DefaultInterrupt)
-                  0x0001e0          0x4 LONG 0x29a DEFINED (__AltInterrupt102)?ABSOLUTE (__AltInterrupt102):DEFINED (__Interrupt102)?ABSOLUTE (__Interrupt102):ABSOLUTE (__DefaultInterrupt)
-                  0x0001e2          0x4 LONG 0x29a DEFINED (__AltInterrupt103)?ABSOLUTE (__AltInterrupt103):DEFINED (__Interrupt103)?ABSOLUTE (__Interrupt103):ABSOLUTE (__DefaultInterrupt)
-                  0x0001e4          0x4 LONG 0x29a DEFINED (__AltInterrupt104)?ABSOLUTE (__AltInterrupt104):DEFINED (__Interrupt104)?ABSOLUTE (__Interrupt104):ABSOLUTE (__DefaultInterrupt)
-                  0x0001e6          0x4 LONG 0x29a DEFINED (__AltInterrupt105)?ABSOLUTE (__AltInterrupt105):DEFINED (__Interrupt105)?ABSOLUTE (__Interrupt105):ABSOLUTE (__DefaultInterrupt)
-                  0x0001e8          0x4 LONG 0x29a DEFINED (__AltInterrupt106)?ABSOLUTE (__AltInterrupt106):DEFINED (__Interrupt106)?ABSOLUTE (__Interrupt106):ABSOLUTE (__DefaultInterrupt)
-                  0x0001ea          0x4 LONG 0x29a DEFINED (__AltInterrupt107)?ABSOLUTE (__AltInterrupt107):DEFINED (__Interrupt107)?ABSOLUTE (__Interrupt107):ABSOLUTE (__DefaultInterrupt)
-                  0x0001ec          0x4 LONG 0x29a DEFINED (__AltInterrupt108)?ABSOLUTE (__AltInterrupt108):DEFINED (__Interrupt108)?ABSOLUTE (__Interrupt108):ABSOLUTE (__DefaultInterrupt)
-                  0x0001ee          0x4 LONG 0x29a DEFINED (__AltInterrupt109)?ABSOLUTE (__AltInterrupt109):DEFINED (__Interrupt109)?ABSOLUTE (__Interrupt109):ABSOLUTE (__DefaultInterrupt)
-                  0x0001f0          0x4 LONG 0x29a DEFINED (__AltInterrupt110)?ABSOLUTE (__AltInterrupt110):DEFINED (__Interrupt110)?ABSOLUTE (__Interrupt110):ABSOLUTE (__DefaultInterrupt)
-                  0x0001f2          0x4 LONG 0x29a DEFINED (__AltInterrupt111)?ABSOLUTE (__AltInterrupt111):DEFINED (__Interrupt111)?ABSOLUTE (__Interrupt111):ABSOLUTE (__DefaultInterrupt)
-                  0x0001f4          0x4 LONG 0x29a DEFINED (__AltInterrupt112)?ABSOLUTE (__AltInterrupt112):DEFINED (__Interrupt112)?ABSOLUTE (__Interrupt112):ABSOLUTE (__DefaultInterrupt)
-                  0x0001f6          0x4 LONG 0x29a DEFINED (__AltInterrupt113)?ABSOLUTE (__AltInterrupt113):DEFINED (__Interrupt113)?ABSOLUTE (__Interrupt113):ABSOLUTE (__DefaultInterrupt)
-                  0x0001f8          0x4 LONG 0x29a DEFINED (__AltInterrupt114)?ABSOLUTE (__AltInterrupt114):DEFINED (__Interrupt114)?ABSOLUTE (__Interrupt114):ABSOLUTE (__DefaultInterrupt)
-                  0x0001fa          0x4 LONG 0x29a DEFINED (__AltInterrupt115)?ABSOLUTE (__AltInterrupt115):DEFINED (__Interrupt115)?ABSOLUTE (__Interrupt115):ABSOLUTE (__DefaultInterrupt)
-                  0x0001fc          0x4 LONG 0x29a DEFINED (__AltInterrupt116)?ABSOLUTE (__AltInterrupt116):DEFINED (__Interrupt116)?ABSOLUTE (__Interrupt116):ABSOLUTE (__DefaultInterrupt)
-                  0x0001fe          0x4 LONG 0x29a DEFINED (__AltInterrupt117)?ABSOLUTE (__AltInterrupt117):DEFINED (__Interrupt117)?ABSOLUTE (__Interrupt117):ABSOLUTE (__DefaultInterrupt)
                     0x0000                  WREG0 = 0x0
                     0x0000                  _WREG0 = 0x0
                     0x0002                  WREG1 = 0x2
@@ -1738,11 +1573,13 @@ __FDS
                     0x0230                  UART2 = 0x230
                     0x0230                  _UART2 = 0x230
 START GROUP
-LOAD c:/program files (x86)/microchip/xc16/v1.23/bin/bin/../../lib\libpic30-elf.a
-LOAD c:/program files (x86)/microchip/xc16/v1.23/bin/bin/../../lib\libm-elf.a
-LOAD c:/program files (x86)/microchip/xc16/v1.23/bin/bin/../../lib\libc-elf.a
+LOAD c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libpic30-elf.a
+LOAD c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libm-elf.a
+LOAD c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libc-elf.a
 END GROUP
 OUTPUT(dist/default/production/BFDisplayPIC.X.production.elf elf32-pic30)
+LOAD FGS
+LOAD FBS
 LOAD default_isr
 LOAD data_init
 
@@ -1760,7 +1597,7 @@ LOAD data_init
                   0x00033e         0x12 build/default/production/Watchdog.o
 
 __c30_signature
-                  0x000350         0x54
+                  0x000350         0x66
  __c30_signature
                   0x000350          0x6 build/default/production/DisplayMain.o
  __c30_signature
@@ -1776,22 +1613,28 @@ __c30_signature
  __c30_signature
                   0x000374          0x6 build/default/production/Watchdog.o
  __c30_signature
-                  0x00037a          0x6 c:/program files (x86)/microchip/xc16/v1.23/bin/bin/../../lib\libpic30-elf.a(crt0_standard.o)
+                  0x00037a          0x6 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libpic30-elf.a(crt0_standard.o)
  __c30_signature
-                  0x000380          0x6 c:/program files (x86)/microchip/xc16/v1.23/bin/bin/../../lib\libpic30-elf.a(data_init_standard.o)
+                  0x000380          0x6 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libpic30-elf.a(data_init_standard.o)
  __c30_signature
-                  0x000386          0x6 c:/program files (x86)/microchip/xc16/v1.23/bin/bin/../../lib\libm-elf.a(udivsi3.eo)
+                  0x000386          0x6 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libm-elf.a(udivsi3.eo)
  __c30_signature
-                  0x00038c          0x6 c:/program files (x86)/microchip/xc16/v1.23/bin/bin/../../lib\libm-elf.a(umodsi3.eo)
+                  0x00038c          0x6 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libm-elf.a(umodsi3.eo)
  __c30_signature
-                  0x000392          0x6 c:/program files (x86)/microchip/xc16/v1.23/bin/bin/../../lib\libc-elf.a(atoi.eo)
+                  0x000392          0x6 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libc-elf.a(atoi.eo)
  __c30_signature
-                  0x000398          0x6 c:/program files (x86)/microchip/xc16/v1.23/bin/bin/../../lib\libc-elf.a(itoa.eo)
+                  0x000398          0x6 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libc-elf.a(itoa.eo)
  __c30_signature
-                  0x00039e          0x6 c:/program files (x86)/microchip/xc16/v1.23/bin/bin/../../lib\libc-elf.a(ltoa.eo)
+                  0x00039e          0x6 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libc-elf.a(ltoa.eo)
+ __c30_signature
+                  0x0003a4          0x6 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libc-elf.a(strtol.eo)
+ __c30_signature
+                  0x0003aa          0x6 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libc-elf.a(errno.elo)
+ __c30_signature
+                  0x0003b0          0x6 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libm-elf.a(mulsi3.eo)
 
-.nbss               0x0800        0x55e
- .nbss              0x0800        0x55e build/default/production/DisplayMain.o
+.nbss               0x0800        0x566
+ .nbss              0x0800        0x566 build/default/production/DisplayMain.o
                     0x0800                  _menuState
                     0x0801                  _button0Flag
                     0x0802                  _button1Flag
@@ -1910,35 +1753,44 @@ __c30_signature
                     0x0c88                  _tempClockStr
                     0x0c92                  _tempCalStr
                     0x0ca1                  _buffer1
-                    0x0cac                  _buffer2
-                    0x0cb7                  _buffer3
-                    0x0cc2                  _buffer4
-                    0x0ccd                  _buffer5
-                    0x0cd8                  _buffer6
-                    0x0ce3                  _buffer7
-                    0x0cee                  _buffer8
-                    0x0cf9                  _audibleAlarm
-                    0x0cfa                  _alarmOneEnabled
-                    0x0cfb                  _alarmTwoEnabled
-                    0x0cfc                  _alarmOnePower
-                    0x0cfd                  _alarmTwoPower
-                    0x0cfe                  _passwordSet
-                    0x0d04                  _emerButtonEnable
-                    0x0d06                  _emerButtonAlloc
-                    0x0d08                  _powerBoxCodeVersion
-                    0x0d0c                  _powerBoxCodeVersionString
-                    0x0d15                  _resetHour
-                    0x0d16                  _resetMinute
-                    0x0d17                  _relayActive
-                    0x0d18                  _totalUsed
-                    0x0d1c                  _previousDayUsed
-                    0x0d20                  _isHigh
-                    0x0d22                  _extraPower
-                    0x0d26                  _reset
+                    0x0cad                  _buffer2
+                    0x0cb9                  _buffer3
+                    0x0cc5                  _buffer4
+                    0x0cd1                  _buffer5
+                    0x0cdd                  _buffer6
+                    0x0ce9                  _buffer7
+                    0x0cf5                  _buffer8
+                    0x0d01                  _audibleAlarm
+                    0x0d02                  _alarmOneEnabled
+                    0x0d03                  _alarmTwoEnabled
+                    0x0d04                  _alarmOnePower
+                    0x0d05                  _alarmTwoPower
+                    0x0d06                  _passwordSet
+                    0x0d0c                  _emerButtonEnable
+                    0x0d0e                  _emerButtonAlloc
+                    0x0d10                  _powerBoxCodeVersion
+                    0x0d14                  _powerBoxCodeVersionString
+                    0x0d1d                  _resetHour
+                    0x0d1e                  _resetMinute
+                    0x0d1f                  _relayActive
+                    0x0d20                  _totalUsed
+                    0x0d24                  _previousDayUsed
+                    0x0d28                  _isHigh
+                    0x0d2a                  _extraPower
+                    0x0d2e                  _reset
 
-.ndata              0x0d5e          0x4
- .ndata             0x0d5e          0x4 build/default/production/DisplayMain.o
-                    0x0d5e                  _displayBoxCodeVersion
+.ndata              0x0d66          0x4
+ .ndata             0x0d66          0x4 build/default/production/DisplayMain.o
+                    0x0d66                  _displayBoxCodeVersion
+
+.bss                0x0d6a          0x2
+ .bss               0x0d6a          0x2 c:/program files (x86)/microchip/xc16/v1.31/bin/bin/../../lib\libc-elf.a(errno.elo)
+                    0x0d6a                  _errno
+
+.ivt._T2Interrupt
+                  0x000022          0x2
+ .ivt._T2Interrupt
+                  0x000022          0x2 build/default/production/DisplayMain.o
 
 .config_DSWDTEN
                   0xf80010          0x2
@@ -1961,148 +1813,157 @@ __c30_signature
 .config_IESO      0xf80006          0x2
  .config_IESO     0xf80006          0x2 build/default/production/DisplayConfiguration.o
 
-.config_GSS0      0xf80004          0x2
- .config_GSS0     0xf80004          0x2 build/default/production/DisplayConfiguration.o
+.ivt._T1Interrupt
+                  0x00001a          0x2
+ .ivt._T1Interrupt
+                  0x00001a          0x2 build/default/production/DisplayMenu.o
 
-.config_BSS       0xf80000          0x2
- .config_BSS      0xf80000          0x2 build/default/production/DisplayConfiguration.o
+.ivt._U2RXInterrupt
+                  0x000050          0x2
+ .ivt._U2RXInterrupt
+                  0x000050          0x2 build/default/production/DisplayUART.o
 
-.const              0x83be        0x99e load address 0x0003be  
- .const             0x83be        0x846 build/default/production/DisplayMenu.o
-                    0x83be                  _softKeys0
-                    0x83d3                  _softKeys1
-                    0x83e8                  _softKeys2
- .const             0x8c04        0x158 build/default/production/DisplayMain.o
+.ivt._U2ErrInterrupt
+                  0x000098          0x2
+ .ivt._U2ErrInterrupt
+                  0x000098          0x2 build/default/production/DisplayUART.o
 
-.text             0x000d5c       0x406c
- .text            0x000d5c       0x2412 build/default/production/DisplayMenu.o
-                  0x000d5c                  _dspCommand
-                  0x000d92                  _dspWrite
-                  0x000dc4                  _dspWriteMessage
-                  0x000de4                  _dspNibble
-                  0x000df2                  _initDisplay
-                  0x000e7a                  _dspSetP1
-                  0x000ef8                  _writeToDisplay
-                  0x001000                  _updateMenu
-                  0x00124c                  _menuButtonRead
-                  0x00130e                  _menuError
-                  0x001346                  _menuDebug
-                  0x00135e                  _menuHomeBasic
-                  0x001568                  _menuHomeDetail
-                  0x001630                  _menuAlarm
-                  0x0016b0                  _menuMain1
-                  0x0016ea                  _menuMain2
-                  0x001728                  _menuMain3
-                  0x0017a0                  _menuMain4
-                  0x0017d4                  _menuMain5
-                  0x001808                  _menuMain6
-                  0x00183c                  _menuAlarm1
-                  0x0018da                  _menuAlarm2
-                  0x001980                  _menuAlarm3
-                  0x001aca                  _menuAlarm4
-                  0x001b70                  _menuAlarm5
-                  0x001cba                  _menuStatistics
-                  0x001d0e                  _menuPowerFailTimes
-                  0x001d4e                  _menuAbout
-                  0x001d94                  _menuAdminLogin
-                  0x001eec                  _menuAdmin1
-                  0x001f56                  _menuAdmin2
-                  0x001fa8                  _menuAdmin3
-                  0x001fd2                  _menuAdmin4
-                  0x00206a                  _menuAdmin5
-                  0x0020ac                  _menuAdmin6
-                  0x0020ec                  _menuSetTime
-                  0x002388                  _menuSetPower
-                  0x002582                  _menuSetResetTime
-                  0x002698                  _menuEmergency1
-                  0x002714                  _menuEmergency2
-                  0x002784                  _menuEmergency3
-                  0x00286a                  _menuEmergency4
-                  0x00291c                  _menuHighLow
-                  0x0029f2                  _menuSetRelay
-                  0x002a86                  _menuBadDate
-                  0x002ab6                  _menuShutOffWarning
-                  0x002b0e                  _menuPasswordChange
-                  0x002c94                  _menuPowerReset
-                  0x002d34                  _writeBarGraph
-                  0x002d9e                  _calcPercentRem
-                  0x002e0a                  _calcTimeRemaining
-                  0x002fe8                  __T1Interrupt
- .text            0x00316e       0x1918 build/default/production/DisplayMain.o
-                  0x00316e                  _commFunctions
-                  0x003178                  _splitReceivedCommand
-                  0x00344c                  _sendCommands
-                  0x00359e                  _sendBuffer
-                  0x00360c                  _receiveBuffer
-                  0x00367a                  _flushBuffer
-                  0x00369e                  _stringCopy
-                  0x0036d6                  _stringConcat
-                  0x00371a                  _stringCompare
-                  0x003760                  _stringLength
-                  0x003788                  _commandBuilder1
-                  0x0037ce                  _commandBuilder2
-                  0x003800                  _commandBuilder3
-                  0x003836                  _commandBuilder4
-                  0x003870                  _commandBuilder5
-                  0x0038ae                  _commandExpander
-                  0x003944                  _processReceivedCommand
-                  0x003d26                  _setRemoteTime
-                  0x003e36                  _setRemotePower
-                  0x003e78                  _setRemoteAlarm
-                  0x003ee8                  _setRemotePassword
-                  0x003f16                  _setRemoteEmergency
-                  0x003f56                  _setRemoteResetTime
-                  0x003f8a                  _setRemoteRelay
-                  0x003faa                  _setRemoteStats
-                  0x003fe8                  _setRemoteHL
-                  0x004008                  _doReset
-                  0x004016                  _readRemoteTime
-                  0x004024                  _readRemotePower
-                  0x004032                  _readRemoteAlarm
-                  0x004040                  _readRemotePassword
-                  0x00404e                  _readRemoteEmergency
-                  0x00405c                  _readRemoteVersion
-                  0x00406a                  _readRemoteResetTime
-                  0x004078                  _readRemoteRelay
-                  0x004086                  _readRemoteStats
-                  0x004094                  _readRemoteHL
-                  0x0040a2                  _readRemotePowerDownUpTime
-                  0x0040b0                  _readUpdate
-                  0x0040be                  _main
-                  0x0040fe                  _init
-                  0x00414a                  _initVars
-                  0x0041d0                  _initPorts
-                  0x0041fa                  _enablePullDownResistors
-                  0x004208                  _enableInterrupts
-                  0x004216                  _disableInterrupts
-                  0x004224                  _enableAlarm
-                  0x0043c4                  _startAlarm
-                  0x004444                  _nextDot
-                  0x004464                  _initDisplayBox
-                  0x00449e                  _periodicUpdate
-                  0x004528                  _checkCommFailure
-                  0x004562                  _initRTCCDisplay
-                  0x00457e                  _initTimer
-                  0x0045a4                  _writeClockStrings
-                  0x0046a8                  _writeTempClockStrings
-                  0x004876                  __T2Interrupt
- .text            0x004a86        0x1d4 build/default/production/DisplayRTCC.o
-                  0x004a86                  _readTime
-                  0x004b24                  _writeTime
-                  0x004c08                  _BcdToDec
-                  0x004c32                  _DecToBcd
- .text            0x004c5a        0x110 build/default/production/DisplayUART.o
-                  0x004c5a                  _initUART
-                  0x004cac                  __U2RXInterrupt
-                  0x004d54                  __U2ErrInterrupt
- .text            0x004d6a         0x5e build/default/production/Delays.o
-                  0x004d6a                  _delayFourUS
-                  0x004d82                  _delayMS
-                  0x004dae                  _commDelay
+.const              0x85c0        0x99e load address 0x0005c0  
+ .const             0x85c0        0x846 build/default/production/DisplayMenu.o
+                    0x85c0                  _softKeys0
+                    0x85d5                  _softKeys1
+                    0x85ea                  _softKeys2
+ .const             0x8e06        0x158 build/default/production/DisplayMain.o
 
-.dinit            0x004dc8         0x12
- .dinit           0x004dc8         0x12 data_init
+.text             0x000f5e       0x3640
+ .text            0x000f5e       0x1ec4 build/default/production/DisplayMenu.o
+                  0x000f5e                  _dspCommand
+                  0x000f86                  _dspWrite
+                  0x000faa                  _dspWriteMessage
+                  0x000fc8                  _dspNibble
+                  0x000fd6                  _initDisplay
+                  0x001050                  _dspSetP1
+                  0x0010c2                  _writeToDisplay
+                  0x0011ca                  _updateMenu
+                  0x001414                  _menuButtonRead
+                  0x00149c                  _menuError
+                  0x0014ce                  _menuDebug
+                  0x0014e6                  _menuHomeBasic
+                  0x0016be                  _menuHomeDetail
+                  0x00176c                  _menuAlarm
+                  0x0017c8                  _menuMain1
+                  0x0017fc                  _menuMain2
+                  0x001834                  _menuMain3
+                  0x0018a2                  _menuMain4
+                  0x0018d4                  _menuMain5
+                  0x001906                  _menuMain6
+                  0x001938                  _menuAlarm1
+                  0x0019be                  _menuAlarm2
+                  0x001a4e                  _menuAlarm3
+                  0x001b4c                  _menuAlarm4
+                  0x001bdc                  _menuAlarm5
+                  0x001cda                  _menuStatistics
+                  0x001d26                  _menuPowerFailTimes
+                  0x001d66                  _menuAbout
+                  0x001da8                  _menuAdminLogin
+                  0x001ed8                  _menuAdmin1
+                  0x001f28                  _menuAdmin2
+                  0x001f78                  _menuAdmin3
+                  0x001fa0                  _menuAdmin4
+                  0x002006                  _menuAdmin5
+                  0x00203e                  _menuAdmin6
+                  0x002078                  _menuSetTime
+                  0x002262                  _menuSetPower
+                  0x002434                  _menuSetResetTime
+                  0x0024fc                  _menuEmergency1
+                  0x002564                  _menuEmergency2
+                  0x0025c2                  _menuEmergency3
+                  0x002684                  _menuEmergency4
+                  0x002724                  _menuHighLow
+                  0x0027d6                  _menuSetRelay
+                  0x002854                  _menuBadDate
+                  0x00287e                  _menuShutOffWarning
+                  0x0028be                  _menuPasswordChange
+                  0x0029ea                  _menuPowerReset
+                  0x002a74                  _writeBarGraph
+                  0x002ad0                  _calcPercentRem
+                  0x002b26                  _calcTimeRemaining
+                  0x002ca4                  __T1Interrupt
+ .text            0x002e22       0x1492 build/default/production/DisplayMain.o
+                  0x002e22                  _commFunctions
+                  0x002e2c                  _splitReceivedCommand
+                  0x00308c                  _sendCommands
+                  0x00318e                  _sendBuffer
+                  0x0031dc                  _receiveBuffer
+                  0x00322a                  _flushBuffer
+                  0x00324e                  _stringCopy
+                  0x003286                  _stringConcat
+                  0x0032c8                  _stringCompare
+                  0x00330c                  _stringLength
+                  0x003332                  _commandBuilder1
+                  0x003376                  _commandBuilder2
+                  0x0033a8                  _commandBuilder3
+                  0x0033de                  _commandBuilder4
+                  0x003418                  _commandBuilder5
+                  0x003456                  _commandExpander
+                  0x0034ea                  _processReceivedCommand
+                  0x0037dc                  _setRemoteTime
+                  0x0038e0                  _setRemotePower
+                  0x00391c                  _setRemoteAlarm
+                  0x003978                  _setRemotePassword
+                  0x0039a6                  _setRemoteEmergency
+                  0x0039de                  _setRemoteResetTime
+                  0x003a0a                  _setRemoteRelay
+                  0x003a28                  _setRemoteStats
+                  0x003a5e                  _setRemoteHL
+                  0x003a7c                  _doReset
+                  0x003a8a                  _readRemoteTime
+                  0x003a98                  _readRemotePower
+                  0x003aa6                  _readRemoteAlarm
+                  0x003ab4                  _readRemotePassword
+                  0x003ac2                  _readRemoteEmergency
+                  0x003ad0                  _readRemoteVersion
+                  0x003ade                  _readRemoteResetTime
+                  0x003aec                  _readRemoteRelay
+                  0x003afa                  _readRemoteStats
+                  0x003b08                  _readRemoteHL
+                  0x003b16                  _readRemotePowerDownUpTime
+                  0x003b24                  _readUpdate
+                  0x003b32                  _main
+                  0x003b64                  _init
+                  0x003b92                  _initVars
+                  0x003bdc                  _initPorts
+                  0x003bfa                  _enablePullDownResistors
+                  0x003c08                  _enableInterrupts
+                  0x003c16                  _disableInterrupts
+                  0x003c24                  _enableAlarm
+                  0x003d40                  _startAlarm
+                  0x003dae                  _nextDot
+                  0x003dc8                  _initDisplayBox
+                  0x003e02                  _periodicUpdate
+                  0x003e70                  _checkCommFailure
+                  0x003ea0                  _initRTCCDisplay
+                  0x003ebc                  _initTimer
+                  0x003ede                  _writeClockStrings
+                  0x003fb4                  _writeTempClockStrings
+                  0x004102                  __T2Interrupt
+ .text            0x0042b4        0x188 build/default/production/DisplayRTCC.o
+                  0x0042b4                  _readTime
+                  0x004316                  _writeTime
+                  0x0043e0                  _BcdToDec
+                  0x00440e                  _DecToBcd
+ .text            0x00443c        0x104 build/default/production/DisplayUART.o
+                  0x00443c                  _initUART
+                  0x00448e                  __U2RXInterrupt
+                  0x00452e                  __U2ErrInterrupt
+ .text            0x004540         0x5e build/default/production/Delays.o
+                  0x004540                  _delayFourUS
+                  0x004558                  _delayMS
+                  0x004584                  _commDelay
 
-.text             0x004dda          0x8
- .text            0x004dda          0x8 build/default/production/Watchdog.o
-                  0x004dda                  _resetWDT
+.dinit            0x00459e         0x18
+ .dinit           0x00459e         0x18 data_init
+
+.text             0x0045b6          0x8
+ .text            0x0045b6          0x8 build/default/production/Watchdog.o
+                  0x0045b6                  _resetWDT

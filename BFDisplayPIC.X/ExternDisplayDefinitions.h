@@ -161,11 +161,11 @@ extern unsigned char lowNibble, highNibble;
 extern char currentDisplay[NUM_LCD_LINES * NUM_LCD_WIDTH + 1];
 extern char nextDisplay[NUM_LCD_LINES * NUM_LCD_WIDTH + 1];
 extern char buffer[20];
-extern char buffer1[11];
-extern char buffer2[11];
-extern char buffer3[11];
-extern char buffer4[11];
-extern char buffer5[11];
+extern char buffer1[12];
+extern char buffer2[12];
+extern char buffer3[12];
+extern char buffer4[12];
+extern char buffer5[12];
 
 extern unsigned char menuState;
 extern unsigned char oldMenuState;

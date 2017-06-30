@@ -152,14 +152,14 @@ unsigned long powerAllocated;
 unsigned long currentLoad;
 
 /* Variable Definitions *******************************************************/
-char buffer1[11];
-char buffer2[11];
-char buffer3[11];
-char buffer4[11];
-char buffer5[11];
-char buffer6[11];
-char buffer7[11];
-char buffer8[11];
+char buffer1[12];
+char buffer2[12];
+char buffer3[12];
+char buffer4[12];
+char buffer5[12];
+char buffer6[12];
+char buffer7[12];
+char buffer8[12];
 char audibleAlarm;
 char alarmOneEnabled;
 char alarmTwoEnabled;

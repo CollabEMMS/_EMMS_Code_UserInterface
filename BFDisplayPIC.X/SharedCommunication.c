@@ -23,7 +23,9 @@
 #include "ExternSharedDefinitions.h"
 
 #ifdef POWER_BOX
-void commInit(void) {
+
+void commInit(void)
+{
 
     sendIndexU1 = receiveIndexU1 = 0;
     newSendDataU1 = 0;
@@ -41,46 +43,54 @@ void commInit(void) {
 }
 #endif
 
-void commFunctions(void) {
+void commFunctions(void)
+{
     splitReceivedCommand();
     sendCommands();
 }
 
-void splitReceivedCommand(void) {
+void splitReceivedCommand(void)
+{
 
     // promote buffers if there is data in one or more of them
     while (newReceiveData == 0 && (receiveBuffer1Used || receiveBuffer2Used ||
-           receiveBuffer3Used || receiveBuffer4Used || receiveBuffer5Used)) {
+            receiveBuffer3Used || receiveBuffer4Used || receiveBuffer5Used))
+    {
 
-        if (newReceiveData == 0 && receiveBuffer1Used != 0) {
+        if (newReceiveData == 0 && receiveBuffer1Used != 0)
+        {
             stringCopy(receiveBuffer1, receivedToProcess);
             receiveBuffer1Used = 0;
             flushBuffer(receiveBuffer1, RECEIVE_STRING_LENGTH);
             newReceiveData = 1;
         }
 
-        if (receiveBuffer1Used == 0 && receiveBuffer2Used != 0) {
+        if (receiveBuffer1Used == 0 && receiveBuffer2Used != 0)
+        {
             stringCopy(receiveBuffer2, receiveBuffer1);
             receiveBuffer2Used = 0;
             flushBuffer(receiveBuffer2, RECEIVE_STRING_LENGTH);
             receiveBuffer1Used = 1;
         }
 
-        if (receiveBuffer2Used == 0 && receiveBuffer3Used != 0) {
+        if (receiveBuffer2Used == 0 && receiveBuffer3Used != 0)
+        {
             stringCopy(receiveBuffer3, receiveBuffer2);
             receiveBuffer3Used = 0;
             flushBuffer(receiveBuffer3, RECEIVE_STRING_LENGTH);
             receiveBuffer2Used = 1;
         }
 
-        if (receiveBuffer3Used == 0 && receiveBuffer4Used != 0) {
+        if (receiveBuffer3Used == 0 && receiveBuffer4Used != 0)
+        {
             stringCopy(receiveBuffer4, receiveBuffer3);
             receiveBuffer4Used = 0;
             flushBuffer(receiveBuffer4, RECEIVE_STRING_LENGTH);
             receiveBuffer3Used = 1;
         }
 
-        if (receiveBuffer4Used == 0 && receiveBuffer5Used != 0) {
+        if (receiveBuffer4Used == 0 && receiveBuffer5Used != 0)
+        {
             stringCopy(receiveBuffer5, receiveBuffer4);
             receiveBuffer5Used = 0;
             flushBuffer(receiveBuffer5, RECEIVE_STRING_LENGTH);
@@ -89,56 +99,66 @@ void splitReceivedCommand(void) {
     }
 
     // check for received information and split it up
-    if (newReceiveData != 0 && readyToProcess == 0) {
+    if (newReceiveData != 0 && readyToProcess == 0)
+    {
 
         // Initialize receivedCommand, receivedAttribute, and receivedValue
         short k = 0;
-        while (k < RECEIVE_PARAM_LENGTH) {
+        while (k < RECEIVE_PARAM_LENGTH)
+        {
             receivedCommand[k] = receivedAttribute[k] = receivedValue[k] = 0;
             k++;
         }
 
         // Check for beginning of command. If not, abort.
-        if (receivedToProcess[0] != '%') {
+        if (receivedToProcess[0] != '%')
+        {
             newReceiveData = 0;
             return;
         }
-        // Command start was present. Split string into components.
-        else {
+            // Command start was present. Split string into components.
+        else
+        {
             short i = 1;
             short j = 0;
 
             // Extract receivedCommand
-            while  (receivedToProcess[i] > 47 && receivedToProcess[i] < 127 &&
-                    j < RECEIVE_PARAM_LENGTH && i < RECEIVE_STRING_LENGTH - 1) { // RECEIVE_STRING_LENGTH - 1 because of check for '.' in the last step
+            while (receivedToProcess[i] > 47 && receivedToProcess[i] < 127 &&
+                    j < RECEIVE_PARAM_LENGTH && i < RECEIVE_STRING_LENGTH - 1)
+            { // RECEIVE_STRING_LENGTH - 1 because of check for '.' in the last step
                 receivedCommand[j++] = receivedToProcess[i++];
             }
             // If delimeter is not next, something went wrong. Abort.
-            if (receivedToProcess[i++] != ' ') {
+            if (receivedToProcess[i++] != ' ')
+            {
                 newReceiveData = 0;
                 return;
             }
 
             // Extract receivedAttribute
             j = 0;
-            while  (receivedToProcess[i] > 47 && receivedToProcess[i] < 127 &&
-                    j < RECEIVE_PARAM_LENGTH && i < RECEIVE_STRING_LENGTH - 1) {
+            while (receivedToProcess[i] > 47 && receivedToProcess[i] < 127 &&
+                    j < RECEIVE_PARAM_LENGTH && i < RECEIVE_STRING_LENGTH - 1)
+            {
                 receivedAttribute[j++] = receivedToProcess[i++];
             }
             // If delimeter is not next, something went wrong. Abort.
-            if (receivedToProcess[i++] != ' ') {
+            if (receivedToProcess[i++] != ' ')
+            {
                 newReceiveData = 0;
                 return;
             }
 
             // Extract receivedValue
             j = 0;
-            while  (receivedToProcess[i] > 47 && receivedToProcess[i] < 127 &&
-                    j < RECEIVE_PARAM_LENGTH && i < RECEIVE_STRING_LENGTH - 1) {
+            while (receivedToProcess[i] > 47 && receivedToProcess[i] < 127 &&
+                    j < RECEIVE_PARAM_LENGTH && i < RECEIVE_STRING_LENGTH - 1)
+            {
                 receivedValue[j++] = receivedToProcess[i++];
             }
             // If end of command is not next, something went wrong. Abort.
-            if (receivedToProcess[i] != '.') {
+            if (receivedToProcess[i] != '.')
+            {
                 newReceiveData = 0;
                 return;
             }
@@ -155,10 +175,12 @@ void splitReceivedCommand(void) {
     }
 }
 
-void sendCommands(void) {
+void sendCommands(void)
+{
     // Move data from sendBuffer1 into stringToSend if possible
     // and promote data in other sendBuffers
-    if (newSendData == 0 && sendBuffer1Used != 0) {
+    if (newSendData == 0 && sendBuffer1Used != 0)
+    {
         stringCopy(sendBuffer1, stringToSendU2);
         newSendDataU2 = 1;
 #ifdef POWER_BOX
@@ -171,28 +193,32 @@ void sendCommands(void) {
 
     }
 
-    if (sendBuffer1Used == 0 && sendBuffer2Used != 0) {
+    if (sendBuffer1Used == 0 && sendBuffer2Used != 0)
+    {
         stringCopy(sendBuffer2, sendBuffer1);
         sendBuffer2Used = 0;
         flushBuffer(sendBuffer2, SEND_STRING_LENGTH);
         sendBuffer1Used = 1;
     }
 
-    if (sendBuffer2Used == 0 && sendBuffer3Used != 0) {
+    if (sendBuffer2Used == 0 && sendBuffer3Used != 0)
+    {
         stringCopy(sendBuffer3, sendBuffer2);
         sendBuffer3Used = 0;
         flushBuffer(sendBuffer3, SEND_STRING_LENGTH);
         sendBuffer2Used = 1;
     }
 
-    if (sendBuffer3Used == 0 && sendBuffer4Used != 0) {
+    if (sendBuffer3Used == 0 && sendBuffer4Used != 0)
+    {
         stringCopy(sendBuffer4, sendBuffer3);
         sendBuffer4Used = 0;
         flushBuffer(sendBuffer4, SEND_STRING_LENGTH);
         sendBuffer3Used = 1;
     }
 
-    if (sendBuffer4Used == 0 && sendBuffer5Used != 0) {
+    if (sendBuffer4Used == 0 && sendBuffer5Used != 0)
+    {
         stringCopy(sendBuffer5, sendBuffer4);
         sendBuffer5Used = 0;
         flushBuffer(sendBuffer5, SEND_STRING_LENGTH);
@@ -204,105 +230,129 @@ void sendCommands(void) {
      * UxSTAbits.UTXBF == 0 is not a valid check.
      * UTXBF doesn't always update correctly.
      * See PIC errata */
-    while (U2STAbits.TRMT == 1 && stringToSendU2[sendIndexU2] != 0 && newSendDataU2 != 0) {
+    while (U2STAbits.TRMT == 1 && stringToSendU2[sendIndexU2] != 0 && newSendDataU2 != 0)
+    {
         U2TXREG = stringToSendU2[sendIndexU2++];
 
-        if (stringToSendU2[sendIndexU2] == 0 || stringToSendU2[sendIndexU2 - 1] == '\n') {
+        if (stringToSendU2[sendIndexU2] == 0 || stringToSendU2[sendIndexU2 - 1] == '\n')
+        {
             sendIndexU2 = 0;
             newSendDataU2 = 0;
         }
     }
 
 #ifdef DISPLAY_BOX
-    if (newSendData != 0 && newSendDataU2 == 0) {
+    if (newSendData != 0 && newSendDataU2 == 0)
+    {
         newSendData = 0;
     }
 #endif
 #ifdef POWER_BOX
-    while (U1STAbits.TRMT == 1 && stringToSendU1[sendIndexU1] != 0 && newSendDataU1 != 0) {
+    while (U1STAbits.TRMT == 1 && stringToSendU1[sendIndexU1] != 0 && newSendDataU1 != 0)
+    {
         U1TXREG = stringToSendU1[sendIndexU1++];
 
-        if (stringToSendU1[sendIndexU1] == 0 || stringToSendU1[sendIndexU1 - 1] == '\n') {
+        if (stringToSendU1[sendIndexU1] == 0 || stringToSendU1[sendIndexU1 - 1] == '\n')
+        {
             sendIndexU1 = 0;
             newSendDataU1 = 0;
         }
     }
-    if (newSendData != 0 && newSendDataU2 == 0 && newSendDataU1 == 0) {
+    if (newSendData != 0 && newSendDataU2 == 0 && newSendDataU1 == 0)
+    {
         newSendData = 0;
     }
 #endif
 
 }
 
-char* sendBuffer(void) {
-    if (sendBuffer1Used == 0) {
+char* sendBuffer(void)
+{
+    if (sendBuffer1Used == 0)
+    {
         sendBuffer1Used = 1;
         return sendBuffer1;
     }
-    else if (sendBuffer2Used == 0) {
+    else if (sendBuffer2Used == 0)
+    {
         sendBuffer2Used = 1;
         return sendBuffer2;
     }
-    else if (sendBuffer3Used == 0) {
+    else if (sendBuffer3Used == 0)
+    {
         sendBuffer3Used = 1;
         return sendBuffer3;
     }
-    else if (sendBuffer4Used == 0) {
+    else if (sendBuffer4Used == 0)
+    {
         sendBuffer4Used = 1;
         return sendBuffer4;
     }
-    else if (sendBuffer5Used == 0) {
+    else if (sendBuffer5Used == 0)
+    {
         sendBuffer5Used = 1;
         return sendBuffer5;
     }
-    // no room in any buffer, throw data away
+        // no room in any buffer, throw data away
     else return sendBlackHole;
 }
 
-char* receiveBuffer(void) {
-    if (receiveBuffer1Used == 0) {
+char* receiveBuffer(void)
+{
+    if (receiveBuffer1Used == 0)
+    {
         receiveBuffer1Used = 1;
         return receiveBuffer1;
     }
-    else if (receiveBuffer2Used == 0) {
+    else if (receiveBuffer2Used == 0)
+    {
         receiveBuffer2Used = 1;
         return receiveBuffer2;
     }
-    else if (receiveBuffer3Used == 0) {
+    else if (receiveBuffer3Used == 0)
+    {
         receiveBuffer3Used = 1;
         return receiveBuffer3;
     }
-    else if (receiveBuffer4Used == 0) {
+    else if (receiveBuffer4Used == 0)
+    {
         receiveBuffer4Used = 1;
         return receiveBuffer4;
     }
-    else if (receiveBuffer5Used == 0) {
+    else if (receiveBuffer5Used == 0)
+    {
         receiveBuffer5Used = 1;
         return receiveBuffer5;
     }
-    // no room in any buffer, throw data away
+        // no room in any buffer, throw data away
     else return receiveBlackHole;
 }
 
-void flushBuffer(char* target, short length) {
+void flushBuffer(char* target, short length)
+{
     short k = 0;
     while (k < length)
         target[k++] = 0;
 }
 
-void stringCopy(char* from, char* to) {
+void stringCopy(char* from, char* to)
+{
     int i;
-    for (i = 0; from[i] != 0; i++) {
+    for (i = 0; from[i] != 0; i++)
+    {
         to[i] = from[i];
     }
     to[i] = 0;
 }
 
 // concatenate the second string onto the first
-void stringConcat(char* destination, char* source) {
+
+void stringConcat(char* destination, char* source)
+{
     int i = 0;
     int start = stringLength(destination);
-    while (source[i] != 0) {
+    while (source[i] != 0)
+    {
         destination[start + i] = source[i];
         i++;
     }
@@ -311,9 +361,12 @@ void stringConcat(char* destination, char* source) {
 
 // Returns 1 if strings differ, because that is
 // the convention for comparison methods.
-char stringCompare(char* a, char* b) {
+
+char stringCompare(char* a, char* b)
+{
     short i = 0;
-    while (a[i] != 0 && b[i] != 0) {
+    while (a[i] != 0 && b[i] != 0)
+    {
         if (a[i] != b[i])
             return 1;
         i++;
@@ -321,13 +374,15 @@ char stringCompare(char* a, char* b) {
     return 0;
 }
 
-int stringLength(char* string) {
+int stringLength(char* string)
+{
     int i = 0;
     while (string[i++] != 0);
     return i - 1;
 }
 
-void commandBuilder1(char* command, char* attribute, char* value) {
+void commandBuilder1(char* command, char* attribute, char* value)
+{
     char newCommand[RECEIVE_PARAM_LENGTH] = "%";
     stringConcat(newCommand, command);
     stringConcat(newCommand, " ");
@@ -338,7 +393,8 @@ void commandBuilder1(char* command, char* attribute, char* value) {
     stringCopy(newCommand, sendBuffer());
 }
 
-void commandBuilder2(char* command, char* attribute, char* value1, char* value2) {
+void commandBuilder2(char* command, char* attribute, char* value1, char* value2)
+{
     char newValue[RECEIVE_PARAM_LENGTH] = "";
     stringConcat(newValue, value1);
     stringConcat(newValue, ":");
@@ -346,7 +402,8 @@ void commandBuilder2(char* command, char* attribute, char* value1, char* value2)
     commandBuilder1(command, attribute, newValue);
 }
 
-void commandBuilder3(char* command, char* attribute, char* value1, char* value2, char* value3) {
+void commandBuilder3(char* command, char* attribute, char* value1, char* value2, char* value3)
+{
     char newValue[RECEIVE_PARAM_LENGTH] = "";
     stringConcat(newValue, value2);
     stringConcat(newValue, ":");
@@ -354,7 +411,8 @@ void commandBuilder3(char* command, char* attribute, char* value1, char* value2,
     commandBuilder2(command, attribute, value1, newValue);
 }
 
-void commandBuilder4(char* command, char* attribute, char* value1, char* value2, char* value3, char* value4) {
+void commandBuilder4(char* command, char* attribute, char* value1, char* value2, char* value3, char* value4)
+{
     char newValue[RECEIVE_PARAM_LENGTH] = "";
     stringConcat(newValue, value3);
     stringConcat(newValue, ":");
@@ -362,7 +420,8 @@ void commandBuilder4(char* command, char* attribute, char* value1, char* value2,
     commandBuilder3(command, attribute, value1, value2, newValue);
 }
 
-void commandBuilder5(char* command, char* attribute, char* value1, char* value2, char* value3, char* value4, char* value5) {
+void commandBuilder5(char* command, char* attribute, char* value1, char* value2, char* value3, char* value4, char* value5)
+{
     char newValue[RECEIVE_PARAM_LENGTH] = "";
     stringConcat(newValue, value4);
     stringConcat(newValue, ":");
@@ -371,7 +430,9 @@ void commandBuilder5(char* command, char* attribute, char* value1, char* value2,
 }
 
 // Split combined value string on colon and return desired part
-char* commandExpander(char* values, char index) {
+
+char* commandExpander(char* values, char index)
+{
     static char returnValue[RECEIVE_PARAM_LENGTH] = "";
     int i = 0;
     int j = 0;
@@ -386,18 +447,21 @@ char* commandExpander(char* values, char index) {
     return returnValue;
 }
 
-void processReceivedCommand() {
+void processReceivedCommand()
+{
 
     if (readyToProcess == 0) return;
 
     // Everything will be LOWERCASED when it is received
-    if (stringCompare(receivedCommand, "set") == 0) {
-        if (stringCompare(receivedAttribute, "time") == 0) {
-            char newYear   = (char) ((receivedValue[0]  - 48) * 10 + receivedValue[1]  - 48);
-            char newMonth  = (char) ((receivedValue[2]  - 48) * 10 + receivedValue[3]  - 48);
-            char newDay    = (char) ((receivedValue[4]  - 48) * 10 + receivedValue[5]  - 48);
-            char newHour   = (char) ((receivedValue[6]  - 48) * 10 + receivedValue[7]  - 48);
-            char newMinute = (char) ((receivedValue[8]  - 48) * 10 + receivedValue[9]  - 48);
+    if (stringCompare(receivedCommand, "set") == 0)
+    {
+        if (stringCompare(receivedAttribute, "time") == 0)
+        {
+            char newYear = (char) ((receivedValue[0] - 48) * 10 + receivedValue[1] - 48);
+            char newMonth = (char) ((receivedValue[2] - 48) * 10 + receivedValue[3] - 48);
+            char newDay = (char) ((receivedValue[4] - 48) * 10 + receivedValue[5] - 48);
+            char newHour = (char) ((receivedValue[6] - 48) * 10 + receivedValue[7] - 48);
+            char newMinute = (char) ((receivedValue[8] - 48) * 10 + receivedValue[9] - 48);
             char newSecond = (char) ((receivedValue[10] - 48) * 10 + receivedValue[11] - 48);
 #ifdef DISPLAY_BOX
             writeTime(newYear, newMonth, newDay, newHour, newMinute, newSecond);
@@ -407,11 +471,13 @@ void processReceivedCommand() {
 #endif
             readTime();
         }
-        else if (stringCompare(receivedAttribute, "power") == 0) {
+        else if (stringCompare(receivedAttribute, "power") == 0)
+        {
             powerAllocated = atoi(commandExpander(receivedValue, 0));
             powerUsed = atoi(commandExpander(receivedValue, 1));
-            currentLoad = atoi(commandExpander(receivedValue, 2));
-
+//            currentLoad = atoi(commandExpander(receivedValue, 2));
+            currentLoad = strtoul( commandExpander(receivedValue, 2), NULL, 10);
+            
 #ifdef POWER_BOX
             highAlloc = powerAllocated;
             lowAlloc = (powerAllocated * 3) / 4;
@@ -419,17 +485,19 @@ void processReceivedCommand() {
             EEwritePowerAlloc();
 #endif
         }
-        else if (stringCompare(receivedAttribute, "alarm") == 0) {
-            audibleAlarm    = (char) atoi(commandExpander(receivedValue, 0));
+        else if (stringCompare(receivedAttribute, "alarm") == 0)
+        {
+            audibleAlarm = (char) atoi(commandExpander(receivedValue, 0));
             alarmOneEnabled = (char) atoi(commandExpander(receivedValue, 1));
             alarmTwoEnabled = (char) atoi(commandExpander(receivedValue, 2));
-            alarmOnePower   = (char) atoi(commandExpander(receivedValue, 3));
-            alarmTwoPower   = (char) atoi(commandExpander(receivedValue, 4));
+            alarmOnePower = (char) atoi(commandExpander(receivedValue, 3));
+            alarmTwoPower = (char) atoi(commandExpander(receivedValue, 4));
 #ifdef POWER_BOX
             EEwriteAlarm();
 #endif
         }
-        else if (stringCompare(receivedAttribute, "pwd") == 0) {
+        else if (stringCompare(receivedAttribute, "pwd") == 0)
+        {
             passwordSet[0] = receivedValue[0];
             passwordSet[1] = receivedValue[1];
             passwordSet[2] = receivedValue[2];
@@ -440,18 +508,21 @@ void processReceivedCommand() {
             EEwritePassword();
 #endif
         }
-        else if (stringCompare(receivedAttribute, "emer") == 0) {
+        else if (stringCompare(receivedAttribute, "emer") == 0)
+        {
 
             emerButtonEnable = (char) atoi(commandExpander(receivedValue, 0));
-            emerButtonAlloc  = atoi(commandExpander(receivedValue, 1));
+            emerButtonAlloc = atoi(commandExpander(receivedValue, 1));
 
 #ifdef POWER_BOX
-            emerAllocNow     = atoi(commandExpander(receivedValue, 2));
-            if (powerUsedMW / 1000 > emerAllocNow) {
+            emerAllocNow = atoi(commandExpander(receivedValue, 2));
+            if (powerUsedMW / 1000 > emerAllocNow)
+            {
                 powerUsedMW = powerUsedMW - ((long) emerAllocNow) * 1000;
                 extraPower += emerAllocNow;
             }
-            else {
+            else
+            {
                 if (emerAllocNow)
                     extraPower += (powerUsed / 1000) - powerAllocated;
 
@@ -462,25 +533,30 @@ void processReceivedCommand() {
 #endif
         }
 #ifdef DISPLAY_BOX
-        else if (stringCompare(receivedAttribute, "vers") == 0) {
+        else if (stringCompare(receivedAttribute, "vers") == 0)
+        {
             stringCopy(receivedValue, powerBoxCodeVersionString);
         }
-        else if (stringCompare(receivedAttribute, "pwrdowntime") == 0) {
+        else if (stringCompare(receivedAttribute, "pwrdowntime") == 0)
+        {
             stringCopy(receivedValue, powerDownTime);
         }
-        else if (stringCompare(receivedAttribute, "pwruptime") == 0) {
+        else if (stringCompare(receivedAttribute, "pwruptime") == 0)
+        {
             stringCopy(receivedValue, powerUpTime);
         }
 #endif
-        else if (stringCompare(receivedAttribute, "reset") == 0) {
-            resetHour   = (unsigned char) atoi(commandExpander(receivedValue, 0));
+        else if (stringCompare(receivedAttribute, "reset") == 0)
+        {
+            resetHour = (unsigned char) atoi(commandExpander(receivedValue, 0));
             resetMinute = (unsigned char) atoi(commandExpander(receivedValue, 1));
 #ifdef POWER_BOX
             EEwriteResetTime();
 #endif
         }
 
-        else if (stringCompare(receivedAttribute, "relay") == 0) {
+        else if (stringCompare(receivedAttribute, "relay") == 0)
+        {
             // ON means relay control is on
             // OFF means control is off
             if (receivedValue[0] == 'f')
@@ -493,12 +569,14 @@ void processReceivedCommand() {
 #endif
         }
 
-        else if (stringCompare(receivedAttribute, "stat") == 0) {
+        else if (stringCompare(receivedAttribute, "stat") == 0)
+        {
             totalUsed = atoi(commandExpander(receivedValue, 0));
             previousDayUsed = atoi(commandExpander(receivedValue, 1));
 
         }
-        else if (stringCompare(receivedAttribute, "hl") == 0) {
+        else if (stringCompare(receivedAttribute, "hl") == 0)
+        {
             if (stringCompare(receivedValue, "high") == 0)
                 isHigh = 0xFF;
             else
@@ -509,59 +587,74 @@ void processReceivedCommand() {
 #endif
         }
     }
-    
+
 #ifdef POWER_BOX
-    // Everything will be LOWERCASED when it is received
-    else if (stringCompare(receivedCommand, "update") == 0) {
+        // Everything will be LOWERCASED when it is received
+    else if (stringCompare(receivedCommand, "update") == 0)
+    {
         setRemotePower();
     }
 
-    // Everything will be LOWERCASED when it is received
-    else if (stringCompare(receivedCommand, "reset") == 0) {
+        // Everything will be LOWERCASED when it is received
+    else if (stringCompare(receivedCommand, "reset") == 0)
+    {
         reset = 0xFF;
     }
 #endif
 
-    // Everything will be LOWERCASED when it is received
-    else if (stringCompare(receivedCommand, "read") == 0) {
-        if (stringCompare(receivedAttribute, "time") == 0) {
+        // Everything will be LOWERCASED when it is received
+    else if (stringCompare(receivedCommand, "read") == 0)
+    {
+        if (stringCompare(receivedAttribute, "time") == 0)
+        {
             setRemoteTime();
         }
-        else if (stringCompare(receivedAttribute, "power") == 0) {
+        else if (stringCompare(receivedAttribute, "power") == 0)
+        {
             setRemotePower();
         }
-        else if (stringCompare(receivedAttribute, "alarm") == 0) {
+        else if (stringCompare(receivedAttribute, "alarm") == 0)
+        {
             setRemoteAlarm();
         }
-        else if (stringCompare(receivedAttribute, "pwd") == 0) {
+        else if (stringCompare(receivedAttribute, "pwd") == 0)
+        {
             setRemotePassword();
         }
-        else if (stringCompare(receivedAttribute, "emer") == 0) {
+        else if (stringCompare(receivedAttribute, "emer") == 0)
+        {
             setRemoteEmergency();
         }
 #ifdef POWER_BOX
-        else if (stringCompare(receivedAttribute, "vers") == 0) {
+        else if (stringCompare(receivedAttribute, "vers") == 0)
+        {
             setRemoteVersion();
         }
-        else if (stringCompare(receivedAttribute, "pwrfail") == 0) {
+        else if (stringCompare(receivedAttribute, "pwrfail") == 0)
+        {
             setRemotePowerDownUpTime();
         }
 #endif
-        else if (stringCompare(receivedAttribute, "reset") == 0) {
+        else if (stringCompare(receivedAttribute, "reset") == 0)
+        {
             setRemoteResetTime();
         }
-        else if (stringCompare(receivedAttribute, "relay") == 0) {
+        else if (stringCompare(receivedAttribute, "relay") == 0)
+        {
             setRemoteRelay();
         }
-        else if (stringCompare(receivedAttribute, "stat") == 0) {
+        else if (stringCompare(receivedAttribute, "stat") == 0)
+        {
             setRemoteStats();
         }
-        else if (stringCompare(receivedAttribute, "hl") == 0) {
+        else if (stringCompare(receivedAttribute, "hl") == 0)
+        {
             setRemoteHL();
         }
     }
 #ifdef DISPLAY_BOX
-    else if (stringCompare(receivedCommand, "reboot") == 0) {
+    else if (stringCompare(receivedCommand, "reboot") == 0)
+    {
         BACKLIGHT = 1;
         writeToDisplay("Power control system  has requested a     system restart.", 0, 80);
         delayMS(2500);
@@ -575,6 +668,7 @@ void processReceivedCommand() {
 }
 
 /* Set commands **************************************************************/
+
 /* The space (' ') and period ('.') characters are reserved for delimiters.
  * Valid characters for use within commands are ASCII 0x30 ('0') through
  * 0x7e ('~'). Any character outside that set will be discarded. All alphabetic
@@ -582,22 +676,23 @@ void processReceivedCommand() {
  */
 
 
-void setRemoteTime(void) {
+void setRemoteTime(void)
+{
 
     readTime();
 
-//    char newTime[11] = "";
+    //    char newTime[11] = "";
     char newTime[13] = "";
-    newTime[0]  = (timeYear / 10) + 0x30;
-    newTime[1]  = (timeYear % 10) + 0x30;
-    newTime[2]  = (timeMonth / 10) + 0x30;
-    newTime[3]  = (timeMonth % 10) + 0x30;
-    newTime[4]  = (timeDay / 10) + 0x30;
-    newTime[5]  = (timeDay % 10) + 0x30;
-    newTime[6]  = (timeHour / 10) + 0x30;
-    newTime[7]  = (timeHour % 10) + 0x30;
-    newTime[8]  = (timeMinute / 10) + 0x30;
-    newTime[9]  = (timeMinute % 10) + 0x30;
+    newTime[0] = (timeYear / 10) + 0x30;
+    newTime[1] = (timeYear % 10) + 0x30;
+    newTime[2] = (timeMonth / 10) + 0x30;
+    newTime[3] = (timeMonth % 10) + 0x30;
+    newTime[4] = (timeDay / 10) + 0x30;
+    newTime[5] = (timeDay % 10) + 0x30;
+    newTime[6] = (timeHour / 10) + 0x30;
+    newTime[7] = (timeHour % 10) + 0x30;
+    newTime[8] = (timeMinute / 10) + 0x30;
+    newTime[9] = (timeMinute % 10) + 0x30;
     newTime[10] = (timeSecond / 10) + 0x30;
     newTime[11] = (timeSecond % 10) + 0x30;
     newTime[12] = 0;
@@ -606,7 +701,8 @@ void setRemoteTime(void) {
 
 }
 
-void setRemotePower(void) {
+void setRemotePower(void)
+{
 
     char newPowerAllocated[7];
     utoa(newPowerAllocated, (unsigned int) powerAllocated, 10);
@@ -621,19 +717,21 @@ void setRemotePower(void) {
             newPowerUsed, newCurrentLoad);
 }
 
-void setRemoteAlarm(void) {
-    char* newAudibleAlarm    = itoa(buffer1, audibleAlarm,    10);
+void setRemoteAlarm(void)
+{
+    char* newAudibleAlarm = itoa(buffer1, audibleAlarm, 10);
     char* newAlarmOneEnabled = itoa(buffer2, alarmOneEnabled, 10);
     char* newAlarmTwoEnabled = itoa(buffer3, alarmTwoEnabled, 10);
-    char* newAlarmOnePower   = itoa(buffer4, alarmOnePower,   10);
-    char* newAlarmTwoPower   = itoa(buffer5, alarmTwoPower,   10);
+    char* newAlarmOnePower = itoa(buffer4, alarmOnePower, 10);
+    char* newAlarmTwoPower = itoa(buffer5, alarmTwoPower, 10);
 
     commandBuilder5("Set", "Alarm", newAudibleAlarm,
             newAlarmOneEnabled, newAlarmTwoEnabled,
             newAlarmOnePower, newAlarmTwoPower);
 }
 
-void setRemotePassword(void) {
+void setRemotePassword(void)
+{
     char newPassword[7];
     int i;
     for (i = 0; i < 6; i++)
@@ -643,109 +741,131 @@ void setRemotePassword(void) {
     commandBuilder1("Set", "Pwd", newPassword);
 }
 
-void setRemoteEmergency(void) {
+void setRemoteEmergency(void)
+{
     char* newEmerButtonEnable = itoa(buffer1, (int) emerButtonEnable, 10);
-    char* newEmerButtonAlloc  = itoa(buffer2, emerButtonAlloc,  10);
-    char* newEmerAllocSend    = itoa(buffer3, emerAllocSend,    10);
+    char* newEmerButtonAlloc = itoa(buffer2, emerButtonAlloc, 10);
+    char* newEmerAllocSend = itoa(buffer3, emerAllocSend, 10);
 
     commandBuilder3("Set", "Emer", newEmerButtonEnable,
             newEmerButtonAlloc, newEmerAllocSend);
 }
 
 #ifdef POWER_BOX
-void setRemoteVersion(void) {
+
+void setRemoteVersion(void)
+{
     commandBuilder1("Set", "Vers", POWER_BOX_CODE_VERSION);
 }
 
-void setRemotePowerDownUpTime(void) {
+void setRemotePowerDownUpTime(void)
+{
     commandBuilder1("Set", "PDT", powerDownTime);
     commandBuilder1("Set", "PUT", powerUpTime);
 }
 #endif
 
-void setRemoteResetTime(void) {
-    char* newResetHour   = itoa(buffer1, (int) resetHour, 10);
+void setRemoteResetTime(void)
+{
+    char* newResetHour = itoa(buffer1, (int) resetHour, 10);
     char* newResetMinute = itoa(buffer2, (int) resetMinute, 10);
 
     commandBuilder2("Set", "Reset", newResetHour, newResetMinute);
 }
 
-void setRemoteRelay(void) {
+void setRemoteRelay(void)
+{
     if (relayActive)
         commandBuilder1("Set", "Relay", "On");
     else
         commandBuilder1("Set", "Relay", "F");
 }
 
-void setRemoteStats(void) {
+void setRemoteStats(void)
+{
     char* stats = itoa(buffer1, totalUsed / 1000, 10);
     char* previousDayStats = itoa(buffer2, previousDayUsed, 10);
     commandBuilder2("Set", "Stat", stats, previousDayStats);
 }
 
-void setRemoteHL(void) {
+void setRemoteHL(void)
+{
     if (isHigh)
         commandBuilder1("Set", "HL", "High");
     else
         commandBuilder1("Set", "HL", "Low");
 }
 
-void doReset(void) {
+void doReset(void)
+{
     commandBuilder1("Reset", "0", "0");
 }
 
 #ifdef POWER_BOX
-void sendUpdate(void) {
+
+void sendUpdate(void)
+{
     setRemotePower();
 }
 #endif
 
-
 /* Read Commands **************************************************************/
-void readRemoteTime(void) {
+void readRemoteTime(void)
+{
     commandBuilder1("Read", "Time", "0");
 }
 
-void readRemotePower(void) {
+void readRemotePower(void)
+{
     commandBuilder1("Read", "Power", "0");
 }
 
-void readRemoteAlarm(void) {
+void readRemoteAlarm(void)
+{
     commandBuilder1("Read", "Alarm", "0");
 }
 
-void readRemotePassword(void) {
+void readRemotePassword(void)
+{
     commandBuilder1("Read", "Pwd", "0");
 }
 
-void readRemoteEmergency(void) {
+void readRemoteEmergency(void)
+{
     commandBuilder1("Read", "Emer", "0");
 }
 
-void readRemoteVersion(void) {
+void readRemoteVersion(void)
+{
     commandBuilder1("Read", "Vers", "0");
 }
 
-void readRemoteResetTime(void) {
+void readRemoteResetTime(void)
+{
     commandBuilder1("Read", "Reset", "0");
 }
 
-void readRemoteRelay(void) {
+void readRemoteRelay(void)
+{
     commandBuilder1("Read", "Relay", "0");
 }
 
-void readRemoteStats(void) {
+void readRemoteStats(void)
+{
     commandBuilder1("Read", "Stat", "0");
 }
 
-void readRemoteHL(void) {
+void readRemoteHL(void)
+{
     commandBuilder1("Read", "HL", "0");
 }
 
-void readRemotePowerDownUpTime(void) {
+void readRemotePowerDownUpTime(void)
+{
     commandBuilder1("Read", "PwrFail", "0");
 }
 
-void readUpdate(void) {
+void readUpdate(void)
+{
     commandBuilder1("Update", "0", "0");
 }
