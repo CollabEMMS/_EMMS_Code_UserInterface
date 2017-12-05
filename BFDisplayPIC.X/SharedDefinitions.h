@@ -103,7 +103,8 @@ void readRemoteHL(void);
 void setRemotePowerDownUpTime(void);
 void readRemotePowerDownUpTime(void);
 void readUpdate(void);
-
+void readModules(void);
+void setRemoteModules(void);
 void doReset(void);
 
 /* Communication High Level - Display Box Only **********************************/

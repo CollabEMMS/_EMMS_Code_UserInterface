@@ -1,4 +1,4 @@
-/* File:    DisplayMenu.h
+/* File:    DisplayMenu.c
  * Authors: Dan Baker
  *          Nathan Chaney
  */
@@ -9,8 +9,10 @@
 /* Includes *******************************************************************/
 
 #include <stdlib.h>
+#include <string.h>
 #include <p24FV32KA301.h>
 
+#include "Modules.h"
 #include "ExternDisplayDefinitions.h"
 #include "DisplayPinDefinitions.h"
 #include "ExternSharedDefinitions.h"
@@ -21,6 +23,39 @@ const char softKeys0[] = "Back  Up  Down    OK";
 const char softKeys1[] = "Back  Up  Top     OK";
 const char softKeys2[] = "Back  Up  Down  Save";
 
+/*
+ * Structs
+ */
+unsigned char amountOfModules;
+
+/**
+ * currently this loads dummy data into the array of moduleInfo. 
+ */
+void loadModules(void) {
+    char dummyval = 1;// enables test data
+    if (dummyval == 1) {
+        strcpy(modules[0].name, "Wifi");
+        strcpy(modules[0].version_number, "1.4.7");
+        strcpy(modules[0].data1, "160.24.5.42");
+        strcpy(modules[0].data2, "wf d2");
+
+//        strcpy(modules[1].name, "Radio       ");
+//        strcpy(modules[1].version_number, "2.1.9   ");
+//        strcpy(modules[1].data1, "rd d1               ");
+//        strcpy(modules[1].data2, "rd d2               ");
+
+        strcpy(modules[2].name, "PowerSense");
+        strcpy(modules[2].version_number, "0.5.3");
+        strcpy(modules[2].data1, "ps d1");
+        strcpy(modules[2].data2, "ps d2");
+        
+        amountOfModules = 2;
+    } else {
+        ;
+    }
+    
+    return;
+}
 
 /* Functions ******************************************************************/
 
@@ -157,7 +192,7 @@ void dspSetP1(unsigned char i) {
  * parameter *message: pointer to message to be put into nextDisplay
  *     works with a char pointer or a string literal
  *     must terminate with null char, 0x00
- * parameter location: destination position of first characer of message
+ * parameter location: destination position of first character of message
  * parameter width: width of message for padding with blanks
  *     positive: pad with spaces to right
  *     negative: pad with spaces to left
@@ -239,6 +274,10 @@ void updateMenu(void) {
         case MENU_MAIN_6:
             menuMain6();
             break;
+            
+        case MENU_MAIN_7:
+            menuMain7();
+            break;
 
         case MENU_ALARM_1:
             menuAlarm1();
@@ -270,6 +309,55 @@ void updateMenu(void) {
 
         case MENU_ABOUT:
             menuAbout();
+            break;
+        
+        case MENU_MODULES:
+            menuModules(1);
+            break;
+            
+        case MENU_MODULES_2:
+            menuModules(2);
+            break;
+            
+        case MENU_MODULES_3:
+            menuModules(3);
+            break;
+            
+        case MENU_MODULES_4:
+            menuModules(4);
+            break;
+            
+        case MENU_MODULES_5:
+            menuModules(5);
+            break;
+            
+        case MENU_MODULES_6:
+            menuModules(6);
+            break;
+            
+        case MENU_MODULES_7:
+            menuModules(7);
+            break;
+            
+        case MENU_MODULES_8:
+            menuModules(8);
+            break;
+            
+        case MENU_MODULES_INDIVIDUAL_0:
+            menuIndividualModules(0);
+            break;
+            
+        case MENU_MODULES_INDIVIDUAL_1:
+            menuIndividualModules(1);
+            break;
+            
+        case MENU_MODULES_INDIVIDUAL_2:
+            menuIndividualModules(2);
+            break;
+            
+        // Add more individuals after this one if the max modules increase.    
+        case MENU_MODULES_INDIVIDUAL_3:
+            menuIndividualModules(3);
             break;
 
         case MENU_ADMIN_LOGIN:
@@ -556,7 +644,7 @@ void menuAlarm(void) {
 
 void menuMain1(void) {
 
-    switch (menuButtonRead(MENU_HOME_BASIC, MENU_MAIN_6, MENU_MAIN_2, MENU_ALARM_1)) {
+    switch (menuButtonRead(MENU_HOME_BASIC, MENU_MAIN_7, MENU_MAIN_2, MENU_ALARM_1)) {
         case 1:
             readRemoteVersion();
             break;
@@ -564,7 +652,7 @@ void menuMain1(void) {
             readRemotePassword();
     }
 
-    writeToDisplay("Main Menu     1 of 6* Alarm Options       Admin Menu", 0, 60);
+    writeToDisplay("Main Menu     1 of 7* Alarm Options       Admin Menu", 0, 60);
     writeToDisplay(softKeys0, 60, 0);
 
     enablePeriodicUpdate = 0;
@@ -583,7 +671,7 @@ void menuMain2(void) {
             pwLength = 0;
     }
 
-    writeToDisplay("Main Menu     2 of 6* Admin Menu          High/Low", 0, 60);
+    writeToDisplay("Main Menu     2 of 7* Admin Menu          High/Low", 0, 60);
     writeToDisplay(softKeys0, 60, 0);
 }
 
@@ -604,7 +692,7 @@ void menuMain3(void) {
             }
     }
 
-    writeToDisplay("Main Menu     3 of 6* High/Low            Statistics", 0, 60);
+    writeToDisplay("Main Menu     3 of 7* High/Low            Statistics", 0, 60);
     writeToDisplay(softKeys0, 60, 0);
 }
 
@@ -617,7 +705,7 @@ void menuMain4(void) {
             readRemotePowerDownUpTime();
     }
 
-    writeToDisplay("Main Menu     4 of 6* Statistics          Last Power Failure", 0, 60);
+    writeToDisplay("Main Menu     4 of 7* Statistics          Last Power Failure", 0, 60);
     writeToDisplay(softKeys0, 60, 0);
 }
 
@@ -627,23 +715,24 @@ void menuMain5(void) {
             readRemoteStats();
             break;
         case 2:
-            readRemoteVersion();
+            readRemoteVersion();            
     }
 
-    writeToDisplay("Main Menu     5 of 6* Last Power Failure  About", 0, 60);
+    writeToDisplay("Main Menu     5 of 7* Last Power Failure  Modules", 0, 60);
     writeToDisplay(softKeys0, 60, 0);
 }
 
 void menuMain6(void) {
-    switch(menuButtonRead(MENU_HOME_BASIC, MENU_MAIN_5, MENU_MAIN_1, MENU_ABOUT)) {
-        case 1:
-            readRemotePowerDownUpTime();
-            break;
-        case 2:
-            readRemoteAlarm();
-    }
+    menuButtonRead(MENU_HOME_BASIC, MENU_MAIN_5, MENU_MAIN_7, MENU_MODULES);
 
-    writeToDisplay("Main Menu     6 of 6  Last Power Failure* About", 0, 60);
+    writeToDisplay("Main Menu     6 of 7* Modules             About", 0, 60);
+    writeToDisplay(softKeys0, 60, 0);
+}
+
+void menuMain7(void) {
+    menuButtonRead(MENU_HOME_BASIC, MENU_MAIN_6, MENU_MAIN_1, MENU_ABOUT);
+
+    writeToDisplay("Main Menu     7 of 7* About             ", 0, 60);
     writeToDisplay(softKeys1, 60, 0);
 }
 
@@ -862,13 +951,126 @@ void menuPowerFailTimes(void) {
 }
 
 void menuAbout(void) {
-    menuButtonRead(MENU_MAIN_6, MENU_MAIN_6, MENU_MAIN_6, MENU_MAIN_6);
+    menuButtonRead(MENU_MAIN_7, MENU_MAIN_7, MENU_MAIN_7, MENU_MAIN_7);
 
     writeToDisplay("Power Code: ", 0, 0);
     writeToDisplay(powerBoxCodeVersionString, 12, 8);
     writeToDisplay("Disp Code:  ", 20, 0);
     writeToDisplay(ltoa(buffer2, displayBoxCodeVersion, 10), 32, 8);
     writeToDisplay("  Messiah College      Collaboratory    ", 40, 0);
+}
+
+/*
+ * Prints the modules menu to the display.
+ * 
+ * @param screenNumber The number of the current screen.
+ */
+void menuModules(unsigned char screenNumber) {
+    unsigned char firstModIndex = screenNumber - 1;
+    unsigned char secondModIndex;
+    unsigned char i;
+    
+    for (i = firstModIndex; i < MAXMODULES; i++) {
+        if (stringNull(modules[i].name) == 1) {// element is empty
+            firstModIndex++;
+        } else { break; }
+    }
+    
+    secondModIndex = firstModIndex + 1;
+    
+    for (i = secondModIndex; i < MAXMODULES; i++) {
+        if (stringNull(modules[i].name) == 1) {// element is empty
+            secondModIndex++;
+        } else { break; }
+    }
+
+    if (firstModIndex < MAXMODULES) {
+        menuButtonRead(MENU_MAIN_6, previousModule(screenNumber), 
+            nextModule(screenNumber), MENU_MODULES_INDIVIDUAL_0 + 
+            firstModIndex);
+    
+        writeToDisplay("Module Select", 0, NUM_LCD_WIDTH);
+        char firstModuleName[20] = "* ";
+        strncat(firstModuleName, modules[firstModIndex].name, NAMELENGTH);
+        strcat(firstModuleName, "     ");
+        writeToDisplay(firstModuleName, 20, NUM_LCD_WIDTH);
+        char secondModuleName[20] = "  ";
+        if ((screenNumber == amountOfModules) || secondModIndex >=  MAXMODULES) {
+            strcat(secondModuleName, "            ");
+        } else {
+            strncat(secondModuleName, modules[secondModIndex].name, NAMELENGTH);
+        }
+        strcat(secondModuleName, "     ");
+        writeToDisplay(secondModuleName, 40, NUM_LCD_WIDTH);
+        writeToDisplay(softKeys0, 60, NUM_LCD_WIDTH);
+    }
+    
+    return;
+}
+
+/*
+ * Calculates the menu constant for the next module.
+ * If the current module is the last one; the next will be the first module.
+ * Otherwise it will be one more.
+ * 
+ * @param screenNumber The number of the current screen.
+ * @return Menu constant for next module.
+ */
+unsigned char nextModule(unsigned char screenNumber) {
+    int result = 0;
+    
+    if (screenNumber == amountOfModules) {
+        result = MENU_MODULES;// first screen
+    } else {
+        result = MENU_MODULES + screenNumber; // next screen
+    }
+    
+    return result;
+}
+
+/*
+ * Calculates the menu constant for the previous module.
+ * If the current module if the first then go to the last module.
+ * Otherwise go one less.
+ * 
+ * @param The number of the current screen.
+ * @return Menu constant for previous module.
+ */
+unsigned char previousModule(unsigned char screenNumber) {
+    int result = 0;
+    
+    if (screenNumber == 1) {
+        result = MENU_MODULES + amountOfModules - 1; // last screen
+    } else {
+        result = MENU_MODULES + screenNumber - 2; // previous screen
+    }
+    
+    return result;
+}
+
+/*
+ * Creates menu display for an individual module. Displays module name and
+ * version number on the first line. On the second line data as send in.
+ * On the third line data as sent in.
+ * 
+ * @param moduleNumber Element of the module in the modules array.
+ */
+void menuIndividualModules(unsigned char moduleNumber) {
+    menuButtonRead(MENU_MAIN_6, MENU_MAIN_6, MENU_MAIN_6, MENU_MAIN_6);
+
+    char firstLine[20] = "";
+    char secondLine[20] = "";
+    char thirdLine[20] = "";
+    strncat(firstLine, modules[moduleNumber].name, NAMELENGTH);
+    strncat(firstLine, "  ", 2);
+    strncat(firstLine, modules[moduleNumber].version_number, VERSIONLENGTH);
+    strncat(secondLine, modules[moduleNumber].data1, NUM_LCD_WIDTH);
+    strncat(thirdLine, modules[moduleNumber].data2, NUM_LCD_WIDTH);
+    
+    writeToDisplay(firstLine, 0, NUM_LCD_WIDTH);
+    writeToDisplay(secondLine, 20, NUM_LCD_WIDTH);
+    writeToDisplay(thirdLine, 40, NUM_LCD_WIDTH);
+    writeToDisplay(softKeys0, 60, NUM_LCD_WIDTH);
 }
 
 void menuAdminLogin(void) {

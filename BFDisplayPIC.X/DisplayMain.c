@@ -31,6 +31,8 @@ int main(void) {
     resetTimeMinute = 9;
 
     init();
+    // used for dummy data. You can enable/disable dummy data inside of loadModules() 
+    loadModules();
 
     static unsigned char lowPriorityCounter = 0;
 
@@ -268,6 +270,8 @@ void initDisplayBox(void) {
     readRemoteVersion();
     nextDot();
     readRemotePowerDownUpTime();
+    nextDot();
+    readRemoteModules();
     nextDot();
 }
 

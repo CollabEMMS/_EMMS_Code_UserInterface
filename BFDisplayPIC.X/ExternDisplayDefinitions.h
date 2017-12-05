@@ -63,6 +63,7 @@ extern char alarmEnd;
 #define MENU_MAIN_4             8
 #define MENU_MAIN_5             9
 #define MENU_MAIN_6            10
+#define MENU_MAIN_7            254
 #define MENU_ALARM_1           11
 #define MENU_ALARM_2           12
 #define MENU_ALARM_3           13
@@ -71,6 +72,18 @@ extern char alarmEnd;
 #define MENU_ALARM_6           16
 #define MENU_ALARM_7           17
 #define MENU_ABOUT             18
+#define MENU_MODULES           210
+#define MENU_MODULES_2           211
+#define MENU_MODULES_3           212
+#define MENU_MODULES_4           213
+#define MENU_MODULES_5           214
+#define MENU_MODULES_6           215
+#define MENU_MODULES_7           216
+#define MENU_MODULES_8           217
+#define MENU_MODULES_INDIVIDUAL_0   220
+#define MENU_MODULES_INDIVIDUAL_1   221
+#define MENU_MODULES_INDIVIDUAL_2   222
+#define MENU_MODULES_INDIVIDUAL_3   223
 #define MENU_ADMIN_LOGIN       19
 #define MENU_ADMIN_1           20
 #define MENU_ADMIN_2           21
@@ -93,6 +106,7 @@ extern char alarmEnd;
 #define MENU_BAD_DATE         100
 #define MENU_SHUT_OFF_WARNING 101
 #define MENU_POWER_RESET      200
+// 210-217,220-223,254 is in use
 #define MENU_404              255
 
 
@@ -107,6 +121,8 @@ void writeToDisplay(const char*, unsigned char, char);
 void dspWriteMessage(char*);
 
 void updateMenu(void);
+void loadModules(void);
+//void individualMemberLoad(char individualData);
 void menuError(void);
 void menuDebug(void);
 void menuHomeBasic(void);
@@ -118,6 +134,7 @@ void menuMain3(void);
 void menuMain4(void);
 void menuMain5(void);
 void menuMain6(void);
+void menuMain7(void);
 void menuAlarm1(void);
 void menuAlarm2(void);
 void menuAlarm3(void);
@@ -126,6 +143,11 @@ void menuAlarm5(void);
 void menuAlarm6(void);
 void menuAlarm7(void);
 void menuAbout(void);
+void menuModules(unsigned char);
+unsigned char nextModule(unsigned char);
+unsigned char previousModule(unsigned char);
+char nextModuleName(unsigned char);
+void menuIndividualModules(unsigned char);
 void menuAdminLogin(void);
 void menuAdmin1(void);
 void menuAdmin2(void);

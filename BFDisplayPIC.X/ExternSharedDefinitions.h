@@ -19,6 +19,7 @@ void processReceivedCommand(void);
 void splitReceivedCommand(void);
 void stringCopy(char* from, char* to);
 char stringCompare(char* a, char* b);
+char stringNull(char* a);
 int  stringLength(char* string);
 void stringConcat(char* destination, char* source);
 void zeroPad(char* target, int length);
@@ -104,6 +105,8 @@ void readRemoteHL(void);
 void setRemotePowerDownUpTime(void);
 void readRemotePowerDownUpTime(void);
 void readUpdate(void);
+void readModules(void);
+void setRemoteModules(void);
 void doReset(void);
 
 /* Communication High Level - Power Box Only **********************************/

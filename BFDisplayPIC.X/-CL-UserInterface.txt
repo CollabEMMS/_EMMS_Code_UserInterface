@@ -6,3 +6,6 @@ open issues
             using strtoul instead of atoi
         also changed where currentLoad is written to the display from utoa to ultoa
         the currentLoad variable is already a unsigned long, so no other changes
+
+12/4/2017
+	adding module data - mostly done
