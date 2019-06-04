@@ -1,4 +1,4 @@
-build/default/production/Communications.o:  \
+build/default/debug/Communications.o:  \
 Communications.c  \
 common.h  \
  Communications.h  \

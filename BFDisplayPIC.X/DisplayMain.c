@@ -70,6 +70,7 @@ void startAlarm( void );
 
 
 void initRTCCDisplay( void );
+void debugBacklight( bool state );
 
 /****************
  CODE
@@ -88,6 +89,10 @@ int main( void )
 
     communications( true );
     static unsigned char lowPriorityCounter = 0;
+
+    initDisplayBox( );
+
+    enablePeriodicUpdate = 1;
 
     while( true )
     {
@@ -124,7 +129,7 @@ void init( void )
     //    initUART( );    now done in the communications code
 
     enableInterrupts( );
-    initDisplayBox( );
+    //    initDisplayBox( );
 
     readTime( );
     tempHour = timeHour;
@@ -323,7 +328,11 @@ void startAlarm( void )
     alarmEnd = (timeSecond + (2 * numBeeps)) % 60;
     menuState = MENU_ALARM;
 
-    BACKLIGHT = 1; // turn on backlight
+
+    if( BACKLIGHT_NORMAL == true )
+    {
+	BACKLIGHT = 1; // turn on backlight
+    }
     resetTimeSecond = (timeSecond + 59) % 60;
     resetTimeMinute = (timeMinute + 9) % 60;
 }
@@ -331,66 +340,136 @@ void startAlarm( void )
 void nextDot( void )
 {
     static char count = 0;
-    commDelay( 1500 );
+    commDelay( 15000 );
     writeToDisplay( ".", 12 + count++, 0 );
 }
 
 void initDisplayBox( void )
 {
     writeToDisplay( "Initializing", 0, 0 );
-    com_command_readRemoteTime( );
-    nextDot( );
-    com_command_readRemoteEnergyAllocation( );
-    nextDot( );
-    com_command_readRemoteAlarm( );
-    nextDot( );
-    com_command_readRemotePassword( );
-    nextDot( );
-    com_command_readRemoteEmergency( );
-    nextDot( );
-    com_command_readRemoteResetTime( );
-    nextDot( );
-    com_command_readRemoteRelay( );
-    nextDot( );
-    com_command_readRemoteStat( );
-    nextDot( );
-    //    com_command_readRemoteHL( );
+
+
+    //    com_command_readRemoteTime( );
     //    nextDot( );
-    com_command_readRemoteCBver( );
-    nextDot( );
-    com_command_readRemotePowerFailTimes( );
-    //    com_command_readRemotePowerDownUpTime( );
-    nextDot( );
+    //    debugBacklight( true );
+    //    com_command_readRemoteEnergyAllocation( );
+    //    nextDot( );
+    //    com_command_readRemoteAlarm( );
+    //    nextDot( );
+    //    com_command_readRemotePassword( );
+    //    nextDot( );
+    //    com_command_readRemoteEmergency( );
+    //    nextDot( );
+    //    com_command_readRemoteResetTime( );
+    //    nextDot( );
+    //    com_command_readRemoteRelay( );
+    //    nextDot( );
+    //    com_command_readRemoteStat( );
+    //    nextDot( );
+    //    //    com_command_readRemoteHL( );
+    //    //    nextDot( );
+    //    com_command_readRemoteCBver( );
+    //    nextDot( );
+    //    com_command_readRemotePowerFailTimes( );
+    //    //    com_command_readRemotePowerDownUpTime( );
+    //    nextDot( );
 }
 
 void periodicUpdate( void )
 {
-    static char lastPowerSecond = 0,
-	    lastOtherSecond = 0;
 
-    if( enablePeriodicUpdate )
+    static bool firstRun = true;
+    static int firstRunStep = 0;
+    static bool alreadyRun = false;
+    // every x seconds run one of the init requests
+    // when last request is run we will make it work
+
+    debugBacklight( true );
+
+    if( firstRun == true )
     {
-	// Refresh power every second
-	if( timeSecond != lastPowerSecond )
+	if( (timeSecond % 2) == 0 )
 	{
-	    com_command_readRemotePowerData( );
-	    lastPowerSecond = timeSecond;
+	    if( alreadyRun == false )
+	    {
+		alreadyRun = true;
+
+		firstRunStep++;
+		switch( firstRunStep )
+		{
+		case 1:
+		    com_command_readRemoteTime( );
+		    break;
+		case 2:
+		    com_command_readRemoteEnergyAllocation( );
+		    break;
+		case 3:
+		    com_command_readRemoteAlarm( );
+		    break;
+		case 4:
+		    com_command_readRemotePassword( );
+		    break;
+		case 5:
+		    com_command_readRemoteEmergency( );
+		    break;
+		case 6:
+		    com_command_readRemoteResetTime( );
+		    break;
+		case 7:
+		    com_command_readRemoteRelay( );
+		    break;
+		case 8:
+		    com_command_readRemoteStat( );
+		    break;
+		case 9:
+		    com_command_readRemoteCBver( );
+		    break;
+		case 10:
+		    com_command_readRemotePowerFailTimes( );
+		    break;
+		default:
+		    break;
+		    firstRun = false;
+		}
+
+	    }
 	}
-	// Refresh time and other settings every 10 seconds
-	if( timeSecond % 10 == 0 && timeSecond != lastOtherSecond )
+	else
 	{
-	    com_command_readRemoteTime( );
-	    readTime( );
-	    lastOtherSecond = timeSecond;
+	    alreadyRun = false;
 	}
     }
     else
     {
-	// Keep checking, but only every 10 seconds
-	if( timeSecond % 10 == 0 && timeSecond != lastPowerSecond )
+	debugBacklight( true );
+
+	static char lastPowerSecond = 0,
+		lastOtherSecond = 0;
+
+	if( enablePeriodicUpdate )
 	{
-	    com_command_readRemotePowerData( );
-	    lastPowerSecond = timeSecond;
+	    // Refresh power every second
+	    if( timeSecond != lastPowerSecond )
+	    {
+		com_command_readRemotePowerData( );
+		lastPowerSecond = timeSecond;
+	    }
+	    // Refresh time and other settings every 10 seconds
+	    if( timeSecond % 10 == 0 && timeSecond != lastOtherSecond )
+	    {
+		com_command_readRemoteTime( );
+		readTime( );
+		lastOtherSecond = timeSecond;
+	    }
+	}
+	else
+	{
+	    // Keep checking, but only every 10 seconds
+	    if( timeSecond % 10 == 0 && timeSecond != lastPowerSecond )
+	    {
+		com_command_readRemotePowerData( );
+		lastPowerSecond = timeSecond;
+	    }
 	}
     }
 }
@@ -401,7 +480,10 @@ void checkCommFailure( void )
     {
 	// no communication received for 1 minute
 	// display a message and reboot
-	BACKLIGHT = 1;
+	if( BACKLIGHT_NORMAL == true )
+	{
+	    BACKLIGHT = 1; // turn on backlight
+	}
 	writeToDisplay( "System will restart in 15 seconds due toa communication linkproblem.", 0, 80 );
 	for(;; );
     }
@@ -581,7 +663,10 @@ void __attribute__( (interrupt, no_auto_psv) ) _T2Interrupt( void )
 
     else if( BTN_0 || BTN_1 || BTN_2 || BTN_3 )
     {
-	BACKLIGHT = 1; // turn on backlight
+	if( BACKLIGHT_NORMAL == true )
+	{
+	    BACKLIGHT = 1; // turn on backlight
+	}
 	button0Flag = 2;
 	button1Flag = 2;
 	button2Flag = 2;
@@ -593,8 +678,25 @@ void __attribute__( (interrupt, no_auto_psv) ) _T2Interrupt( void )
     if( (timeMinute == resetTimeMinute) && (timeSecond == resetTimeSecond) && ((menuState != MENU_ALARM) || ((menuState == MENU_ALARM) && (remainingSets == 0))) && (menuState != MENU_DEBUG) && (!isBooting) )
     {
 	menuState = MENU_HOME_BASIC;
-	BACKLIGHT = 0; // turn off backlight
+	if( BACKLIGHT_NORMAL == true )
+	{
+	    BACKLIGHT = 0; // turn on backlight
+	}
     }
 
     _T2IF = 0; // clear interrupt flag
+}
+
+void debugBacklight( bool state )
+{
+    if( state == true )
+    {
+	BACKLIGHT = 1;
+    }
+    else
+    {
+	BACKLIGHT = 0;
+    }
+
+    return;
 }

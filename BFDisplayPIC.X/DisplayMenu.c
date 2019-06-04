@@ -312,7 +312,10 @@ void initDisplay( void )
 
     unsigned char i;
 
-    BACKLIGHT = 1; // turn on backlight
+    if( BACKLIGHT_NORMAL == true )
+    {
+	BACKLIGHT = 1; // turn on backlight
+    }
 
     // initialize starting arrays to 0
     for( i = 0; i < NUM_LCD_LINES * NUM_LCD_WIDTH; i++ )

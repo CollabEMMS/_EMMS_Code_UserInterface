@@ -54,7 +54,7 @@
         <targetDevice>PIC24FV32KA301</targetDevice>
         <targetHeader></targetHeader>
         <targetPluginBoard></targetPluginBoard>
-        <platformTool>PICkit3PlatformTool</platformTool>
+        <platformTool>pk4hybrid</platformTool>
         <languageToolchain>XC16</languageToolchain>
         <languageToolchainVersion>1.33</languageToolchainVersion>
         <platform>3</platform>
@@ -287,6 +287,9 @@
         <C30Global>
         </C30Global>
       </item>
+      <pk4hybrid>
+        <property key="debugoptions.useswbreakpoints" value="true"/>
+      </pk4hybrid>
     </conf>
   </confs>
 </configurationDescriptor>

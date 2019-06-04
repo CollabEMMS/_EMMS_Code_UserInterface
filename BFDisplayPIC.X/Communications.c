@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include "common.h"
 #include "Communications.h"
+#include "DisplayMain.h"
 #include "DisplayMenu.h"
 #include "DisplayRTCC.h"
 
@@ -19,7 +20,7 @@
 
 
 #define PARAMETER_MAX_COUNT 7
-#define PARAMETER_MAX_LENGTH 10
+#define PARAMETER_MAX_LENGTH 12
 
 //#define CHAR_NULL '\0'
 #define COMMAND_SEND_RECEIVE_PRIMER_CHAR '#' // something to run the SPI clock so data can be received
@@ -107,6 +108,7 @@ void readRemotePowerFailTimes( struct buffer *send_buffer );
 
 void readRemotePowerData( struct buffer *send_buffer );
 
+struct buffer * command_builder_external_helper( bool init, struct buffer *send_buffer );
 
 // not yet sorted
 void delayMS10( int count );
@@ -175,9 +177,9 @@ void communications( bool firstTime )
     {
 	//        SPISlaveInit();
 	initUART( );
-	send_buffer.write_position = 0;
-	send_buffer.read_position = 0;
+
 	resetCommunications( &send_buffer );
+	command_builder_external_helper( true, &send_buffer );
     }
     else
     {
@@ -241,9 +243,9 @@ void resetCommunications( struct buffer * send_buffer )
     //    SSP2CON1bits.WCOL = 0;
     //    SPI_transmit_wait = false;
 
+
     send_buffer->read_position = 0;
     send_buffer->write_position = 0;
-
 
     // set up command state machine
     // do we repeat a command if we did not hit END command?
@@ -300,6 +302,7 @@ enum receive_status receive_data( struct buffer * receive_buffer )
 	my_status = receive_waiting;
     }
 
+
     somethingReceived = UART_receive_data_char( &data );
 
     while( (somethingReceived == true) && (my_status != receive_end_command) )
@@ -326,6 +329,8 @@ enum receive_status receive_data( struct buffer * receive_buffer )
 	{
 	    my_status = receive_end_command;
 	}
+	somethingReceived = UART_receive_data_char( &data );
+
     }
 
     return my_status;
@@ -896,11 +901,15 @@ void command_builder_add_string( struct buffer *send_buffer, char *data_string )
 
 struct buffer * command_builder_external_helper( bool init, struct buffer *send_buffer )
 {
+
     static struct buffer *send_buffer_keep;
+
+
     if( init == true )
     {
 	send_buffer_keep = send_buffer;
     }
+
 
     return send_buffer_keep;
 }
@@ -908,6 +917,7 @@ struct buffer * command_builder_external_helper( bool init, struct buffer *send_
 bool send_data( struct buffer * send_buffer )
 {
     bool send_end;
+
 
     if( send_buffer->read_position == send_buffer->write_position )
     {
@@ -921,7 +931,6 @@ bool send_data( struct buffer * send_buffer )
 
 	if( UART_send_data_char( send_buffer->data_buffer[send_buffer->read_position] ) == true )
 	{
-
 	    send_buffer->read_position++;
 	    if( send_buffer->read_position >= BUFFER_LENGTH )
 	    {
@@ -1025,16 +1034,18 @@ bool UART_receive_data_char( char *data )
 
     bool recvGood = false;
 
-    if( uartBufferLarge > 0 )
+    if( uartBufferLargeCount > 0 )
     {
 	*data = uartBufferLarge[0];
 	recvGood = true;
 
-	for( int inx = uartBufferLargeCount; inx >= 1; uartBufferLargeCount-- )
-	{
-	    uartBufferLarge[ inx] = uartBufferLarge [inx - 1];
-	}
 	uartBufferLargeCount--;
+
+	for( int inx = 0; inx < uartBufferLargeCount; inx++ )
+	{
+	    uartBufferLarge[ inx] = uartBufferLarge[ inx + 1];
+	}
+
 
     }
 
@@ -1211,7 +1222,7 @@ void com_command_readRemoteTime( void )
 
     send_buffer = command_builder_external_helper( false, NULL );
 
-    readRemoteAlarm( send_buffer );
+    readRemoteTime( send_buffer );
 
     return;
 }

@@ -10,6 +10,7 @@
 
 #define DISPLAY_BOX_CODE_VERSION "20190529"
 
+void debugBacklight( bool state );
 
 #endif	/* DISPLAYMAIN_H */
 

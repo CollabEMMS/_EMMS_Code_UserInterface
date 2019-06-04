@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <project>
-  <executable name="dist/default/production/BFDisplayPIC.X.production.elf">
+  <executable name="dist/default/debug/BFDisplayPIC.X.debug.elf">
     <memory name="data">
       <units>bytes</units>
       <length>2048</length>
-      <used>534</used>
-      <free>1514</free>
+      <used>608</used>
+      <free>1440</free>
     </memory>
     <memory name="program">
       <units>bytes</units>
       <length>33024</length>
-      <used>26406</used>
-      <free>6618</free>
+      <used>26256</used>
+      <free>6768</free>
     </memory>
   </executable>
 </project>

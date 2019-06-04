@@ -4,7 +4,7 @@
  ****************/
 #include "common.h"
 #include "Communications.h"
-
+#include "DisplayMain.h"
 /****************
  MACROS
  ****************/
@@ -60,10 +60,12 @@ void delayMS( unsigned int a )
 
 void commDelay( unsigned int a )
 {
-    unsigned int i;
 
-    for( i = 0; i < a; i++ )
+    for( int i = 0; i < a; i++ )
+    {
 	// FIX
 	communications( false );
-    //	commFunctions();
+
+	//	commFunctions();
+    }
 }

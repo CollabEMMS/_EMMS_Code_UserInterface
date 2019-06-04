@@ -6,7 +6,7 @@ Tool Name:
 Command:
   -p24FV32KA301 \
   -o \
-  dist/default/production/BFDisplayPIC.X.production.elf \
+  dist/default/debug/BFDisplayPIC.X.debug.elf \
   -Lc:/program files (x86)/microchip/xc16/v1.33/bin/bin/.. \
   -Lc:/program files (x86)/microchip/xc16/v1.33/bin/bin/../../lib \
   -Lc:/program files (x86)/microchip/xc16/v1.33/bin/bin/../../support/PIC24E/gld \
@@ -16,16 +16,23 @@ Command:
   -Lc:/program files (x86)/microchip/xc16/v1.33/bin/bin/../../support/dsPIC33C/gld \
   -Lc:/program files (x86)/microchip/xc16/v1.33/bin/bin/../../support/dsPIC33E/gld \
   -Lc:/program files (x86)/microchip/xc16/v1.33/bin/bin/../../support/dsPIC33F/gld \
-  build/default/production/DisplayMain.o \
-  build/default/production/DisplayConfiguration.o \
-  build/default/production/DisplayMenu.o \
-  build/default/production/DisplayRTCC.o \
-  build/default/production/Delays.o \
-  build/default/production/Watchdog.o \
-  build/default/production/Communications.o \
-  build/default/production/REM_DisplayUART.o \
+  build/default/debug/DisplayMain.o \
+  build/default/debug/DisplayConfiguration.o \
+  build/default/debug/DisplayMenu.o \
+  build/default/debug/DisplayRTCC.o \
+  build/default/debug/Delays.o \
+  build/default/debug/Watchdog.o \
+  build/default/debug/Communications.o \
+  build/default/debug/REM_DisplayUART.o \
+  -TC:\\Users\\Austin\\AppData\\Local\\Temp\\tmp000025f8.00 \
+  -TC:\\Users\\Austin\\AppData\\Local\\Temp\\tmp000025f8.01 \
+  -TC:\\Users\\Austin\\AppData\\Local\\Temp\\tmp000025f8.02 \
+  -TC:\\Users\\Austin\\AppData\\Local\\Temp\\tmp000025f8.03 \
+  -TC:\\Users\\Austin\\AppData\\Local\\Temp\\tmp000025f8.04 \
   --defsym=__MPLAB_BUILD=1 \
-  -Tp24FV32KA301.gld.00 \
+  --defsym=__MPLAB_DEBUG=1 \
+  --defsym=__DEBUG=1 \
+  -Tp24FV32KA301.gld.05 \
   --stack=16 \
   --check-sections \
   --data-init \
@@ -37,10 +44,10 @@ Command:
   --stackguard=16 \
   --no-force-link \
   --smart-io \
-  -Map=dist/default/production/BFDisplayPIC.X.production.map \
+  -Map=dist/default/debug/BFDisplayPIC.X.debug.map \
   --report-mem \
   --memorysummary \
-  dist/default/production/memoryfile.xml \
+  dist/default/debug/memoryfile.xml \
   -start-group \
   --library=pic30-elf \
   --library=m-elf \
@@ -58,17 +65,17 @@ c:/program files (x86)/microchip/xc16/v1.33/bin/bin/../../lib\libpic30-elf.a(dat
 c:/program files (x86)/microchip/xc16/v1.33/bin/bin/../../lib\libpic30-elf.a(crt_start_mode_normal.eo)
                               (__crt_start_mode_normal)
 c:/program files (x86)/microchip/xc16/v1.33/bin/bin/../../lib\libm-elf.a(udivsi3.eo)
-                              build/default/production/DisplayMenu.o (___udivsi3)
+                              build/default/debug/DisplayMenu.o (___udivsi3)
 c:/program files (x86)/microchip/xc16/v1.33/bin/bin/../../lib\libm-elf.a(umodsi3.eo)
-                              build/default/production/DisplayMenu.o (___umodsi3)
+                              build/default/debug/DisplayMenu.o (___umodsi3)
 c:/program files (x86)/microchip/xc16/v1.33/bin/bin/../../lib\libc-elf.a(atoi.eo)
-                              build/default/production/Communications.o (_atoi)
+                              build/default/debug/Communications.o (_atoi)
 c:/program files (x86)/microchip/xc16/v1.33/bin/bin/../../lib\libc-elf.a(atol.eo)
-                              build/default/production/Communications.o (_atol)
+                              build/default/debug/Communications.o (_atol)
 c:/program files (x86)/microchip/xc16/v1.33/bin/bin/../../lib\libc-elf.a(itoa.eo)
-                              build/default/production/DisplayMenu.o (_itoa)
+                              build/default/debug/DisplayMenu.o (_itoa)
 c:/program files (x86)/microchip/xc16/v1.33/bin/bin/../../lib\libc-elf.a(ltoa.eo)
-                              build/default/production/DisplayMenu.o (_ultoa)
+                              build/default/debug/DisplayMenu.o (_ultoa)
 c:/program files (x86)/microchip/xc16/v1.33/bin/bin/../../lib\libm-elf.a(mulsi3.eo)
                               c:/program files (x86)/microchip/xc16/v1.33/bin/bin/../../lib\libc-elf.a(atol.eo) (___mulsi3)
 
@@ -103,11 +110,11 @@ section                    address   length (PC units)   length (bytes) (dec)
 -------                    -------   -----------------   --------------------
 .text                        0x200               0x5c4           0x8a6  (2214)
 .const                       0x7c4               0x93a           0xdd7  (3543)
-.text                       0x10fe              0x3594          0x505e  (20574)
-.dinit                      0x4692                0x2a            0x3f  (63)
-.text                       0x46bc                 0x8             0xc  (12)
+.text                       0x10fe              0x3538          0x4fd4  (20436)
+.dinit                      0x4636                0x22            0x33  (51)
+.text                       0x4658                 0x8             0xc  (12)
 
-                 Total program memory used (bytes):         0x6726  (26406) 79%
+                 Total program memory used (bytes):         0x6690  (26256) 79%
 
 
 Ivt Memory  [Origin = 0x4, Length = 0xfc]
@@ -124,10 +131,15 @@ Data Memory  [Origin = 0x800, Length = 0x800]
 
 section                    address      alignment gaps    total length  (dec)
 -------                    -------      --------------    -------------------
-.nbss                        0x800                   0           0x212  (530)
-.ndata                       0xa12                   0             0x4  (4)
+reserve_data_0x800           0x800                0x20            0x20  (32)
+reserve_data_0x820           0x820                 0x2             0x2  (2)
+reserve_data_0x822           0x822                 0x2             0x2  (2)
+reserve_data_0x824           0x824                 0x2             0x2  (2)
+reserve_data_0x826           0x826                0x2a            0x2a  (42)
+.nbss                        0x850                   0           0x20e  (526)
+.ndata                       0xa5e                   0             0x2  (2)
 
-                 Total data memory used (bytes):          0x216  (534) 26%
+                 Total data memory used (bytes):          0x260  (608) 29%
 
 
 Dynamic Memory Usage
@@ -135,208 +147,208 @@ Dynamic Memory Usage
 region                     address                      maximum length  (dec)
 ------                     -------                      ---------------------
 heap                             0                                   0  (0)
-stack                        0xa16                               0x5ea  (1514)
+stack                        0xa60                               0x5a0  (1440)
 
-                 Maximum dynamic memory (bytes):          0x5ea  (1514)
+                 Maximum dynamic memory (bytes):          0x5a0  (1440)
 
 
 External Symbols in Data Memory (by address):
 
-                    0x0800                  _passwordSet
-                    0x0806                  _previousDayUsed
-                    0x080a                  _totalUsed
-                    0x080e                  _audibleAlarm
-                    0x080f                  _alarm1Enabled
-                    0x0810                  _alarm2Enabled
-                    0x0811                  _alarm1Energy
-                    0x0812                  _alarm2Energy
-                    0x0813                  _emerButtonEnable
-                    0x0814                  _resetTimeHour
-                    0x0815                  _resetTimeMinute
-                    0x0816                  _tempResetHour
-                    0x0817                  _tempResetMinute
-                    0x0818                  _tempIsHigh
-                    0x0819                  _oldPowerMenuState
-                    0x081a                  _emerButtonEnergyAllocate
-                    0x081c                  _emerButtonAllocTemp
-                    0x081e                  _emerAllocNow
-                    0x0820                  _emerAllocSend
-                    0x0822                  _powerDownTime
-                    0x082e                  _powerUpTime
-                    0x083a                  _powerBoxCodeVersionString
-                    0x0843                  _passwordInput
-                    0x0849                  _newPassword
-                    0x0855                  _pwLength
-                    0x0856                  _homeBasicAlternate
-                    0x0857                  _barGraph
-                    0x086c                  _tempResetTimeString
-                    0x0872                  _timeRemHour
-                    0x0873                  _timeRemMinute
-                    0x0874                  _timeRemSecond
-                    0x0875                  _timeRemUpdate
-                    0x0876                  _timeRem1
-                    0x087a                  _timeRem2
-                    0x087e                  _timeRem3
-                    0x0882                  _timeRem4
-                    0x0886                  _timeRem5
-                    0x088a                  _timeRemainingString
-                    0x0893                  _currentDisplay
-                    0x08e4                  _nextDisplay
-                    0x0935                  _menuState
-                    0x0936                  _oldMenuState
-                    0x0937                  _lastUpdateSecond
-                    0x0938                  _lastUpdateMinute
-                    0x0939                  _enablePeriodicUpdate
-                    0x093a                  _activeAlarm
-                    0x093b                  _alarmToResume
-                    0x093c                  _rightArrow
-                    0x093e                  _tempPercent
-                    0x093f                  _silenceAlarmOne
-                    0x0940                  _silenceAlarmTwo
-                    0x0941                  _remainingSets
-                    0x0942                  _powerLoad
-                    0x0946                  _energyUsed
-                    0x094a                  _energyAllocated
-                    0x094e                  _lowAlloc
-                    0x0952                  _highAlloc
-                    0x0956                  _tempAlloc
-                    0x095a                  _percentRem
-                    0x095b                  _button0Flag
-                    0x095c                  _button1Flag
-                    0x095d                  _button2Flag
-                    0x095e                  _button3Flag
-                    0x095f                  _relayActive
-                    0x0960                  _tempRelayActive
-                    0x0961                  _isBooting
-                    0x0962                  _alarmOneHit
-                    0x0963                  _alarmTwoHit
-                    0x0964                  _SPI_transmit_wait
-                    0x0965                  _uartBufferLarge
-                    0x096f                  _uartBufferLargeCount
-                    0x09cc                  _timeYear
-                    0x09cd                  _timeMonth
-                    0x09ce                  _timeDay
-                    0x09cf                  _timeWeekday
-                    0x09d0                  _timeHour
-                    0x09d1                  _timeMinute
-                    0x09d2                  _timeSecond
-                    0x09d3                  _resetTimeSecond
-                    0x09d4                  _clockStr
-                    0x09da                  _calendarStr
-                    0x09e3                  _timeSetPos
-                    0x09e4                  _tempHour
-                    0x09e5                  _tempMin
-                    0x09e6                  _tempMonth
-                    0x09e7                  _tempDay
-                    0x09e8                  _tempYear
-                    0x09e9                  _tempClockStr
-                    0x09f3                  _tempCalStr
-                    0x0a02                  _commError
-                    0x0a03                  _commErrorTime
-                    0x0a04                  _alarmEnd
-                    0x0a05                  _alarmPulse
-                    0x0a06                  _numBeeps
-                    0x0a07                  _numSets
-                    0x0a14                  _isHigh
+                    0x0850                  _passwordSet
+                    0x0856                  _previousDayUsed
+                    0x085a                  _totalUsed
+                    0x085e                  _audibleAlarm
+                    0x085f                  _alarm1Enabled
+                    0x0860                  _alarm2Enabled
+                    0x0861                  _alarm1Energy
+                    0x0862                  _alarm2Energy
+                    0x0863                  _emerButtonEnable
+                    0x0864                  _resetTimeHour
+                    0x0865                  _resetTimeMinute
+                    0x0866                  _tempResetHour
+                    0x0867                  _tempResetMinute
+                    0x0868                  _tempIsHigh
+                    0x0869                  _oldPowerMenuState
+                    0x086a                  _emerButtonEnergyAllocate
+                    0x086c                  _emerButtonAllocTemp
+                    0x086e                  _emerAllocNow
+                    0x0870                  _emerAllocSend
+                    0x0872                  _powerDownTime
+                    0x087e                  _powerUpTime
+                    0x088a                  _powerBoxCodeVersionString
+                    0x0893                  _passwordInput
+                    0x0899                  _newPassword
+                    0x08a5                  _pwLength
+                    0x08a6                  _homeBasicAlternate
+                    0x08a7                  _barGraph
+                    0x08bc                  _tempResetTimeString
+                    0x08c2                  _timeRemHour
+                    0x08c3                  _timeRemMinute
+                    0x08c4                  _timeRemSecond
+                    0x08c5                  _timeRemUpdate
+                    0x08c6                  _timeRem1
+                    0x08ca                  _timeRem2
+                    0x08ce                  _timeRem3
+                    0x08d2                  _timeRem4
+                    0x08d6                  _timeRem5
+                    0x08da                  _timeRemainingString
+                    0x08e3                  _currentDisplay
+                    0x0934                  _nextDisplay
+                    0x0985                  _menuState
+                    0x0986                  _oldMenuState
+                    0x0987                  _lastUpdateSecond
+                    0x0988                  _lastUpdateMinute
+                    0x0989                  _enablePeriodicUpdate
+                    0x098a                  _activeAlarm
+                    0x098b                  _alarmToResume
+                    0x098c                  _rightArrow
+                    0x098e                  _tempPercent
+                    0x098f                  _silenceAlarmOne
+                    0x0990                  _silenceAlarmTwo
+                    0x0991                  _remainingSets
+                    0x0992                  _powerLoad
+                    0x0996                  _energyUsed
+                    0x099a                  _energyAllocated
+                    0x099e                  _lowAlloc
+                    0x09a2                  _highAlloc
+                    0x09a6                  _tempAlloc
+                    0x09aa                  _percentRem
+                    0x09ab                  _button0Flag
+                    0x09ac                  _button1Flag
+                    0x09ad                  _button2Flag
+                    0x09ae                  _button3Flag
+                    0x09af                  _relayActive
+                    0x09b0                  _tempRelayActive
+                    0x09b1                  _isBooting
+                    0x09b2                  _alarmOneHit
+                    0x09b3                  _alarmTwoHit
+                    0x09b4                  _SPI_transmit_wait
+                    0x09b5                  _uartBufferLarge
+                    0x09bf                  _uartBufferLargeCount
+                    0x0a1c                  _timeYear
+                    0x0a1d                  _timeMonth
+                    0x0a1e                  _timeDay
+                    0x0a1f                  _timeWeekday
+                    0x0a20                  _timeHour
+                    0x0a21                  _timeMinute
+                    0x0a22                  _timeSecond
+                    0x0a23                  _resetTimeSecond
+                    0x0a24                  _clockStr
+                    0x0a2a                  _calendarStr
+                    0x0a33                  _timeSetPos
+                    0x0a34                  _tempHour
+                    0x0a35                  _tempMin
+                    0x0a36                  _tempMonth
+                    0x0a37                  _tempDay
+                    0x0a38                  _tempYear
+                    0x0a39                  _tempClockStr
+                    0x0a43                  _tempCalStr
+                    0x0a52                  _commError
+                    0x0a53                  _commErrorTime
+                    0x0a54                  _alarmEnd
+                    0x0a55                  _alarmPulse
+                    0x0a56                  _numBeeps
+                    0x0a57                  _numSets
+                    0x0a5e                  _isHigh
 
 External Symbols in Data Memory (by name):
 
-                    0x0964                  _SPI_transmit_wait
-                    0x093a                  _activeAlarm
-                    0x080f                  _alarm1Enabled
-                    0x0811                  _alarm1Energy
-                    0x0810                  _alarm2Enabled
-                    0x0812                  _alarm2Energy
-                    0x0a04                  _alarmEnd
-                    0x0962                  _alarmOneHit
-                    0x0a05                  _alarmPulse
-                    0x093b                  _alarmToResume
-                    0x0963                  _alarmTwoHit
-                    0x080e                  _audibleAlarm
-                    0x0857                  _barGraph
-                    0x095b                  _button0Flag
-                    0x095c                  _button1Flag
-                    0x095d                  _button2Flag
-                    0x095e                  _button3Flag
-                    0x09da                  _calendarStr
-                    0x09d4                  _clockStr
-                    0x0a02                  _commError
-                    0x0a03                  _commErrorTime
-                    0x0893                  _currentDisplay
-                    0x081e                  _emerAllocNow
-                    0x0820                  _emerAllocSend
-                    0x081c                  _emerButtonAllocTemp
-                    0x0813                  _emerButtonEnable
-                    0x081a                  _emerButtonEnergyAllocate
-                    0x0939                  _enablePeriodicUpdate
-                    0x094a                  _energyAllocated
-                    0x0946                  _energyUsed
-                    0x0952                  _highAlloc
-                    0x0856                  _homeBasicAlternate
-                    0x0961                  _isBooting
-                    0x0a14                  _isHigh
-                    0x0938                  _lastUpdateMinute
-                    0x0937                  _lastUpdateSecond
-                    0x094e                  _lowAlloc
-                    0x0935                  _menuState
-                    0x0849                  _newPassword
-                    0x08e4                  _nextDisplay
-                    0x0a06                  _numBeeps
-                    0x0a07                  _numSets
-                    0x0936                  _oldMenuState
-                    0x0819                  _oldPowerMenuState
-                    0x0843                  _passwordInput
-                    0x0800                  _passwordSet
-                    0x095a                  _percentRem
-                    0x083a                  _powerBoxCodeVersionString
-                    0x0822                  _powerDownTime
-                    0x0942                  _powerLoad
-                    0x082e                  _powerUpTime
-                    0x0806                  _previousDayUsed
-                    0x0855                  _pwLength
-                    0x095f                  _relayActive
-                    0x0941                  _remainingSets
-                    0x0814                  _resetTimeHour
-                    0x0815                  _resetTimeMinute
-                    0x09d3                  _resetTimeSecond
-                    0x093c                  _rightArrow
-                    0x093f                  _silenceAlarmOne
-                    0x0940                  _silenceAlarmTwo
-                    0x0956                  _tempAlloc
-                    0x09f3                  _tempCalStr
-                    0x09e9                  _tempClockStr
-                    0x09e7                  _tempDay
-                    0x09e4                  _tempHour
-                    0x0818                  _tempIsHigh
-                    0x09e5                  _tempMin
-                    0x09e6                  _tempMonth
-                    0x093e                  _tempPercent
-                    0x0960                  _tempRelayActive
-                    0x0816                  _tempResetHour
-                    0x0817                  _tempResetMinute
-                    0x086c                  _tempResetTimeString
-                    0x09e8                  _tempYear
-                    0x09ce                  _timeDay
-                    0x09d0                  _timeHour
-                    0x09d1                  _timeMinute
-                    0x09cd                  _timeMonth
-                    0x0876                  _timeRem1
-                    0x087a                  _timeRem2
-                    0x087e                  _timeRem3
-                    0x0882                  _timeRem4
-                    0x0886                  _timeRem5
-                    0x0872                  _timeRemHour
-                    0x0873                  _timeRemMinute
-                    0x0874                  _timeRemSecond
-                    0x0875                  _timeRemUpdate
-                    0x088a                  _timeRemainingString
-                    0x09d2                  _timeSecond
-                    0x09e3                  _timeSetPos
-                    0x09cf                  _timeWeekday
-                    0x09cc                  _timeYear
-                    0x080a                  _totalUsed
-                    0x0965                  _uartBufferLarge
-                    0x096f                  _uartBufferLargeCount
+                    0x09b4                  _SPI_transmit_wait
+                    0x098a                  _activeAlarm
+                    0x085f                  _alarm1Enabled
+                    0x0861                  _alarm1Energy
+                    0x0860                  _alarm2Enabled
+                    0x0862                  _alarm2Energy
+                    0x0a54                  _alarmEnd
+                    0x09b2                  _alarmOneHit
+                    0x0a55                  _alarmPulse
+                    0x098b                  _alarmToResume
+                    0x09b3                  _alarmTwoHit
+                    0x085e                  _audibleAlarm
+                    0x08a7                  _barGraph
+                    0x09ab                  _button0Flag
+                    0x09ac                  _button1Flag
+                    0x09ad                  _button2Flag
+                    0x09ae                  _button3Flag
+                    0x0a2a                  _calendarStr
+                    0x0a24                  _clockStr
+                    0x0a52                  _commError
+                    0x0a53                  _commErrorTime
+                    0x08e3                  _currentDisplay
+                    0x086e                  _emerAllocNow
+                    0x0870                  _emerAllocSend
+                    0x086c                  _emerButtonAllocTemp
+                    0x0863                  _emerButtonEnable
+                    0x086a                  _emerButtonEnergyAllocate
+                    0x0989                  _enablePeriodicUpdate
+                    0x099a                  _energyAllocated
+                    0x0996                  _energyUsed
+                    0x09a2                  _highAlloc
+                    0x08a6                  _homeBasicAlternate
+                    0x09b1                  _isBooting
+                    0x0a5e                  _isHigh
+                    0x0988                  _lastUpdateMinute
+                    0x0987                  _lastUpdateSecond
+                    0x099e                  _lowAlloc
+                    0x0985                  _menuState
+                    0x0899                  _newPassword
+                    0x0934                  _nextDisplay
+                    0x0a56                  _numBeeps
+                    0x0a57                  _numSets
+                    0x0986                  _oldMenuState
+                    0x0869                  _oldPowerMenuState
+                    0x0893                  _passwordInput
+                    0x0850                  _passwordSet
+                    0x09aa                  _percentRem
+                    0x088a                  _powerBoxCodeVersionString
+                    0x0872                  _powerDownTime
+                    0x0992                  _powerLoad
+                    0x087e                  _powerUpTime
+                    0x0856                  _previousDayUsed
+                    0x08a5                  _pwLength
+                    0x09af                  _relayActive
+                    0x0991                  _remainingSets
+                    0x0864                  _resetTimeHour
+                    0x0865                  _resetTimeMinute
+                    0x0a23                  _resetTimeSecond
+                    0x098c                  _rightArrow
+                    0x098f                  _silenceAlarmOne
+                    0x0990                  _silenceAlarmTwo
+                    0x09a6                  _tempAlloc
+                    0x0a43                  _tempCalStr
+                    0x0a39                  _tempClockStr
+                    0x0a37                  _tempDay
+                    0x0a34                  _tempHour
+                    0x0868                  _tempIsHigh
+                    0x0a35                  _tempMin
+                    0x0a36                  _tempMonth
+                    0x098e                  _tempPercent
+                    0x09b0                  _tempRelayActive
+                    0x0866                  _tempResetHour
+                    0x0867                  _tempResetMinute
+                    0x08bc                  _tempResetTimeString
+                    0x0a38                  _tempYear
+                    0x0a1e                  _timeDay
+                    0x0a20                  _timeHour
+                    0x0a21                  _timeMinute
+                    0x0a1d                  _timeMonth
+                    0x08c6                  _timeRem1
+                    0x08ca                  _timeRem2
+                    0x08ce                  _timeRem3
+                    0x08d2                  _timeRem4
+                    0x08d6                  _timeRem5
+                    0x08c2                  _timeRemHour
+                    0x08c3                  _timeRemMinute
+                    0x08c4                  _timeRemSecond
+                    0x08c5                  _timeRemUpdate
+                    0x08da                  _timeRemainingString
+                    0x0a22                  _timeSecond
+                    0x0a33                  _timeSetPos
+                    0x0a1f                  _timeWeekday
+                    0x0a1c                  _timeYear
+                    0x085a                  _totalUsed
+                    0x09b5                  _uartBufferLarge
+                    0x09bf                  _uartBufferLargeCount
 
 External Symbols in Program Memory (by address):
 
@@ -474,43 +486,43 @@ External Symbols in Program Memory (by address):
                   0x003d78                  _readRemotePowerFailTimes
                   0x003d88                  _com_command_readRemotePowerData
                   0x003d9a                  _readRemotePowerData
-                  0x003daa                  _com_command_readRemoteEnergy
-                  0x003db0                  _com_command_readUpdate
-                  0x003db6                  _com_command_doReset
-                  0x003dbc                  _initUART
-                  0x003e0e                  _main
-                  0x003e50                  _init
-                  0x003e7a                  _initVars
-                  0x003ee0                  _initPorts
-                  0x003efe                  _enablePullDownResistors
-                  0x003f0c                  _enableInterrupts
-                  0x003f18                  _disableInterrupts
-                  0x003f26                  _enableAlarm
-                  0x004042                  _startAlarm
-                  0x0040b4                  _nextDot
-                  0x0040ce                  _initDisplayBox
-                  0x0040dc                  _periodicUpdate
-                  0x0041d8                  _checkCommFailure
-                  0x004206                  _initRTCCDisplay
-                  0x004222                  _initTimer
-                  0x004244                  _writeClockStrings
-                  0x00431a                  _writeTempClockStrings
-                  0x004490                  _debugBacklight
-                  0x0044a4                  _readTime
-                  0x004506                  _writeTime
-                  0x0045d0                  _BcdToDec
-                  0x004600                  _DecToBcd
-                  0x004632                  _delayFourUS
-                  0x00464a                  _delayMS
-                  0x004676                  _commDelay
-                  0x0046bc                  _resetWDT
+                  0x003dac                  _com_command_readRemoteEnergy
+                  0x003db2                  _com_command_readUpdate
+                  0x003db8                  _com_command_doReset
+                  0x003dbe                  _initUART
+                  0x003e10                  _main
+                  0x003e52                  _init
+                  0x003e7c                  _initVars
+                  0x003ee2                  _initPorts
+                  0x003f00                  _enablePullDownResistors
+                  0x003f0e                  _enableInterrupts
+                  0x003f1a                  _disableInterrupts
+                  0x003f28                  _enableAlarm
+                  0x004044                  _startAlarm
+                  0x0040b6                  _nextDot
+                  0x0040d0                  _initDisplayBox
+                  0x00410a                  _periodicUpdate
+                  0x00417c                  _checkCommFailure
+                  0x0041aa                  _initRTCCDisplay
+                  0x0041c6                  _initTimer
+                  0x0041e8                  _writeClockStrings
+                  0x0042be                  _writeTempClockStrings
+                  0x004434                  _debugBacklight
+                  0x004448                  _readTime
+                  0x0044aa                  _writeTime
+                  0x004574                  _BcdToDec
+                  0x0045a4                  _DecToBcd
+                  0x0045d6                  _delayFourUS
+                  0x0045ee                  _delayMS
+                  0x00461a                  _commDelay
+                  0x004658                  _resetWDT
                   0xf80000                  __FBS.sec
                   0xf80004                  __FGS.sec
 
 External Symbols in Program Memory (by name):
 
-                  0x0045d0                  _BcdToDec
-                  0x004600                  _DecToBcd
+                  0x004574                  _BcdToDec
+                  0x0045a4                  _DecToBcd
                   0x003978                  _UART_receive_data_char
                   0x0039c6                  _UART_send_data_char
                   0x00063c                  __DefaultInterrupt
@@ -533,13 +545,13 @@ External Symbols in Program Memory (by name):
                   0x0006a6                  _atol
                   0x002cae                  _calcPercentRem
                   0x002d08                  _calcTimeRemaining
-                  0x0041d8                  _checkCommFailure
+                  0x00417c                  _checkCommFailure
                   0x003906                  _checkOnOff
-                  0x003db6                  _com_command_doReset
+                  0x003db8                  _com_command_doReset
                   0x003b1c                  _com_command_readRemoteAlarm
                   0x003d44                  _com_command_readRemoteCBver
                   0x003c0a                  _com_command_readRemoteEmergency
-                  0x003daa                  _com_command_readRemoteEnergy
+                  0x003dac                  _com_command_readRemoteEnergy
                   0x003acc                  _com_command_readRemoteEnergyAllocation
                   0x003ba8                  _com_command_readRemotePassword
                   0x003d88                  _com_command_readRemotePowerData
@@ -548,7 +560,7 @@ External Symbols in Program Memory (by name):
                   0x003c66                  _com_command_readRemoteResetTime
                   0x003d22                  _com_command_readRemoteStat
                   0x0039f6                  _com_command_readRemoteTime
-                  0x003db0                  _com_command_readUpdate
+                  0x003db2                  _com_command_readUpdate
                   0x003b3e                  _com_command_setRemoteAlarm
                   0x003c2c                  _com_command_setRemoteEmergency
                   0x003aee                  _com_command_setRemoteEnergyAllocation
@@ -556,7 +568,7 @@ External Symbols in Program Memory (by name):
                   0x003cf4                  _com_command_setRemoteRelay
                   0x003c88                  _com_command_setRemoteResetTime
                   0x003a18                  _com_command_setRemoteTime
-                  0x004676                  _commDelay
+                  0x00461a                  _commDelay
                   0x003546                  _command_builder1
                   0x00356e                  _command_builder2
                   0x0035a4                  _command_builder3
@@ -568,30 +580,30 @@ External Symbols in Program Memory (by name):
                   0x0037b4                  _command_builder_add_string
                   0x0037e0                  _command_builder_external_helper
                   0x002e88                  _communications
-                  0x004490                  _debugBacklight
-                  0x004632                  _delayFourUS
-                  0x00464a                  _delayMS
-                  0x003f18                  _disableInterrupts
+                  0x004434                  _debugBacklight
+                  0x0045d6                  _delayFourUS
+                  0x0045ee                  _delayMS
+                  0x003f1a                  _disableInterrupts
                   0x0010fe                  _dspCommand
                   0x001164                  _dspNibble
                   0x0011ea                  _dspSetP1
                   0x001124                  _dspWrite
                   0x001146                  _dspWriteMessage
-                  0x003f26                  _enableAlarm
-                  0x003f0c                  _enableInterrupts
-                  0x003efe                  _enablePullDownResistors
+                  0x003f28                  _enableAlarm
+                  0x003f0e                  _enableInterrupts
+                  0x003f00                  _enablePullDownResistors
                   0x003932                  _fillOnOff
-                  0x003e50                  _init
+                  0x003e52                  _init
                   0x001172                  _initDisplay
-                  0x0040ce                  _initDisplayBox
-                  0x003ee0                  _initPorts
-                  0x004206                  _initRTCCDisplay
-                  0x004222                  _initTimer
-                  0x003dbc                  _initUART
-                  0x003e7a                  _initVars
+                  0x0040d0                  _initDisplayBox
+                  0x003ee2                  _initPorts
+                  0x0041aa                  _initRTCCDisplay
+                  0x0041c6                  _initTimer
+                  0x003dbe                  _initUART
+                  0x003e7c                  _initVars
                   0x000730                  _itoa
                   0x000798                  _ltoa
-                  0x003e0e                  _main
+                  0x003e10                  _main
                   0x001f24                  _menuAbout
                   0x00208c                  _menuAdmin1
                   0x0020dc                  _menuAdmin2
@@ -632,8 +644,8 @@ External Symbols in Program Memory (by name):
                   0x00222c                  _menuSetTime
                   0x002a38                  _menuShutOffWarning
                   0x001e98                  _menuStatistics
-                  0x0040b4                  _nextDot
-                  0x0040dc                  _periodicUpdate
+                  0x0040b6                  _nextDot
+                  0x00410a                  _periodicUpdate
                   0x002f74                  _process_data
                   0x002f8e                  _process_data_parameterize
                   0x003060                  _process_data_parameters
@@ -648,10 +660,10 @@ External Symbols in Program Memory (by name):
                   0x003c78                  _readRemoteResetTime
                   0x003d34                  _readRemoteStat
                   0x003a08                  _readRemoteTime
-                  0x0044a4                  _readTime
+                  0x004448                  _readTime
                   0x002eec                  _receive_data
                   0x002ed8                  _resetCommunications
-                  0x0046bc                  _resetWDT
+                  0x004658                  _resetWDT
                   0x0037f6                  _send_data
                   0x0039e8                  _send_end_of_transmission
                   0x003b50                  _setRemoteAlarm
@@ -664,16 +676,16 @@ External Symbols in Program Memory (by name):
                   0x0007c4                  _softKeys0
                   0x0007d9                  _softKeys1
                   0x0007ee                  _softKeys2
-                  0x004042                  _startAlarm
+                  0x004044                  _startAlarm
                   0x003864                  _strcmp2
                   0x003844                  _strmatch
                   0x00074c                  _ultoa
                   0x00136a                  _updateMenu
                   0x0006fc                  _utoa
                   0x002c4e                  _writeBarGraph
-                  0x004244                  _writeClockStrings
-                  0x00431a                  _writeTempClockStrings
-                  0x004506                  _writeTime
+                  0x0041e8                  _writeClockStrings
+                  0x0042be                  _writeTempClockStrings
+                  0x0044aa                  _writeTime
                   0x001262                  _writeToDisplay
 
 Memory Configuration
@@ -698,15 +710,42 @@ FDS              0xf80010           0x000002
 
 Linker script and memory map
 
-LOAD build/default/production/DisplayMain.o
-LOAD build/default/production/DisplayConfiguration.o
-LOAD build/default/production/DisplayMenu.o
-LOAD build/default/production/DisplayRTCC.o
-LOAD build/default/production/Delays.o
-LOAD build/default/production/Watchdog.o
-LOAD build/default/production/Communications.o
-LOAD build/default/production/REM_DisplayUART.o
+LOAD build/default/debug/DisplayMain.o
+LOAD build/default/debug/DisplayConfiguration.o
+LOAD build/default/debug/DisplayMenu.o
+LOAD build/default/debug/DisplayRTCC.o
+LOAD build/default/debug/Delays.o
+LOAD build/default/debug/Watchdog.o
+LOAD build/default/debug/Communications.o
+LOAD build/default/debug/REM_DisplayUART.o
+
+reserve_data_0x800
+                    0x0800         0x20
+                    0x0820                  . = 0x20
+ *fill*             0x0800         0x2000
+
+reserve_data_0x820
+                    0x0820          0x2
+                    0x0822                  . = 0x2
+ *fill*             0x0820          0x200
+
+reserve_data_0x822
+                    0x0822          0x2
+                    0x0824                  . = 0x2
+ *fill*             0x0822          0x200
+
+reserve_data_0x824
+                    0x0824          0x2
+                    0x0826                  . = 0x2
+ *fill*             0x0824          0x200
+
+reserve_data_0x826
+                    0x0826         0x2a
+                    0x0850                  . = 0x2a
+ *fill*             0x0826         0x2a00
                     0x0001                  __MPLAB_BUILD = 0x1
+                    0x0001                  __MPLAB_DEBUG = 0x1
+                    0x0001                  __DEBUG = 0x1
 LOAD pPIC24Fxxx
 LOAD c:/program files (x86)/microchip/xc16/v1.33/bin/bin/../../lib\libfx-elf.a
                     0xf80000                  __FBS = 0xf80000
@@ -743,11 +782,11 @@ LOAD c:/program files (x86)/microchip/xc16/v1.33/bin/bin/../../lib\libfx-elf.a
  *(.user_init)
  *(.handle)
  *(.isr*)
- .isr.text        0x0002c8        0x1ae build/default/production/DisplayMain.o
+ .isr.text        0x0002c8        0x1ae build/default/debug/DisplayMain.o
                   0x0002c8                  __T2Interrupt
- .isr.text        0x000476        0x17e build/default/production/DisplayMenu.o
+ .isr.text        0x000476        0x17e build/default/debug/DisplayMenu.o
                   0x000476                  __T1Interrupt
- .isr.text        0x0005f4         0x48 build/default/production/Communications.o
+ .isr.text        0x0005f4         0x48 build/default/debug/Communications.o
                   0x0005f4                  __U2RXInterrupt
                   0x00062a                  __U2ErrInterrupt
  .isr             0x00063c          0x4 default_isr
@@ -815,53 +854,53 @@ __FDS
 .comment
  *(.comment)
 
-.debug_info       0x000000       0x60ff
+.debug_info       0x000000       0x60aa
  *(.debug_info)
- .debug_info      0x000000       0x16bf build/default/production/DisplayMain.o
- .debug_info      0x0016bf       0x1a81 build/default/production/DisplayMenu.o
- .debug_info      0x003140        0x69b build/default/production/DisplayRTCC.o
- .debug_info      0x0037db        0x1d1 build/default/production/Delays.o
- .debug_info      0x0039ac        0x137 build/default/production/Watchdog.o
- .debug_info      0x003ae3       0x261c build/default/production/Communications.o
+ .debug_info      0x000000       0x166a build/default/debug/DisplayMain.o
+ .debug_info      0x00166a       0x1a81 build/default/debug/DisplayMenu.o
+ .debug_info      0x0030eb        0x69b build/default/debug/DisplayRTCC.o
+ .debug_info      0x003786        0x1d1 build/default/debug/Delays.o
+ .debug_info      0x003957        0x137 build/default/debug/Watchdog.o
+ .debug_info      0x003a8e       0x261c build/default/debug/Communications.o
  *(.gnu.linkonce.wi.*)
 
-.debug_abbrev     0x000000        0x779
+.debug_abbrev     0x000000        0x770
  *(.debug_abbrev)
- .debug_abbrev    0x000000        0x1ba build/default/production/DisplayMain.o
- .debug_abbrev    0x0001ba          0x1 build/default/production/DisplayConfiguration.o
- .debug_abbrev    0x0001bb        0x196 build/default/production/DisplayMenu.o
- .debug_abbrev    0x000351        0x154 build/default/production/DisplayRTCC.o
- .debug_abbrev    0x0004a5         0x72 build/default/production/Delays.o
- .debug_abbrev    0x000517         0x34 build/default/production/Watchdog.o
- .debug_abbrev    0x00054b        0x22d build/default/production/Communications.o
- .debug_abbrev    0x000778          0x1 build/default/production/REM_DisplayUART.o
+ .debug_abbrev    0x000000        0x1b1 build/default/debug/DisplayMain.o
+ .debug_abbrev    0x0001b1          0x1 build/default/debug/DisplayConfiguration.o
+ .debug_abbrev    0x0001b2        0x196 build/default/debug/DisplayMenu.o
+ .debug_abbrev    0x000348        0x154 build/default/debug/DisplayRTCC.o
+ .debug_abbrev    0x00049c         0x72 build/default/debug/Delays.o
+ .debug_abbrev    0x00050e         0x34 build/default/debug/Watchdog.o
+ .debug_abbrev    0x000542        0x22d build/default/debug/Communications.o
+ .debug_abbrev    0x00076f          0x1 build/default/debug/REM_DisplayUART.o
 
-.debug_line       0x000000        0xe15
+.debug_line       0x000000        0xe03
  *(.debug_line)
- .debug_line      0x000000        0x28b build/default/production/DisplayMain.o
- .debug_line      0x00028b         0x1a build/default/production/DisplayConfiguration.o
- .debug_line      0x0002a5        0x5ea build/default/production/DisplayMenu.o
- .debug_line      0x00088f        0x123 build/default/production/DisplayRTCC.o
- .debug_line      0x0009b2         0x42 build/default/production/Delays.o
- .debug_line      0x0009f4         0x39 build/default/production/Watchdog.o
- .debug_line      0x000a2d        0x3ce build/default/production/Communications.o
- .debug_line      0x000dfb         0x1a build/default/production/REM_DisplayUART.o
+ .debug_line      0x000000        0x278 build/default/debug/DisplayMain.o
+ .debug_line      0x000278         0x1a build/default/debug/DisplayConfiguration.o
+ .debug_line      0x000292        0x5ea build/default/debug/DisplayMenu.o
+ .debug_line      0x00087c        0x123 build/default/debug/DisplayRTCC.o
+ .debug_line      0x00099f         0x42 build/default/debug/Delays.o
+ .debug_line      0x0009e1         0x39 build/default/debug/Watchdog.o
+ .debug_line      0x000a1a        0x3cf build/default/debug/Communications.o
+ .debug_line      0x000de9         0x1a build/default/debug/REM_DisplayUART.o
 
 .debug_frame      0x000000       0x10a6
  *(.debug_frame)
- .debug_frame     0x000000        0x23a build/default/production/DisplayMain.o
- .debug_frame     0x00023a        0x5ee build/default/production/DisplayMenu.o
- .debug_frame     0x000828         0x8a build/default/production/DisplayRTCC.o
- .debug_frame     0x0008b2         0x68 build/default/production/Delays.o
- .debug_frame     0x00091a         0x30 build/default/production/Watchdog.o
- .debug_frame     0x00094a        0x75c build/default/production/Communications.o
+ .debug_frame     0x000000        0x23a build/default/debug/DisplayMain.o
+ .debug_frame     0x00023a        0x5ee build/default/debug/DisplayMenu.o
+ .debug_frame     0x000828         0x8a build/default/debug/DisplayRTCC.o
+ .debug_frame     0x0008b2         0x68 build/default/debug/Delays.o
+ .debug_frame     0x00091a         0x30 build/default/debug/Watchdog.o
+ .debug_frame     0x00094a        0x75c build/default/debug/Communications.o
 
 .debug_str        0x000000        0xa2f
  *(.debug_str)
- .debug_str       0x000000        0x2fc build/default/production/DisplayMain.o
- .debug_str       0x0002fc        0x4a2 build/default/production/DisplayMenu.o
- .debug_str       0x00079e         0x61 build/default/production/DisplayRTCC.o
- .debug_str       0x0007ff        0x230 build/default/production/Communications.o
+ .debug_str       0x000000        0x2fc build/default/debug/DisplayMain.o
+ .debug_str       0x0002fc        0x4a2 build/default/debug/DisplayMenu.o
+ .debug_str       0x00079e         0x61 build/default/debug/DisplayRTCC.o
+ .debug_str       0x0007ff        0x230 build/default/debug/Communications.o
 
 .debug_loc
  *(.debug_loc)
@@ -873,17 +912,17 @@ __FDS
                   0x000000       0x12a2
  *(.debug_pubnames)
  .debug_pubnames
-                  0x000000        0x1b7 build/default/production/DisplayMain.o
+                  0x000000        0x1b7 build/default/debug/DisplayMain.o
  .debug_pubnames
-                  0x0001b7        0x856 build/default/production/DisplayMenu.o
+                  0x0001b7        0x856 build/default/debug/DisplayMenu.o
  .debug_pubnames
-                  0x000a0d        0x149 build/default/production/DisplayRTCC.o
+                  0x000a0d        0x149 build/default/debug/DisplayRTCC.o
  .debug_pubnames
-                  0x000b56         0x3c build/default/production/Delays.o
+                  0x000b56         0x3c build/default/debug/Delays.o
  .debug_pubnames
-                  0x000b92         0x1f build/default/production/Watchdog.o
+                  0x000b92         0x1f build/default/debug/Watchdog.o
  .debug_pubnames
-                  0x000bb1        0x6f1 build/default/production/Communications.o
+                  0x000bb1        0x6f1 build/default/debug/Communications.o
 
 .debug_ranges
  *(.debug_ranges)
@@ -891,17 +930,17 @@ __FDS
 .debug_aranges    0x000000         0x90
  *(.debug_aranges)
  .debug_aranges
-                  0x000000         0x18 build/default/production/DisplayMain.o
+                  0x000000         0x18 build/default/debug/DisplayMain.o
  .debug_aranges
-                  0x000018         0x18 build/default/production/DisplayMenu.o
+                  0x000018         0x18 build/default/debug/DisplayMenu.o
  .debug_aranges
-                  0x000030         0x18 build/default/production/DisplayRTCC.o
+                  0x000030         0x18 build/default/debug/DisplayRTCC.o
  .debug_aranges
-                  0x000048         0x18 build/default/production/Delays.o
+                  0x000048         0x18 build/default/debug/Delays.o
  .debug_aranges
-                  0x000060         0x18 build/default/production/Watchdog.o
+                  0x000060         0x18 build/default/debug/Watchdog.o
  .debug_aranges
-                  0x000078         0x18 build/default/production/Communications.o
+                  0x000078         0x18 build/default/debug/Communications.o
                     0x0000                  WREG0 = 0x0
                     0x0000                  _WREG0 = 0x0
                     0x0002                  WREG1 = 0x2
@@ -1516,7 +1555,7 @@ LOAD c:/program files (x86)/microchip/xc16/v1.33/bin/bin/../../lib\libpic30-elf.
 LOAD c:/program files (x86)/microchip/xc16/v1.33/bin/bin/../../lib\libm-elf.a
 LOAD c:/program files (x86)/microchip/xc16/v1.33/bin/bin/../../lib\libc-elf.a
 END GROUP
-OUTPUT(dist/default/production/BFDisplayPIC.X.production.elf elf32-pic30)
+OUTPUT(dist/default/debug/BFDisplayPIC.X.debug.elf elf32-pic30)
 LOAD FGS
 LOAD FBS
 LOAD default_isr
@@ -1525,36 +1564,36 @@ LOAD data_init
 .debug_pubtypes
                   0x000090        0x305
  .debug_pubtypes
-                  0x000090        0x136 build/default/production/DisplayMain.o
+                  0x000090        0x136 build/default/debug/DisplayMain.o
  .debug_pubtypes
-                  0x0001c6         0x5b build/default/production/DisplayMenu.o
+                  0x0001c6         0x5b build/default/debug/DisplayMenu.o
  .debug_pubtypes
-                  0x000221         0x42 build/default/production/DisplayRTCC.o
+                  0x000221         0x42 build/default/debug/DisplayRTCC.o
  .debug_pubtypes
-                  0x000263         0x12 build/default/production/Delays.o
+                  0x000263         0x12 build/default/debug/Delays.o
  .debug_pubtypes
-                  0x000275         0x12 build/default/production/Watchdog.o
+                  0x000275         0x12 build/default/debug/Watchdog.o
  .debug_pubtypes
-                  0x000287        0x10e build/default/production/Communications.o
+                  0x000287        0x10e build/default/debug/Communications.o
 
 __c30_signature
                   0x000395         0x66
  __c30_signature
-                  0x000395          0x6 build/default/production/DisplayMain.o
+                  0x000395          0x6 build/default/debug/DisplayMain.o
  __c30_signature
-                  0x00039b          0x6 build/default/production/DisplayConfiguration.o
+                  0x00039b          0x6 build/default/debug/DisplayConfiguration.o
  __c30_signature
-                  0x0003a1          0x6 build/default/production/DisplayMenu.o
+                  0x0003a1          0x6 build/default/debug/DisplayMenu.o
  __c30_signature
-                  0x0003a7          0x6 build/default/production/DisplayRTCC.o
+                  0x0003a7          0x6 build/default/debug/DisplayRTCC.o
  __c30_signature
-                  0x0003ad          0x6 build/default/production/Delays.o
+                  0x0003ad          0x6 build/default/debug/Delays.o
  __c30_signature
-                  0x0003b3          0x6 build/default/production/Watchdog.o
+                  0x0003b3          0x6 build/default/debug/Watchdog.o
  __c30_signature
-                  0x0003b9          0x6 build/default/production/Communications.o
+                  0x0003b9          0x6 build/default/debug/Communications.o
  __c30_signature
-                  0x0003bf          0x6 build/default/production/REM_DisplayUART.o
+                  0x0003bf          0x6 build/default/debug/REM_DisplayUART.o
  __c30_signature
                   0x0003c5          0x6 c:/program files (x86)/microchip/xc16/v1.33/bin/bin/../../lib\libpic30-elf.a(crt0_standard.o)
  __c30_signature
@@ -1574,163 +1613,162 @@ __c30_signature
  __c30_signature
                   0x0003f5          0x6 c:/program files (x86)/microchip/xc16/v1.33/bin/bin/../../lib\libm-elf.a(mulsi3.eo)
 
-.nbss               0x0800        0x212
- .nbss              0x0800        0x164 build/default/production/DisplayMenu.o
-                    0x0800                  _passwordSet
-                    0x0806                  _previousDayUsed
-                    0x080a                  _totalUsed
-                    0x080e                  _audibleAlarm
-                    0x080f                  _alarm1Enabled
-                    0x0810                  _alarm2Enabled
-                    0x0811                  _alarm1Energy
-                    0x0812                  _alarm2Energy
-                    0x0813                  _emerButtonEnable
-                    0x0814                  _resetTimeHour
-                    0x0815                  _resetTimeMinute
-                    0x0816                  _tempResetHour
-                    0x0817                  _tempResetMinute
-                    0x0818                  _tempIsHigh
-                    0x0819                  _oldPowerMenuState
-                    0x081a                  _emerButtonEnergyAllocate
-                    0x081c                  _emerButtonAllocTemp
-                    0x081e                  _emerAllocNow
-                    0x0820                  _emerAllocSend
-                    0x0822                  _powerDownTime
-                    0x082e                  _powerUpTime
-                    0x083a                  _powerBoxCodeVersionString
-                    0x0843                  _passwordInput
-                    0x0849                  _newPassword
-                    0x0855                  _pwLength
-                    0x0856                  _homeBasicAlternate
-                    0x0857                  _barGraph
-                    0x086c                  _tempResetTimeString
-                    0x0872                  _timeRemHour
-                    0x0873                  _timeRemMinute
-                    0x0874                  _timeRemSecond
-                    0x0875                  _timeRemUpdate
-                    0x0876                  _timeRem1
-                    0x087a                  _timeRem2
-                    0x087e                  _timeRem3
-                    0x0882                  _timeRem4
-                    0x0886                  _timeRem5
-                    0x088a                  _timeRemainingString
-                    0x0893                  _currentDisplay
-                    0x08e4                  _nextDisplay
-                    0x0935                  _menuState
-                    0x0936                  _oldMenuState
-                    0x0937                  _lastUpdateSecond
-                    0x0938                  _lastUpdateMinute
-                    0x0939                  _enablePeriodicUpdate
-                    0x093a                  _activeAlarm
-                    0x093b                  _alarmToResume
-                    0x093c                  _rightArrow
-                    0x093e                  _tempPercent
-                    0x093f                  _silenceAlarmOne
-                    0x0940                  _silenceAlarmTwo
-                    0x0941                  _remainingSets
-                    0x0942                  _powerLoad
-                    0x0946                  _energyUsed
-                    0x094a                  _energyAllocated
-                    0x094e                  _lowAlloc
-                    0x0952                  _highAlloc
-                    0x0956                  _tempAlloc
-                    0x095a                  _percentRem
-                    0x095b                  _button0Flag
-                    0x095c                  _button1Flag
-                    0x095d                  _button2Flag
-                    0x095e                  _button3Flag
-                    0x095f                  _relayActive
-                    0x0960                  _tempRelayActive
-                    0x0961                  _isBooting
-                    0x0962                  _alarmOneHit
-                    0x0963                  _alarmTwoHit
- .nbss              0x0964         0x68 build/default/production/Communications.o
-                    0x0964                  _SPI_transmit_wait
-                    0x0965                  _uartBufferLarge
-                    0x096f                  _uartBufferLargeCount
- .nbss              0x09cc         0x36 build/default/production/DisplayRTCC.o
-                    0x09cc                  _timeYear
-                    0x09cd                  _timeMonth
-                    0x09ce                  _timeDay
-                    0x09cf                  _timeWeekday
-                    0x09d0                  _timeHour
-                    0x09d1                  _timeMinute
-                    0x09d2                  _timeSecond
-                    0x09d3                  _resetTimeSecond
-                    0x09d4                  _clockStr
-                    0x09da                  _calendarStr
-                    0x09e3                  _timeSetPos
-                    0x09e4                  _tempHour
-                    0x09e5                  _tempMin
-                    0x09e6                  _tempMonth
-                    0x09e7                  _tempDay
-                    0x09e8                  _tempYear
-                    0x09e9                  _tempClockStr
-                    0x09f3                  _tempCalStr
- .nbss              0x0a02         0x10 build/default/production/DisplayMain.o
-                    0x0a02                  _commError
-                    0x0a03                  _commErrorTime
-                    0x0a04                  _alarmEnd
-                    0x0a05                  _alarmPulse
-                    0x0a06                  _numBeeps
-                    0x0a07                  _numSets
+.nbss               0x0850        0x20e
+ .nbss              0x0850        0x164 build/default/debug/DisplayMenu.o
+                    0x0850                  _passwordSet
+                    0x0856                  _previousDayUsed
+                    0x085a                  _totalUsed
+                    0x085e                  _audibleAlarm
+                    0x085f                  _alarm1Enabled
+                    0x0860                  _alarm2Enabled
+                    0x0861                  _alarm1Energy
+                    0x0862                  _alarm2Energy
+                    0x0863                  _emerButtonEnable
+                    0x0864                  _resetTimeHour
+                    0x0865                  _resetTimeMinute
+                    0x0866                  _tempResetHour
+                    0x0867                  _tempResetMinute
+                    0x0868                  _tempIsHigh
+                    0x0869                  _oldPowerMenuState
+                    0x086a                  _emerButtonEnergyAllocate
+                    0x086c                  _emerButtonAllocTemp
+                    0x086e                  _emerAllocNow
+                    0x0870                  _emerAllocSend
+                    0x0872                  _powerDownTime
+                    0x087e                  _powerUpTime
+                    0x088a                  _powerBoxCodeVersionString
+                    0x0893                  _passwordInput
+                    0x0899                  _newPassword
+                    0x08a5                  _pwLength
+                    0x08a6                  _homeBasicAlternate
+                    0x08a7                  _barGraph
+                    0x08bc                  _tempResetTimeString
+                    0x08c2                  _timeRemHour
+                    0x08c3                  _timeRemMinute
+                    0x08c4                  _timeRemSecond
+                    0x08c5                  _timeRemUpdate
+                    0x08c6                  _timeRem1
+                    0x08ca                  _timeRem2
+                    0x08ce                  _timeRem3
+                    0x08d2                  _timeRem4
+                    0x08d6                  _timeRem5
+                    0x08da                  _timeRemainingString
+                    0x08e3                  _currentDisplay
+                    0x0934                  _nextDisplay
+                    0x0985                  _menuState
+                    0x0986                  _oldMenuState
+                    0x0987                  _lastUpdateSecond
+                    0x0988                  _lastUpdateMinute
+                    0x0989                  _enablePeriodicUpdate
+                    0x098a                  _activeAlarm
+                    0x098b                  _alarmToResume
+                    0x098c                  _rightArrow
+                    0x098e                  _tempPercent
+                    0x098f                  _silenceAlarmOne
+                    0x0990                  _silenceAlarmTwo
+                    0x0991                  _remainingSets
+                    0x0992                  _powerLoad
+                    0x0996                  _energyUsed
+                    0x099a                  _energyAllocated
+                    0x099e                  _lowAlloc
+                    0x09a2                  _highAlloc
+                    0x09a6                  _tempAlloc
+                    0x09aa                  _percentRem
+                    0x09ab                  _button0Flag
+                    0x09ac                  _button1Flag
+                    0x09ad                  _button2Flag
+                    0x09ae                  _button3Flag
+                    0x09af                  _relayActive
+                    0x09b0                  _tempRelayActive
+                    0x09b1                  _isBooting
+                    0x09b2                  _alarmOneHit
+                    0x09b3                  _alarmTwoHit
+ .nbss              0x09b4         0x68 build/default/debug/Communications.o
+                    0x09b4                  _SPI_transmit_wait
+                    0x09b5                  _uartBufferLarge
+                    0x09bf                  _uartBufferLargeCount
+ .nbss              0x0a1c         0x36 build/default/debug/DisplayRTCC.o
+                    0x0a1c                  _timeYear
+                    0x0a1d                  _timeMonth
+                    0x0a1e                  _timeDay
+                    0x0a1f                  _timeWeekday
+                    0x0a20                  _timeHour
+                    0x0a21                  _timeMinute
+                    0x0a22                  _timeSecond
+                    0x0a23                  _resetTimeSecond
+                    0x0a24                  _clockStr
+                    0x0a2a                  _calendarStr
+                    0x0a33                  _timeSetPos
+                    0x0a34                  _tempHour
+                    0x0a35                  _tempMin
+                    0x0a36                  _tempMonth
+                    0x0a37                  _tempDay
+                    0x0a38                  _tempYear
+                    0x0a39                  _tempClockStr
+                    0x0a43                  _tempCalStr
+ .nbss              0x0a52          0xc build/default/debug/DisplayMain.o
+                    0x0a52                  _commError
+                    0x0a53                  _commErrorTime
+                    0x0a54                  _alarmEnd
+                    0x0a55                  _alarmPulse
+                    0x0a56                  _numBeeps
+                    0x0a57                  _numSets
 
-.ndata              0x0a12          0x4
- .ndata             0x0a12          0x2 build/default/production/DisplayMain.o
- .ndata             0x0a14          0x2 build/default/production/DisplayMenu.o
-                    0x0a14                  _isHigh
+.ndata              0x0a5e          0x2
+ .ndata             0x0a5e          0x2 build/default/debug/DisplayMenu.o
+                    0x0a5e                  _isHigh
 
 .ivt._T2Interrupt
                   0x000022          0x2
  .ivt._T2Interrupt
-                  0x000022          0x2 build/default/production/DisplayMain.o
+                  0x000022          0x2 build/default/debug/DisplayMain.o
 
 .config_DSWDTEN
                   0xf80010          0x2
  .config_DSWDTEN
-                  0xf80010          0x2 build/default/production/DisplayConfiguration.o
+                  0xf80010          0x2 build/default/debug/DisplayConfiguration.o
 
 .config_ICS       0xf8000e          0x2
- .config_ICS      0xf8000e          0x2 build/default/production/DisplayConfiguration.o
+ .config_ICS      0xf8000e          0x2 build/default/debug/DisplayConfiguration.o
 
 .config_MCLRE     0xf8000c          0x2
- .config_MCLRE    0xf8000c          0x2 build/default/production/DisplayConfiguration.o
+ .config_MCLRE    0xf8000c          0x2 build/default/debug/DisplayConfiguration.o
 
 .config_WINDIS    0xf8000a          0x2
  .config_WINDIS
-                  0xf8000a          0x2 build/default/production/DisplayConfiguration.o
+                  0xf8000a          0x2 build/default/debug/DisplayConfiguration.o
 
 .config_FCKSM     0xf80008          0x2
- .config_FCKSM    0xf80008          0x2 build/default/production/DisplayConfiguration.o
+ .config_FCKSM    0xf80008          0x2 build/default/debug/DisplayConfiguration.o
 
 .config_IESO      0xf80006          0x2
- .config_IESO     0xf80006          0x2 build/default/production/DisplayConfiguration.o
+ .config_IESO     0xf80006          0x2 build/default/debug/DisplayConfiguration.o
 
 .ivt._T1Interrupt
                   0x00001a          0x2
  .ivt._T1Interrupt
-                  0x00001a          0x2 build/default/production/DisplayMenu.o
+                  0x00001a          0x2 build/default/debug/DisplayMenu.o
 
 .ivt._U2RXInterrupt
                   0x000050          0x2
  .ivt._U2RXInterrupt
-                  0x000050          0x2 build/default/production/Communications.o
+                  0x000050          0x2 build/default/debug/Communications.o
 
 .ivt._U2ErrInterrupt
                   0x000098          0x2
  .ivt._U2ErrInterrupt
-                  0x000098          0x2 build/default/production/Communications.o
+                  0x000098          0x2 build/default/debug/Communications.o
 
 .const              0x87c4        0x93a load address 0x0007c4  
- .const             0x87c4        0x850 build/default/production/DisplayMenu.o
+ .const             0x87c4        0x850 build/default/debug/DisplayMenu.o
                     0x87c4                  _softKeys0
                     0x87d9                  _softKeys1
                     0x87ee                  _softKeys2
- .const             0x9014         0x96 build/default/production/Communications.o
- .const             0x90aa         0x54 build/default/production/DisplayMain.o
+ .const             0x9014         0x96 build/default/debug/Communications.o
+ .const             0x90aa         0x54 build/default/debug/DisplayMain.o
 
-.text             0x0010fe       0x3594
- .text            0x0010fe       0x1d8a build/default/production/DisplayMenu.o
+.text             0x0010fe       0x3538
+ .text            0x0010fe       0x1d8a build/default/debug/DisplayMenu.o
                   0x0010fe                  _dspCommand
                   0x001124                  _dspWrite
                   0x001146                  _dspWriteMessage
@@ -1782,7 +1820,7 @@ __c30_signature
                   0x002c4e                  _writeBarGraph
                   0x002cae                  _calcPercentRem
                   0x002d08                  _calcTimeRemaining
- .text            0x002e88        0xf86 build/default/production/Communications.o
+ .text            0x002e88        0xf88 build/default/debug/Communications.o
                   0x002e88                  _communications
                   0x002ed8                  _resetCommunications
                   0x002eec                  _receive_data
@@ -1843,42 +1881,42 @@ __c30_signature
                   0x003d78                  _readRemotePowerFailTimes
                   0x003d88                  _com_command_readRemotePowerData
                   0x003d9a                  _readRemotePowerData
-                  0x003daa                  _com_command_readRemoteEnergy
-                  0x003db0                  _com_command_readUpdate
-                  0x003db6                  _com_command_doReset
-                  0x003dbc                  _initUART
- .text            0x003e0e        0x696 build/default/production/DisplayMain.o
-                  0x003e0e                  _main
-                  0x003e50                  _init
-                  0x003e7a                  _initVars
-                  0x003ee0                  _initPorts
-                  0x003efe                  _enablePullDownResistors
-                  0x003f0c                  _enableInterrupts
-                  0x003f18                  _disableInterrupts
-                  0x003f26                  _enableAlarm
-                  0x004042                  _startAlarm
-                  0x0040b4                  _nextDot
-                  0x0040ce                  _initDisplayBox
-                  0x0040dc                  _periodicUpdate
-                  0x0041d8                  _checkCommFailure
-                  0x004206                  _initRTCCDisplay
-                  0x004222                  _initTimer
-                  0x004244                  _writeClockStrings
-                  0x00431a                  _writeTempClockStrings
-                  0x004490                  _debugBacklight
- .text            0x0044a4        0x18e build/default/production/DisplayRTCC.o
-                  0x0044a4                  _readTime
-                  0x004506                  _writeTime
-                  0x0045d0                  _BcdToDec
-                  0x004600                  _DecToBcd
- .text            0x004632         0x60 build/default/production/Delays.o
-                  0x004632                  _delayFourUS
-                  0x00464a                  _delayMS
-                  0x004676                  _commDelay
+                  0x003dac                  _com_command_readRemoteEnergy
+                  0x003db2                  _com_command_readUpdate
+                  0x003db8                  _com_command_doReset
+                  0x003dbe                  _initUART
+ .text            0x003e10        0x638 build/default/debug/DisplayMain.o
+                  0x003e10                  _main
+                  0x003e52                  _init
+                  0x003e7c                  _initVars
+                  0x003ee2                  _initPorts
+                  0x003f00                  _enablePullDownResistors
+                  0x003f0e                  _enableInterrupts
+                  0x003f1a                  _disableInterrupts
+                  0x003f28                  _enableAlarm
+                  0x004044                  _startAlarm
+                  0x0040b6                  _nextDot
+                  0x0040d0                  _initDisplayBox
+                  0x00410a                  _periodicUpdate
+                  0x00417c                  _checkCommFailure
+                  0x0041aa                  _initRTCCDisplay
+                  0x0041c6                  _initTimer
+                  0x0041e8                  _writeClockStrings
+                  0x0042be                  _writeTempClockStrings
+                  0x004434                  _debugBacklight
+ .text            0x004448        0x18e build/default/debug/DisplayRTCC.o
+                  0x004448                  _readTime
+                  0x0044aa                  _writeTime
+                  0x004574                  _BcdToDec
+                  0x0045a4                  _DecToBcd
+ .text            0x0045d6         0x60 build/default/debug/Delays.o
+                  0x0045d6                  _delayFourUS
+                  0x0045ee                  _delayMS
+                  0x00461a                  _commDelay
 
-.dinit            0x004692         0x2a
- .dinit           0x004692         0x2a data_init
+.dinit            0x004636         0x22
+ .dinit           0x004636         0x22 data_init
 
-.text             0x0046bc          0x8
- .text            0x0046bc          0x8 build/default/production/Watchdog.o
-                  0x0046bc                  _resetWDT
+.text             0x004658          0x8
+ .text            0x004658          0x8 build/default/debug/Watchdog.o
+                  0x004658                  _resetWDT
