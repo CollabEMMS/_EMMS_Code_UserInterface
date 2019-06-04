@@ -1,8 +1,47 @@
+/******
+ Common Header File
+ Only put something in here if:
+    it is required for all C files
+    it is not best included in any other header file
+*/
+
+#ifndef COMMON_H
+#define	COMMON_H
+
+
+//#include <xc.h>
+#include <p24FV32KA301.h>
+#include <stdbool.h>
+
+
+
+#define CHAR_NULL '\0'
+
+#define BUF_SIZE_CHAR 5
+#define BUF_SIZE_INT 7
+#define BUF_SIZE_LONG 12
+
+
+// can be used for debugging
+#define BACKLIGHT   _RB2    // Pin 6:  RB2
+
+
+#endif	/* COMMON_H */
+
+
+
+/******
+ Below are the comments for the headers of C files
+ This should be placed at the top of each c file to provide some sense and
+   structure to make things easier to understand
+ */
+
+
+
 /****************
  INCLUDES
  only include the header files that are required
  ****************/
-#include "common.h"
 
 /****************
  MACROS
@@ -33,7 +72,6 @@
 /****************
  CODE
  ****************/
-void resetWDT( void )
-{
-    asm( "CLRWDT" );
-}
+
+
+

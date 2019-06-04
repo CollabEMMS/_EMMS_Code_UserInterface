@@ -1,3 +1,8 @@
+/****************
+ PIC HARDWARE COMPILE CONFIGURATION BITS
+ ****************/
+
+
 /* Configuration Bits *********************************************************/
 // FBS
 #pragma config BWRP = OFF         // Boot Segment Write Protect (Disabled)
