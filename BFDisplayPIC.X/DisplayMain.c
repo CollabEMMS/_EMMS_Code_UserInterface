@@ -7,7 +7,6 @@
 
 #include "Communications.h"
 #include "DisplayRTCC.h"
-#include "Watchdog.h"
 #include "DisplayMenu.h"
 #include "DisplayMenuMacros.h"
 #include "Delays.h"
@@ -61,10 +60,10 @@ void enableInterrupts( void );
 void initVars( void );
 
 void periodicUpdate( void );
-void initDisplayBox( void );
+//void initDisplayBox( void );
 void enableAlarm( void );
 
-void checkCommFailure( void );
+//void checkCommFailure( void );
 void startAlarm( void );
 
 
@@ -90,27 +89,30 @@ int main( void )
     communications( true );
     static unsigned char lowPriorityCounter = 0;
 
-    initDisplayBox( );
+    //    initDisplayBox( );
 
     enablePeriodicUpdate = 1;
 
     while( true )
     {
+
 	// Only do these tasks every 100 - 150 ms
 	if( !lowPriorityCounter++ )
 	{
+
 	    readTime( );
 	    periodicUpdate( );
 	    calcPercentRem( );
 	    calcTimeRemaining( );
 	    enableAlarm( );
-	    checkCommFailure( );
-	    resetWDT( );
+	    //	    checkCommFailure( );
+	    //	    resetWDT( );
+	    //	    asm( "CLRWDT" ); // reset the watchdog timer in case it is running
+
 	}
 
 	updateMenu( );
 	communications( false );
-	//        commFunctions();
     }
 }
 
@@ -344,36 +346,36 @@ void nextDot( void )
     writeToDisplay( ".", 12 + count++, 0 );
 }
 
-void initDisplayBox( void )
-{
-    writeToDisplay( "Initializing", 0, 0 );
-
-
-    //    com_command_readRemoteTime( );
-    //    nextDot( );
-    //    debugBacklight( true );
-    //    com_command_readRemoteEnergyAllocation( );
-    //    nextDot( );
-    //    com_command_readRemoteAlarm( );
-    //    nextDot( );
-    //    com_command_readRemotePassword( );
-    //    nextDot( );
-    //    com_command_readRemoteEmergency( );
-    //    nextDot( );
-    //    com_command_readRemoteResetTime( );
-    //    nextDot( );
-    //    com_command_readRemoteRelay( );
-    //    nextDot( );
-    //    com_command_readRemoteStat( );
-    //    nextDot( );
-    //    //    com_command_readRemoteHL( );
-    //    //    nextDot( );
-    //    com_command_readRemoteCBver( );
-    //    nextDot( );
-    //    com_command_readRemotePowerFailTimes( );
-    //    //    com_command_readRemotePowerDownUpTime( );
-    //    nextDot( );
-}
+//void initDisplayBox( void )
+//{
+//    writeToDisplay( "Initializing", 0, 0 );
+//
+//
+//    //    com_command_readRemoteTime( );
+//    //    nextDot( );
+//    //    debugBacklight( true );
+//    //    com_command_readRemoteEnergyAllocation( );
+//    //    nextDot( );
+//    //    com_command_readRemoteAlarm( );
+//    //    nextDot( );
+//    //    com_command_readRemotePassword( );
+//    //    nextDot( );
+//    //    com_command_readRemoteEmergency( );
+//    //    nextDot( );
+//    //    com_command_readRemoteResetTime( );
+//    //    nextDot( );
+//    //    com_command_readRemoteRelay( );
+//    //    nextDot( );
+//    //    com_command_readRemoteStat( );
+//    //    nextDot( );
+//    //    //    com_command_readRemoteHL( );
+//    //    //    nextDot( );
+//    //    com_command_readRemoteCBver( );
+//    //    nextDot( );
+//    //    com_command_readRemotePowerFailTimes( );
+//    //    //    com_command_readRemotePowerDownUpTime( );
+//    //    nextDot( );
+//}
 
 void periodicUpdate( void )
 {
@@ -428,8 +430,8 @@ void periodicUpdate( void )
 		    com_command_readRemotePowerFailTimes( );
 		    break;
 		default:
-		    break;
 		    firstRun = false;
+		    break;
 		}
 
 	    }
@@ -443,8 +445,16 @@ void periodicUpdate( void )
     {
 	debugBacklight( true );
 
+
+
 	static char lastPowerSecond = 0,
 		lastOtherSecond = 0;
+
+	//FIX
+	// problem here is that the commands get tripped over
+	// seems like the power and time get scrambled when both
+	// are run at the same time
+	// likely due to receiving commands and the buffer running on while it is beinf processed
 
 	if( enablePeriodicUpdate )
 	{
@@ -455,7 +465,7 @@ void periodicUpdate( void )
 		lastPowerSecond = timeSecond;
 	    }
 	    // Refresh time and other settings every 10 seconds
-	    if( timeSecond % 10 == 0 && timeSecond != lastOtherSecond )
+	    if( ((timeSecond % 10) == 0) && (timeSecond != lastOtherSecond) )
 	    {
 		com_command_readRemoteTime( );
 		readTime( );
@@ -471,29 +481,35 @@ void periodicUpdate( void )
 		lastPowerSecond = timeSecond;
 	    }
 	}
-    }
-}
 
-void checkCommFailure( void )
-{
-    if( commError > 90 )
-    {
-	// no communication received for 1 minute
-	// display a message and reboot
-	if( BACKLIGHT_NORMAL == true )
+	if( timeSecond % 60 == 0 )
 	{
-	    BACKLIGHT = 1; // turn on backlight
-	}
-	writeToDisplay( "System will restart in 15 seconds due toa communication linkproblem.", 0, 80 );
-	for(;; );
-    }
+	    // here we should grab all or most of the parameters so that we keep up to date
 
-    if( timeSecond != commErrorTime )
-    {
-	commError++;
-	commErrorTime = timeSecond;
+	}
     }
 }
+
+//void checkCommFailure( void )
+//{
+//    if( commError > 90 )
+//    {
+//	// no communication received for 1 minute
+//	// display a message and reboot
+//	if( BACKLIGHT_NORMAL == true )
+//	{
+//	    BACKLIGHT = 1; // turn on backlight
+//	}
+//	writeToDisplay( "System will restart in 15 seconds due toa communication linkproblem.", 0, 80 );
+//	for(;; );
+//    }
+//
+//    if( timeSecond != commErrorTime )
+//    {
+//	commError++;
+//	commErrorTime = timeSecond;
+//    }
+//}
 
 // ignore red error marks (caused by some failure regarding macro definition)
 
@@ -689,13 +705,16 @@ void __attribute__( (interrupt, no_auto_psv) ) _T2Interrupt( void )
 
 void debugBacklight( bool state )
 {
-    if( state == true )
+    if( BACKLIGHT_NORMAL == false )
     {
-	BACKLIGHT = 1;
-    }
-    else
-    {
-	BACKLIGHT = 0;
+	if( state == true )
+	{
+	    BACKLIGHT = 1;
+	}
+	else
+	{
+	    BACKLIGHT = 0;
+	}
     }
 
     return;

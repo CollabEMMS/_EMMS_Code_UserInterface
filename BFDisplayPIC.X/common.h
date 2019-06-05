@@ -23,7 +23,7 @@
 
 
 // can be used for debugging
-#define BACKLIGHT_NORMAL false // set to 'true' to use the backlight normally - anything else will allow debugging
+#define BACKLIGHT_NORMAL true // set to 'true' to use the backlight normally - anything else will allow debugging
 #define BACKLIGHT   _RB2    // Pin 6:  RB2
 
 

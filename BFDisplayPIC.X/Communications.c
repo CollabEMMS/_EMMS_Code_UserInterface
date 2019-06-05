@@ -8,6 +8,7 @@
 #include "DisplayMain.h"
 #include "DisplayMenu.h"
 #include "DisplayRTCC.h"
+#include "Delays.h"
 
 /****************
  MACROS
@@ -79,6 +80,7 @@ volatile unsigned char uartBufferLargeCount = 0;
 
 bool checkOnOff( char *toCheck );
 void fillOnOff( char *buf, int checkValue );
+void zeroPad_itoa( char *output, int num, int minDigits );
 
 void readRemoteTime( struct buffer *send_buffer );
 void setRemoteTime( struct buffer *send_buffer );
@@ -417,16 +419,19 @@ bool process_data_parameters( char parameters[PARAMETER_MAX_COUNT][PARAMETER_MAX
     bool end_of_transmission_received = false;
 
 
+    if( strmatch( parameters[0], "Conf" ) == true )
+    {
+	writeToDisplay( parameters[0], 0, 20 );
+	writeToDisplay( parameters[1], 20, 20 );
+	writeToDisplay( parameters[2], 40, 20 );
+	writeToDisplay( parameters[3], 60, 20 );
+	delayMS( 4000 );
+    }
+
+
+
     if( strmatch( parameters[0], "END" ) == true )
     {
-	//	if( LEDSET == 1 )
-	//	{
-	//	    LEDSET = 0;
-	//	}
-	//	else
-	//	{
-	//	    LEDSET = 1;
-	//	}
 
 	end_of_transmission_received = true;
     }
@@ -434,6 +439,13 @@ bool process_data_parameters( char parameters[PARAMETER_MAX_COUNT][PARAMETER_MAX
     {
 	if( strmatch( parameters[1], "Time" ) == true )
 	{
+	    //	    //DEBUG TOM
+	    //	    writeToDisplay( parameters[0], 0, 40 );
+	    //	    writeToDisplay( parameters[1], 20, 40 );
+	    //	    writeToDisplay( parameters[2], 40, 40 );
+	    //	    writeToDisplay( parameters[3], 60, 40 );
+	    //	    delayMS( 10000 );
+
 	    char timeDayBuf[3];
 	    char timeMonthBuf[3];
 	    char timeYearBuf[3];
@@ -613,6 +625,7 @@ bool process_data_parameters( char parameters[PARAMETER_MAX_COUNT][PARAMETER_MAX
 	    while( (inx < 9) && (parameters[2][inx] != CHAR_NULL) )
 	    {
 		powerBoxCodeVersionString[inx] = parameters[2][inx];
+		inx++;
 	    }
 	    powerBoxCodeVersionString[inx] = CHAR_NULL;
 
@@ -929,14 +942,38 @@ bool send_data( struct buffer * send_buffer )
 	send_end = false;
 
 
-	if( UART_send_data_char( send_buffer->data_buffer[send_buffer->read_position] ) == true )
+	// after end command character, wait until next second before sending next data
+
+	char data;
+	static unsigned char waitSecond;
+	static bool wait = false;
+
+	data = send_buffer->data_buffer[send_buffer->read_position];
+
+	if( wait != true )
 	{
-	    send_buffer->read_position++;
-	    if( send_buffer->read_position >= BUFFER_LENGTH )
+	    if( UART_send_data_char( data ) == true )
 	    {
-		send_buffer->read_position = 0;
+		send_buffer->read_position++;
+		if( send_buffer->read_position >= BUFFER_LENGTH )
+		{
+		    send_buffer->read_position = 0;
+		}
 	    }
 	}
+
+	if( timeSecond != waitSecond )
+	{
+	    wait = false;
+	}
+
+	if( data == COMMAND_END_CHAR )
+	{
+	    waitSecond = timeSecond;
+	    wait = true;
+	}
+
+
     }
 
     return send_end;
@@ -1028,6 +1065,46 @@ void fillOnOff( char *buf, int checkValue )
     return;
 }
 
+void zeroPad_itoa( char *output, int num, int minDigits )
+{
+    char temp[BUF_SIZE_INT];
+
+    int rawLen;
+
+    itoa( temp, num, 10 );
+
+    rawLen = 0;
+    while( temp[rawLen] != CHAR_NULL )
+    {
+	rawLen++;
+    }
+
+    // rawLen now contains the length of the converted number
+
+    int padding;
+
+    padding = minDigits - rawLen;
+
+    int inxOutput;
+    for( inxOutput = 0; inxOutput < padding; inxOutput++ )
+    {
+	output[inxOutput] = '0';
+    }
+
+    int inxTemp;
+    inxTemp = 0;
+    while( temp[inxTemp] != CHAR_NULL )
+    {
+	output[inxOutput] = temp[inxTemp];
+	inxOutput++;
+	inxTemp++;
+    }
+    output[inxOutput ] = CHAR_NULL;
+
+
+    return;
+}
+
 bool UART_receive_data_char( char *data )
 {
     // need to use interrupts because we have some blocking code to update the display
@@ -1057,7 +1134,7 @@ bool UART_send_data_char( char data )
 {
     bool sendGood = false;
 
-    if( U2STAbits.TRMT == 1 )
+    if( U2STAbits.UTXBF == 0 )
     {
 	U2TXREG = data;
 	sendGood = true;
@@ -1262,13 +1339,19 @@ void setRemoteTime( struct buffer *send_buffer )
     char timeTimeMMBuf[BUF_SIZE_INT];
     char timeTimeSSBuf[BUF_SIZE_INT];
 
-    itoa( timeDateDDBuf, timeDay, 10 );
-    itoa( timeDateMMBuf, timeMonth, 10 );
-    itoa( timeDateYYBuf, timeYear, 10 );
-    itoa( timeTimeHHBuf, timeHour, 10 );
-    itoa( timeTimeMMBuf, timeMinute, 10 );
-    itoa( timeTimeSSBuf, timeSecond, 10 );
+    zeroPad_itoa( timeDateDDBuf, tempDay, 2 );
+    zeroPad_itoa( timeDateMMBuf, tempMonth, 2 );
+    zeroPad_itoa( timeDateYYBuf, tempYear, 2 );
+    zeroPad_itoa( timeTimeHHBuf, tempHour, 2 );
+    zeroPad_itoa( timeTimeMMBuf, tempMin, 2 );
+    //    zeroPad_itoa( timeTimeSSBuf, tempSecond, 2 );
 
+    //    zeroPad_itoa( timeDateDDBuf, timeDay, 2 );
+    //    zeroPad_itoa( timeDateMMBuf, timeMonth, 2 );
+    //    zeroPad_itoa( timeDateYYBuf, timeYear, 2 );
+    //    zeroPad_itoa( timeTimeHHBuf, timeHour, 2 );
+    //    zeroPad_itoa( timeTimeMMBuf, timeMinute, 2 );
+    //    zeroPad_itoa( timeTimeSSBuf, timeSecond, 2 );
 
     timeDateBuf[0] = timeDateDDBuf[0];
     timeDateBuf[1] = timeDateDDBuf[1];
@@ -1286,9 +1369,17 @@ void setRemoteTime( struct buffer *send_buffer )
     timeTimeBuf[3] = timeTimeMMBuf[0];
     timeTimeBuf[4] = timeTimeMMBuf[1];
     timeTimeBuf[5] = ':';
-    timeTimeBuf[6] = timeTimeSSBuf[0];
-    timeTimeBuf[7] = timeTimeSSBuf[1];
+    timeTimeBuf[6] = '0'; //  timeTimeSSBuf[0];
+    timeTimeBuf[7] = '0'; //timeTimeSSBuf[1];
     timeTimeBuf[8] = CHAR_NULL;
+
+
+    //    // DEBUG TOM
+    //    writeToDisplay( "Set", 0, 20 );
+    //    writeToDisplay( "Time", 20, 20 );
+    //    writeToDisplay( timeDateBuf, 40, 20 );
+    //    writeToDisplay( timeTimeBuf, 60, 20 );
+    //    delayMS( 2500 );
 
     command_builder4( send_buffer, "Set", "Time", timeDateBuf, timeTimeBuf );
 }
