@@ -33,6 +33,7 @@ void com_command_readRemotePowerFailTimes( void );
 
 void com_command_readRemotePowerData( void );
 
+void com_command_setRemoteAllocationAdd( void );
 
 // not yet sorted
 //void com_command_readRemoteVersion(void);

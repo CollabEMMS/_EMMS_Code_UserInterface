@@ -31,7 +31,7 @@ unsigned char timeSecond;
 
 
 // not sorted yet
-unsigned char resetTimeSecond;
+int resetTimeSecond;
 
 char clockStr[6], calendarStr[9];
 

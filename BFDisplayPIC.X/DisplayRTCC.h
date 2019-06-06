@@ -17,8 +17,8 @@ void writeClockStrings(void);
 void writeTempClockStrings(void);
 char writeTime(char newYear, char newMonth, char newDay, char newHour, char newMinute, char newSecond);
 
-extern unsigned char resetTimeSecond;
-extern unsigned char resetTimeMinute;
+extern int resetTimeHour;
+extern int resetTimeMinute;
 
 extern char clockStr[6];
 extern char calendarStr[9];

@@ -53,10 +53,10 @@ char alarm1Energy;
 char alarm2Energy;
 char emerButtonEnable;
 
-unsigned char resetTimeHour;
-unsigned char resetTimeMinute;
-unsigned char tempResetHour;
-unsigned char tempResetMinute;
+int resetTimeHour;
+int resetTimeMinute;
+int tempResetHour;
+int tempResetMinute;
 
 
 char isHigh = 0xFF;
@@ -1657,18 +1657,47 @@ void menuSetResetTime( void )
     case 3:
 	resetTimeHour = tempResetHour;
 	resetTimeMinute = tempResetMinute;
+
+	char rth[20];
+	char rtm[20];
+	itoa( rth, tempResetHour, 10 );
+	itoa( rtm, tempResetMinute, 10 );
+
+	writeToDisplay( "Resetting Reset Time", 0, 20 );
+	writeToDisplay( rth, 20, 20 );
+	writeToDisplay( rtm, 40, 20 );
+	writeToDisplay( " ", 60, 20 );
+
+	delayMS( 2000 );
+
 	com_command_setRemoteResetTime( );
     }
 
     tempResetTimeString[0] = (tempResetHour / 10) + 0x30;
     tempResetTimeString[1] = (tempResetHour % 10) + 0x30;
     tempResetTimeString[2] = ':';
-    if( !tempResetMinute )
+    char rtm[20];
+
+    itoa( rtm, tempResetMinute, 10 );
+    if( rtm[1] == CHAR_NULL )
+    {
 	tempResetTimeString[3] = '0';
+	tempResetTimeString[4] = rtm[0];
+    }
     else
-	tempResetTimeString[3] = '3';
-    tempResetTimeString[4] = '0';
-    tempResetTimeString[5] = 0;
+    {
+	tempResetTimeString[3] = rtm[0];
+	tempResetTimeString[4] = rtm[1];
+    }
+    tempResetTimeString[5] = CHAR_NULL;
+
+
+    //    if( !tempResetMinute )
+    //	tempResetTimeString[3] = '0';
+    //    else
+    //	tempResetTimeString[3] = '3';
+    //    tempResetTimeString[4] = '0';
+    //    tempResetTimeString[5] = 0;
 
     writeToDisplay( "Set Reset Time", 0, 27 );
     writeToDisplay( tempResetTimeString, 27, 33 );
@@ -1826,7 +1855,7 @@ void menuEmergency4( void )
 	break;
     case 3:
 	emerAllocSend = emerAllocNow;
-	com_command_setRemoteEmergency( );
+	com_command_setRemoteAllocationAdd( );
 	emerAllocSend = 0;
     }
 

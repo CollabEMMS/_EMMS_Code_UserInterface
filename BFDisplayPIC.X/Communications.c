@@ -159,6 +159,8 @@ void com_command_readRemoteEnergyAllocation( void );
 void readRemoteEnergyAllocation( struct buffer *send_buffer );
 void com_command_setRemoteEnergyAllocation( void );
 void setRemoteEnergyAllocation( struct buffer *send_buffer );
+void com_command_setRemoteAllocationAdd( void );
+void setRemoteAllocationAdd( struct buffer *send_buffer );
 
 /****************
  CODE
@@ -419,14 +421,17 @@ bool process_data_parameters( char parameters[PARAMETER_MAX_COUNT][PARAMETER_MAX
     bool end_of_transmission_received = false;
 
 
-    if( strmatch( parameters[0], "Conf" ) == true )
-    {
-	writeToDisplay( parameters[0], 0, 20 );
-	writeToDisplay( parameters[1], 20, 20 );
-	writeToDisplay( parameters[2], 40, 20 );
-	writeToDisplay( parameters[3], 60, 20 );
-	delayMS( 4000 );
-    }
+    //    if( strmatch( parameters[0], "Conf" ) == true )
+    //    {
+    //	writeToDisplay( parameters[0], 0, 20 );
+    //	writeToDisplay( " ", 20, 20 );
+    //	writeToDisplay( parameters[1], 20, 20 );
+    //	writeToDisplay( " ", 40, 20 );
+    //	writeToDisplay( parameters[2], 40, 20 );
+    //	writeToDisplay( " ", 60, 20 );
+    //	writeToDisplay( parameters[3], 60, 20 );
+    //	delayMS( 4000 );
+    //    }
 
 
 
@@ -585,12 +590,12 @@ bool process_data_parameters( char parameters[PARAMETER_MAX_COUNT][PARAMETER_MAX
 	}
 	else if( strmatch( parameters[1], "RstTim" ) == true )
 	{
-	    int resetTimeHourTemp;
-	    int resetTimeMinuteTemp;
 
-	    resetTimeHourTemp = atoi( parameters[2] );
-	    resetTimeMinuteTemp = atoi( parameters[3] );
+	    resetTimeHour = atoi( parameters[2] );
+	    resetTimeMinute = atoi( parameters[3] );
 
+	    tempResetHour = resetTimeHour;
+	    tempResetMinute = resetTimeMinute;
 
 	    command_builder2( send_buffer, "Conf", "RstTim" );
 
@@ -954,6 +959,7 @@ bool send_data( struct buffer * send_buffer )
 	{
 	    if( UART_send_data_char( data ) == true )
 	    {
+		delayMSTenths( 5 );
 		send_buffer->read_position++;
 		if( send_buffer->read_position >= BUFFER_LENGTH )
 		{
@@ -1337,7 +1343,7 @@ void setRemoteTime( struct buffer *send_buffer )
 
     char timeTimeHHBuf[BUF_SIZE_INT];
     char timeTimeMMBuf[BUF_SIZE_INT];
-    char timeTimeSSBuf[BUF_SIZE_INT];
+    //    char timeTimeSSBuf[BUF_SIZE_INT];
 
     zeroPad_itoa( timeDateDDBuf, tempDay, 2 );
     zeroPad_itoa( timeDateMMBuf, tempMonth, 2 );
@@ -1421,6 +1427,28 @@ void setRemoteEnergyAllocation( struct buffer *send_buffer )
     ltoa( powerAllocatedBuf, energyAllocated, 10 );
 
     command_builder3( send_buffer, "Set", "EnAl", powerAllocatedBuf );
+
+    return;
+
+}
+
+void com_command_setRemoteAllocationAdd( void )
+{
+    struct buffer *send_buffer;
+
+    send_buffer = command_builder_external_helper( false, NULL );
+
+    setRemoteAllocationAdd( send_buffer );
+
+    return;
+}
+
+void setRemoteAllocationAdd( struct buffer *send_buffer )
+{
+    char buf[BUF_SIZE_LONG];
+
+    ltoa( buf, emerAllocSend, 10 );
+    command_builder3( send_buffer, "Set", "AllAdd", buf );
 
     return;
 
@@ -1614,11 +1642,19 @@ void setRemoteResetTime( struct buffer *send_buffer )
     char resetTimeHourBuf[BUF_SIZE_INT];
     char resetTimeMinuteBuf[BUF_SIZE_INT];
 
+
     resetTimeHourTemp = resetTimeHour;
     resetTimeMinuteTemp = resetTimeMinute;
 
     itoa( resetTimeHourBuf, resetTimeHour, 10 );
     itoa( resetTimeMinuteBuf, resetTimeMinute, 10 );
+
+    //    writeToDisplay( resetTimeHourBuf, 0, 20 );
+    //    writeToDisplay( resetTimeMinuteBuf, 20, 20 );
+    //    writeToDisplay( " ", 40, 20 );
+    //    writeToDisplay( " ", 60, 20 );
+    //
+    //    delayMS( 1000 );
 
     command_builder4( send_buffer, "Set", "RstTim", resetTimeHourBuf, resetTimeMinuteBuf );
 

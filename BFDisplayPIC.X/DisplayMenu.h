@@ -10,8 +10,9 @@ extern char alarm2Energy;
 
 extern char passwordSet[6];
 
-extern unsigned char resetTimeHour;
-extern unsigned char resetTimeMinute;
+extern int resetTimeHour;
+extern int resetTimeMinute;
+extern int resetTimeSecond;
 
 extern long totalUsed;
 extern long previousDayUsed;
