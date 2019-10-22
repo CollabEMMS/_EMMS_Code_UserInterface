@@ -59,7 +59,7 @@
 #define MENU_EMERGENCY_3       31
 #define MENU_EMERGENCY_4       32
 #define MENU_PASSWORD_CHANGE   33
-#define MENU_HIGH_LOW          34
+#define MENU_MODULES           34
 #define MENU_SET_RELAY         35
 #define MENU_STATISTICS        36
 #define MENU_POWERFAILTIMES    37

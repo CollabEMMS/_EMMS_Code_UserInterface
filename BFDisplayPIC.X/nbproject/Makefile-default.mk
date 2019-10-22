@@ -57,17 +57,18 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=DisplayMain.c DisplayConfiguration.c DisplayMenu.c DisplayRTCC.c Delays.c Communications.c REM_DisplayUART.c REMOVE_Watchdog.c
+SOURCEFILES_QUOTED_IF_SPACED=DisplayMain.c DisplayConfiguration.c DisplayMenu.c DisplayRTCC.c Delays.c Communications.c REM_DisplayUART.c
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/DisplayMain.o ${OBJECTDIR}/DisplayConfiguration.o ${OBJECTDIR}/DisplayMenu.o ${OBJECTDIR}/DisplayRTCC.o ${OBJECTDIR}/Delays.o ${OBJECTDIR}/Communications.o ${OBJECTDIR}/REM_DisplayUART.o ${OBJECTDIR}/REMOVE_Watchdog.o
-POSSIBLE_DEPFILES=${OBJECTDIR}/DisplayMain.o.d ${OBJECTDIR}/DisplayConfiguration.o.d ${OBJECTDIR}/DisplayMenu.o.d ${OBJECTDIR}/DisplayRTCC.o.d ${OBJECTDIR}/Delays.o.d ${OBJECTDIR}/Communications.o.d ${OBJECTDIR}/REM_DisplayUART.o.d ${OBJECTDIR}/REMOVE_Watchdog.o.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/DisplayMain.o ${OBJECTDIR}/DisplayConfiguration.o ${OBJECTDIR}/DisplayMenu.o ${OBJECTDIR}/DisplayRTCC.o ${OBJECTDIR}/Delays.o ${OBJECTDIR}/Communications.o ${OBJECTDIR}/REM_DisplayUART.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/DisplayMain.o.d ${OBJECTDIR}/DisplayConfiguration.o.d ${OBJECTDIR}/DisplayMenu.o.d ${OBJECTDIR}/DisplayRTCC.o.d ${OBJECTDIR}/Delays.o.d ${OBJECTDIR}/Communications.o.d ${OBJECTDIR}/REM_DisplayUART.o.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/DisplayMain.o ${OBJECTDIR}/DisplayConfiguration.o ${OBJECTDIR}/DisplayMenu.o ${OBJECTDIR}/DisplayRTCC.o ${OBJECTDIR}/Delays.o ${OBJECTDIR}/Communications.o ${OBJECTDIR}/REM_DisplayUART.o ${OBJECTDIR}/REMOVE_Watchdog.o
+OBJECTFILES=${OBJECTDIR}/DisplayMain.o ${OBJECTDIR}/DisplayConfiguration.o ${OBJECTDIR}/DisplayMenu.o ${OBJECTDIR}/DisplayRTCC.o ${OBJECTDIR}/Delays.o ${OBJECTDIR}/Communications.o ${OBJECTDIR}/REM_DisplayUART.o
 
 # Source Files
-SOURCEFILES=DisplayMain.c DisplayConfiguration.c DisplayMenu.c DisplayRTCC.c Delays.c Communications.c REM_DisplayUART.c REMOVE_Watchdog.c
+SOURCEFILES=DisplayMain.c DisplayConfiguration.c DisplayMenu.c DisplayRTCC.c Delays.c Communications.c REM_DisplayUART.c
+
 
 
 CFLAGS=
@@ -143,13 +144,6 @@ ${OBJECTDIR}/REM_DisplayUART.o: REM_DisplayUART.c  nbproject/Makefile-${CND_CONF
 	${MP_CC} $(MP_EXTRA_CC_PRE)  REM_DisplayUART.c  -o ${OBJECTDIR}/REM_DisplayUART.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/REM_DisplayUART.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1    -omf=elf -DXPRJ_default=$(CND_CONF)  -no-legacy-libc  $(COMPARISON_BUILD)  -std=gnu99 -O0 -msmart-io=1 -Wall -msfr-warn=off  
 	@${FIXDEPS} "${OBJECTDIR}/REM_DisplayUART.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
 	
-${OBJECTDIR}/REMOVE_Watchdog.o: REMOVE_Watchdog.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/REMOVE_Watchdog.o.d 
-	@${RM} ${OBJECTDIR}/REMOVE_Watchdog.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE)  REMOVE_Watchdog.c  -o ${OBJECTDIR}/REMOVE_Watchdog.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/REMOVE_Watchdog.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1    -omf=elf -DXPRJ_default=$(CND_CONF)  -no-legacy-libc  $(COMPARISON_BUILD)  -std=gnu99 -O0 -msmart-io=1 -Wall -msfr-warn=off  
-	@${FIXDEPS} "${OBJECTDIR}/REMOVE_Watchdog.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
-	
 else
 ${OBJECTDIR}/DisplayMain.o: DisplayMain.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}" 
@@ -199,13 +193,6 @@ ${OBJECTDIR}/REM_DisplayUART.o: REM_DisplayUART.c  nbproject/Makefile-${CND_CONF
 	@${RM} ${OBJECTDIR}/REM_DisplayUART.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  REM_DisplayUART.c  -o ${OBJECTDIR}/REM_DisplayUART.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/REM_DisplayUART.o.d"        -g -omf=elf -DXPRJ_default=$(CND_CONF)  -no-legacy-libc  $(COMPARISON_BUILD)  -std=gnu99 -O0 -msmart-io=1 -Wall -msfr-warn=off  
 	@${FIXDEPS} "${OBJECTDIR}/REM_DisplayUART.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
-	
-${OBJECTDIR}/REMOVE_Watchdog.o: REMOVE_Watchdog.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/REMOVE_Watchdog.o.d 
-	@${RM} ${OBJECTDIR}/REMOVE_Watchdog.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE)  REMOVE_Watchdog.c  -o ${OBJECTDIR}/REMOVE_Watchdog.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/REMOVE_Watchdog.o.d"        -g -omf=elf -DXPRJ_default=$(CND_CONF)  -no-legacy-libc  $(COMPARISON_BUILD)  -std=gnu99 -O0 -msmart-io=1 -Wall -msfr-warn=off  
-	@${FIXDEPS} "${OBJECTDIR}/REMOVE_Watchdog.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
 	
 endif
 

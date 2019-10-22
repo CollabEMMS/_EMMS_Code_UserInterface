@@ -1,21 +1,21 @@
-Microchip Technology Inc, v1.36 (B)
+Microchip Technology Inc, v1.41 (A)
 
 Tool Name:
-  c:\program files (x86)\microchip\xc16\v1.36\bin\bin\..\bin/elf-ld.exe
+  c:\program files (x86)\microchip\xc16\v1.41\bin\bin\..\bin/elf-ld.exe
 
 Command:
   -p24FV32KA301 \
   -o \
   dist/default/production/BFDisplayPIC.X.production.elf \
-  -Lc:/program files (x86)/microchip/xc16/v1.36/bin/bin/.. \
-  -Lc:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib \
-  -Lc:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../support/PIC24E/gld \
-  -Lc:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../support/PIC24F/gld \
-  -Lc:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../support/PIC24H/gld \
-  -Lc:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../support/dsPIC30F/gld \
-  -Lc:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../support/dsPIC33C/gld \
-  -Lc:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../support/dsPIC33E/gld \
-  -Lc:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../support/dsPIC33F/gld \
+  -Lc:/program files (x86)/microchip/xc16/v1.41/bin/bin/.. \
+  -Lc:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../lib \
+  -Lc:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../support/PIC24E/gld \
+  -Lc:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../support/PIC24F/gld \
+  -Lc:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../support/PIC24H/gld \
+  -Lc:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../support/dsPIC30F/gld \
+  -Lc:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../support/dsPIC33C/gld \
+  -Lc:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../support/dsPIC33E/gld \
+  -Lc:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../support/dsPIC33F/gld \
   build/default/production/DisplayMain.o \
   build/default/production/DisplayConfiguration.o \
   build/default/production/DisplayMenu.o \
@@ -23,7 +23,6 @@ Command:
   build/default/production/Delays.o \
   build/default/production/Communications.o \
   build/default/production/REM_DisplayUART.o \
-  build/default/production/REMOVE_Watchdog.o \
   --defsym=__MPLAB_BUILD=1 \
   -Tp24FV32KA301.gld.00 \
   --stack=16 \
@@ -51,26 +50,26 @@ Command:
 Optional library libpPIC24Fxxx.a not found
 Archive member included because of file (symbol)
 
-c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libpic30-elf.a(crt0_standard.o)
+c:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../lib\libpic30-elf.a(crt0_standard.o)
                               (__resetPRI)
-c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libpic30-elf.a(data_init_standard.o)
-                              c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libpic30-elf.a(crt0_standard.o) (__data_init_standard)
-c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libpic30-elf.a(crt_start_mode_normal.eo)
+c:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../lib\libpic30-elf.a(data_init_standard.o)
+                              c:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../lib\libpic30-elf.a(crt0_standard.o) (__data_init_standard)
+c:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../lib\libpic30-elf.a(crt_start_mode_normal.eo)
                               (__crt_start_mode_normal)
-c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libm-elf.a(udivsi3.eo)
+c:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../lib\libm-elf.a(udivsi3.eo)
                               build/default/production/DisplayMenu.o (___udivsi3)
-c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libm-elf.a(umodsi3.eo)
+c:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../lib\libm-elf.a(umodsi3.eo)
                               build/default/production/DisplayMenu.o (___umodsi3)
-c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libc-elf.a(atoi.eo)
+c:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../lib\libc-elf.a(atoi.eo)
                               build/default/production/Communications.o (_atoi)
-c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libc-elf.a(atol.eo)
+c:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../lib\libc-elf.a(atol.eo)
                               build/default/production/Communications.o (_atol)
-c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libc-elf.a(itoa.eo)
+c:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../lib\libc-elf.a(itoa.eo)
                               build/default/production/DisplayMenu.o (_itoa)
-c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libc-elf.a(ltoa.eo)
+c:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../lib\libc-elf.a(ltoa.eo)
                               build/default/production/DisplayMenu.o (_ultoa)
-c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libm-elf.a(mulsi3.eo)
-                              c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libc-elf.a(atol.eo) (___mulsi3)
+c:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../lib\libm-elf.a(mulsi3.eo)
+                              c:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../lib\libc-elf.a(atol.eo) (___mulsi3)
 
 
 Selected CodeGuard Options:
@@ -95,7 +94,11 @@ CodeGuard EEPROM Memory:
   boot    (none)
 
 
-xc16-ld 1.36 (B)
+xc16-ld 1.41 (A)
+
+Default Code Model: Small
+Default Data Model: Small
+Default Scalar Model: Small
 
 "program" Memory  [Origin = 0x200, Length = 0x5600]
 
@@ -105,9 +108,8 @@ section                    address   length (PC units)   length (bytes) (dec)
 .const                       0x7b4               0x902           0xd83  (3459)
 .text                       0x10b6              0x3686          0x51c9  (20937)
 .dinit                      0x473c                0x2a            0x3f  (63)
-.text                       0x4766                 0x8             0xc  (12)
 
-                 Total "program" memory used (bytes):         0x6825  (26661) 80%
+                 Total "program" memory used (bytes):         0x6819  (26649) 80%
 
 
 "data" Memory  [Origin = 0x800, Length = 0x800]
@@ -128,6 +130,8 @@ heap                             0                                   0  (0)
 stack                        0xa1e                               0x5e2  (1506)
 
                  Maximum dynamic memory (bytes):          0x5e2  (1506)
+
+Note: Project is using a large data memory model when small data memory model is sufficient.
 
 
 External Symbols in Data Memory (by address):
@@ -347,9 +351,9 @@ External Symbols in Program Memory (by address):
                   0x000720                  _itoa
                   0x00073c                  _ultoa
                   0x000788                  _ltoa
-                  0x0007a8                  ___mulp32peds3
-                  0x0007a8                  ___mulsi3
                   0x0007a8                  ___mulp32eds3
+                  0x0007a8                  ___mulsi3
+                  0x0007a8                  ___mulp32peds3
                   0x0007b4                  _softKeys0
                   0x0007c9                  _softKeys1
                   0x0007de                  _softKeys2
@@ -395,7 +399,7 @@ External Symbols in Program Memory (by address):
                   0x002712                  _menuEmergency2
                   0x002772                  _menuEmergency3
                   0x002836                  _menuEmergency4
-                  0x0028d8                  _menuHighLow
+                  0x0028d8                  _menuModules
                   0x002988                  _menuSetRelay
                   0x002a06                  _menuBadDate
                   0x002a30                  _menuShutOffWarning
@@ -495,7 +499,6 @@ External Symbols in Program Memory (by address):
                   0x0046c8                  _delayMS
                   0x0046f4                  _delayMSTenths
                   0x004720                  _commDelay
-                  0x004766                  _resetWDT
                   0xf80000                  __FBS.sec
                   0xf80004                  __FGS.sec
 
@@ -606,7 +609,6 @@ External Symbols in Program Memory (by name):
                   0x002772                  _menuEmergency3
                   0x002836                  _menuEmergency4
                   0x0015ee                  _menuError
-                  0x0028d8                  _menuHighLow
                   0x00163e                  _menuHomeBasic
                   0x001814                  _menuHomeDetail
                   0x001920                  _menuMain1
@@ -615,6 +617,7 @@ External Symbols in Program Memory (by name):
                   0x001a0a                  _menuMain4
                   0x001a3a                  _menuMain5
                   0x001a6c                  _menuMain6
+                  0x0028d8                  _menuModules
                   0x002a70                  _menuPasswordChange
                   0x001e96                  _menuPowerFailTimes
                   0x002bc4                  _menuPowerReset
@@ -643,7 +646,6 @@ External Symbols in Program Memory (by name):
                   0x004522                  _readTime
                   0x002ee2                  _receive_data
                   0x002ece                  _resetCommunications
-                  0x004766                  _resetWDT
                   0x0037fe                  _send_data
                   0x003a9e                  _send_end_of_transmission
                   0x003c28                  _setRemoteAlarm
@@ -699,10 +701,9 @@ LOAD build/default/production/DisplayRTCC.o
 LOAD build/default/production/Delays.o
 LOAD build/default/production/Communications.o
 LOAD build/default/production/REM_DisplayUART.o
-LOAD build/default/production/REMOVE_Watchdog.o
                     0x0001                  __MPLAB_BUILD = 0x1
 LOAD pPIC24Fxxx
-LOAD c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libfx-elf.a
+LOAD c:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../lib\libfx-elf.a
                     0xf80000                  __FBS = 0xf80000
                     0xf80004                  __FGS = 0xf80004
                     0xf80006                  __FOSCSEL = 0xf80006
@@ -727,11 +728,11 @@ LOAD c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libfx-elf.a
 
 .text             0x000200        0x5b4
  *(.init)
- .init            0x000200         0x4c c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libpic30-elf.a(crt0_standard.o)
+ .init            0x000200         0x4c c:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../lib\libpic30-elf.a(crt0_standard.o)
                   0x000200                  __resetPRI
                   0x000200                  __reset
                   0x00023c                  __psv_init
- .init            0x00024c         0x7c c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libpic30-elf.a(data_init_standard.o)
+ .init            0x00024c         0x7c c:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../lib\libpic30-elf.a(data_init_standard.o)
                   0x000252                  __data_init_standard
                   0x000252                  __data_init
  *(.user_init)
@@ -751,26 +752,26 @@ LOAD c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libfx-elf.a
  *(.libdsp)
  *(.lib*)
  .libpic30_crt_start_mode
-                  0x000630          0x2 c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libpic30-elf.a(crt_start_mode_normal.eo)
+                  0x000630          0x2 c:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../lib\libpic30-elf.a(crt_start_mode_normal.eo)
                   0x000630                  __crt_start_mode
                   0x000630                  __crt_start_mode_normal
- .libm.udivsi3    0x000632         0x20 c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libm-elf.a(udivsi3.eo)
+ .libm.udivsi3    0x000632         0x20 c:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../lib\libm-elf.a(udivsi3.eo)
                   0x000632                  ___udivsi3
- .libm.umodsi3    0x000652          0x6 c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libm-elf.a(umodsi3.eo)
+ .libm.umodsi3    0x000652          0x6 c:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../lib\libm-elf.a(umodsi3.eo)
                   0x000652                  ___umodsi3
- .libc.atoi       0x000658         0x3e c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libc-elf.a(atoi.eo)
+ .libc.atoi       0x000658         0x3e c:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../lib\libc-elf.a(atoi.eo)
                   0x000658                  _atoi
- .libc.atol       0x000696         0x56 c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libc-elf.a(atol.eo)
+ .libc.atol       0x000696         0x56 c:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../lib\libc-elf.a(atol.eo)
                   0x000696                  _atol
- .libc.utoa       0x0006ec         0x34 c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libc-elf.a(itoa.eo)
+ .libc.utoa       0x0006ec         0x34 c:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../lib\libc-elf.a(itoa.eo)
                   0x0006ec                  _utoa
- .libc.itoa       0x000720         0x1c c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libc-elf.a(itoa.eo)
+ .libc.itoa       0x000720         0x1c c:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../lib\libc-elf.a(itoa.eo)
                   0x000720                  _itoa
- .libc.ultoa      0x00073c         0x4c c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libc-elf.a(ltoa.eo)
+ .libc.ultoa      0x00073c         0x4c c:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../lib\libc-elf.a(ltoa.eo)
                   0x00073c                  _ultoa
- .libc.ltoa       0x000788         0x20 c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libc-elf.a(ltoa.eo)
+ .libc.ltoa       0x000788         0x20 c:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../lib\libc-elf.a(ltoa.eo)
                   0x000788                  _ltoa
- .libm.mulsi3     0x0007a8          0xc c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libm-elf.a(mulsi3.eo)
+ .libm.mulsi3     0x0007a8          0xc c:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../lib\libm-elf.a(mulsi3.eo)
                   0x0007a8                  ___mulp32peds3
                   0x0007a8                  ___mulsi3
                   0x0007a8                  ___mulp32eds3
@@ -780,12 +781,12 @@ usercode
 
 __FBS             0xf80000          0x2
  *(__FBS.sec*)
- __FBS.sec        0xf80000          0x2 /CW/_FBSð<	(=	__FBS.sec
+ __FBS.sec        0xf80000          0x2 /CW/_FBSð`Þ
                   0xf80000                  __FBS.sec
 
 __FGS             0xf80004          0x2
  *(__FGS.sec*)
- __FGS.sec        0xf80004          0x2 /CW/_FGSm	@m	__FGS.sec
+ __FGS.sec        0xf80004          0x2 /CW/_FGSèPÞ
                   0xf80004                  __FGS.sec
 
 __FOSCSEL
@@ -809,17 +810,16 @@ __FDS
 .comment
  *(.comment)
 
-.debug_info       0x000000       0x62fa
+.debug_info       0x000000       0x620c
  *(.debug_info)
- .debug_info      0x000000       0x1676 build/default/production/DisplayMain.o
- .debug_info      0x001676       0x1acd build/default/production/DisplayMenu.o
- .debug_info      0x003143        0x69b build/default/production/DisplayRTCC.o
- .debug_info      0x0037de        0x217 build/default/production/Delays.o
- .debug_info      0x0039f5       0x27c7 build/default/production/Communications.o
- .debug_info      0x0061bc        0x13e build/default/production/REMOVE_Watchdog.o
+ .debug_info      0x000000       0x1686 build/default/production/DisplayMain.o
+ .debug_info      0x001686       0x1add build/default/production/DisplayMenu.o
+ .debug_info      0x003163        0x6ab build/default/production/DisplayRTCC.o
+ .debug_info      0x00380e        0x227 build/default/production/Delays.o
+ .debug_info      0x003a35       0x27d7 build/default/production/Communications.o
  *(.gnu.linkonce.wi.*)
 
-.debug_abbrev     0x000000        0x779
+.debug_abbrev     0x000000        0x745
  *(.debug_abbrev)
  .debug_abbrev    0x000000        0x1ba build/default/production/DisplayMain.o
  .debug_abbrev    0x0001ba          0x1 build/default/production/DisplayConfiguration.o
@@ -828,9 +828,8 @@ __FDS
  .debug_abbrev    0x0004a5         0x72 build/default/production/Delays.o
  .debug_abbrev    0x000517        0x22d build/default/production/Communications.o
  .debug_abbrev    0x000744          0x1 build/default/production/REM_DisplayUART.o
- .debug_abbrev    0x000745         0x34 build/default/production/REMOVE_Watchdog.o
 
-.debug_line       0x000000        0xe5a
+.debug_line       0x000000        0xe1a
  *(.debug_line)
  .debug_line      0x000000        0x283 build/default/production/DisplayMain.o
  .debug_line      0x000283         0x1a build/default/production/DisplayConfiguration.o
@@ -839,16 +838,14 @@ __FDS
  .debug_line      0x0009b8         0x49 build/default/production/Delays.o
  .debug_line      0x000a01        0x3ff build/default/production/Communications.o
  .debug_line      0x000e00         0x1a build/default/production/REM_DisplayUART.o
- .debug_line      0x000e1a         0x40 build/default/production/REMOVE_Watchdog.o
 
-.debug_frame      0x000000       0x10de
+.debug_frame      0x000000       0x10ae
  *(.debug_frame)
  .debug_frame     0x000000        0x202 build/default/production/DisplayMain.o
  .debug_frame     0x000202        0x5ee build/default/production/DisplayMenu.o
  .debug_frame     0x0007f0         0x8a build/default/production/DisplayRTCC.o
  .debug_frame     0x00087a         0x84 build/default/production/Delays.o
  .debug_frame     0x0008fe        0x7b0 build/default/production/Communications.o
- .debug_frame     0x0010ae         0x30 build/default/production/REMOVE_Watchdog.o
 
 .debug_str        0x000000        0xa12
  *(.debug_str)
@@ -864,7 +861,7 @@ __FDS
  *(.debug_macinfo)
 
 .debug_pubnames
-                  0x000000       0x12df
+                  0x000000       0x12c0
  *(.debug_pubnames)
  .debug_pubnames
                   0x000000        0x18f build/default/production/DisplayMain.o
@@ -876,13 +873,11 @@ __FDS
                   0x000b2e         0x4e build/default/production/Delays.o
  .debug_pubnames
                   0x000b7c        0x744 build/default/production/Communications.o
- .debug_pubnames
-                  0x0012c0         0x1f build/default/production/REMOVE_Watchdog.o
 
 .debug_ranges
  *(.debug_ranges)
 
-.debug_aranges    0x000000         0x90
+.debug_aranges    0x000000         0x78
  *(.debug_aranges)
  .debug_aranges
                   0x000000         0x18 build/default/production/DisplayMain.o
@@ -894,8 +889,6 @@ __FDS
                   0x000048         0x18 build/default/production/Delays.o
  .debug_aranges
                   0x000060         0x18 build/default/production/Communications.o
- .debug_aranges
-                  0x000078         0x18 build/default/production/REMOVE_Watchdog.o
                     0x0000                  WREG0 = 0x0
                     0x0000                  _WREG0 = 0x0
                     0x0002                  WREG1 = 0x2
@@ -1506,67 +1499,63 @@ __FDS
                     0x0230                  UART2 = 0x230
                     0x0230                  _UART2 = 0x230
 START GROUP
-LOAD c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libpic30-elf.a
-LOAD c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libm-elf.a
-LOAD c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libc-elf.a
+LOAD c:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../lib\libpic30-elf.a
+LOAD c:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../lib\libm-elf.a
+LOAD c:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../lib\libc-elf.a
 END GROUP
 OUTPUT(dist/default/production/BFDisplayPIC.X.production.elf elf32-pic30)
-LOAD /CW/_FGSm	@m	__FGS.sec
-LOAD /CW/_FBSð<	(=	__FBS.sec
+LOAD /CW/_FGSèPÞ
+LOAD /CW/_FBSð`Þ
 LOAD default_isr
 LOAD data_init
 
 .debug_pubtypes
-                  0x000090        0x305
+                  0x000078        0x2f3
  .debug_pubtypes
-                  0x000090        0x136 build/default/production/DisplayMain.o
+                  0x000078        0x136 build/default/production/DisplayMain.o
  .debug_pubtypes
-                  0x0001c6         0x5b build/default/production/DisplayMenu.o
+                  0x0001ae         0x5b build/default/production/DisplayMenu.o
  .debug_pubtypes
-                  0x000221         0x42 build/default/production/DisplayRTCC.o
+                  0x000209         0x42 build/default/production/DisplayRTCC.o
  .debug_pubtypes
-                  0x000263         0x12 build/default/production/Delays.o
+                  0x00024b         0x12 build/default/production/Delays.o
  .debug_pubtypes
-                  0x000275        0x10e build/default/production/Communications.o
- .debug_pubtypes
-                  0x000383         0x12 build/default/production/REMOVE_Watchdog.o
+                  0x00025d        0x10e build/default/production/Communications.o
 
 __c30_signature
-                  0x000395         0x66
+                  0x00036b         0x60
  __c30_signature
-                  0x000395          0x6 build/default/production/DisplayMain.o
+                  0x00036b          0x6 build/default/production/DisplayMain.o
  __c30_signature
-                  0x00039b          0x6 build/default/production/DisplayConfiguration.o
+                  0x000371          0x6 build/default/production/DisplayConfiguration.o
  __c30_signature
-                  0x0003a1          0x6 build/default/production/DisplayMenu.o
+                  0x000377          0x6 build/default/production/DisplayMenu.o
  __c30_signature
-                  0x0003a7          0x6 build/default/production/DisplayRTCC.o
+                  0x00037d          0x6 build/default/production/DisplayRTCC.o
  __c30_signature
-                  0x0003ad          0x6 build/default/production/Delays.o
+                  0x000383          0x6 build/default/production/Delays.o
  __c30_signature
-                  0x0003b3          0x6 build/default/production/Communications.o
+                  0x000389          0x6 build/default/production/Communications.o
  __c30_signature
-                  0x0003b9          0x6 build/default/production/REM_DisplayUART.o
+                  0x00038f          0x6 build/default/production/REM_DisplayUART.o
  __c30_signature
-                  0x0003bf          0x6 build/default/production/REMOVE_Watchdog.o
+                  0x000395          0x6 c:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../lib\libpic30-elf.a(crt0_standard.o)
  __c30_signature
-                  0x0003c5          0x6 c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libpic30-elf.a(crt0_standard.o)
+                  0x00039b          0x6 c:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../lib\libpic30-elf.a(data_init_standard.o)
  __c30_signature
-                  0x0003cb          0x6 c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libpic30-elf.a(data_init_standard.o)
+                  0x0003a1          0x6 c:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../lib\libm-elf.a(udivsi3.eo)
  __c30_signature
-                  0x0003d1          0x6 c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libm-elf.a(udivsi3.eo)
+                  0x0003a7          0x6 c:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../lib\libm-elf.a(umodsi3.eo)
  __c30_signature
-                  0x0003d7          0x6 c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libm-elf.a(umodsi3.eo)
+                  0x0003ad          0x6 c:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../lib\libc-elf.a(atoi.eo)
  __c30_signature
-                  0x0003dd          0x6 c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libc-elf.a(atoi.eo)
+                  0x0003b3          0x6 c:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../lib\libc-elf.a(atol.eo)
  __c30_signature
-                  0x0003e3          0x6 c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libc-elf.a(atol.eo)
+                  0x0003b9          0x6 c:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../lib\libc-elf.a(itoa.eo)
  __c30_signature
-                  0x0003e9          0x6 c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libc-elf.a(itoa.eo)
+                  0x0003bf          0x6 c:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../lib\libc-elf.a(ltoa.eo)
  __c30_signature
-                  0x0003ef          0x6 c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libc-elf.a(ltoa.eo)
- __c30_signature
-                  0x0003f5          0x6 c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libm-elf.a(mulsi3.eo)
+                  0x0003c5          0x6 c:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../lib\libm-elf.a(mulsi3.eo)
 
 .nbss               0x0800        0x21a
  .nbss              0x0800        0x168 build/default/production/DisplayMenu.o
@@ -1767,7 +1756,7 @@ __c30_signature
                   0x002712                  _menuEmergency2
                   0x002772                  _menuEmergency3
                   0x002836                  _menuEmergency4
-                  0x0028d8                  _menuHighLow
+                  0x0028d8                  _menuModules
                   0x002988                  _menuSetRelay
                   0x002a06                  _menuBadDate
                   0x002a30                  _menuShutOffWarning
@@ -1874,7 +1863,3 @@ __c30_signature
 
 .dinit            0x00473c         0x2a
  .dinit           0x00473c         0x2a data_init
-
-.text             0x004766          0x8
- .text            0x004766          0x8 build/default/production/REMOVE_Watchdog.o
-                  0x004766                  _resetWDT

@@ -189,7 +189,7 @@ void menuEmergency1( void );
 void menuEmergency2( void );
 void menuEmergency3( void );
 void menuEmergency4( void );
-void menuHighLow( void );
+void menuModules( void );
 void menuSetRelay( void );
 void menuBadDate( void );
 void menuShutOffWarning( void );
@@ -529,8 +529,8 @@ void updateMenu( void )
 	menuEmergency4( );
 	break;
 
-    case MENU_HIGH_LOW:
-	menuHighLow( );
+    case MENU_MODULES:
+	menuModules( );
 	break;
 
     case MENU_SET_RELAY:
@@ -841,14 +841,14 @@ void menuMain2( void )
 	pwLength = 0;
     }
 
-    writeToDisplay( "Main Menu     2 of 6* Admin Menu          High/Low", 0, 60 );
+    writeToDisplay( "Main Menu     2 of 6* Admin Menu          Modules ", 0, 60 );
     writeToDisplay( softKeys0, 60, 0 );
 }
 
 void menuMain3( void )
 {
 
-    switch( menuButtonRead( MENU_HOME_BASIC, MENU_MAIN_2, MENU_MAIN_4, MENU_HIGH_LOW ) )
+    switch( menuButtonRead( MENU_HOME_BASIC, MENU_MAIN_2, MENU_MAIN_4, MENU_MODULES ) )
     {
     case 1:
 	com_command_readRemotePassword( );
@@ -865,7 +865,7 @@ void menuMain3( void )
 	}
     }
 
-    writeToDisplay( "Main Menu     3 of 6* High/Low            Statistics", 0, 60 );
+    writeToDisplay( "Main Menu     3 of 6* Modules             Statistics", 0, 60 );
     writeToDisplay( softKeys0, 60, 0 );
 }
 
@@ -1886,7 +1886,7 @@ void menuEmergency4( void )
     writeToDisplay( softKeys2, 60, 0 );
 }
 
-void menuHighLow( void )
+void menuModules( void )
 {
 
     switch( menuButtonRead( MENU_MAIN_3, 0, 0, 0 ) )
@@ -1912,12 +1912,12 @@ void menuHighLow( void )
 	else
 	{
 	    menuState = MENU_SHUT_OFF_WARNING;
-	    oldPowerMenuState = MENU_HIGH_LOW;
+	    oldPowerMenuState = MENU_MODULES;
 	}
 	//com_command_setRemoteHL( );
     }
 
-    writeToDisplay( "High/Low Allocation    ", 0, 0 );
+    writeToDisplay( "Modules Placeholder    ", 0, 0 );
     if( tempIsHigh )
 	writeToDisplay( rightArrow, 23, 0 );
     else

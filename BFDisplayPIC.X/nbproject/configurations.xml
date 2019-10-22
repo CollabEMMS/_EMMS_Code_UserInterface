@@ -11,13 +11,7 @@
       <itemPath>Delays.h</itemPath>
       <itemPath>DisplayMenu.h</itemPath>
       <itemPath>DisplayMain.h</itemPath>
-      <itemPath>REMOVE_ExternDisplayDefinitions.h</itemPath>
-      <itemPath>REMOVE_ExternSharedDefinitions.h</itemPath>
-      <itemPath>REMOVE_DisplayDefinitions.h</itemPath>
-      <itemPath>REMOVE_SharedDefinitions.h</itemPath>
       <itemPath>DisplayMenuMacros.h</itemPath>
-      <itemPath>REMOVE_DisplayPinDefinitions.h</itemPath>
-      <itemPath>REMOVE_Watchdog.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -33,9 +27,7 @@
       <itemPath>Delays.c</itemPath>
       <itemPath>-CL-UserInterface.txt</itemPath>
       <itemPath>Communications.c</itemPath>
-      <itemPath>REMOVE_SharedCommunication.c</itemPath>
       <itemPath>REM_DisplayUART.c</itemPath>
-      <itemPath>REMOVE_Watchdog.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -56,11 +48,11 @@
         <targetPluginBoard></targetPluginBoard>
         <platformTool>PICkit3PlatformTool</platformTool>
         <languageToolchain>XC16</languageToolchain>
-        <languageToolchainVersion>1.36</languageToolchainVersion>
+        <languageToolchainVersion>1.41</languageToolchainVersion>
         <platform>3</platform>
       </toolsSet>
       <packs>
-        <pack name="PIC24F-KA-KL-KM_DFP" vendor="Microchip" version="1.0.12"/>
+        <pack name="PIC24F-KA-KL-KM_DFP" vendor="Microchip" version="1.1.18"/>
       </packs>
       <compileType>
         <linkerTool>
@@ -148,6 +140,9 @@
         <property key="relax" value="false"/>
         <property key="warning-level" value="emit-warnings"/>
       </C30-AS>
+      <C30-CO>
+        <property key="coverage-enable" value=""/>
+      </C30-CO>
       <C30-LD>
         <property key="additional-options-use-response-files" value="false"/>
         <property key="boot-eeprom" value="no_eeprom"/>
@@ -276,18 +271,6 @@
         <property key="programoptions.uselvpprogramming" value="false"/>
         <property key="voltagevalue" value="4.5"/>
       </PICkit3PlatformTool>
-      <item path="REMOVE_SharedCommunication.c" ex="true" overriding="false">
-        <C30>
-        </C30>
-        <C30-AR>
-        </C30-AR>
-        <C30-AS>
-        </C30-AS>
-        <C30-LD>
-        </C30-LD>
-        <C30Global>
-        </C30Global>
-      </item>
       <pk4hybrid>
         <property key="ADC 1" value="true"/>
         <property key="AutoSelectMemRanges" value="auto"/>
