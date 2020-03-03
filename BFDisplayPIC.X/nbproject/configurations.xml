@@ -56,11 +56,11 @@
         <targetPluginBoard></targetPluginBoard>
         <platformTool>PICkit3PlatformTool</platformTool>
         <languageToolchain>XC16</languageToolchain>
-        <languageToolchainVersion>1.36</languageToolchainVersion>
+        <languageToolchainVersion>1.41</languageToolchainVersion>
         <platform>3</platform>
       </toolsSet>
       <packs>
-        <pack name="PIC24F-KA-KL-KM_DFP" vendor="Microchip" version="1.0.12"/>
+        <pack name="PIC24F-KA-KL-KM_DFP" vendor="Microchip" version="1.1.18"/>
       </packs>
       <compileType>
         <linkerTool>
@@ -148,6 +148,9 @@
         <property key="relax" value="false"/>
         <property key="warning-level" value="emit-warnings"/>
       </C30-AS>
+      <C30-CO>
+        <property key="coverage-enable" value=""/>
+      </C30-CO>
       <C30-LD>
         <property key="additional-options-use-response-files" value="false"/>
         <property key="boot-eeprom" value="no_eeprom"/>
@@ -283,6 +286,8 @@
         </C30-AR>
         <C30-AS>
         </C30-AS>
+        <C30-CO>
+        </C30-CO>
         <C30-LD>
         </C30-LD>
         <C30Global>

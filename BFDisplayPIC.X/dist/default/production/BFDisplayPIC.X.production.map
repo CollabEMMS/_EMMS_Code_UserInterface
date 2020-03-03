@@ -1,21 +1,21 @@
-Microchip Technology Inc, v1.36 (B)
+Microchip Technology Inc, v1.41 (A)
 
 Tool Name:
-  c:\program files (x86)\microchip\xc16\v1.36\bin\bin\..\bin/elf-ld.exe
+  c:\program files (x86)\microchip\xc16\v1.41\bin\bin\..\bin/elf-ld.exe
 
 Command:
   -p24FV32KA301 \
   -o \
   dist/default/production/BFDisplayPIC.X.production.elf \
-  -Lc:/program files (x86)/microchip/xc16/v1.36/bin/bin/.. \
-  -Lc:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib \
-  -Lc:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../support/PIC24E/gld \
-  -Lc:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../support/PIC24F/gld \
-  -Lc:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../support/PIC24H/gld \
-  -Lc:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../support/dsPIC30F/gld \
-  -Lc:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../support/dsPIC33C/gld \
-  -Lc:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../support/dsPIC33E/gld \
-  -Lc:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../support/dsPIC33F/gld \
+  -Lc:/program files (x86)/microchip/xc16/v1.41/bin/bin/.. \
+  -Lc:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../lib \
+  -Lc:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../support/PIC24E/gld \
+  -Lc:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../support/PIC24F/gld \
+  -Lc:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../support/PIC24H/gld \
+  -Lc:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../support/dsPIC30F/gld \
+  -Lc:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../support/dsPIC33C/gld \
+  -Lc:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../support/dsPIC33E/gld \
+  -Lc:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../support/dsPIC33F/gld \
   build/default/production/DisplayMain.o \
   build/default/production/DisplayConfiguration.o \
   build/default/production/DisplayMenu.o \
@@ -51,26 +51,26 @@ Command:
 Optional library libpPIC24Fxxx.a not found
 Archive member included because of file (symbol)
 
-c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libpic30-elf.a(crt0_standard.o)
+c:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../lib\libpic30-elf.a(crt0_standard.o)
                               (__resetPRI)
-c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libpic30-elf.a(data_init_standard.o)
-                              c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libpic30-elf.a(crt0_standard.o) (__data_init_standard)
-c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libpic30-elf.a(crt_start_mode_normal.eo)
+c:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../lib\libpic30-elf.a(data_init_standard.o)
+                              c:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../lib\libpic30-elf.a(crt0_standard.o) (__data_init_standard)
+c:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../lib\libpic30-elf.a(crt_start_mode_normal.eo)
                               (__crt_start_mode_normal)
-c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libm-elf.a(udivsi3.eo)
+c:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../lib\libm-elf.a(udivsi3.eo)
                               build/default/production/DisplayMenu.o (___udivsi3)
-c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libm-elf.a(umodsi3.eo)
+c:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../lib\libm-elf.a(umodsi3.eo)
                               build/default/production/DisplayMenu.o (___umodsi3)
-c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libc-elf.a(atoi.eo)
+c:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../lib\libc-elf.a(atoi.eo)
                               build/default/production/Communications.o (_atoi)
-c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libc-elf.a(atol.eo)
+c:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../lib\libc-elf.a(atol.eo)
                               build/default/production/Communications.o (_atol)
-c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libc-elf.a(itoa.eo)
+c:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../lib\libc-elf.a(itoa.eo)
                               build/default/production/DisplayMenu.o (_itoa)
-c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libc-elf.a(ltoa.eo)
+c:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../lib\libc-elf.a(ltoa.eo)
                               build/default/production/DisplayMenu.o (_ultoa)
-c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libm-elf.a(mulsi3.eo)
-                              c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libc-elf.a(atol.eo) (___mulsi3)
+c:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../lib\libm-elf.a(mulsi3.eo)
+                              c:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../lib\libc-elf.a(atol.eo) (___mulsi3)
 
 
 Selected CodeGuard Options:
@@ -95,7 +95,11 @@ CodeGuard EEPROM Memory:
   boot    (none)
 
 
-xc16-ld 1.36 (B)
+xc16-ld 1.41 (A)
+
+Default Code Model: Small
+Default Data Model: Small
+Default Scalar Model: Small
 
 "program" Memory  [Origin = 0x200, Length = 0x5600]
 
@@ -103,11 +107,11 @@ section                    address   length (PC units)   length (bytes) (dec)
 -------                    -------   -----------------   --------------------
 .text                        0x200               0x5b4           0x88e  (2190)
 .const                       0x7b4               0x902           0xd83  (3459)
-.text                       0x10b6              0x3686          0x51c9  (20937)
-.dinit                      0x473c                0x2a            0x3f  (63)
-.text                       0x4766                 0x8             0xc  (12)
+.text                       0x10b6              0x37d4          0x53be  (21438)
+.dinit                      0x488a                0x2a            0x3f  (63)
+.text                       0x48b4                 0x8             0xc  (12)
 
-                 Total "program" memory used (bytes):         0x6825  (26661) 80%
+                 Total "program" memory used (bytes):         0x6a1a  (27162) 82%
 
 
 "data" Memory  [Origin = 0x800, Length = 0x800]
@@ -128,6 +132,8 @@ heap                             0                                   0  (0)
 stack                        0xa1e                               0x5e2  (1506)
 
                  Maximum dynamic memory (bytes):          0x5e2  (1506)
+
+Note: Project is using a large data memory model when small data memory model is sufficient.
 
 
 External Symbols in Data Memory (by address):
@@ -347,8 +353,8 @@ External Symbols in Program Memory (by address):
                   0x000720                  _itoa
                   0x00073c                  _ultoa
                   0x000788                  _ltoa
-                  0x0007a8                  ___mulp32peds3
                   0x0007a8                  ___mulsi3
+                  0x0007a8                  ___mulp32peds3
                   0x0007a8                  ___mulp32eds3
                   0x0007b4                  _softKeys0
                   0x0007c9                  _softKeys1
@@ -405,106 +411,108 @@ External Symbols in Program Memory (by address):
                   0x002ca4                  _calcPercentRem
                   0x002cfe                  _calcTimeRemaining
                   0x002e7e                  _communications
-                  0x002ece                  _resetCommunications
-                  0x002ee2                  _receive_data
-                  0x002f6a                  _process_data
-                  0x002f84                  _process_data_parameterize
-                  0x003056                  _process_data_parameters
-                  0x00354e                  _command_builder1
-                  0x003576                  _command_builder2
-                  0x0035ac                  _command_builder3
-                  0x0035f0                  _command_builder4
-                  0x003642                  _command_builder5
-                  0x0036a2                  _command_builder6
-                  0x003710                  _command_builder7
-                  0x00378c                  _command_builder_add_char
-                  0x0037bc                  _command_builder_add_string
-                  0x0037e8                  _command_builder_external_helper
-                  0x0037fe                  _send_data
-                  0x003878                  _strmatch
-                  0x003898                  _strcmp2
-                  0x00393a                  _checkOnOff
-                  0x003966                  _fillOnOff
-                  0x0039ac                  _zeroPad_itoa
-                  0x003a2e                  _UART_receive_data_char
-                  0x003a7c                  _UART_send_data_char
-                  0x003a9e                  _send_end_of_transmission
-                  0x003aac                  _com_command_readRemoteTime
-                  0x003abe                  _readRemoteTime
-                  0x003ace                  _com_command_setRemoteTime
-                  0x003ae0                  _setRemoteTime
-                  0x003b76                  _com_command_readRemoteEnergyAllocation
-                  0x003b88                  _readRemoteEnergyAllocation
-                  0x003b98                  _com_command_setRemoteEnergyAllocation
-                  0x003baa                  _setRemoteEnergyAllocation
-                  0x003bc6                  _com_command_setRemoteAllocationAdd
-                  0x003bd8                  _setRemoteAllocationAdd
-                  0x003bf4                  _com_command_readRemoteAlarm
-                  0x003c06                  _readRemoteAlarm
-                  0x003c16                  _com_command_setRemoteAlarm
-                  0x003c28                  _setRemoteAlarm
-                  0x003c80                  _com_command_readRemotePassword
-                  0x003c92                  _readRemotePassword
-                  0x003ca2                  _com_command_setRemotePassword
-                  0x003cb4                  _setRemotePassword
-                  0x003ce2                  _com_command_readRemoteEmergency
-                  0x003cf4                  _readRemoteEmergency
-                  0x003d04                  _com_command_setRemoteEmergency
-                  0x003d16                  _setRemoteEmergency
-                  0x003d3e                  _com_command_readRemoteResetTime
-                  0x003d50                  _readRemoteResetTime
-                  0x003d60                  _com_command_setRemoteResetTime
-                  0x003d72                  _setRemoteResetTime
-                  0x003da2                  _com_command_readRemoteRelay
-                  0x003db4                  _readRemoteRelay
-                  0x003dc4                  _com_command_setRemoteRelay
-                  0x003dd6                  _setRemoteRelay
-                  0x003df2                  _com_command_readRemoteStat
-                  0x003e04                  _readRemoteStat
-                  0x003e14                  _com_command_readRemoteCBver
-                  0x003e26                  _readRemoteCBver
-                  0x003e36                  _com_command_readRemotePowerFailTimes
-                  0x003e48                  _readRemotePowerFailTimes
-                  0x003e58                  _com_command_readRemotePowerData
-                  0x003e6a                  _readRemotePowerData
-                  0x003e7a                  _com_command_readRemoteEnergy
-                  0x003e80                  _com_command_readUpdate
-                  0x003e86                  _com_command_doReset
-                  0x003e8c                  _initUART
-                  0x003ede                  _main
-                  0x003f1a                  _init
-                  0x003f44                  _initVars
-                  0x003faa                  _initPorts
-                  0x003fc8                  _enablePullDownResistors
-                  0x003fd6                  _enableInterrupts
-                  0x003fe2                  _disableInterrupts
-                  0x003fee                  _enableAlarm
-                  0x00410a                  _startAlarm
-                  0x00417a                  _nextDot
-                  0x004194                  _periodicUpdate
-                  0x004290                  _initRTCCDisplay
-                  0x0042ac                  _initTimer
-                  0x0042ce                  _writeClockStrings
-                  0x0043a4                  _writeTempClockStrings
-                  0x00451a                  _debugBacklight
-                  0x004522                  _readTime
-                  0x004584                  _writeTime
-                  0x00464e                  _BcdToDec
-                  0x00467e                  _DecToBcd
-                  0x0046b0                  _delayFourUS
-                  0x0046c8                  _delayMS
-                  0x0046f4                  _delayMSTenths
-                  0x004720                  _commDelay
-                  0x004766                  _resetWDT
+                  0x002ee2                  _xSumMatches
+                  0x002f80                  _resetCommunications
+                  0x002f94                  _receive_data
+                  0x00301c                  _process_data
+                  0x003044                  _process_data_parameterize
+                  0x003116                  _process_data_parameters
+                  0x00360e                  _command_builder1
+                  0x003636                  _command_builder2
+                  0x003670                  _command_builder3
+                  0x0036bc                  _command_builder4
+                  0x00371a                  _command_builder5
+                  0x00378a                  _command_builder6
+                  0x00380c                  _command_builder7
+                  0x0038a0                  _command_builder_add_char
+                  0x0038d4                  _command_builder_add_string
+                  0x00390c                  _xsum_builder
+                  0x003936                  _command_builder_external_helper
+                  0x00394c                  _send_data
+                  0x0039c6                  _strmatch
+                  0x0039e6                  _strcmp2
+                  0x003a88                  _checkOnOff
+                  0x003ab4                  _fillOnOff
+                  0x003afa                  _zeroPad_itoa
+                  0x003b7c                  _UART_receive_data_char
+                  0x003bca                  _UART_send_data_char
+                  0x003bec                  _send_end_of_transmission
+                  0x003bfa                  _com_command_readRemoteTime
+                  0x003c0c                  _readRemoteTime
+                  0x003c1c                  _com_command_setRemoteTime
+                  0x003c2e                  _setRemoteTime
+                  0x003cc4                  _com_command_readRemoteEnergyAllocation
+                  0x003cd6                  _readRemoteEnergyAllocation
+                  0x003ce6                  _com_command_setRemoteEnergyAllocation
+                  0x003cf8                  _setRemoteEnergyAllocation
+                  0x003d14                  _com_command_setRemoteAllocationAdd
+                  0x003d26                  _setRemoteAllocationAdd
+                  0x003d42                  _com_command_readRemoteAlarm
+                  0x003d54                  _readRemoteAlarm
+                  0x003d64                  _com_command_setRemoteAlarm
+                  0x003d76                  _setRemoteAlarm
+                  0x003dce                  _com_command_readRemotePassword
+                  0x003de0                  _readRemotePassword
+                  0x003df0                  _com_command_setRemotePassword
+                  0x003e02                  _setRemotePassword
+                  0x003e30                  _com_command_readRemoteEmergency
+                  0x003e42                  _readRemoteEmergency
+                  0x003e52                  _com_command_setRemoteEmergency
+                  0x003e64                  _setRemoteEmergency
+                  0x003e8c                  _com_command_readRemoteResetTime
+                  0x003e9e                  _readRemoteResetTime
+                  0x003eae                  _com_command_setRemoteResetTime
+                  0x003ec0                  _setRemoteResetTime
+                  0x003ef0                  _com_command_readRemoteRelay
+                  0x003f02                  _readRemoteRelay
+                  0x003f12                  _com_command_setRemoteRelay
+                  0x003f24                  _setRemoteRelay
+                  0x003f40                  _com_command_readRemoteStat
+                  0x003f52                  _readRemoteStat
+                  0x003f62                  _com_command_readRemoteCBver
+                  0x003f74                  _readRemoteCBver
+                  0x003f84                  _com_command_readRemotePowerFailTimes
+                  0x003f96                  _readRemotePowerFailTimes
+                  0x003fa6                  _com_command_readRemotePowerData
+                  0x003fb8                  _readRemotePowerData
+                  0x003fc8                  _com_command_readRemoteEnergy
+                  0x003fce                  _com_command_readUpdate
+                  0x003fd4                  _com_command_doReset
+                  0x003fda                  _initUART
+                  0x00402c                  _main
+                  0x004068                  _init
+                  0x004092                  _initVars
+                  0x0040f8                  _initPorts
+                  0x004116                  _enablePullDownResistors
+                  0x004124                  _enableInterrupts
+                  0x004130                  _disableInterrupts
+                  0x00413c                  _enableAlarm
+                  0x004258                  _startAlarm
+                  0x0042c8                  _nextDot
+                  0x0042e2                  _periodicUpdate
+                  0x0043de                  _initRTCCDisplay
+                  0x0043fa                  _initTimer
+                  0x00441c                  _writeClockStrings
+                  0x0044f2                  _writeTempClockStrings
+                  0x004668                  _debugBacklight
+                  0x004670                  _readTime
+                  0x0046d2                  _writeTime
+                  0x00479c                  _BcdToDec
+                  0x0047cc                  _DecToBcd
+                  0x0047fe                  _delayFourUS
+                  0x004816                  _delayMS
+                  0x004842                  _delayMSTenths
+                  0x00486e                  _commDelay
+                  0x0048b4                  _resetWDT
                   0xf80000                  __FBS.sec
                   0xf80004                  __FGS.sec
 
 External Symbols in Program Memory (by name):
 
-                  0x00464e                  _BcdToDec
-                  0x00467e                  _DecToBcd
-                  0x003a2e                  _UART_receive_data_char
-                  0x003a7c                  _UART_send_data_char
+                  0x00479c                  _BcdToDec
+                  0x0047cc                  _DecToBcd
+                  0x003b7c                  _UART_receive_data_char
+                  0x003bca                  _UART_send_data_char
                   0x00062c                  __DefaultInterrupt
                   0xf80000                  __FBS.sec
                   0xf80004                  __FGS.sec
@@ -525,65 +533,65 @@ External Symbols in Program Memory (by name):
                   0x000696                  _atol
                   0x002ca4                  _calcPercentRem
                   0x002cfe                  _calcTimeRemaining
-                  0x00393a                  _checkOnOff
-                  0x003e86                  _com_command_doReset
-                  0x003bf4                  _com_command_readRemoteAlarm
-                  0x003e14                  _com_command_readRemoteCBver
-                  0x003ce2                  _com_command_readRemoteEmergency
-                  0x003e7a                  _com_command_readRemoteEnergy
-                  0x003b76                  _com_command_readRemoteEnergyAllocation
-                  0x003c80                  _com_command_readRemotePassword
-                  0x003e58                  _com_command_readRemotePowerData
-                  0x003e36                  _com_command_readRemotePowerFailTimes
-                  0x003da2                  _com_command_readRemoteRelay
-                  0x003d3e                  _com_command_readRemoteResetTime
-                  0x003df2                  _com_command_readRemoteStat
-                  0x003aac                  _com_command_readRemoteTime
-                  0x003e80                  _com_command_readUpdate
-                  0x003c16                  _com_command_setRemoteAlarm
-                  0x003bc6                  _com_command_setRemoteAllocationAdd
-                  0x003d04                  _com_command_setRemoteEmergency
-                  0x003b98                  _com_command_setRemoteEnergyAllocation
-                  0x003ca2                  _com_command_setRemotePassword
-                  0x003dc4                  _com_command_setRemoteRelay
-                  0x003d60                  _com_command_setRemoteResetTime
-                  0x003ace                  _com_command_setRemoteTime
-                  0x004720                  _commDelay
-                  0x00354e                  _command_builder1
-                  0x003576                  _command_builder2
-                  0x0035ac                  _command_builder3
-                  0x0035f0                  _command_builder4
-                  0x003642                  _command_builder5
-                  0x0036a2                  _command_builder6
-                  0x003710                  _command_builder7
-                  0x00378c                  _command_builder_add_char
-                  0x0037bc                  _command_builder_add_string
-                  0x0037e8                  _command_builder_external_helper
+                  0x003a88                  _checkOnOff
+                  0x003fd4                  _com_command_doReset
+                  0x003d42                  _com_command_readRemoteAlarm
+                  0x003f62                  _com_command_readRemoteCBver
+                  0x003e30                  _com_command_readRemoteEmergency
+                  0x003fc8                  _com_command_readRemoteEnergy
+                  0x003cc4                  _com_command_readRemoteEnergyAllocation
+                  0x003dce                  _com_command_readRemotePassword
+                  0x003fa6                  _com_command_readRemotePowerData
+                  0x003f84                  _com_command_readRemotePowerFailTimes
+                  0x003ef0                  _com_command_readRemoteRelay
+                  0x003e8c                  _com_command_readRemoteResetTime
+                  0x003f40                  _com_command_readRemoteStat
+                  0x003bfa                  _com_command_readRemoteTime
+                  0x003fce                  _com_command_readUpdate
+                  0x003d64                  _com_command_setRemoteAlarm
+                  0x003d14                  _com_command_setRemoteAllocationAdd
+                  0x003e52                  _com_command_setRemoteEmergency
+                  0x003ce6                  _com_command_setRemoteEnergyAllocation
+                  0x003df0                  _com_command_setRemotePassword
+                  0x003f12                  _com_command_setRemoteRelay
+                  0x003eae                  _com_command_setRemoteResetTime
+                  0x003c1c                  _com_command_setRemoteTime
+                  0x00486e                  _commDelay
+                  0x00360e                  _command_builder1
+                  0x003636                  _command_builder2
+                  0x003670                  _command_builder3
+                  0x0036bc                  _command_builder4
+                  0x00371a                  _command_builder5
+                  0x00378a                  _command_builder6
+                  0x00380c                  _command_builder7
+                  0x0038a0                  _command_builder_add_char
+                  0x0038d4                  _command_builder_add_string
+                  0x003936                  _command_builder_external_helper
                   0x002e7e                  _communications
-                  0x00451a                  _debugBacklight
-                  0x0046b0                  _delayFourUS
-                  0x0046c8                  _delayMS
-                  0x0046f4                  _delayMSTenths
-                  0x003fe2                  _disableInterrupts
+                  0x004668                  _debugBacklight
+                  0x0047fe                  _delayFourUS
+                  0x004816                  _delayMS
+                  0x004842                  _delayMSTenths
+                  0x004130                  _disableInterrupts
                   0x0010b6                  _dspCommand
                   0x00111c                  _dspNibble
                   0x0011a4                  _dspSetP1
                   0x0010dc                  _dspWrite
                   0x0010fe                  _dspWriteMessage
-                  0x003fee                  _enableAlarm
-                  0x003fd6                  _enableInterrupts
-                  0x003fc8                  _enablePullDownResistors
-                  0x003966                  _fillOnOff
-                  0x003f1a                  _init
+                  0x00413c                  _enableAlarm
+                  0x004124                  _enableInterrupts
+                  0x004116                  _enablePullDownResistors
+                  0x003ab4                  _fillOnOff
+                  0x004068                  _init
                   0x00112a                  _initDisplay
-                  0x003faa                  _initPorts
-                  0x004290                  _initRTCCDisplay
-                  0x0042ac                  _initTimer
-                  0x003e8c                  _initUART
-                  0x003f44                  _initVars
+                  0x0040f8                  _initPorts
+                  0x0043de                  _initRTCCDisplay
+                  0x0043fa                  _initTimer
+                  0x003fda                  _initUART
+                  0x004092                  _initVars
                   0x000720                  _itoa
                   0x000788                  _ltoa
-                  0x003ede                  _main
+                  0x00402c                  _main
                   0x001ed6                  _menuAbout
                   0x00203e                  _menuAdmin1
                   0x00208e                  _menuAdmin2
@@ -624,51 +632,53 @@ External Symbols in Program Memory (by name):
                   0x0021de                  _menuSetTime
                   0x002a30                  _menuShutOffWarning
                   0x001e4a                  _menuStatistics
-                  0x00417a                  _nextDot
-                  0x004194                  _periodicUpdate
-                  0x002f6a                  _process_data
-                  0x002f84                  _process_data_parameterize
-                  0x003056                  _process_data_parameters
-                  0x003c06                  _readRemoteAlarm
-                  0x003e26                  _readRemoteCBver
-                  0x003cf4                  _readRemoteEmergency
-                  0x003b88                  _readRemoteEnergyAllocation
-                  0x003c92                  _readRemotePassword
-                  0x003e6a                  _readRemotePowerData
-                  0x003e48                  _readRemotePowerFailTimes
-                  0x003db4                  _readRemoteRelay
-                  0x003d50                  _readRemoteResetTime
-                  0x003e04                  _readRemoteStat
-                  0x003abe                  _readRemoteTime
-                  0x004522                  _readTime
-                  0x002ee2                  _receive_data
-                  0x002ece                  _resetCommunications
-                  0x004766                  _resetWDT
-                  0x0037fe                  _send_data
-                  0x003a9e                  _send_end_of_transmission
-                  0x003c28                  _setRemoteAlarm
-                  0x003bd8                  _setRemoteAllocationAdd
-                  0x003d16                  _setRemoteEmergency
-                  0x003baa                  _setRemoteEnergyAllocation
-                  0x003cb4                  _setRemotePassword
-                  0x003dd6                  _setRemoteRelay
-                  0x003d72                  _setRemoteResetTime
-                  0x003ae0                  _setRemoteTime
+                  0x0042c8                  _nextDot
+                  0x0042e2                  _periodicUpdate
+                  0x00301c                  _process_data
+                  0x003044                  _process_data_parameterize
+                  0x003116                  _process_data_parameters
+                  0x003d54                  _readRemoteAlarm
+                  0x003f74                  _readRemoteCBver
+                  0x003e42                  _readRemoteEmergency
+                  0x003cd6                  _readRemoteEnergyAllocation
+                  0x003de0                  _readRemotePassword
+                  0x003fb8                  _readRemotePowerData
+                  0x003f96                  _readRemotePowerFailTimes
+                  0x003f02                  _readRemoteRelay
+                  0x003e9e                  _readRemoteResetTime
+                  0x003f52                  _readRemoteStat
+                  0x003c0c                  _readRemoteTime
+                  0x004670                  _readTime
+                  0x002f94                  _receive_data
+                  0x002f80                  _resetCommunications
+                  0x0048b4                  _resetWDT
+                  0x00394c                  _send_data
+                  0x003bec                  _send_end_of_transmission
+                  0x003d76                  _setRemoteAlarm
+                  0x003d26                  _setRemoteAllocationAdd
+                  0x003e64                  _setRemoteEmergency
+                  0x003cf8                  _setRemoteEnergyAllocation
+                  0x003e02                  _setRemotePassword
+                  0x003f24                  _setRemoteRelay
+                  0x003ec0                  _setRemoteResetTime
+                  0x003c2e                  _setRemoteTime
                   0x0007b4                  _softKeys0
                   0x0007c9                  _softKeys1
                   0x0007de                  _softKeys2
-                  0x00410a                  _startAlarm
-                  0x003898                  _strcmp2
-                  0x003878                  _strmatch
+                  0x004258                  _startAlarm
+                  0x0039e6                  _strcmp2
+                  0x0039c6                  _strmatch
                   0x00073c                  _ultoa
                   0x00131c                  _updateMenu
                   0x0006ec                  _utoa
                   0x002c44                  _writeBarGraph
-                  0x0042ce                  _writeClockStrings
-                  0x0043a4                  _writeTempClockStrings
-                  0x004584                  _writeTime
+                  0x00441c                  _writeClockStrings
+                  0x0044f2                  _writeTempClockStrings
+                  0x0046d2                  _writeTime
                   0x001214                  _writeToDisplay
-                  0x0039ac                  _zeroPad_itoa
+                  0x002ee2                  _xSumMatches
+                  0x00390c                  _xsum_builder
+                  0x003afa                  _zeroPad_itoa
 
 Memory Configuration
 
@@ -702,7 +712,7 @@ LOAD build/default/production/REM_DisplayUART.o
 LOAD build/default/production/REMOVE_Watchdog.o
                     0x0001                  __MPLAB_BUILD = 0x1
 LOAD pPIC24Fxxx
-LOAD c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libfx-elf.a
+LOAD c:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../lib\libfx-elf.a
                     0xf80000                  __FBS = 0xf80000
                     0xf80004                  __FGS = 0xf80004
                     0xf80006                  __FOSCSEL = 0xf80006
@@ -727,11 +737,11 @@ LOAD c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libfx-elf.a
 
 .text             0x000200        0x5b4
  *(.init)
- .init            0x000200         0x4c c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libpic30-elf.a(crt0_standard.o)
+ .init            0x000200         0x4c c:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../lib\libpic30-elf.a(crt0_standard.o)
                   0x000200                  __resetPRI
                   0x000200                  __reset
                   0x00023c                  __psv_init
- .init            0x00024c         0x7c c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libpic30-elf.a(data_init_standard.o)
+ .init            0x00024c         0x7c c:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../lib\libpic30-elf.a(data_init_standard.o)
                   0x000252                  __data_init_standard
                   0x000252                  __data_init
  *(.user_init)
@@ -751,26 +761,26 @@ LOAD c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libfx-elf.a
  *(.libdsp)
  *(.lib*)
  .libpic30_crt_start_mode
-                  0x000630          0x2 c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libpic30-elf.a(crt_start_mode_normal.eo)
+                  0x000630          0x2 c:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../lib\libpic30-elf.a(crt_start_mode_normal.eo)
                   0x000630                  __crt_start_mode
                   0x000630                  __crt_start_mode_normal
- .libm.udivsi3    0x000632         0x20 c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libm-elf.a(udivsi3.eo)
+ .libm.udivsi3    0x000632         0x20 c:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../lib\libm-elf.a(udivsi3.eo)
                   0x000632                  ___udivsi3
- .libm.umodsi3    0x000652          0x6 c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libm-elf.a(umodsi3.eo)
+ .libm.umodsi3    0x000652          0x6 c:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../lib\libm-elf.a(umodsi3.eo)
                   0x000652                  ___umodsi3
- .libc.atoi       0x000658         0x3e c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libc-elf.a(atoi.eo)
+ .libc.atoi       0x000658         0x3e c:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../lib\libc-elf.a(atoi.eo)
                   0x000658                  _atoi
- .libc.atol       0x000696         0x56 c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libc-elf.a(atol.eo)
+ .libc.atol       0x000696         0x56 c:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../lib\libc-elf.a(atol.eo)
                   0x000696                  _atol
- .libc.utoa       0x0006ec         0x34 c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libc-elf.a(itoa.eo)
+ .libc.utoa       0x0006ec         0x34 c:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../lib\libc-elf.a(itoa.eo)
                   0x0006ec                  _utoa
- .libc.itoa       0x000720         0x1c c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libc-elf.a(itoa.eo)
+ .libc.itoa       0x000720         0x1c c:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../lib\libc-elf.a(itoa.eo)
                   0x000720                  _itoa
- .libc.ultoa      0x00073c         0x4c c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libc-elf.a(ltoa.eo)
+ .libc.ultoa      0x00073c         0x4c c:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../lib\libc-elf.a(ltoa.eo)
                   0x00073c                  _ultoa
- .libc.ltoa       0x000788         0x20 c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libc-elf.a(ltoa.eo)
+ .libc.ltoa       0x000788         0x20 c:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../lib\libc-elf.a(ltoa.eo)
                   0x000788                  _ltoa
- .libm.mulsi3     0x0007a8          0xc c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libm-elf.a(mulsi3.eo)
+ .libm.mulsi3     0x0007a8          0xc c:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../lib\libm-elf.a(mulsi3.eo)
                   0x0007a8                  ___mulp32peds3
                   0x0007a8                  ___mulsi3
                   0x0007a8                  ___mulp32eds3
@@ -780,12 +790,12 @@ usercode
 
 __FBS             0xf80000          0x2
  *(__FBS.sec*)
- __FBS.sec        0xf80000          0x2 /CW/_FBSð<	(=	__FBS.sec
+ __FBS.sec        0xf80000          0x2 /CW/_FBSÈ__FBS.sec
                   0xf80000                  __FBS.sec
 
 __FGS             0xf80004          0x2
  *(__FGS.sec*)
- __FGS.sec        0xf80004          0x2 /CW/_FGSm	@m	__FGS.sec
+ __FGS.sec        0xf80004          0x2 /CW/_FGSˆÀ__FGS.sec
                   0xf80004                  __FGS.sec
 
 __FOSCSEL
@@ -809,53 +819,53 @@ __FDS
 .comment
  *(.comment)
 
-.debug_info       0x000000       0x62fa
+.debug_info       0x000000       0x6527
  *(.debug_info)
- .debug_info      0x000000       0x1676 build/default/production/DisplayMain.o
- .debug_info      0x001676       0x1acd build/default/production/DisplayMenu.o
- .debug_info      0x003143        0x69b build/default/production/DisplayRTCC.o
- .debug_info      0x0037de        0x217 build/default/production/Delays.o
- .debug_info      0x0039f5       0x27c7 build/default/production/Communications.o
- .debug_info      0x0061bc        0x13e build/default/production/REMOVE_Watchdog.o
+ .debug_info      0x000000       0x1686 build/default/production/DisplayMain.o
+ .debug_info      0x001686       0x1add build/default/production/DisplayMenu.o
+ .debug_info      0x003163        0x6ab build/default/production/DisplayRTCC.o
+ .debug_info      0x00380e        0x227 build/default/production/Delays.o
+ .debug_info      0x003a35       0x29a4 build/default/production/Communications.o
+ .debug_info      0x0063d9        0x14e build/default/production/REMOVE_Watchdog.o
  *(.gnu.linkonce.wi.*)
 
-.debug_abbrev     0x000000        0x779
+.debug_abbrev     0x000000        0x783
  *(.debug_abbrev)
  .debug_abbrev    0x000000        0x1ba build/default/production/DisplayMain.o
  .debug_abbrev    0x0001ba          0x1 build/default/production/DisplayConfiguration.o
  .debug_abbrev    0x0001bb        0x196 build/default/production/DisplayMenu.o
  .debug_abbrev    0x000351        0x154 build/default/production/DisplayRTCC.o
  .debug_abbrev    0x0004a5         0x72 build/default/production/Delays.o
- .debug_abbrev    0x000517        0x22d build/default/production/Communications.o
- .debug_abbrev    0x000744          0x1 build/default/production/REM_DisplayUART.o
- .debug_abbrev    0x000745         0x34 build/default/production/REMOVE_Watchdog.o
+ .debug_abbrev    0x000517        0x237 build/default/production/Communications.o
+ .debug_abbrev    0x00074e          0x1 build/default/production/REM_DisplayUART.o
+ .debug_abbrev    0x00074f         0x34 build/default/production/REMOVE_Watchdog.o
 
-.debug_line       0x000000        0xe5a
+.debug_line       0x000000        0xe86
  *(.debug_line)
  .debug_line      0x000000        0x283 build/default/production/DisplayMain.o
  .debug_line      0x000283         0x1a build/default/production/DisplayConfiguration.o
  .debug_line      0x00029d        0x5f8 build/default/production/DisplayMenu.o
  .debug_line      0x000895        0x123 build/default/production/DisplayRTCC.o
  .debug_line      0x0009b8         0x49 build/default/production/Delays.o
- .debug_line      0x000a01        0x3ff build/default/production/Communications.o
- .debug_line      0x000e00         0x1a build/default/production/REM_DisplayUART.o
- .debug_line      0x000e1a         0x40 build/default/production/REMOVE_Watchdog.o
+ .debug_line      0x000a01        0x42b build/default/production/Communications.o
+ .debug_line      0x000e2c         0x1a build/default/production/REM_DisplayUART.o
+ .debug_line      0x000e46         0x40 build/default/production/REMOVE_Watchdog.o
 
-.debug_frame      0x000000       0x10de
+.debug_frame      0x000000       0x1124
  *(.debug_frame)
  .debug_frame     0x000000        0x202 build/default/production/DisplayMain.o
  .debug_frame     0x000202        0x5ee build/default/production/DisplayMenu.o
  .debug_frame     0x0007f0         0x8a build/default/production/DisplayRTCC.o
  .debug_frame     0x00087a         0x84 build/default/production/Delays.o
- .debug_frame     0x0008fe        0x7b0 build/default/production/Communications.o
- .debug_frame     0x0010ae         0x30 build/default/production/REMOVE_Watchdog.o
+ .debug_frame     0x0008fe        0x7f6 build/default/production/Communications.o
+ .debug_frame     0x0010f4         0x30 build/default/production/REMOVE_Watchdog.o
 
-.debug_str        0x000000        0xa12
+.debug_str        0x000000        0xa28
  *(.debug_str)
  .debug_str       0x000000        0x2e4 build/default/production/DisplayMain.o
  .debug_str       0x0002e4        0x4a2 build/default/production/DisplayMenu.o
  .debug_str       0x000786         0x61 build/default/production/DisplayRTCC.o
- .debug_str       0x0007e7        0x22b build/default/production/Communications.o
+ .debug_str       0x0007e7        0x241 build/default/production/Communications.o
 
 .debug_loc
  *(.debug_loc)
@@ -864,7 +874,7 @@ __FDS
  *(.debug_macinfo)
 
 .debug_pubnames
-                  0x000000       0x12df
+                  0x000000       0x1300
  *(.debug_pubnames)
  .debug_pubnames
                   0x000000        0x18f build/default/production/DisplayMain.o
@@ -875,9 +885,9 @@ __FDS
  .debug_pubnames
                   0x000b2e         0x4e build/default/production/Delays.o
  .debug_pubnames
-                  0x000b7c        0x744 build/default/production/Communications.o
+                  0x000b7c        0x765 build/default/production/Communications.o
  .debug_pubnames
-                  0x0012c0         0x1f build/default/production/REMOVE_Watchdog.o
+                  0x0012e1         0x1f build/default/production/REMOVE_Watchdog.o
 
 .debug_ranges
  *(.debug_ranges)
@@ -1506,13 +1516,13 @@ __FDS
                     0x0230                  UART2 = 0x230
                     0x0230                  _UART2 = 0x230
 START GROUP
-LOAD c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libpic30-elf.a
-LOAD c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libm-elf.a
-LOAD c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libc-elf.a
+LOAD c:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../lib\libpic30-elf.a
+LOAD c:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../lib\libm-elf.a
+LOAD c:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../lib\libc-elf.a
 END GROUP
 OUTPUT(dist/default/production/BFDisplayPIC.X.production.elf elf32-pic30)
-LOAD /CW/_FGSm	@m	__FGS.sec
-LOAD /CW/_FBSð<	(=	__FBS.sec
+LOAD /CW/_FGSˆÀ__FGS.sec
+LOAD /CW/_FBSÈ__FBS.sec
 LOAD default_isr
 LOAD data_init
 
@@ -1550,23 +1560,23 @@ __c30_signature
  __c30_signature
                   0x0003bf          0x6 build/default/production/REMOVE_Watchdog.o
  __c30_signature
-                  0x0003c5          0x6 c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libpic30-elf.a(crt0_standard.o)
+                  0x0003c5          0x6 c:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../lib\libpic30-elf.a(crt0_standard.o)
  __c30_signature
-                  0x0003cb          0x6 c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libpic30-elf.a(data_init_standard.o)
+                  0x0003cb          0x6 c:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../lib\libpic30-elf.a(data_init_standard.o)
  __c30_signature
-                  0x0003d1          0x6 c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libm-elf.a(udivsi3.eo)
+                  0x0003d1          0x6 c:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../lib\libm-elf.a(udivsi3.eo)
  __c30_signature
-                  0x0003d7          0x6 c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libm-elf.a(umodsi3.eo)
+                  0x0003d7          0x6 c:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../lib\libm-elf.a(umodsi3.eo)
  __c30_signature
-                  0x0003dd          0x6 c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libc-elf.a(atoi.eo)
+                  0x0003dd          0x6 c:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../lib\libc-elf.a(atoi.eo)
  __c30_signature
-                  0x0003e3          0x6 c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libc-elf.a(atol.eo)
+                  0x0003e3          0x6 c:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../lib\libc-elf.a(atol.eo)
  __c30_signature
-                  0x0003e9          0x6 c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libc-elf.a(itoa.eo)
+                  0x0003e9          0x6 c:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../lib\libc-elf.a(itoa.eo)
  __c30_signature
-                  0x0003ef          0x6 c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libc-elf.a(ltoa.eo)
+                  0x0003ef          0x6 c:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../lib\libc-elf.a(ltoa.eo)
  __c30_signature
-                  0x0003f5          0x6 c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libm-elf.a(mulsi3.eo)
+                  0x0003f5          0x6 c:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../lib\libm-elf.a(mulsi3.eo)
 
 .nbss               0x0800        0x21a
  .nbss              0x0800        0x168 build/default/production/DisplayMenu.o
@@ -1723,7 +1733,7 @@ __c30_signature
  .const             0x9018         0x9c build/default/production/Communications.o
  .const             0x90b4          0x2 build/default/production/DisplayMain.o
 
-.text             0x0010b6       0x3686
+.text             0x0010b6       0x37d4
  .text            0x0010b6       0x1dc8 build/default/production/DisplayMenu.o
                   0x0010b6                  _dspCommand
                   0x0010dc                  _dspWrite
@@ -1776,105 +1786,107 @@ __c30_signature
                   0x002c44                  _writeBarGraph
                   0x002ca4                  _calcPercentRem
                   0x002cfe                  _calcTimeRemaining
- .text            0x002e7e       0x1060 build/default/production/Communications.o
+ .text            0x002e7e       0x11ae build/default/production/Communications.o
                   0x002e7e                  _communications
-                  0x002ece                  _resetCommunications
-                  0x002ee2                  _receive_data
-                  0x002f6a                  _process_data
-                  0x002f84                  _process_data_parameterize
-                  0x003056                  _process_data_parameters
-                  0x00354e                  _command_builder1
-                  0x003576                  _command_builder2
-                  0x0035ac                  _command_builder3
-                  0x0035f0                  _command_builder4
-                  0x003642                  _command_builder5
-                  0x0036a2                  _command_builder6
-                  0x003710                  _command_builder7
-                  0x00378c                  _command_builder_add_char
-                  0x0037bc                  _command_builder_add_string
-                  0x0037e8                  _command_builder_external_helper
-                  0x0037fe                  _send_data
-                  0x003878                  _strmatch
-                  0x003898                  _strcmp2
-                  0x00393a                  _checkOnOff
-                  0x003966                  _fillOnOff
-                  0x0039ac                  _zeroPad_itoa
-                  0x003a2e                  _UART_receive_data_char
-                  0x003a7c                  _UART_send_data_char
-                  0x003a9e                  _send_end_of_transmission
-                  0x003aac                  _com_command_readRemoteTime
-                  0x003abe                  _readRemoteTime
-                  0x003ace                  _com_command_setRemoteTime
-                  0x003ae0                  _setRemoteTime
-                  0x003b76                  _com_command_readRemoteEnergyAllocation
-                  0x003b88                  _readRemoteEnergyAllocation
-                  0x003b98                  _com_command_setRemoteEnergyAllocation
-                  0x003baa                  _setRemoteEnergyAllocation
-                  0x003bc6                  _com_command_setRemoteAllocationAdd
-                  0x003bd8                  _setRemoteAllocationAdd
-                  0x003bf4                  _com_command_readRemoteAlarm
-                  0x003c06                  _readRemoteAlarm
-                  0x003c16                  _com_command_setRemoteAlarm
-                  0x003c28                  _setRemoteAlarm
-                  0x003c80                  _com_command_readRemotePassword
-                  0x003c92                  _readRemotePassword
-                  0x003ca2                  _com_command_setRemotePassword
-                  0x003cb4                  _setRemotePassword
-                  0x003ce2                  _com_command_readRemoteEmergency
-                  0x003cf4                  _readRemoteEmergency
-                  0x003d04                  _com_command_setRemoteEmergency
-                  0x003d16                  _setRemoteEmergency
-                  0x003d3e                  _com_command_readRemoteResetTime
-                  0x003d50                  _readRemoteResetTime
-                  0x003d60                  _com_command_setRemoteResetTime
-                  0x003d72                  _setRemoteResetTime
-                  0x003da2                  _com_command_readRemoteRelay
-                  0x003db4                  _readRemoteRelay
-                  0x003dc4                  _com_command_setRemoteRelay
-                  0x003dd6                  _setRemoteRelay
-                  0x003df2                  _com_command_readRemoteStat
-                  0x003e04                  _readRemoteStat
-                  0x003e14                  _com_command_readRemoteCBver
-                  0x003e26                  _readRemoteCBver
-                  0x003e36                  _com_command_readRemotePowerFailTimes
-                  0x003e48                  _readRemotePowerFailTimes
-                  0x003e58                  _com_command_readRemotePowerData
-                  0x003e6a                  _readRemotePowerData
-                  0x003e7a                  _com_command_readRemoteEnergy
-                  0x003e80                  _com_command_readUpdate
-                  0x003e86                  _com_command_doReset
-                  0x003e8c                  _initUART
- .text            0x003ede        0x644 build/default/production/DisplayMain.o
-                  0x003ede                  _main
-                  0x003f1a                  _init
-                  0x003f44                  _initVars
-                  0x003faa                  _initPorts
-                  0x003fc8                  _enablePullDownResistors
-                  0x003fd6                  _enableInterrupts
-                  0x003fe2                  _disableInterrupts
-                  0x003fee                  _enableAlarm
-                  0x00410a                  _startAlarm
-                  0x00417a                  _nextDot
-                  0x004194                  _periodicUpdate
-                  0x004290                  _initRTCCDisplay
-                  0x0042ac                  _initTimer
-                  0x0042ce                  _writeClockStrings
-                  0x0043a4                  _writeTempClockStrings
-                  0x00451a                  _debugBacklight
- .text            0x004522        0x18e build/default/production/DisplayRTCC.o
-                  0x004522                  _readTime
-                  0x004584                  _writeTime
-                  0x00464e                  _BcdToDec
-                  0x00467e                  _DecToBcd
- .text            0x0046b0         0x8c build/default/production/Delays.o
-                  0x0046b0                  _delayFourUS
-                  0x0046c8                  _delayMS
-                  0x0046f4                  _delayMSTenths
-                  0x004720                  _commDelay
+                  0x002ee2                  _xSumMatches
+                  0x002f80                  _resetCommunications
+                  0x002f94                  _receive_data
+                  0x00301c                  _process_data
+                  0x003044                  _process_data_parameterize
+                  0x003116                  _process_data_parameters
+                  0x00360e                  _command_builder1
+                  0x003636                  _command_builder2
+                  0x003670                  _command_builder3
+                  0x0036bc                  _command_builder4
+                  0x00371a                  _command_builder5
+                  0x00378a                  _command_builder6
+                  0x00380c                  _command_builder7
+                  0x0038a0                  _command_builder_add_char
+                  0x0038d4                  _command_builder_add_string
+                  0x00390c                  _xsum_builder
+                  0x003936                  _command_builder_external_helper
+                  0x00394c                  _send_data
+                  0x0039c6                  _strmatch
+                  0x0039e6                  _strcmp2
+                  0x003a88                  _checkOnOff
+                  0x003ab4                  _fillOnOff
+                  0x003afa                  _zeroPad_itoa
+                  0x003b7c                  _UART_receive_data_char
+                  0x003bca                  _UART_send_data_char
+                  0x003bec                  _send_end_of_transmission
+                  0x003bfa                  _com_command_readRemoteTime
+                  0x003c0c                  _readRemoteTime
+                  0x003c1c                  _com_command_setRemoteTime
+                  0x003c2e                  _setRemoteTime
+                  0x003cc4                  _com_command_readRemoteEnergyAllocation
+                  0x003cd6                  _readRemoteEnergyAllocation
+                  0x003ce6                  _com_command_setRemoteEnergyAllocation
+                  0x003cf8                  _setRemoteEnergyAllocation
+                  0x003d14                  _com_command_setRemoteAllocationAdd
+                  0x003d26                  _setRemoteAllocationAdd
+                  0x003d42                  _com_command_readRemoteAlarm
+                  0x003d54                  _readRemoteAlarm
+                  0x003d64                  _com_command_setRemoteAlarm
+                  0x003d76                  _setRemoteAlarm
+                  0x003dce                  _com_command_readRemotePassword
+                  0x003de0                  _readRemotePassword
+                  0x003df0                  _com_command_setRemotePassword
+                  0x003e02                  _setRemotePassword
+                  0x003e30                  _com_command_readRemoteEmergency
+                  0x003e42                  _readRemoteEmergency
+                  0x003e52                  _com_command_setRemoteEmergency
+                  0x003e64                  _setRemoteEmergency
+                  0x003e8c                  _com_command_readRemoteResetTime
+                  0x003e9e                  _readRemoteResetTime
+                  0x003eae                  _com_command_setRemoteResetTime
+                  0x003ec0                  _setRemoteResetTime
+                  0x003ef0                  _com_command_readRemoteRelay
+                  0x003f02                  _readRemoteRelay
+                  0x003f12                  _com_command_setRemoteRelay
+                  0x003f24                  _setRemoteRelay
+                  0x003f40                  _com_command_readRemoteStat
+                  0x003f52                  _readRemoteStat
+                  0x003f62                  _com_command_readRemoteCBver
+                  0x003f74                  _readRemoteCBver
+                  0x003f84                  _com_command_readRemotePowerFailTimes
+                  0x003f96                  _readRemotePowerFailTimes
+                  0x003fa6                  _com_command_readRemotePowerData
+                  0x003fb8                  _readRemotePowerData
+                  0x003fc8                  _com_command_readRemoteEnergy
+                  0x003fce                  _com_command_readUpdate
+                  0x003fd4                  _com_command_doReset
+                  0x003fda                  _initUART
+ .text            0x00402c        0x644 build/default/production/DisplayMain.o
+                  0x00402c                  _main
+                  0x004068                  _init
+                  0x004092                  _initVars
+                  0x0040f8                  _initPorts
+                  0x004116                  _enablePullDownResistors
+                  0x004124                  _enableInterrupts
+                  0x004130                  _disableInterrupts
+                  0x00413c                  _enableAlarm
+                  0x004258                  _startAlarm
+                  0x0042c8                  _nextDot
+                  0x0042e2                  _periodicUpdate
+                  0x0043de                  _initRTCCDisplay
+                  0x0043fa                  _initTimer
+                  0x00441c                  _writeClockStrings
+                  0x0044f2                  _writeTempClockStrings
+                  0x004668                  _debugBacklight
+ .text            0x004670        0x18e build/default/production/DisplayRTCC.o
+                  0x004670                  _readTime
+                  0x0046d2                  _writeTime
+                  0x00479c                  _BcdToDec
+                  0x0047cc                  _DecToBcd
+ .text            0x0047fe         0x8c build/default/production/Delays.o
+                  0x0047fe                  _delayFourUS
+                  0x004816                  _delayMS
+                  0x004842                  _delayMSTenths
+                  0x00486e                  _commDelay
 
-.dinit            0x00473c         0x2a
- .dinit           0x00473c         0x2a data_init
+.dinit            0x00488a         0x2a
+ .dinit           0x00488a         0x2a data_init
 
-.text             0x004766          0x8
- .text            0x004766          0x8 build/default/production/REMOVE_Watchdog.o
-                  0x004766                  _resetWDT
+.text             0x0048b4          0x8
+ .text            0x0048b4          0x8 build/default/production/REMOVE_Watchdog.o
+                  0x0048b4                  _resetWDT
