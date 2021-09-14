@@ -1,10 +1,53 @@
+/******
+ Common Header File
+ Only put something in here if:
+    it is required for all C files
+    it is not best included in any other header file
+*/
+
+#ifndef COMMON_H
+#define	COMMON_H
+
+
+//#include <xc.h>
+#include <p24FV32KA301.h>
+#include <stdbool.h>
+
+
+
+#define CHAR_NULL '\0'
+
+#define BUF_SIZE_CHAR 5
+#define BUF_SIZE_INT 7
+#define BUF_SIZE_LONG 12
+
+
+// can be used for debugging
+#define BACKLIGHT_NORMAL true // set to 'true' to use the backlight normally - anything else will allow debugging
+#define BACKLIGHT   _RB2    // Pin 6:  RB2
+
+
+
+
+
+
+#endif	/* COMMON_H */
+
+
+
+/******
+ Below are the comments for the headers of C files
+ This should be placed at the top of each c file to provide some sense and
+   structure to make things easier to understand
+ */
+
+
+
 /****************
  INCLUDES
  only include the header files that are required
  ****************/
-#include "common.h"
-#include "Communications.h"
-#include "DisplayMain.h"
+
 /****************
  MACROS
  ****************/
@@ -35,45 +78,5 @@
  CODE
  ****************/
 
-/* delayFourUS
- * delays for approximately four microseconds per input
- * parameter a: delays for a * 4 microseconds
- */
-void delayFourUS( unsigned int a )
-{
-    unsigned int i;
 
-    for( i = 0; i < a; i++ );
-}
 
-/* delayMS
- * delays for approximately one millisecond per input
- * paramter a: delays for a milliseconds
- */
-void delayMS( unsigned int a )
-{
-    unsigned int i, j;
-
-    for( i = 0; i < a; i++ )
-	for( j = 0; j < 250; j++ ); // delay for 1ms
-}
-
-void delayMSTenths( unsigned int a )
-{
-    unsigned int i, j;
-
-    for( i = 0; i < a; i++ )
-	for( j = 0; j < 250; j++ ); // delay for 1ms
-}
-
-void commDelay( unsigned int a )
-{
-
-    for( int i = 0; i < a; i++ )
-    {
-	// FIX
-	communications( false );
-
-	//	commFunctions();
-    }
-}

@@ -1,3 +1,8 @@
+/****************
+ PIC HARDWARE COMPILE CONFIGURATION BITS
+ ****************/
+
+
 /* Configuration Bits *********************************************************/
 // FBS
 #pragma config BWRP = OFF         // Boot Segment Write Protect (Disabled)
@@ -44,7 +49,8 @@
 // (1:16384)
 #pragma config FWPSA = PR32       // WDT Prescaler bit (WDT prescaler ratio of
 // 1:32)
-#pragma config FWDTEN = ON        // Watchdog Timer Enable bits (WDT enabled in
+//#pragma config FWDTEN = ON        // Watchdog Timer Enable bits (WDT enabled in
+#pragma config FWDTEN = OFF        // Watchdog Timer Enable bits (WDT enabled in
 // hardware; SWDTEN bit enabled)
 #pragma config WINDIS = OFF       // Windowed Watchdog Timer Disable bit
 // (Standard WDT selected(windowed WDT
@@ -75,5 +81,6 @@
 // uses Low Power RC Oscillator (LPRC))
 #pragma config DSBOREN = OFF      // Deep Sleep Zero-Power BOR Enable bit (Deep
 // Sleep BOR enabled in Deep Sleep)
-#pragma config DSWDTEN = ON       // Deep Sleep Watchdog Timer Enable bit (DSWDT
+//#pragma config DSWDTEN = ON       // Deep Sleep Watchdog Timer Enable bit (DSWDT
+#pragma config DSWDTEN = OFF       // Deep Sleep Watchdog Timer Enable bit (DSWDT
 // enabled)

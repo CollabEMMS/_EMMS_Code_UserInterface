@@ -1,7 +1,8 @@
 build/default/production/DisplayMain.o:  \
 DisplayMain.c  \
- DisplayDefinitions.h  \
-DisplayPinDefinitions.h  \
-SharedDefinitions.h  \
- SharedCommunication.c  \
-ExternSharedDefinitions.h 
+common.h  \
+ Communications.h  \
+DisplayRTCC.h  \
+DisplayMenu.h  \
+DisplayMenuMacros.h  \
+ Delays.h 

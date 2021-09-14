@@ -1,3 +1,5 @@
 build/default/production/Delays.o:  \
 Delays.c  \
-ExternSharedDefinitions.h 
+common.h  \
+Communications.h  \
+ DisplayMain.h 
