@@ -115,7 +115,6 @@ void readRemotePowerData( struct buffer_struct *send_buffer );
 struct buffer_struct * command_builder_external_helper( bool init, struct buffer_struct *send_buffer );
 
 // not yet sorted
-void delayMS10( int count );
 
 bool UART_receive_data_char( char *data );
 

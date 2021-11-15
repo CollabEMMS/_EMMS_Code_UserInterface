@@ -1,6 +1,12 @@
 open issues
 
-
+11/15/2021
+    BugFix
+        If the backlight was BACKLIGHT_NORMAL false and the backlight was off, the buttons would not work.
+    New Function
+        Added debugBacklightFlash function to support alternate debugging methods
+    Misc
+        Cleaned up an unused function prototype delayMS10( )
 
 9/22/2021
     XSum had some issues
