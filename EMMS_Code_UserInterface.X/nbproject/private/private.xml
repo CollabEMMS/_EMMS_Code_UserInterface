@@ -11,7 +11,7 @@
             </bookmark>
             <bookmark id="1">
                 <name/>
-                <line>1107</line>
+                <line>1106</line>
                 <key/>
             </bookmark>
         </file>
@@ -19,7 +19,7 @@
             <url>DisplayMain.c</url>
             <bookmark id="3">
                 <name/>
-                <line>368</line>
+                <line>371</line>
                 <key/>
             </bookmark>
         </file>
@@ -28,6 +28,12 @@
         <group>
             <file>file:/E:/Documents/Tom/Messiah_Collab/emms/code/_EMMS_Code_UserInterface/EMMS_Code_UserInterface.X/-CL-UserInterface.txt</file>
             <file>file:/E:/Documents/Tom/Messiah_Collab/emms/code/_EMMS_Code_UserInterface/EMMS_Code_UserInterface.X/Communications.c</file>
+            <file>file:/E:/Documents/Tom/Messiah_Collab/emms/code/_EMMS_Code_UserInterface/EMMS_Code_UserInterface.X/common.h</file>
+            <file>file:/E:/Documents/Tom/Messiah_Collab/emms/code/_EMMS_Code_UserInterface/EMMS_Code_UserInterface.X/DisplayMain.c</file>
+            <file>file:/E:/Documents/Tom/Messiah_Collab/emms/code/_EMMS_Code_UserInterface/EMMS_Code_UserInterface.X/DisplayMenu.c</file>
+            <file>file:/E:/Documents/Tom/Messiah_Collab/emms/code/_EMMS_Code_UserInterface/EMMS_Code_UserInterface.X/Delays.h</file>
+            <file>file:/E:/Documents/Tom/Messiah_Collab/emms/code/_EMMS_Code_UserInterface/EMMS_Code_UserInterface.X/Delays.c</file>
+            <file>file:/E:/Documents/Tom/Messiah_Collab/emms/code/_EMMS_Code_UserInterface/EMMS_Code_UserInterface.X/DisplayMain.h</file>
         </group>
     </open-files>
 </project-private>

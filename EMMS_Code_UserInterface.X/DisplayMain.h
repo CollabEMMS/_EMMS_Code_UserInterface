@@ -12,6 +12,7 @@
 
 void debugBacklight( bool state );
 void debugBacklightToggle();
+void debugBacklightFlash( int timeOn );
 
 
 #endif	/* DISPLAYMAIN_H */

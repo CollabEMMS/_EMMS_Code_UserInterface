@@ -71,6 +71,7 @@ void startAlarm( void );
 void initRTCCDisplay( void );
 void debugBacklight( bool state );
 void debugBacklightToggle( );
+void debugBacklightFlash( int timeOn );
 
 
 /****************
@@ -614,7 +615,7 @@ void __attribute__( (interrupt, no_auto_psv) ) _T2Interrupt( void )
 	// pressed = 1
 	// pressed and resolved = 2?
 	// released = 0
-	if( BACKLIGHT )
+	if( (BACKLIGHT == true) || (BACKLIGHT_NORMAL == false) )
 	{
 		// _RA4 is pin 10
 		if( !BTN_3 )
@@ -704,8 +705,6 @@ void debugBacklightToggle( )
 
 	return;
 }
-
-
 void debugBacklight( bool state )
 {
 	if( BACKLIGHT_NORMAL == false )
@@ -718,6 +717,18 @@ void debugBacklight( bool state )
 		{
 			BACKLIGHT = 0;
 		}
+	}
+
+	return;
+}
+
+void debugBacklightFlash( int timeOn )
+{
+	if( BACKLIGHT_NORMAL == false )
+	{
+		BACKLIGHT = 1;
+		delayMS( timeOn );
+		BACKLIGHT = 0;
 	}
 
 	return;
