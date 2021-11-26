@@ -1577,7 +1577,7 @@ void setRemoteAlarm( struct buffer_struct *send_buffer )
 	itoa( alarm1PowerBuf, alarm1EnergyTemp, 10 );
 	itoa( alarm2PowerBuf, alarm2EnergyTemp, 10 );
 
-	command_builder7( send_buffer, "set", "Alarm", audibleAlarmBuf, alarm1EnabledBuf, alarm1PowerBuf, alarm2EnabledBuf, alarm2PowerBuf );
+	command_builder7( send_buffer, "Set", "Alarm", audibleAlarmBuf, alarm1EnabledBuf, alarm1PowerBuf, alarm2EnabledBuf, alarm2PowerBuf );
 
 	return;
 }
