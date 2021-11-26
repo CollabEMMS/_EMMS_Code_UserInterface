@@ -95,86 +95,86 @@ MP_LINKER_FILE_OPTION=,--script=p24FV32KA301.gld
 # ------------------------------------------------------------------------------------
 # Rules for buildStep: compile
 ifeq ($(TYPE_IMAGE), DEBUG_RUN)
-${OBJECTDIR}/DisplayMain.o: DisplayMain.c  .generated_files/flags/default/2c76f49fceafac94f74fb07532330ec809a2c101 .generated_files/flags/default/134520b63590fa964063cd5424fbfd9de18f6d5
+${OBJECTDIR}/DisplayMain.o: DisplayMain.c  .generated_files/flags/default/e83b9cf1ac4fb8fb612334dd2430bef37cf740ff .generated_files/flags/default/134520b63590fa964063cd5424fbfd9de18f6d5
 	@${MKDIR} "${OBJECTDIR}" 
 	@${RM} ${OBJECTDIR}/DisplayMain.o.d 
 	@${RM} ${OBJECTDIR}/DisplayMain.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  DisplayMain.c  -o ${OBJECTDIR}/DisplayMain.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/DisplayMain.o.d"      -g -D__DEBUG     -omf=elf -DXPRJ_default=$(CND_CONF)  -no-legacy-libc  $(COMPARISON_BUILD)  -std=gnu99 -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
 	
-${OBJECTDIR}/DisplayConfiguration.o: DisplayConfiguration.c  .generated_files/flags/default/8a1f7b2417f1f141efda243f1dadc4c919f03bb4 .generated_files/flags/default/134520b63590fa964063cd5424fbfd9de18f6d5
+${OBJECTDIR}/DisplayConfiguration.o: DisplayConfiguration.c  .generated_files/flags/default/3f88295729f88f3e74988b6c34adf82989e923f8 .generated_files/flags/default/134520b63590fa964063cd5424fbfd9de18f6d5
 	@${MKDIR} "${OBJECTDIR}" 
 	@${RM} ${OBJECTDIR}/DisplayConfiguration.o.d 
 	@${RM} ${OBJECTDIR}/DisplayConfiguration.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  DisplayConfiguration.c  -o ${OBJECTDIR}/DisplayConfiguration.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/DisplayConfiguration.o.d"      -g -D__DEBUG     -omf=elf -DXPRJ_default=$(CND_CONF)  -no-legacy-libc  $(COMPARISON_BUILD)  -std=gnu99 -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
 	
-${OBJECTDIR}/DisplayMenu.o: DisplayMenu.c  .generated_files/flags/default/34b005bce218f587dab7bbfe73144bb239dff6ed .generated_files/flags/default/134520b63590fa964063cd5424fbfd9de18f6d5
+${OBJECTDIR}/DisplayMenu.o: DisplayMenu.c  .generated_files/flags/default/2743d1313ab914cc20bd2ed20a6077369306e6a8 .generated_files/flags/default/134520b63590fa964063cd5424fbfd9de18f6d5
 	@${MKDIR} "${OBJECTDIR}" 
 	@${RM} ${OBJECTDIR}/DisplayMenu.o.d 
 	@${RM} ${OBJECTDIR}/DisplayMenu.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  DisplayMenu.c  -o ${OBJECTDIR}/DisplayMenu.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/DisplayMenu.o.d"      -g -D__DEBUG     -omf=elf -DXPRJ_default=$(CND_CONF)  -no-legacy-libc  $(COMPARISON_BUILD)  -std=gnu99 -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
 	
-${OBJECTDIR}/DisplayRTCC.o: DisplayRTCC.c  .generated_files/flags/default/1435efdbad23eb50f411abd28690f5eb7a5fa96b .generated_files/flags/default/134520b63590fa964063cd5424fbfd9de18f6d5
+${OBJECTDIR}/DisplayRTCC.o: DisplayRTCC.c  .generated_files/flags/default/7627aa94cfd28096403339700a3c9509793de7a1 .generated_files/flags/default/134520b63590fa964063cd5424fbfd9de18f6d5
 	@${MKDIR} "${OBJECTDIR}" 
 	@${RM} ${OBJECTDIR}/DisplayRTCC.o.d 
 	@${RM} ${OBJECTDIR}/DisplayRTCC.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  DisplayRTCC.c  -o ${OBJECTDIR}/DisplayRTCC.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/DisplayRTCC.o.d"      -g -D__DEBUG     -omf=elf -DXPRJ_default=$(CND_CONF)  -no-legacy-libc  $(COMPARISON_BUILD)  -std=gnu99 -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
 	
-${OBJECTDIR}/Delays.o: Delays.c  .generated_files/flags/default/9f9f4763de47a502c293e8a7141649f643ef69cc .generated_files/flags/default/134520b63590fa964063cd5424fbfd9de18f6d5
+${OBJECTDIR}/Delays.o: Delays.c  .generated_files/flags/default/d42994a6929679f5c933d04f9deb63b5cceed06e .generated_files/flags/default/134520b63590fa964063cd5424fbfd9de18f6d5
 	@${MKDIR} "${OBJECTDIR}" 
 	@${RM} ${OBJECTDIR}/Delays.o.d 
 	@${RM} ${OBJECTDIR}/Delays.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  Delays.c  -o ${OBJECTDIR}/Delays.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/Delays.o.d"      -g -D__DEBUG     -omf=elf -DXPRJ_default=$(CND_CONF)  -no-legacy-libc  $(COMPARISON_BUILD)  -std=gnu99 -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
 	
-${OBJECTDIR}/Communications.o: Communications.c  .generated_files/flags/default/8749625914677004636b863ca45ed8696be4a392 .generated_files/flags/default/134520b63590fa964063cd5424fbfd9de18f6d5
+${OBJECTDIR}/Communications.o: Communications.c  .generated_files/flags/default/7cffb1d1911d7804637d6b01a8f9cee054289c3c .generated_files/flags/default/134520b63590fa964063cd5424fbfd9de18f6d5
 	@${MKDIR} "${OBJECTDIR}" 
 	@${RM} ${OBJECTDIR}/Communications.o.d 
 	@${RM} ${OBJECTDIR}/Communications.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  Communications.c  -o ${OBJECTDIR}/Communications.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/Communications.o.d"      -g -D__DEBUG     -omf=elf -DXPRJ_default=$(CND_CONF)  -no-legacy-libc  $(COMPARISON_BUILD)  -std=gnu99 -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
 	
-${OBJECTDIR}/REM_DisplayUART.o: REM_DisplayUART.c  .generated_files/flags/default/d7dc9f942cb7b110cb453235d1b03fd106ba9725 .generated_files/flags/default/134520b63590fa964063cd5424fbfd9de18f6d5
+${OBJECTDIR}/REM_DisplayUART.o: REM_DisplayUART.c  .generated_files/flags/default/cd116f9185c810ca37e7e26cae1eccd3111706d6 .generated_files/flags/default/134520b63590fa964063cd5424fbfd9de18f6d5
 	@${MKDIR} "${OBJECTDIR}" 
 	@${RM} ${OBJECTDIR}/REM_DisplayUART.o.d 
 	@${RM} ${OBJECTDIR}/REM_DisplayUART.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  REM_DisplayUART.c  -o ${OBJECTDIR}/REM_DisplayUART.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/REM_DisplayUART.o.d"      -g -D__DEBUG     -omf=elf -DXPRJ_default=$(CND_CONF)  -no-legacy-libc  $(COMPARISON_BUILD)  -std=gnu99 -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
 	
 else
-${OBJECTDIR}/DisplayMain.o: DisplayMain.c  .generated_files/flags/default/b2968591dd17935fd2b75a183ec51d632ab97d0 .generated_files/flags/default/134520b63590fa964063cd5424fbfd9de18f6d5
+${OBJECTDIR}/DisplayMain.o: DisplayMain.c  .generated_files/flags/default/e5d63ddc6165a5f694d1f6ef399be6470592ba34 .generated_files/flags/default/134520b63590fa964063cd5424fbfd9de18f6d5
 	@${MKDIR} "${OBJECTDIR}" 
 	@${RM} ${OBJECTDIR}/DisplayMain.o.d 
 	@${RM} ${OBJECTDIR}/DisplayMain.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  DisplayMain.c  -o ${OBJECTDIR}/DisplayMain.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/DisplayMain.o.d"        -g -omf=elf -DXPRJ_default=$(CND_CONF)  -no-legacy-libc  $(COMPARISON_BUILD)  -std=gnu99 -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
 	
-${OBJECTDIR}/DisplayConfiguration.o: DisplayConfiguration.c  .generated_files/flags/default/6f228706265a6af223bb701b4700da4c39ccf6e7 .generated_files/flags/default/134520b63590fa964063cd5424fbfd9de18f6d5
+${OBJECTDIR}/DisplayConfiguration.o: DisplayConfiguration.c  .generated_files/flags/default/7d25cea3388cf0596e2169b3863d73df901eaeb4 .generated_files/flags/default/134520b63590fa964063cd5424fbfd9de18f6d5
 	@${MKDIR} "${OBJECTDIR}" 
 	@${RM} ${OBJECTDIR}/DisplayConfiguration.o.d 
 	@${RM} ${OBJECTDIR}/DisplayConfiguration.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  DisplayConfiguration.c  -o ${OBJECTDIR}/DisplayConfiguration.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/DisplayConfiguration.o.d"        -g -omf=elf -DXPRJ_default=$(CND_CONF)  -no-legacy-libc  $(COMPARISON_BUILD)  -std=gnu99 -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
 	
-${OBJECTDIR}/DisplayMenu.o: DisplayMenu.c  .generated_files/flags/default/d8a20f36cced4cabdfcb8ec902dbf39e5fb89e59 .generated_files/flags/default/134520b63590fa964063cd5424fbfd9de18f6d5
+${OBJECTDIR}/DisplayMenu.o: DisplayMenu.c  .generated_files/flags/default/1d59c6510a58a730a7b313ba1725ff681edc9df6 .generated_files/flags/default/134520b63590fa964063cd5424fbfd9de18f6d5
 	@${MKDIR} "${OBJECTDIR}" 
 	@${RM} ${OBJECTDIR}/DisplayMenu.o.d 
 	@${RM} ${OBJECTDIR}/DisplayMenu.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  DisplayMenu.c  -o ${OBJECTDIR}/DisplayMenu.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/DisplayMenu.o.d"        -g -omf=elf -DXPRJ_default=$(CND_CONF)  -no-legacy-libc  $(COMPARISON_BUILD)  -std=gnu99 -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
 	
-${OBJECTDIR}/DisplayRTCC.o: DisplayRTCC.c  .generated_files/flags/default/8a23783079e2f344386154b01846bdcfe249cf86 .generated_files/flags/default/134520b63590fa964063cd5424fbfd9de18f6d5
+${OBJECTDIR}/DisplayRTCC.o: DisplayRTCC.c  .generated_files/flags/default/d7ece162cf0aad08e5ef090818f84ef747ff47a2 .generated_files/flags/default/134520b63590fa964063cd5424fbfd9de18f6d5
 	@${MKDIR} "${OBJECTDIR}" 
 	@${RM} ${OBJECTDIR}/DisplayRTCC.o.d 
 	@${RM} ${OBJECTDIR}/DisplayRTCC.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  DisplayRTCC.c  -o ${OBJECTDIR}/DisplayRTCC.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/DisplayRTCC.o.d"        -g -omf=elf -DXPRJ_default=$(CND_CONF)  -no-legacy-libc  $(COMPARISON_BUILD)  -std=gnu99 -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
 	
-${OBJECTDIR}/Delays.o: Delays.c  .generated_files/flags/default/691b112bead4bb0bc1237acdd7b67fbb1e9da450 .generated_files/flags/default/134520b63590fa964063cd5424fbfd9de18f6d5
+${OBJECTDIR}/Delays.o: Delays.c  .generated_files/flags/default/c8bd355a397b583a8cc2c65cf1c4780fef7df5d5 .generated_files/flags/default/134520b63590fa964063cd5424fbfd9de18f6d5
 	@${MKDIR} "${OBJECTDIR}" 
 	@${RM} ${OBJECTDIR}/Delays.o.d 
 	@${RM} ${OBJECTDIR}/Delays.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  Delays.c  -o ${OBJECTDIR}/Delays.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/Delays.o.d"        -g -omf=elf -DXPRJ_default=$(CND_CONF)  -no-legacy-libc  $(COMPARISON_BUILD)  -std=gnu99 -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
 	
-${OBJECTDIR}/Communications.o: Communications.c  .generated_files/flags/default/9f71be10c0d3d77fff2b52a2aff2cc68f0bbe6a4 .generated_files/flags/default/134520b63590fa964063cd5424fbfd9de18f6d5
+${OBJECTDIR}/Communications.o: Communications.c  .generated_files/flags/default/86fcaafe160ad0215a1e97fa403ac3437f4ccaec .generated_files/flags/default/134520b63590fa964063cd5424fbfd9de18f6d5
 	@${MKDIR} "${OBJECTDIR}" 
 	@${RM} ${OBJECTDIR}/Communications.o.d 
 	@${RM} ${OBJECTDIR}/Communications.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  Communications.c  -o ${OBJECTDIR}/Communications.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/Communications.o.d"        -g -omf=elf -DXPRJ_default=$(CND_CONF)  -no-legacy-libc  $(COMPARISON_BUILD)  -std=gnu99 -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
 	
-${OBJECTDIR}/REM_DisplayUART.o: REM_DisplayUART.c  .generated_files/flags/default/3e45c5e081382bd1ae5325cd85f4d8f0bc5ca9f1 .generated_files/flags/default/134520b63590fa964063cd5424fbfd9de18f6d5
+${OBJECTDIR}/REM_DisplayUART.o: REM_DisplayUART.c  .generated_files/flags/default/40abfbd66bc4c0b3b6f9bb21a90c6311621cf098 .generated_files/flags/default/134520b63590fa964063cd5424fbfd9de18f6d5
 	@${MKDIR} "${OBJECTDIR}" 
 	@${RM} ${OBJECTDIR}/REM_DisplayUART.o.d 
 	@${RM} ${OBJECTDIR}/REM_DisplayUART.o 

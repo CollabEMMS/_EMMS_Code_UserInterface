@@ -1,5 +1,10 @@
 open issues
 
+
+11/25/2021
+    BugFix
+        The alarms were not saving - found to be a capitalization of 'Set' typo
+
 11/15/2021
     BugFix
         If the backlight was BACKLIGHT_NORMAL false and the backlight was off, the buttons would not work.
