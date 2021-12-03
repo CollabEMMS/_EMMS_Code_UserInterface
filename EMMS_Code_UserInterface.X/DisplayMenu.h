@@ -1,5 +1,5 @@
 #ifndef DISPLAYMENU_H
-#define	DISPLAYMENU_H
+#    define	DISPLAYMENU_H
 
 
 extern char audibleAlarm;
@@ -23,13 +23,13 @@ extern char powerUpTime[12];
 
 // not sorted yet
 extern char emerButtonEnable;
-extern int  emerButtonEnergyAllocate;
+extern int emerButtonEnergyAllocate;
 extern unsigned char tempResetHour;
 extern unsigned char tempResetMinute;
 extern char relayActive;
 
-extern int  emerButtonEnergyAllocate;
-extern int  emerAllocNow;
+extern int emerButtonEnergyAllocate;
+extern int emerAllocNow;
 extern int emerAllocSend;
 
 extern char powerBoxCodeVersionString[9];
@@ -69,8 +69,8 @@ extern char alarmTwoHit;
 
 
 
-void initDisplay(void);
-void writeToDisplay(const char*, unsigned char, char);
+void initDisplay( void );
+void writeToDisplay( const char*, unsigned char, char );
 
 void calcPercentRem( void );
 void calcTimeRemaining( void );

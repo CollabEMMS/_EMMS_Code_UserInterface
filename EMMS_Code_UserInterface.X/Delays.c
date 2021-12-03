@@ -28,7 +28,7 @@
  external functions should be in the header
  ideally these are in the same order as in the code listing
  any functions used internally and externally (prototype here and in the .h file)
-     should be marked
+	 should be marked
  *****************/
 
 /****************
@@ -41,9 +41,9 @@
  */
 void delayFourUS( unsigned int a )
 {
-    unsigned int i;
+	unsigned int i;
 
-    for( i = 0; i < a; i++ );
+	for( i = 0; i < a; i++ );
 }
 
 /* delayMS
@@ -52,28 +52,28 @@ void delayFourUS( unsigned int a )
  */
 void delayMS( unsigned int a )
 {
-    unsigned int i, j;
+	unsigned int i, j;
 
-    for( i = 0; i < a; i++ )
-	for( j = 0; j < 250; j++ ); // delay for 1ms
+	for( i = 0; i < a; i++ )
+		for( j = 0; j < 250; j++ ); // delay for 1ms
 }
 
 void delayMSTenths( unsigned int a )
 {
-    unsigned int i, j;
+	unsigned int i, j;
 
-    for( i = 0; i < a; i++ )
-	for( j = 0; j < 250; j++ ); // delay for 1ms
+	for( i = 0; i < a; i++ )
+		for( j = 0; j < 250; j++ ); // delay for 1ms
 }
 
 void commDelay( unsigned int a )
 {
 
-    for( int i = 0; i < a; i++ )
-    {
-	// FIX
-	communications( false );
+	for( int i = 0; i < a; i++ )
+	{
+		// FIX
+		communications( false );
 
-	//	commFunctions();
-    }
+		//	commFunctions();
+	}
 }

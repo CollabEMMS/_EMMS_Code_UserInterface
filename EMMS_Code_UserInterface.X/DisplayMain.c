@@ -77,6 +77,7 @@ void debugBacklightFlash( int timeOn );
 /****************
  CODE
  ****************/
+
 /* main
  * Initializes and runs through the main code that is repetitively called
  */
@@ -119,6 +120,7 @@ int main( void )
 }
 
 /* Functions ******************************************************************/
+
 /* init
  * Calls each individual initialization method
  */
@@ -143,6 +145,7 @@ void init( void )
 
 	initVars( );
 }
+
 /* initVars
  * Initializes variables to their starting values (usually 0)
  */
@@ -188,6 +191,7 @@ void initVars( void )
 	relayActive = 1;
 	tempRelayActive = 1;
 }
+
 /* initPorts
  * initializes ports for I/O
  * disables Int0 interrupt
@@ -214,6 +218,7 @@ void initPorts( void )
 	// disable int0 interrupt, just in case it initializes enabled
 	_INT0IE = 0;
 }
+
 void enablePullDownResistors( void )
 {
 	// uncomment pins you want to be pull down resistors
@@ -240,6 +245,7 @@ void enablePullDownResistors( void )
 	// pin 19 is Vss
 	// pin 20 is Vdd
 }
+
 /* enableInterrupts
  * as named
  */
@@ -247,6 +253,7 @@ void enableInterrupts( void )
 {
 	INTCON1 |= 0b1000000000000000;
 }
+
 /* disableInterrupts
  * also as named
  */
@@ -254,6 +261,7 @@ void disableInterrupts( void )
 {
 	INTCON1 &= 0b0111111111111111;
 }
+
 void enableAlarm( void )
 {
 	static char startNextAlarm;
@@ -265,7 +273,7 @@ void enableAlarm( void )
 		alarmOneHit = alarmTwoHit = 0;
 	}
 
-	if( alarm1Energy && (percentRem <= alarm1Energy) && !alarmOneHit && !silenceAlarmOne && !activeAlarm && !alarmToResume )
+	if( alarm1Energy && ( percentRem <= alarm1Energy ) && !alarmOneHit && !silenceAlarmOne && !activeAlarm && !alarmToResume )
 	{
 
 		remainingSets = numSets;
@@ -274,7 +282,7 @@ void enableAlarm( void )
 		startAlarm( );
 
 	}
-	else if( alarm2Energy && (percentRem <= alarm2Energy) && !alarmTwoHit && !silenceAlarmTwo && !activeAlarm && !alarmToResume )
+	else if( alarm2Energy && ( percentRem <= alarm2Energy ) && !alarmTwoHit && !silenceAlarmTwo && !activeAlarm && !alarmToResume )
 	{
 
 		remainingSets = numSets;
@@ -283,7 +291,7 @@ void enableAlarm( void )
 		startAlarm( );
 	}
 
-	if( activeAlarm && (timeSecond == alarmEnd) )
+	if( activeAlarm && ( timeSecond == alarmEnd ) )
 	{
 		alarmToResume = activeAlarm;
 		activeAlarm = 0;
@@ -291,11 +299,11 @@ void enableAlarm( void )
 
 		if( remainingSets )
 		{
-			startNextAlarm = (timeSecond + 59) % 60;
+			startNextAlarm = ( timeSecond + 59 ) % 60;
 			remainingSets--;
 		}
 	}
-	else if( audibleAlarm && activeAlarm && ((timeSecond % 2) == alarmPulse) )
+	else if( audibleAlarm && activeAlarm && ( ( timeSecond % 2 ) == alarmPulse ) )
 	{
 		_RB7 = 1;
 	}
@@ -310,27 +318,29 @@ void enableAlarm( void )
 	if( percentRem != alarm2Energy )
 		silenceAlarmTwo = 0;
 
-	if( (startNextAlarm == timeSecond) && remainingSets )
+	if( ( startNextAlarm == timeSecond ) && remainingSets )
 	{
 		activeAlarm = alarmToResume;
 		startAlarm( );
 	}
 }
+
 void startAlarm( void )
 {
 	if( menuState != MENU_ALARM )
 		oldMenuState = menuState;
-	alarmPulse = (timeSecond + 1) % 2;
-	alarmEnd = (timeSecond + (2 * numBeeps)) % 60;
+	alarmPulse = ( timeSecond + 1 ) % 2;
+	alarmEnd = ( timeSecond + ( 2 * numBeeps ) ) % 60;
 	menuState = MENU_ALARM;
 
 	if( BACKLIGHT_NORMAL == true )
 	{
 		BACKLIGHT = 1; // turn on backlight
 	}
-	resetTimeSecond = (timeSecond + 59) % 60;
-	resetTimeMinute = (timeMinute + 9) % 60;
+	resetTimeSecond = ( timeSecond + 59 ) % 60;
+	resetTimeMinute = ( timeMinute + 9 ) % 60;
 }
+
 void nextDot( void )
 {
 	static char count = 0;
@@ -368,6 +378,7 @@ void nextDot( void )
 //    //    //    com_command_readRemotePowerDownUpTime( );
 //    //    nextDot( );
 //}
+
 void periodicUpdate( void )
 {
 
@@ -379,7 +390,7 @@ void periodicUpdate( void )
 
 	if( firstRun == true )
 	{
-		if( (timeSecond % 2) == 0 )
+		if( ( timeSecond % 2 ) == 0 )
 		{
 			if( alreadyRun == false )
 			{
@@ -451,7 +462,7 @@ void periodicUpdate( void )
 				lastPowerSecond = timeSecond;
 			}
 			// Refresh time and other settings every 10 seconds
-			if( ((timeSecond % 10) == 0) && (timeSecond != lastOtherSecond) )
+			if( ( ( timeSecond % 10 ) == 0 ) && ( timeSecond != lastOtherSecond ) )
 			{
 				com_command_readRemoteTime( );
 				readTime( );
@@ -498,6 +509,7 @@ void periodicUpdate( void )
 //}
 
 // ignore red error marks (caused by some failure regarding macro definition)
+
 void initRTCCDisplay( void )
 {
 
@@ -511,6 +523,7 @@ void initRTCCDisplay( void )
 
 	_RTCWREN = 0; // Disable Writing
 }
+
 void initTimer( void )
 {
 
@@ -532,6 +545,7 @@ void initTimer( void )
 	_T2IE = 1;
 	_T2IF = 0;
 }
+
 /* writeClockStrings
  * writes clock and calendar strings for output to LCD screen
  * current formats:
@@ -541,23 +555,24 @@ void initTimer( void )
 void writeClockStrings( void )
 {
 
-	calendarStr[0] = (timeDay / 10) + 0x30;
-	calendarStr[1] = (timeDay % 10) + 0x30;
+	calendarStr[0] = ( timeDay / 10 ) + 0x30;
+	calendarStr[1] = ( timeDay % 10 ) + 0x30;
 	calendarStr[2] = calendarStr[5] = '/';
-	calendarStr[3] = (timeMonth / 10) + 0x30;
-	calendarStr[4] = (timeMonth % 10) + 0x30;
-	calendarStr[6] = (timeYear / 10) + 0x30;
-	calendarStr[7] = (timeYear % 10) + 0x30;
+	calendarStr[3] = ( timeMonth / 10 ) + 0x30;
+	calendarStr[4] = ( timeMonth % 10 ) + 0x30;
+	calendarStr[6] = ( timeYear / 10 ) + 0x30;
+	calendarStr[7] = ( timeYear % 10 ) + 0x30;
 
-	clockStr[0] = (timeHour / 10) + 0x30;
-	clockStr[1] = (timeHour % 10) + 0x30;
+	clockStr[0] = ( timeHour / 10 ) + 0x30;
+	clockStr[1] = ( timeHour % 10 ) + 0x30;
 	clockStr[2] = ':';
-	clockStr[3] = (timeMinute / 10) + 0x30;
-	clockStr[4] = (timeMinute % 10) + 0x30;
+	clockStr[3] = ( timeMinute / 10 ) + 0x30;
+	clockStr[4] = ( timeMinute % 10 ) + 0x30;
 
 
 	calendarStr[8] = clockStr[5] = 0;
 }
+
 void writeTempClockStrings( void )
 {
 	tempClockStr[0] = tempClockStr[3] = tempClockStr[5] = tempClockStr[8] = tempCalStr[0] = tempCalStr[3] = tempCalStr[5] = tempCalStr[8] = tempCalStr[10] = tempCalStr[13] = ' ';
@@ -565,16 +580,16 @@ void writeTempClockStrings( void )
 	tempCalStr[4] = tempCalStr[9] = '/';
 	tempClockStr[9] = tempCalStr[14] = 0;
 
-	tempClockStr[1] = (tempHour / 10) + 0x30;
-	tempClockStr[2] = (tempHour % 10) + 0x30;
-	tempClockStr[6] = (tempMin / 10) + 0x30;
-	tempClockStr[7] = (tempMin % 10) + 0x30;
-	tempCalStr[1] = (tempDay / 10) + 0x30;
-	tempCalStr[2] = (tempDay % 10) + 0x30;
-	tempCalStr[6] = (tempMonth / 10) + 0x30;
-	tempCalStr[7] = (tempMonth % 10) + 0x30;
-	tempCalStr[11] = (tempYear / 10) + 0x30;
-	tempCalStr[12] = (tempYear % 10) + 0x30;
+	tempClockStr[1] = ( tempHour / 10 ) + 0x30;
+	tempClockStr[2] = ( tempHour % 10 ) + 0x30;
+	tempClockStr[6] = ( tempMin / 10 ) + 0x30;
+	tempClockStr[7] = ( tempMin % 10 ) + 0x30;
+	tempCalStr[1] = ( tempDay / 10 ) + 0x30;
+	tempCalStr[2] = ( tempDay % 10 ) + 0x30;
+	tempCalStr[6] = ( tempMonth / 10 ) + 0x30;
+	tempCalStr[7] = ( tempMonth % 10 ) + 0x30;
+	tempCalStr[11] = ( tempYear / 10 ) + 0x30;
+	tempCalStr[12] = ( tempYear % 10 ) + 0x30;
 
 	switch( timeSetPos )
 	{
@@ -605,17 +620,18 @@ void writeTempClockStrings( void )
 }
 
 /* Interrupts *****************************************************************/
+
 /* Timer 2 Interrupt
  * Detects button presses
  */
-void __attribute__( (interrupt, no_auto_psv) ) _T2Interrupt( void )
+void __attribute__( ( interrupt, no_auto_psv ) ) _T2Interrupt( void )
 {
 
 	// clear flag in main loop code by setting to a value other than 0 or 1
 	// pressed = 1
 	// pressed and resolved = 2?
 	// released = 0
-	if( (BACKLIGHT == true) || (BACKLIGHT_NORMAL == false) )
+	if( ( BACKLIGHT == true ) || ( BACKLIGHT_NORMAL == false ) )
 	{
 		// _RA4 is pin 10
 		if( !BTN_3 )
@@ -623,8 +639,8 @@ void __attribute__( (interrupt, no_auto_psv) ) _T2Interrupt( void )
 		else if( !button3Flag )
 		{// && _RA3 == 1
 			button3Flag = 1;
-			resetTimeSecond = (timeSecond + 59) % 60;
-			resetTimeMinute = (timeMinute + 9) % 60;
+			resetTimeSecond = ( timeSecond + 59 ) % 60;
+			resetTimeMinute = ( timeMinute + 9 ) % 60;
 		}
 
 		// _RB4 is pin 9
@@ -633,8 +649,8 @@ void __attribute__( (interrupt, no_auto_psv) ) _T2Interrupt( void )
 		else if( !button2Flag )
 		{// && _RB8 == 1
 			button2Flag = 1;
-			resetTimeSecond = (timeSecond + 59) % 60;
-			resetTimeMinute = (timeMinute + 9) % 60;
+			resetTimeSecond = ( timeSecond + 59 ) % 60;
+			resetTimeMinute = ( timeMinute + 9 ) % 60;
 		}
 
 		// _RA3 is pin 8
@@ -643,8 +659,8 @@ void __attribute__( (interrupt, no_auto_psv) ) _T2Interrupt( void )
 		else if( !button1Flag )
 		{// && _RA4 == 1
 			button1Flag = 1;
-			resetTimeSecond = (timeSecond + 59) % 60;
-			resetTimeMinute = (timeMinute + 9) % 60;
+			resetTimeSecond = ( timeSecond + 59 ) % 60;
+			resetTimeMinute = ( timeMinute + 9 ) % 60;
 		}
 
 		// _RA2 is pin 7
@@ -653,8 +669,8 @@ void __attribute__( (interrupt, no_auto_psv) ) _T2Interrupt( void )
 		else if( !button0Flag )
 		{// && _RB4 == 1
 			button0Flag = 1;
-			resetTimeSecond = (timeSecond + 59) % 60;
-			resetTimeMinute = (timeMinute + 9) % 60;
+			resetTimeSecond = ( timeSecond + 59 ) % 60;
+			resetTimeMinute = ( timeMinute + 9 ) % 60;
 		}
 	}
 
@@ -668,11 +684,11 @@ void __attribute__( (interrupt, no_auto_psv) ) _T2Interrupt( void )
 		button1Flag = 2;
 		button2Flag = 2;
 		button3Flag = 2;
-		resetTimeSecond = (timeSecond + 59) % 60;
-		resetTimeMinute = (timeMinute + 9) % 60;
+		resetTimeSecond = ( timeSecond + 59 ) % 60;
+		resetTimeMinute = ( timeMinute + 9 ) % 60;
 	}
 
-	if( (timeMinute == resetTimeMinute) && (timeSecond == resetTimeSecond) && ((menuState != MENU_ALARM) || ((menuState == MENU_ALARM) && (remainingSets == 0))) && (menuState != MENU_DEBUG) && (!isBooting) )
+	if( ( timeMinute == resetTimeMinute ) && ( timeSecond == resetTimeSecond ) && ( ( menuState != MENU_ALARM ) || ( ( menuState == MENU_ALARM ) && ( remainingSets == 0 ) ) ) && ( menuState != MENU_DEBUG ) && ( !isBooting ) )
 	{
 		menuState = MENU_HOME_BASIC;
 		if( BACKLIGHT_NORMAL == true )
@@ -689,6 +705,7 @@ void __attribute__( (interrupt, no_auto_psv) ) _T2Interrupt( void )
 
 
 //
+
 void debugBacklightToggle( )
 {
 	if( BACKLIGHT_NORMAL == false )
@@ -705,6 +722,7 @@ void debugBacklightToggle( )
 
 	return;
 }
+
 void debugBacklight( bool state )
 {
 	if( BACKLIGHT_NORMAL == false )

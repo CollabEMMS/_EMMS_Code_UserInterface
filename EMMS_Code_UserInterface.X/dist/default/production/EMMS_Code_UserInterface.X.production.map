@@ -24,7 +24,6 @@ Command:
   build/default/production/DisplayRTCC.o \
   build/default/production/Delays.o \
   build/default/production/Communications.o \
-  build/default/production/REM_DisplayUART.o \
   --defsym=__MPLAB_BUILD=1 \
   -Tp24FV32KA301.gld.00 \
   --stack=16 \
@@ -710,7 +709,6 @@ LOAD build/default/production/DisplayMenu.o
 LOAD build/default/production/DisplayRTCC.o
 LOAD build/default/production/Delays.o
 LOAD build/default/production/Communications.o
-LOAD build/default/production/REM_DisplayUART.o
                     0x0001                  __MPLAB_BUILD = 0x1
 LOAD pPIC24Fxxx
 LOAD c:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../lib\libfx-elf.a
@@ -791,12 +789,12 @@ usercode
 
 __FBS             0xf80000          0x2
  *(__FBS.sec*)
- __FBS.sec        0xf80000          0x2 /CW/_FBSÐÞè
+ __FBS.sec        0xf80000          0x2 /CW/_FBSÀ¤Ú
                   0xf80000                  __FBS.sec
 
 __FGS             0xf80004          0x2
  *(__FGS.sec*)
- __FGS.sec        0xf80004          0x2 /CW/_FGSÈÎè
+ __FGS.sec        0xf80004          0x2 /CW/_FGSÈ´Ú
                   0xf80004                  __FGS.sec
 
 __FOSCSEL
@@ -820,34 +818,32 @@ __FDS
 .comment
  *(.comment)
 
-.debug_info       0x000000       0x6431
+.debug_info       0x000000       0x64a1
  *(.debug_info)
- .debug_info      0x000000       0x16e4 build/default/production/DisplayMain.o
- .debug_info      0x0016e4       0x1adc build/default/production/DisplayMenu.o
- .debug_info      0x0031c0        0x6ab build/default/production/DisplayRTCC.o
- .debug_info      0x00386b        0x227 build/default/production/Delays.o
- .debug_info      0x003a92       0x299f build/default/production/Communications.o
+ .debug_info      0x000000       0x16fb build/default/production/DisplayMain.o
+ .debug_info      0x0016fb       0x1af3 build/default/production/DisplayMenu.o
+ .debug_info      0x0031ee        0x6c1 build/default/production/DisplayRTCC.o
+ .debug_info      0x0038af        0x23d build/default/production/Delays.o
+ .debug_info      0x003aec       0x29b5 build/default/production/Communications.o
  *(.gnu.linkonce.wi.*)
 
-.debug_abbrev     0x000000        0x771
+.debug_abbrev     0x000000        0x761
  *(.debug_abbrev)
  .debug_abbrev    0x000000        0x1cd build/default/production/DisplayMain.o
  .debug_abbrev    0x0001cd          0x1 build/default/production/DisplayConfiguration.o
- .debug_abbrev    0x0001ce        0x1a5 build/default/production/DisplayMenu.o
- .debug_abbrev    0x000373        0x154 build/default/production/DisplayRTCC.o
- .debug_abbrev    0x0004c7         0x72 build/default/production/Delays.o
- .debug_abbrev    0x000539        0x237 build/default/production/Communications.o
- .debug_abbrev    0x000770          0x1 build/default/production/REM_DisplayUART.o
+ .debug_abbrev    0x0001ce        0x196 build/default/production/DisplayMenu.o
+ .debug_abbrev    0x000364        0x154 build/default/production/DisplayRTCC.o
+ .debug_abbrev    0x0004b8         0x72 build/default/production/Delays.o
+ .debug_abbrev    0x00052a        0x237 build/default/production/Communications.o
 
-.debug_line       0x000000        0xeef
+.debug_line       0x000000        0xedb
  *(.debug_line)
- .debug_line      0x000000        0x2b5 build/default/production/DisplayMain.o
- .debug_line      0x0002b5         0x1a build/default/production/DisplayConfiguration.o
- .debug_line      0x0002cf        0x61b build/default/production/DisplayMenu.o
- .debug_line      0x0008ea        0x148 build/default/production/DisplayRTCC.o
- .debug_line      0x000a32         0x49 build/default/production/Delays.o
- .debug_line      0x000a7b        0x45a build/default/production/Communications.o
- .debug_line      0x000ed5         0x1a build/default/production/REM_DisplayUART.o
+ .debug_line      0x000000        0x2b9 build/default/production/DisplayMain.o
+ .debug_line      0x0002b9         0x1a build/default/production/DisplayConfiguration.o
+ .debug_line      0x0002d3        0x61d build/default/production/DisplayMenu.o
+ .debug_line      0x0008f0        0x148 build/default/production/DisplayRTCC.o
+ .debug_line      0x000a38         0x49 build/default/production/Delays.o
+ .debug_line      0x000a81        0x45a build/default/production/Communications.o
 
 .debug_frame      0x000000       0x111e
  *(.debug_frame)
@@ -1514,8 +1510,8 @@ LOAD c:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../lib\libm-elf.a
 LOAD c:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../lib\libc-elf.a
 END GROUP
 OUTPUT(dist/default/production/EMMS_Code_UserInterface.X.production.elf elf32-pic30)
-LOAD /CW/_FGSÈÎè
-LOAD /CW/_FBSÐÞè
+LOAD /CW/_FGSÈ´Ú
+LOAD /CW/_FBSÀ¤Ú
 LOAD default_isr
 LOAD data_init
 
@@ -1533,7 +1529,7 @@ LOAD data_init
                   0x00025d        0x115 build/default/production/Communications.o
 
 __c30_signature
-                  0x000372         0x60
+                  0x000372         0x5a
  __c30_signature
                   0x000372          0x6 build/default/production/DisplayMain.o
  __c30_signature
@@ -1547,25 +1543,23 @@ __c30_signature
  __c30_signature
                   0x000390          0x6 build/default/production/Communications.o
  __c30_signature
-                  0x000396          0x6 build/default/production/REM_DisplayUART.o
+                  0x000396          0x6 c:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../lib\libpic30-elf.a(crt0_standard.o)
  __c30_signature
-                  0x00039c          0x6 c:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../lib\libpic30-elf.a(crt0_standard.o)
+                  0x00039c          0x6 c:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../lib\libpic30-elf.a(data_init_standard.o)
  __c30_signature
-                  0x0003a2          0x6 c:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../lib\libpic30-elf.a(data_init_standard.o)
+                  0x0003a2          0x6 c:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../lib\libm-elf.a(udivsi3.eo)
  __c30_signature
-                  0x0003a8          0x6 c:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../lib\libm-elf.a(udivsi3.eo)
+                  0x0003a8          0x6 c:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../lib\libm-elf.a(umodsi3.eo)
  __c30_signature
-                  0x0003ae          0x6 c:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../lib\libm-elf.a(umodsi3.eo)
+                  0x0003ae          0x6 c:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../lib\libc-elf.a(atoi.eo)
  __c30_signature
-                  0x0003b4          0x6 c:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../lib\libc-elf.a(atoi.eo)
+                  0x0003b4          0x6 c:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../lib\libc-elf.a(atol.eo)
  __c30_signature
-                  0x0003ba          0x6 c:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../lib\libc-elf.a(atol.eo)
+                  0x0003ba          0x6 c:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../lib\libc-elf.a(itoa.eo)
  __c30_signature
-                  0x0003c0          0x6 c:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../lib\libc-elf.a(itoa.eo)
+                  0x0003c0          0x6 c:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../lib\libc-elf.a(ltoa.eo)
  __c30_signature
-                  0x0003c6          0x6 c:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../lib\libc-elf.a(ltoa.eo)
- __c30_signature
-                  0x0003cc          0x6 c:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../lib\libm-elf.a(mulsi3.eo)
+                  0x0003c6          0x6 c:/program files (x86)/microchip/xc16/v1.41/bin/bin/../../lib\libm-elf.a(mulsi3.eo)
 
 .nbss               0x0800        0x21a
  .nbss              0x0800        0x168 build/default/production/DisplayMenu.o

@@ -200,6 +200,7 @@ void writeBarGraph( void );
 /****************
  CODE
  ****************/
+
 /* command
  * sends a command to the LCD
  * parameter i: char representing the command to be sent
@@ -222,6 +223,7 @@ void dspCommand( unsigned char i )
 	dspNibble( ); // Send upper 4 bits
 	delayMS( 2 );
 }
+
 /* write
  * sends a byte of data to the LCD to be displayed
  * parameter i: char to be displayed
@@ -242,6 +244,7 @@ void dspWrite( unsigned char i )
 	dspSetP1( lowNibble ); // put data on output Port
 	dspNibble( ); // Clock upper 4 bits
 }
+
 /* writeMessage
  * sends a string of data to the LCD to be displayed
  * end of data will be denoted by a null character (0x00)
@@ -254,6 +257,7 @@ void dspWriteMessage( char *message )
 	while( *pos != 0 )
 		dspWrite( *pos++ );
 }
+
 /* nibble
  * sends half of a byte of data to the LCD, already on output lines to LCD
  */
@@ -263,6 +267,7 @@ void dspNibble( void )
 	delayFourUS( 1 ); //enable pulse width >= 300ns
 	LCD_E = 0; //Clock enable: falling edge
 }
+
 /* initDisplay
  * initializes the LCD for 4-bit operation
  */
@@ -319,6 +324,7 @@ void initDisplay( void )
 		nextDisplay[i] = ' ';
 	}
 }
+
 /* setP1
  * prepares output lines to LCD for data transfer
  * parameter i: low nibble (lowest 4 bits) in i are data to be sent
@@ -334,6 +340,7 @@ void dspSetP1( unsigned char i )
 	LCD_D7 = i % 2;
 
 }
+
 /* writeToDisplay
  * writes a message to the nextDisplay array to await transfer to the LCD
  * can pad string with blank characters to either side to right- or left-align
@@ -360,20 +367,20 @@ void writeToDisplay( const char *message, unsigned char location, char width )
 	{
 		width = 0 - width; // make positive
 
-		while( *(pos2++) != 0 )
+		while( *( pos2++ ) != 0 )
 			currentWidth++;
 
 		for( i = 0; i < width - currentWidth; i++ )
 			nextDisplay[location + i] = ' ';
 
 		while( *pos != 0 )
-			nextDisplay[location + i++] = *(pos++);
+			nextDisplay[location + i++] = *( pos++ );
 	}
 	else
 	{
 		while( *pos != 0 )
 		{
-			nextDisplay[location + i++] = *(pos++);
+			nextDisplay[location + i++] = *( pos++ );
 			currentWidth++;
 		}
 
@@ -386,6 +393,7 @@ void writeToDisplay( const char *message, unsigned char location, char width )
 		}
 	}
 }
+
 /* updateMenu
  * Updates the menu by using detected button presses to switch between states
  */
@@ -557,6 +565,7 @@ void updateMenu( void )
 			menuError( );
 	}
 }
+
 /* Processes button presses. Changes menu state to the provided state for
  * the button which has been pushed. Returns the number of the button
  * which has been pressed (0-3) or -1 if no button has been pressed */
@@ -593,6 +602,7 @@ char menuButtonRead( char menu1, char menu2, char menu3, char menu4 )
 	}
 	return -1;
 }
+
 void menuError( void )
 {
 	menuButtonRead( MENU_HOME_BASIC, MENU_HOME_BASIC, MENU_HOME_BASIC, MENU_HOME_BASIC );
@@ -608,6 +618,7 @@ void menuError( void )
 	writeToDisplay( "Menu not found", 20, 57 );
 	writeToDisplay( menuStateBuf, 77, -3 );
 }
+
 void menuDebug( void )
 {
 
@@ -623,6 +634,7 @@ void menuDebug( void )
 	//writeToDisplay(ltoa(buffer, currentLoad, 10), 60, 0);
 
 }
+
 void menuHomeBasic( void )
 {
 
@@ -638,7 +650,7 @@ void menuHomeBasic( void )
 
 	if( !BACKLIGHT )
 	{
-		homeBasicAlternate = (timeSecond / 10) % 2;
+		homeBasicAlternate = ( timeSecond / 10 ) % 2;
 	}
 
 	readTime( );
@@ -658,24 +670,24 @@ void menuHomeBasic( void )
 	/* Debug, with seconds displayed */
 	char specialClockStr[21];
 	specialClockStr[0] = ' ';
-	specialClockStr[1] = (timeHour / 10) + 0x30;
-	specialClockStr[2] = (timeHour % 10) + 0x30;
+	specialClockStr[1] = ( timeHour / 10 ) + 0x30;
+	specialClockStr[2] = ( timeHour % 10 ) + 0x30;
 	specialClockStr[3] = ':';
-	specialClockStr[4] = (timeMinute / 10) + 0x30;
-	specialClockStr[5] = (timeMinute % 10) + 0x30;
+	specialClockStr[4] = ( timeMinute / 10 ) + 0x30;
+	specialClockStr[5] = ( timeMinute % 10 ) + 0x30;
 	specialClockStr[6] = ':';
-	specialClockStr[7] = (timeSecond / 10) + 0x30;
-	specialClockStr[8] = (timeSecond % 10) + 0x30;
+	specialClockStr[7] = ( timeSecond / 10 ) + 0x30;
+	specialClockStr[8] = ( timeSecond % 10 ) + 0x30;
 	specialClockStr[9] = ' ';
 	specialClockStr[10] = ' ';
-	specialClockStr[11] = (timeDay / 10) + 0x30;
-	specialClockStr[12] = (timeDay % 10) + 0x30;
+	specialClockStr[11] = ( timeDay / 10 ) + 0x30;
+	specialClockStr[12] = ( timeDay % 10 ) + 0x30;
 	specialClockStr[13] = '/';
-	specialClockStr[14] = (timeMonth / 10) + 0x30;
-	specialClockStr[15] = (timeMonth % 10) + 0x30;
+	specialClockStr[14] = ( timeMonth / 10 ) + 0x30;
+	specialClockStr[15] = ( timeMonth % 10 ) + 0x30;
 	specialClockStr[16] = '/';
-	specialClockStr[17] = (timeYear / 10) + 0x30;
-	specialClockStr[18] = (timeYear % 10) + 0x30;
+	specialClockStr[17] = ( timeYear / 10 ) + 0x30;
+	specialClockStr[18] = ( timeYear % 10 ) + 0x30;
 	specialClockStr[19] = ' ';
 	specialClockStr[20] = 0;
 	writeToDisplay( specialClockStr, 0, 0 );
@@ -718,6 +730,7 @@ void menuHomeBasic( void )
 		enablePeriodicUpdate = 1;
 	}
 }
+
 void menuHomeDetail( void )
 {
 	switch( menuButtonRead( MENU_MAIN_1, 0, 0, MENU_HOME_BASIC ) )
@@ -762,6 +775,7 @@ void menuHomeDetail( void )
 		enablePeriodicUpdate = 1;
 	}
 }
+
 void menuAlarm( void )
 {
 	switch( menuButtonRead( 0, 0, 0, 0 ) )
@@ -793,6 +807,7 @@ void menuAlarm( void )
 	//    writeToDisplay(itoa(buffer3, activeAlarm, 10), 44, -2);
 	//    writeToDisplay("                  Clear Alarm     ", 46, 0);
 }
+
 void menuMain1( void )
 {
 
@@ -811,6 +826,7 @@ void menuMain1( void )
 	enablePeriodicUpdate = 0;
 
 }
+
 void menuMain2( void )
 {
 	switch( menuButtonRead( MENU_HOME_BASIC, MENU_MAIN_1, MENU_MAIN_3, MENU_ADMIN_LOGIN ) )
@@ -828,6 +844,7 @@ void menuMain2( void )
 	writeToDisplay( "Main Menu     2 of 6* Admin Menu          Modules ", 0, 60 );
 	writeToDisplay( softKeys0, 60, 0 );
 }
+
 void menuMain3( void )
 {
 
@@ -844,13 +861,14 @@ void menuMain3( void )
 			if( highAlloc == 0 )
 			{
 				highAlloc = energyAllocated;
-				lowAlloc = (energyAllocated * 3) / 4;
+				lowAlloc = ( energyAllocated * 3 ) / 4;
 			}
 	}
 
 	writeToDisplay( "Main Menu     3 of 6* Modules             Statistics", 0, 60 );
 	writeToDisplay( softKeys0, 60, 0 );
 }
+
 void menuMain4( void )
 {
 	switch( menuButtonRead( MENU_HOME_BASIC, MENU_MAIN_3, MENU_MAIN_5, MENU_STATISTICS ) )
@@ -865,6 +883,7 @@ void menuMain4( void )
 	writeToDisplay( "Main Menu     4 of 6* Statistics          Last Power Failure", 0, 60 );
 	writeToDisplay( softKeys0, 60, 0 );
 }
+
 void menuMain5( void )
 {
 	switch( menuButtonRead( MENU_HOME_BASIC, MENU_MAIN_4, MENU_MAIN_6, MENU_POWERFAILTIMES ) )
@@ -879,6 +898,7 @@ void menuMain5( void )
 	writeToDisplay( "Main Menu     5 of 6* Last Power Failure  About", 0, 60 );
 	writeToDisplay( softKeys0, 60, 0 );
 }
+
 void menuMain6( void )
 {
 	switch( menuButtonRead( MENU_HOME_BASIC, MENU_MAIN_5, MENU_MAIN_1, MENU_ABOUT ) )
@@ -893,6 +913,7 @@ void menuMain6( void )
 	writeToDisplay( "Main Menu     6 of 6  Last Power Failure* About", 0, 60 );
 	writeToDisplay( softKeys1, 60, 0 );
 }
+
 void menuAlarm1( void )
 {
 
@@ -934,6 +955,7 @@ void menuAlarm1( void )
 
 	writeToDisplay( softKeys0, 60, 0 );
 }
+
 void menuAlarm2( void )
 {
 
@@ -976,6 +998,7 @@ void menuAlarm2( void )
 
 	writeToDisplay( softKeys0, 60, 0 );
 }
+
 void menuAlarm3( void )
 {
 
@@ -1043,6 +1066,7 @@ void menuAlarm3( void )
 
 	writeToDisplay( softKeys2, 60, 0 );
 }
+
 void menuAlarm4( void )
 {
 
@@ -1085,6 +1109,7 @@ void menuAlarm4( void )
 
 	writeToDisplay( softKeys1, 60, 0 );
 }
+
 void menuAlarm5( void )
 {
 
@@ -1151,6 +1176,7 @@ void menuAlarm5( void )
 
 	writeToDisplay( softKeys2, 60, 0 );
 }
+
 void menuStatistics( void )
 {
 
@@ -1170,6 +1196,7 @@ void menuStatistics( void )
 	writeToDisplay( totalUsedBuf, 60, -16 );
 	writeToDisplay( " kWh", 76, 0 );
 }
+
 void menuPowerFailTimes( void )
 {
 	menuButtonRead( MENU_MAIN_5, MENU_MAIN_5, MENU_MAIN_5, MENU_MAIN_5 );
@@ -1181,6 +1208,7 @@ void menuPowerFailTimes( void )
 	writeToDisplay( powerUpTime, 49, 0 );
 	writeToDisplay( "Back", 60, 20 );
 }
+
 void menuAbout( void )
 {
 	menuButtonRead( MENU_MAIN_6, MENU_MAIN_6, MENU_MAIN_6, MENU_MAIN_6 );
@@ -1191,6 +1219,7 @@ void menuAbout( void )
 	writeToDisplay( DISPLAY_BOX_CODE_VERSION, 32, 8 );
 	writeToDisplay( "  Messiah College      Collaboratory    ", 40, 0 );
 }
+
 void menuAdminLogin( void )
 {
 	if( pwLength != 6 )
@@ -1258,6 +1287,7 @@ void menuAdminLogin( void )
 
 	writeToDisplay( "     1     2      3     4", 55, 0 );
 }
+
 void menuAdmin1( void )
 {
 
@@ -1284,6 +1314,7 @@ void menuAdmin1( void )
 	writeToDisplay( "Admin Menu    1 of 6* Set Time/Date       Set Power Alloc", 0, 60 );
 	writeToDisplay( softKeys0, 60, 0 );
 }
+
 void menuAdmin2( void )
 {
 
@@ -1304,6 +1335,7 @@ void menuAdmin2( void )
 	writeToDisplay( "Admin Menu    2 of 6* Set Power Alloc     Emergency Options", 0, 60 );
 	writeToDisplay( softKeys0, 60, 0 );
 }
+
 void menuAdmin3( void )
 {
 	switch( menuButtonRead( MENU_MAIN_2, MENU_ADMIN_2, MENU_ADMIN_4, MENU_EMERGENCY_1 ) )
@@ -1315,6 +1347,7 @@ void menuAdmin3( void )
 	writeToDisplay( "Admin Menu    3 of 6* Emergency Options   Change Password", 0, 60 );
 	writeToDisplay( softKeys0, 60, 0 );
 }
+
 void menuAdmin4( void )
 {
 
@@ -1338,6 +1371,7 @@ void menuAdmin4( void )
 	writeToDisplay( "Admin Menu    4 of 6* Change Password     Change Reset Time", 0, 60 );
 	writeToDisplay( softKeys0, 60, 0 );
 }
+
 void menuAdmin5( void )
 {
 
@@ -1354,6 +1388,7 @@ void menuAdmin5( void )
 	writeToDisplay( "Admin Menu    5 of 6* Change Reset Time   Relay Control", 0, 60 );
 	writeToDisplay( softKeys0, 60, 0 );
 }
+
 void menuAdmin6( void )
 {
 
@@ -1372,6 +1407,7 @@ void menuAdmin6( void )
 	writeToDisplay( "Admin Menu    6 of 6  Change Reset Time * Relay Control", 0, 60 );
 	writeToDisplay( softKeys1, 60, 0 );
 }
+
 void menuSetTime( void )
 {
 
@@ -1392,22 +1428,22 @@ void menuSetTime( void )
 			switch( timeSetPos )
 			{
 				case 1:
-					tempHour = (tempHour + 1) % 24;
+					tempHour = ( tempHour + 1 ) % 24;
 					break;
 
 				case 2:
-					tempMin = (tempMin + 1) % 60;
+					tempMin = ( tempMin + 1 ) % 60;
 					break;
 
 				case 3:
 					tempDay--;
-					tempDay = (tempDay + 1) % 31;
+					tempDay = ( tempDay + 1 ) % 31;
 					tempDay++;
 					break;
 
 				case 4:
 					tempMonth--;
-					tempMonth = (tempMonth + 1) % 12;
+					tempMonth = ( tempMonth + 1 ) % 12;
 					tempMonth++;
 					break;
 
@@ -1521,6 +1557,7 @@ void menuSetTime( void )
 	// when done use writeTime(newYear, newMonth, newDay, newHour, newMinute)
 	// seconds, weekday are zeroed...
 }
+
 void menuSetPower( void )
 {
 
@@ -1565,7 +1602,7 @@ void menuSetPower( void )
 				menuState = MENU_ADMIN_2;
 				energyAllocated = tempAlloc;
 				highAlloc = tempAlloc;
-				lowAlloc = (highAlloc * 3) / 4;
+				lowAlloc = ( highAlloc * 3 ) / 4;
 			}
 			else
 			{
@@ -1588,6 +1625,7 @@ void menuSetPower( void )
 	writeToDisplay( " Wh per day", 27, 33 );
 	writeToDisplay( softKeys2, 60, 0 );
 }
+
 void menuSetResetTime( void )
 {
 
@@ -1599,7 +1637,7 @@ void menuSetResetTime( void )
 			else
 			{
 				tempResetMinute = 0;
-				tempResetHour = (tempResetHour + 1) % 24;
+				tempResetHour = ( tempResetHour + 1 ) % 24;
 			}
 			break;
 
@@ -1635,8 +1673,8 @@ void menuSetResetTime( void )
 			com_command_setRemoteResetTime( );
 	}
 
-	tempResetTimeString[0] = (tempResetHour / 10) + 0x30;
-	tempResetTimeString[1] = (tempResetHour % 10) + 0x30;
+	tempResetTimeString[0] = ( tempResetHour / 10 ) + 0x30;
+	tempResetTimeString[1] = ( tempResetHour % 10 ) + 0x30;
 	tempResetTimeString[2] = ':';
 	char rtm[20];
 
@@ -1665,6 +1703,7 @@ void menuSetResetTime( void )
 	writeToDisplay( tempResetTimeString, 27, 33 );
 	writeToDisplay( softKeys2, 60, 0 );
 }
+
 void menuEmergency1( void )
 {
 
@@ -1701,6 +1740,7 @@ void menuEmergency1( void )
 
 	writeToDisplay( softKeys0, 60, 0 );
 }
+
 void menuEmergency2( void )
 {
 	menuButtonRead( MENU_ADMIN_3, MENU_EMERGENCY_1, MENU_EMERGENCY_1, MENU_EMERGENCY_4 );
@@ -1731,6 +1771,7 @@ void menuEmergency2( void )
 
 	writeToDisplay( softKeys0, 60, 0 );
 }
+
 void menuEmergency3( void )
 {
 
@@ -1798,6 +1839,7 @@ void menuEmergency3( void )
 	writeToDisplay( softKeys2, 60, 0 );
 
 }
+
 void menuEmergency4( void )
 {
 
@@ -1843,6 +1885,7 @@ void menuEmergency4( void )
 
 	writeToDisplay( softKeys2, 60, 0 );
 }
+
 void menuModules( void )
 {
 
@@ -1886,6 +1929,7 @@ void menuModules( void )
 		writeToDisplay( rightArrow, 43, 0 );
 	writeToDisplay( "Low             Back  High  Low   OK", 44, 0 );
 }
+
 void menuSetRelay( void )
 {
 
@@ -1920,6 +1964,7 @@ void menuSetRelay( void )
 	writeToDisplay( "Back   On   Off   OK", 60, 0 );
 
 }
+
 void menuBadDate( void )
 {
 	if( menuButtonRead( MENU_SET_TIME, MENU_SET_TIME, MENU_SET_TIME, MENU_SET_TIME ) != -1 )
@@ -1928,6 +1973,7 @@ void menuBadDate( void )
 	writeToDisplay( "Invalid date entered", 0, 60 );
 	writeToDisplay( "Return", 60, 20 );
 }
+
 void menuShutOffWarning( void )
 {
 
@@ -1949,6 +1995,7 @@ void menuShutOffWarning( void )
 
 	writeToDisplay( "Continuing will     cause power to shut off immediately!    Return      Continue", 0, 0 );
 }
+
 void menuPasswordChange( void )
 {
 	if( pwLength < 6 )
@@ -2022,6 +2069,7 @@ void menuPasswordChange( void )
 	else
 		writeToDisplay( "Clear           Save", 60, 0 );
 }
+
 void menuPowerReset( void )
 {
 
@@ -2061,6 +2109,7 @@ void menuPowerReset( void )
 	}
 	writeToDisplay( "0)       No               Yes", 51, 0 );
 }
+
 void writeBarGraph( void )
 {
 	barGraph[20] = 0;
@@ -2080,16 +2129,18 @@ void writeBarGraph( void )
 	if( percentRem < 5 && energyUsed < energyAllocated )
 		barGraph[0] = '|';
 }
+
 void calcPercentRem( void )
 {
-	percentRem = (energyAllocated - energyUsed) * 100 / energyAllocated;
+	percentRem = ( energyAllocated - energyUsed ) * 100 / energyAllocated;
 
-	if( (percentRem < 0) || (energyUsed > energyAllocated) )
+	if( ( percentRem < 0 ) || ( energyUsed > energyAllocated ) )
 		percentRem = 0;
 
 	else if( percentRem > 100 )
 		percentRem = 100;
 }
+
 void calcTimeRemaining( void )
 {
 	// variables:
@@ -2110,7 +2161,7 @@ void calcTimeRemaining( void )
 		timeRem4 = timeRem5;
 		timeRem5 = powerLoad;
 
-		unsigned long timeRemAvg = (timeRem1 + timeRem2 + timeRem3 + timeRem4 + timeRem5) / 5;
+		unsigned long timeRemAvg = ( timeRem1 + timeRem2 + timeRem3 + timeRem4 + timeRem5 ) / 5;
 
 		if( !timeRemAvg )
 		{
@@ -2120,9 +2171,9 @@ void calcTimeRemaining( void )
 		else
 		{
 			long powerRemaining = energyAllocated - energyUsed;
-			unsigned long timeRemaining = (3600 * powerRemaining) / timeRemAvg;
+			unsigned long timeRemaining = ( 3600 * powerRemaining ) / timeRemAvg;
 			timeRemHour = timeRemaining / 3600;
-			timeRemMinute = (timeRemaining / 60) - (60 * timeRemHour);
+			timeRemMinute = ( timeRemaining / 60 ) - ( 60 * timeRemHour );
 			timeRemSecond = timeRemaining % 60;
 
 			if( timeRemHour > 59 ) timeRemHour = 59;
@@ -2139,12 +2190,13 @@ void calcTimeRemaining( void )
 
 
 /* Interrupts *****************************************************************/
+
 /* Timer 1 Interrupt
  * Updates the display with changes made to the nextDisplay array
  * Updates currentDisplay array with what is now on the display
  * Only changes lines that are different between nextDisplay and currentDisplay
  */
-void __attribute__( (interrupt, no_auto_psv) ) _T1Interrupt( void )
+void __attribute__( ( interrupt, no_auto_psv ) ) _T1Interrupt( void )
 {
 
 	unsigned char i, j, k;
@@ -2162,7 +2214,7 @@ void __attribute__( (interrupt, no_auto_psv) ) _T1Interrupt( void )
 		{
 
 			if( currentDisplay[lineOffset + j] !=
-				nextDisplay[lineOffset + j] )
+			 nextDisplay[lineOffset + j] )
 			{
 
 				currentDisplay[lineOffset + j] =
@@ -2171,7 +2223,7 @@ void __attribute__( (interrupt, no_auto_psv) ) _T1Interrupt( void )
 			}
 		}
 
-		if( (!matches && currentDisplay[lineOffset] != 0) )
+		if( ( !matches && currentDisplay[lineOffset] != 0 ) )
 		{
 
 			char tempArray[NUM_LCD_WIDTH + 1];

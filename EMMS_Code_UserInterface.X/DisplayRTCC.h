@@ -1,5 +1,5 @@
 #ifndef DISPLAYRTCC_H
-#define	DISPLAYRTCC_H
+#    define	DISPLAYRTCC_H
 
 
 extern unsigned char timeYear;
@@ -12,10 +12,10 @@ extern unsigned char timeSecond;
 
 
 // not sorted yet
-void readTime(void);
-void writeClockStrings(void);
-void writeTempClockStrings(void);
-char writeTime(char newYear, char newMonth, char newDay, char newHour, char newMinute, char newSecond);
+void readTime( void );
+void writeClockStrings( void );
+void writeTempClockStrings( void );
+char writeTime( char newYear, char newMonth, char newDay, char newHour, char newMinute, char newSecond );
 
 extern int resetTimeHour;
 extern int resetTimeMinute;
