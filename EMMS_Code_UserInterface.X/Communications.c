@@ -53,16 +53,16 @@ bool SPI_transmit_wait;
 
 enum receive_status
 {
-  receive_waiting,
-  receive_in_command,
-  receive_end_command
+	receive_waiting,
+	receive_in_command,
+	receive_end_command
 };
 
 struct buffer_struct
 {
-  char data_buffer[ BUFFER_LENGTH];
-  unsigned char write_position;
-  unsigned char read_position;
+	char data_buffer[ BUFFER_LENGTH];
+	unsigned char write_position;
+	unsigned char read_position;
 };
 
 volatile unsigned char uartBufferLarge[ UART_LARGE_BUFFER_SIZE];
@@ -164,7 +164,6 @@ void com_command_setRemoteEnergyAllocation( void );
 void setRemoteEnergyAllocation( struct buffer_struct *send_buffer );
 void com_command_setRemoteAllocationAdd( void );
 void setRemoteAllocationAdd( struct buffer_struct *send_buffer );
-
 
 /****************
  CODE
@@ -368,6 +367,7 @@ void resetCommunications( struct buffer_struct * send_buffer )
 
 	return;
 }
+
 enum receive_status receive_data( struct buffer_struct * receive_buffer )
 {
 	char data;
@@ -383,9 +383,9 @@ enum receive_status receive_data( struct buffer_struct * receive_buffer )
 
 	somethingReceived = UART_receive_data_char( &data );
 
-	while( (somethingReceived == true) && (my_status != receive_end_command) )
+	while( ( somethingReceived == true ) && ( my_status != receive_end_command ) )
 	{
-		if( (data == COMMAND_START_CHAR) && (my_status != receive_in_command) )
+		if( ( data == COMMAND_START_CHAR ) && ( my_status != receive_in_command ) )
 		{
 			my_status = receive_in_command;
 			receive_buffer->read_position = 0;
@@ -399,11 +399,11 @@ enum receive_status receive_data( struct buffer_struct * receive_buffer )
 			receive_buffer->write_position++;
 			if( receive_buffer->write_position >= BUFFER_LENGTH )
 			{
-				receive_buffer->write_position = (BUFFER_LENGTH - 1);
+				receive_buffer->write_position = ( BUFFER_LENGTH - 1 );
 			}
 		}
 
-		if( (my_status == receive_in_command) && (data == COMMAND_END_CHAR) )
+		if( ( my_status == receive_in_command ) && ( data == COMMAND_END_CHAR ) )
 		{
 			my_status = receive_end_command;
 		}
@@ -413,6 +413,7 @@ enum receive_status receive_data( struct buffer_struct * receive_buffer )
 
 	return my_status;
 }
+
 bool process_data( struct buffer_struct *receive_buffer, struct buffer_struct * send_buffer )
 {
 	bool end_of_transmission_received;
@@ -429,6 +430,7 @@ bool process_data( struct buffer_struct *receive_buffer, struct buffer_struct * 
 	return end_of_transmission_received;
 
 }
+
 void process_data_parameterize( char parameters[PARAMETER_MAX_COUNT][PARAMETER_MAX_LENGTH], struct buffer_struct * buffer_to_parameterize )
 {
 	unsigned char parameter_position = 0;
@@ -447,7 +449,7 @@ void process_data_parameterize( char parameters[PARAMETER_MAX_COUNT][PARAMETER_M
 	}
 
 	while(
-		 ( buffer_to_parameterize->read_position < BUFFER_LENGTH )	 // this check first - if it fails the other checks are not done - this makes sure the receiveBufferPos is never out of bounds
+		 ( buffer_to_parameterize->read_position < BUFFER_LENGTH ) // this check first - if it fails the other checks are not done - this makes sure the receiveBufferPos is never out of bounds
 		 &&( buffer_to_parameterize->data_buffer[buffer_to_parameterize->read_position ] != COMMAND_END_CHAR )
 		 && ( buffer_to_parameterize->read_position != buffer_to_parameterize->write_position )
 		 && ( buffer_to_parameterize->data_buffer[buffer_to_parameterize->read_position ] != COMMAND_XSUM_CHAR )
@@ -467,7 +469,7 @@ void process_data_parameterize( char parameters[PARAMETER_MAX_COUNT][PARAMETER_M
 				{
 					// if we run out of parameters just overwrite the last one
 					// we should never have this case, but this keeps us from crashing and burning
-					parameter_index = (PARAMETER_MAX_COUNT - 1);
+					parameter_index = ( PARAMETER_MAX_COUNT - 1 );
 				}
 
 				break;
@@ -479,7 +481,7 @@ void process_data_parameterize( char parameters[PARAMETER_MAX_COUNT][PARAMETER_M
 				{
 					// if our parameter is too long, just overwrite the last character
 					// we should never have this case, but this keeps us from crashing and burning
-					parameter_position = (PARAMETER_MAX_LENGTH - 1);
+					parameter_position = ( PARAMETER_MAX_LENGTH - 1 );
 				}
 
 				// always make the last character a null
@@ -492,6 +494,7 @@ void process_data_parameterize( char parameters[PARAMETER_MAX_COUNT][PARAMETER_M
 
 	return;
 }
+
 bool process_data_parameters( char parameters[PARAMETER_MAX_COUNT][PARAMETER_MAX_LENGTH], struct buffer_struct * send_buffer )
 {
 	bool end_of_transmission_received = false;
@@ -703,7 +706,7 @@ bool process_data_parameters( char parameters[PARAMETER_MAX_COUNT][PARAMETER_MAX
 		{
 
 			int inx = 0;
-			while( (inx < 9) && (parameters[2][inx] != CHAR_NULL) )
+			while( ( inx < 9 ) && ( parameters[2][inx] != CHAR_NULL ) )
 			{
 				powerBoxCodeVersionString[inx] = parameters[2][inx];
 				inx++;
@@ -850,6 +853,7 @@ bool process_data_parameters( char parameters[PARAMETER_MAX_COUNT][PARAMETER_MAX
 
 	return end_of_transmission_received;
 }
+
 void command_builder1( struct buffer_struct *send_buffer, char* data1 )
 {
 	command_builder_add_char( send_buffer, COMMAND_SEND_RECEIVE_PRIMER_CHAR );
@@ -863,6 +867,7 @@ void command_builder1( struct buffer_struct *send_buffer, char* data1 )
 
 	return;
 }
+
 void command_builder2( struct buffer_struct *send_buffer, char* data1, char* data2 )
 {
 	command_builder_add_char( send_buffer, COMMAND_SEND_RECEIVE_PRIMER_CHAR );
@@ -878,6 +883,7 @@ void command_builder2( struct buffer_struct *send_buffer, char* data1, char* dat
 
 	return;
 }
+
 void command_builder3( struct buffer_struct *send_buffer, char* data1, char* data2, char* data3 )
 {
 	command_builder_add_char( send_buffer, COMMAND_SEND_RECEIVE_PRIMER_CHAR );
@@ -895,6 +901,7 @@ void command_builder3( struct buffer_struct *send_buffer, char* data1, char* dat
 
 	return;
 }
+
 void command_builder4( struct buffer_struct *send_buffer, char* data1, char* data2, char* data3, char* data4 )
 {
 	command_builder_add_char( send_buffer, COMMAND_SEND_RECEIVE_PRIMER_CHAR );
@@ -914,6 +921,7 @@ void command_builder4( struct buffer_struct *send_buffer, char* data1, char* dat
 
 	return;
 }
+
 void command_builder5( struct buffer_struct *send_buffer, char* data1, char* data2, char* data3, char* data4, char* data5 )
 {
 	command_builder_add_char( send_buffer, COMMAND_SEND_RECEIVE_PRIMER_CHAR );
@@ -935,6 +943,7 @@ void command_builder5( struct buffer_struct *send_buffer, char* data1, char* dat
 
 	return;
 }
+
 void command_builder6( struct buffer_struct *send_buffer, char* data1, char* data2, char* data3, char* data4, char* data5, char* data6 )
 {
 	command_builder_add_char( send_buffer, COMMAND_SEND_RECEIVE_PRIMER_CHAR );
@@ -958,6 +967,7 @@ void command_builder6( struct buffer_struct *send_buffer, char* data1, char* dat
 
 	return;
 }
+
 void command_builder7( struct buffer_struct *send_buffer, char* data1, char* data2, char* data3, char* data4, char* data5, char* data6, char* data7 )
 {
 	command_builder_add_char( send_buffer, COMMAND_SEND_RECEIVE_PRIMER_CHAR );
@@ -983,6 +993,7 @@ void command_builder7( struct buffer_struct *send_buffer, char* data1, char* dat
 
 	return;
 }
+
 void xsum_builder( struct buffer_struct *send_buffer, int xsum )
 {
 
@@ -996,6 +1007,7 @@ void xsum_builder( struct buffer_struct *send_buffer, int xsum )
 
 	return;
 }
+
 char command_builder_add_char( struct buffer_struct *send_buffer, char data )
 {
 	send_buffer->data_buffer[send_buffer->write_position] = data;
@@ -1008,6 +1020,7 @@ char command_builder_add_char( struct buffer_struct *send_buffer, char data )
 
 	return data; // return the character for XSum calculation
 }
+
 int command_builder_add_string( struct buffer_struct *send_buffer, char *data_string )
 {
 	int xsum = 0;
@@ -1018,6 +1031,7 @@ int command_builder_add_string( struct buffer_struct *send_buffer, char *data_st
 
 	return xsum;
 }
+
 struct buffer_struct * command_builder_external_helper( bool init, struct buffer_struct *send_buffer )
 {
 
@@ -1031,6 +1045,7 @@ struct buffer_struct * command_builder_external_helper( bool init, struct buffer
 
 	return send_buffer_keep;
 }
+
 bool send_data( struct buffer_struct * send_buffer )
 {
 	bool send_end;
@@ -1083,6 +1098,7 @@ bool send_data( struct buffer_struct * send_buffer )
 
 	return send_end;
 }
+
 bool strmatch( char* a, char* b )
 {
 	int result;
@@ -1090,16 +1106,17 @@ bool strmatch( char* a, char* b )
 
 	result = strcmp2( a, b );
 
-	match = (result == 0) ? true : false;
+	match = ( result == 0 ) ? true : false;
 
 	return match;
 }
+
 int strcmp2( char* a, char* b )
 {
 	int inx = 0;
 	int match = 0;
 
-	while( (a[inx] != CHAR_NULL) && (b[inx] != CHAR_NULL) && (match == 0) )
+	while( ( a[inx] != CHAR_NULL ) && ( b[inx] != CHAR_NULL ) && ( match == 0 ) )
 	{
 		if( a[inx] > b[inx] )
 		{
@@ -1118,11 +1135,11 @@ int strcmp2( char* a, char* b )
 	}
 
 
-	if( (a[inx] == CHAR_NULL) && (b[inx] != CHAR_NULL) )
+	if( ( a[inx] == CHAR_NULL ) && ( b[inx] != CHAR_NULL ) )
 	{
 		match = -1;
 	}
-	else if( (a[inx] != CHAR_NULL) && (b[inx] == CHAR_NULL) )
+	else if( ( a[inx] != CHAR_NULL ) && ( b[inx] == CHAR_NULL ) )
 	{
 		match = 1;
 	}
@@ -1130,6 +1147,7 @@ int strcmp2( char* a, char* b )
 	return match;
 
 }
+
 bool checkOnOff( char *toCheck )
 {
 	bool isOn = false;
@@ -1145,6 +1163,7 @@ bool checkOnOff( char *toCheck )
 
 	return isOn;
 }
+
 void fillOnOff( char *buf, int checkValue )
 {
 	if( checkValue == 0 )
@@ -1165,6 +1184,7 @@ void fillOnOff( char *buf, int checkValue )
 
 	return;
 }
+
 void zeroPad_itoa( char *output, int num, int minDigits )
 {
 	char temp[BUF_SIZE_INT];
@@ -1204,6 +1224,7 @@ void zeroPad_itoa( char *output, int num, int minDigits )
 
 	return;
 }
+
 bool UART_receive_data_char( char *data )
 {
 	// need to use interrupts because we have some blocking code to update the display
@@ -1228,6 +1249,7 @@ bool UART_receive_data_char( char *data )
 	return recvGood;
 
 }
+
 bool UART_send_data_char( char data )
 {
 	bool sendGood = false;
@@ -1383,12 +1405,14 @@ bool UART_send_data_char( char data )
 //}
 //
 //
+
 void send_end_of_transmission( struct buffer_struct *send_buffer )
 {
 	command_builder1( send_buffer, "END" );
 
 	return;
 }
+
 void com_command_readRemoteTime( void )
 {
 	struct buffer_struct *send_buffer;
@@ -1399,6 +1423,7 @@ void com_command_readRemoteTime( void )
 
 	return;
 }
+
 void readRemoteTime( struct buffer_struct *send_buffer )
 {
 
@@ -1407,6 +1432,7 @@ void readRemoteTime( struct buffer_struct *send_buffer )
 	return;
 
 }
+
 void com_command_setRemoteTime( void )
 {
 	struct buffer_struct *send_buffer;
@@ -1418,6 +1444,7 @@ void com_command_setRemoteTime( void )
 	return;
 
 }
+
 void setRemoteTime( struct buffer_struct *send_buffer )
 {
 
@@ -1476,6 +1503,7 @@ void setRemoteTime( struct buffer_struct *send_buffer )
 
 	command_builder4( send_buffer, "Set", "Time", timeDateBuf, timeTimeBuf );
 }
+
 void com_command_readRemoteEnergyAllocation( void )
 {
 	struct buffer_struct *send_buffer;
@@ -1487,12 +1515,14 @@ void com_command_readRemoteEnergyAllocation( void )
 	return;
 
 }
+
 void readRemoteEnergyAllocation( struct buffer_struct *send_buffer )
 {
 	command_builder2( send_buffer, "Read", "EnAl" );
 
 	return;
 }
+
 void com_command_setRemoteEnergyAllocation( void )
 {
 	struct buffer_struct *send_buffer;
@@ -1503,6 +1533,7 @@ void com_command_setRemoteEnergyAllocation( void )
 
 	return;
 }
+
 void setRemoteEnergyAllocation( struct buffer_struct *send_buffer )
 {
 	char powerAllocatedBuf[BUF_SIZE_LONG];
@@ -1514,6 +1545,7 @@ void setRemoteEnergyAllocation( struct buffer_struct *send_buffer )
 	return;
 
 }
+
 void com_command_setRemoteAllocationAdd( void )
 {
 	struct buffer_struct *send_buffer;
@@ -1524,6 +1556,7 @@ void com_command_setRemoteAllocationAdd( void )
 
 	return;
 }
+
 void setRemoteAllocationAdd( struct buffer_struct *send_buffer )
 {
 	char buf[BUF_SIZE_LONG];
@@ -1534,6 +1567,7 @@ void setRemoteAllocationAdd( struct buffer_struct *send_buffer )
 	return;
 
 }
+
 void com_command_readRemoteAlarm( )
 {
 	struct buffer_struct *send_buffer;
@@ -1544,6 +1578,7 @@ void com_command_readRemoteAlarm( )
 
 	return;
 }
+
 void readRemoteAlarm( struct buffer_struct *send_buffer )
 {
 
@@ -1551,6 +1586,7 @@ void readRemoteAlarm( struct buffer_struct *send_buffer )
 
 	return;
 }
+
 void com_command_setRemoteAlarm( void )
 {
 	struct buffer_struct *send_buffer;
@@ -1561,6 +1597,7 @@ void com_command_setRemoteAlarm( void )
 
 	return;
 }
+
 void setRemoteAlarm( struct buffer_struct *send_buffer )
 {
 
@@ -1588,6 +1625,7 @@ void setRemoteAlarm( struct buffer_struct *send_buffer )
 
 	return;
 }
+
 void com_command_readRemotePassword( void )
 {
 	struct buffer_struct *send_buffer;
@@ -1598,12 +1636,14 @@ void com_command_readRemotePassword( void )
 
 	return;
 }
+
 void readRemotePassword( struct buffer_struct *send_buffer )
 {
 	command_builder2( send_buffer, "Read", "Pass" );
 
 	return;
 }
+
 void com_command_setRemotePassword( void )
 {
 	struct buffer_struct *send_buffer;
@@ -1614,6 +1654,7 @@ void com_command_setRemotePassword( void )
 
 	return;
 }
+
 void setRemotePassword( struct buffer_struct *send_buffer )
 {
 	char passwordTemp[7];
@@ -1631,6 +1672,7 @@ void setRemotePassword( struct buffer_struct *send_buffer )
 	return;
 
 }
+
 void com_command_readRemoteEmergency( void )
 {
 	struct buffer_struct *send_buffer;
@@ -1641,6 +1683,7 @@ void com_command_readRemoteEmergency( void )
 
 	return;
 }
+
 void readRemoteEmergency( struct buffer_struct *send_buffer )
 {
 	command_builder2( send_buffer, "Read", "Emer" );
@@ -1648,6 +1691,7 @@ void readRemoteEmergency( struct buffer_struct *send_buffer )
 	return;
 
 }
+
 void com_command_setRemoteEmergency( void )
 {
 	struct buffer_struct *send_buffer;
@@ -1658,6 +1702,7 @@ void com_command_setRemoteEmergency( void )
 
 	return;
 }
+
 void setRemoteEmergency( struct buffer_struct *send_buffer )
 {
 	char emerButtonEnableBuf[4];
@@ -1671,6 +1716,7 @@ void setRemoteEmergency( struct buffer_struct *send_buffer )
 	return;
 
 }
+
 void com_command_readRemoteResetTime( void )
 {
 	struct buffer_struct *send_buffer;
@@ -1681,6 +1727,7 @@ void com_command_readRemoteResetTime( void )
 
 	return;
 }
+
 void readRemoteResetTime( struct buffer_struct *send_buffer )
 {
 	command_builder2( send_buffer, "Read", "RstTim" );
@@ -1688,6 +1735,7 @@ void readRemoteResetTime( struct buffer_struct *send_buffer )
 	return;
 
 }
+
 void com_command_setRemoteResetTime( void )
 {
 	struct buffer_struct *send_buffer;
@@ -1698,6 +1746,7 @@ void com_command_setRemoteResetTime( void )
 
 	return;
 }
+
 void setRemoteResetTime( struct buffer_struct *send_buffer )
 {
 
@@ -1724,6 +1773,7 @@ void setRemoteResetTime( struct buffer_struct *send_buffer )
 	command_builder4( send_buffer, "Set", "RstTim", resetTimeHourBuf, resetTimeMinuteBuf );
 
 }
+
 void com_command_readRemoteRelay( void )
 {
 	struct buffer_struct *send_buffer;
@@ -1734,6 +1784,7 @@ void com_command_readRemoteRelay( void )
 
 	return;
 }
+
 void readRemoteRelay( struct buffer_struct *send_buffer )
 {
 	command_builder2( send_buffer, "Read", "Relay" );
@@ -1741,6 +1792,7 @@ void readRemoteRelay( struct buffer_struct *send_buffer )
 	return;
 
 }
+
 void com_command_setRemoteRelay( void )
 {
 	struct buffer_struct *send_buffer;
@@ -1751,6 +1803,7 @@ void com_command_setRemoteRelay( void )
 
 	return;
 }
+
 void setRemoteRelay( struct buffer_struct *send_buffer )
 {
 	char relayActiveBuf[4];
@@ -1762,6 +1815,7 @@ void setRemoteRelay( struct buffer_struct *send_buffer )
 	return;
 
 }
+
 void com_command_readRemoteStat( void )
 {
 	struct buffer_struct *send_buffer;
@@ -1772,6 +1826,7 @@ void com_command_readRemoteStat( void )
 
 	return;
 }
+
 void readRemoteStat( struct buffer_struct *send_buffer )
 {
 	command_builder2( send_buffer, "Read", "Stat" );
@@ -1779,6 +1834,7 @@ void readRemoteStat( struct buffer_struct *send_buffer )
 	return;
 
 }
+
 void com_command_readRemoteCBver( void )
 {
 	struct buffer_struct *send_buffer;
@@ -1789,6 +1845,7 @@ void com_command_readRemoteCBver( void )
 
 	return;
 }
+
 void readRemoteCBver( struct buffer_struct *send_buffer )
 {
 	command_builder2( send_buffer, "Read", "CBver" );
@@ -1796,6 +1853,7 @@ void readRemoteCBver( struct buffer_struct *send_buffer )
 	return;
 
 }
+
 void com_command_readRemotePowerFailTimes( void )
 {
 	struct buffer_struct *send_buffer;
@@ -1807,6 +1865,7 @@ void com_command_readRemotePowerFailTimes( void )
 	return;
 
 }
+
 void readRemotePowerFailTimes( struct buffer_struct *send_buffer )
 {
 	command_builder2( send_buffer, "Read", "PwrFail" );
@@ -1814,6 +1873,7 @@ void readRemotePowerFailTimes( struct buffer_struct *send_buffer )
 	return;
 
 }
+
 void com_command_readRemotePowerData( void )
 {
 	struct buffer_struct *send_buffer;
@@ -1824,6 +1884,7 @@ void com_command_readRemotePowerData( void )
 
 	return;
 }
+
 void readRemotePowerData( struct buffer_struct *send_buffer )
 {
 	command_builder2( send_buffer, "Read", "PwrData" );
@@ -1882,6 +1943,7 @@ void setRemoteXXX( struct buffer *send_buffer )
 
 /******************/
 /******************/
+
 /******************/
 
 
@@ -1891,9 +1953,18 @@ void setRemoteXXX( struct buffer *send_buffer )
 
 
 
-void com_command_readRemoteEnergy( void ) { }
-void com_command_readUpdate( void ) { }
-void com_command_doReset( void ) { }
+void com_command_readRemoteEnergy( void )
+{
+}
+
+void com_command_readUpdate( void )
+{
+}
+
+void com_command_doReset( void )
+{
+}
+
 void initUART( void )
 {
 	// FCY = 2 MHz;
@@ -1942,7 +2013,8 @@ void initUART( void )
 	U2STAbits.UTXEN = 0b1; // enable transmit
 
 }
-void __attribute__( (__interrupt__, __no_auto_psv__) ) _U2RXInterrupt( void )
+
+void __attribute__( ( __interrupt__, __no_auto_psv__ ) ) _U2RXInterrupt( void )
 {
 	// we need to read all of the characters out of the RX hardware buffer
 	// typically there will be only one, but there could be more
@@ -1968,14 +2040,15 @@ void __attribute__( (__interrupt__, __no_auto_psv__) ) _U2RXInterrupt( void )
 		uartBufferLargeCount++;
 		if( uartBufferLargeCount >= UART_LARGE_BUFFER_SIZE )
 		{
-			uartBufferLargeCount = (UART_LARGE_BUFFER_SIZE - 1);
+			uartBufferLargeCount = ( UART_LARGE_BUFFER_SIZE - 1 );
 		}
 
 	}
 
 	_U2RXIF = 0; // clear interrupt flag
 }
-void __attribute__( (__interrupt__, __no_auto_psv__) ) _U2ErrInterrupt( void )
+
+void __attribute__( ( __interrupt__, __no_auto_psv__ ) ) _U2ErrInterrupt( void )
 {
 	//    U2MODEbits.UARTEN = 0b0;
 	//    delayMS(1);
