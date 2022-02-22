@@ -188,8 +188,7 @@ void initVars( void )
 	tempResetHour = 0;
 	tempResetMinute = 0;
 
-	relayActive = 1;
-	tempRelayActive = 1;
+	relayMode_global = 0;  // default to show relay is in off mode
 }
 
 /* initPorts
