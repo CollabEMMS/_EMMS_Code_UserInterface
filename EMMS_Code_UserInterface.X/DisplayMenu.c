@@ -33,108 +33,105 @@
  ****************/
 // external
 
-char passwordSet[6];
+char passwordSet_global[6];
 
-long previousDayUsed = 0;
-long totalUsed = 0;
+long previousDayUsed_global = 0;
+long totalUsed_global = 0;
 
 char relayMode_global;
 char relayModeTemp_module;
 
-// internal only
+
+const char softKeys0_module[] = "Back  Up  Down    OK";
+const char softKeys1_module[] = "Back  Up  Top     OK";
+const char softKeys2_module[] = "Back  Up  Down  Save";
 
 
-// not yet sorted
-const char softKeys0[] = "Back  Up  Down    OK";
-const char softKeys1[] = "Back  Up  Top     OK";
-const char softKeys2[] = "Back  Up  Down  Save";
+char audibleAlarm_global;
+char alarm1Enabled_global;
+char alarm2Enabled_global;
+char alarm1Energy_global;
+char alarm2Energy_global;
 
-char audibleAlarm;
-char alarm1Enabled;
-char alarm2Enabled;
-char alarm1Energy;
-char alarm2Energy;
-char emerButtonEnable;
+char emerButtonEnable_global;
 
-int resetTimeHour;
-int resetTimeMinute;
-int tempResetHour;
-int tempResetMinute;
+int resetTimeHour_global;
+int resetTimeMinute_global;
+int tempResetHour_global;
+int tempResetMinute_global;
 
 
-char isHigh = 0xFF;
-char tempIsHigh;
-char oldPowerMenuState;
+char isHigh_module = 0xFF;
+char tempIsHigh_module;
+char oldPowerMenuState_module;
 
 
-int emerButtonEnergyAllocate;
-int emerButtonAllocTemp;
-int emerAllocNow;
-int emerAllocSend;
+int emerButtonEnergyAllocate_global;
+int emerButtonAllocTemp_module;
+int emerAllocNow_global;
+int emerAllocSend_global;
 
-char powerDownTime[12];
-char powerUpTime[12];
+char powerDownTime_global[12];
+char powerUpTime_global[12];
 
-char powerBoxCodeVersionString[9];
+char powerBoxCodeVersionString_global[9];
 
-char passwordInput[6];
-char newPassword[12];
-unsigned char pwLength;
+char passwordInput_module[6];
+char newPassword_module[12];
+unsigned char pwLength_module;
 
-char homeBasicAlternate; // 0 for % remaining, 1 for % load
+char homeBasicAlternate_module; // 0 for % remaining, 1 for % load
 
-char barGraph[21];
+char barGraph_module[21];
 
-char tempResetTimeString[6];
+char tempResetTimeString_module[6];
 
-unsigned char timeRemHour;
-unsigned char timeRemMinute;
-unsigned char timeRemSecond;
-unsigned char timeRemUpdate;
-unsigned long timeRem1;
-unsigned long timeRem2;
-unsigned long timeRem3;
-unsigned long timeRem4;
-unsigned long timeRem5;
+unsigned char timeRemHour_module;
+unsigned char timeRemMinute_module;
+unsigned char timeRemSecond_module;
+unsigned char timeRemUpdate_module;
+unsigned long timeRem1_module;
+unsigned long timeRem2_module;
+unsigned long timeRem3_module;
+unsigned long timeRem4_module;
+unsigned long timeRem5_module;
 
-char timeRemainingString[9];
+char timeRemainingString_module[9];
 
-char currentDisplay[NUM_LCD_LINES * NUM_LCD_WIDTH + 1];
-char nextDisplay[NUM_LCD_LINES * NUM_LCD_WIDTH + 1];
+char currentDisplay_module[NUM_LCD_LINES * NUM_LCD_WIDTH + 1];
+char nextDisplay_module[NUM_LCD_LINES * NUM_LCD_WIDTH + 1];
 
-unsigned char menuState;
-unsigned char oldMenuState;
-unsigned char lastUpdateSecond;
-unsigned char lastUpdateMinute;
-char enablePeriodicUpdate;
+unsigned char menuState_global;
+unsigned char oldMenuState_global;
+char enablePeriodicUpdate_global;
 
-char activeAlarm;
-char alarmToResume;
-char rightArrow[2];
-char tempPercent;
-char silenceAlarmOne;
-char silenceAlarmTwo;
-char remainingSets;
+char activeAlarm_global;
+char alarmToResume_global;
+char rightArrow_module[2];
+char tempPercent_global;
+char silenceAlarmOne_global;
+char silenceAlarmTwo_global;
+char remainingSets_global;
 
-unsigned long powerLoad;
-unsigned long energyUsed;
-long energyAllocated;
-unsigned long lowAlloc;
-unsigned long highAlloc;
-unsigned long tempAlloc;
+unsigned long powerLoad_global;
+unsigned long energyUsed_global;
+long energyAllocated_global;
+unsigned long lowAlloc_module;
+unsigned long highAlloc_module;
+unsigned long tempAlloc_module;
 
-char percentRem;
+char percentRem_global;
 
-unsigned char button0Flag;
-unsigned char button1Flag;
-unsigned char button2Flag;
-unsigned char button3Flag;
+unsigned char button0Flag_global;
+unsigned char button1Flag_global;
+unsigned char button2Flag_global;
+unsigned char button3Flag_global;
 
 
-char isBooting;
+char isBooting_global;
 
-char alarmOneHit;
-char alarmTwoHit;
+char alarmOneHit_global;
+char alarmTwoHit_global;
 
 
 
@@ -308,8 +305,8 @@ void initDisplay( void )
     delayMS( 2 );
     dspCommand( FIRST_LINE ); //Return To First Line
 
-    rightArrow[0] = 0x7E; // right arrow character for menus
-    rightArrow[1] = 0x00;
+    rightArrow_module[0] = 0x7E; // right arrow character for menus
+    rightArrow_module[1] = 0x00;
 
     unsigned char i;
 
@@ -321,8 +318,8 @@ void initDisplay( void )
     // initialize starting arrays to 0
     for ( i = 0; i < NUM_LCD_LINES * NUM_LCD_WIDTH; i++ )
     {
-        currentDisplay[i] = ' ';
-        nextDisplay[i] = ' ';
+        currentDisplay_module[i] = ' ';
+        nextDisplay_module[i] = ' ';
     }
 }
 
@@ -372,16 +369,16 @@ void writeToDisplay( const char *message, unsigned char location, char width )
             currentWidth++;
 
         for ( i = 0; i < width - currentWidth; i++ )
-            nextDisplay[location + i] = ' ';
+            nextDisplay_module[location + i] = ' ';
 
         while ( *pos != 0 )
-            nextDisplay[location + i++] = *( pos++ );
+            nextDisplay_module[location + i++] = *( pos++ );
     }
     else
     {
         while ( *pos != 0 )
         {
-            nextDisplay[location + i++] = *( pos++ );
+            nextDisplay_module[location + i++] = *( pos++ );
             currentWidth++;
         }
 
@@ -389,7 +386,7 @@ void writeToDisplay( const char *message, unsigned char location, char width )
         {
             for ( i = 0; i < width - currentWidth; i++ )
             {
-                nextDisplay[location + currentWidth + i] = ' ';
+                nextDisplay_module[location + currentWidth + i] = ' ';
             }
         }
     }
@@ -400,7 +397,7 @@ void writeToDisplay( const char *message, unsigned char location, char width )
  */
 void updateMenu( void )
 {
-    switch ( menuState )
+    switch ( menuState_global )
     {
         case MENU_DEBUG:
             menuDebug( );
@@ -572,33 +569,33 @@ void updateMenu( void )
  * which has been pressed (0-3) or -1 if no button has been pressed */
 char menuButtonRead( char menu1, char menu2, char menu3, char menu4 )
 {
-    if ( menu1 == 0 ) menu1 = menuState;
-    if ( menu2 == 0 ) menu2 = menuState;
-    if ( menu3 == 0 ) menu3 = menuState;
-    if ( menu4 == 0 ) menu4 = menuState;
+    if ( menu1 == 0 ) menu1 = menuState_global;
+    if ( menu2 == 0 ) menu2 = menuState_global;
+    if ( menu3 == 0 ) menu3 = menuState_global;
+    if ( menu4 == 0 ) menu4 = menuState_global;
 
-    if ( button0Flag == 1 )
+    if ( button0Flag_global == 1 )
     {
-        menuState = menu1;
-        button0Flag++;
+        menuState_global = menu1;
+        button0Flag_global++;
         return 0;
     }
-    else if ( button1Flag == 1 )
+    else if ( button1Flag_global == 1 )
     {
-        menuState = menu2;
-        button1Flag++;
+        menuState_global = menu2;
+        button1Flag_global++;
         return 1;
     }
-    else if ( button2Flag == 1 )
+    else if ( button2Flag_global == 1 )
     {
-        menuState = menu3;
-        button2Flag++;
+        menuState_global = menu3;
+        button2Flag_global++;
         return 2;
     }
-    else if ( button3Flag == 1 )
+    else if ( button3Flag_global == 1 )
     {
-        menuState = menu4;
-        button3Flag++;
+        menuState_global = menu4;
+        button3Flag_global++;
         return 3;
     }
     return -1;
@@ -611,8 +608,8 @@ void menuError( void )
     int menuStateTemp;
     char menuStateBuf[BUF_SIZE_INT ];
 
-    menuStateTemp = menuState;
-    itoa( menuStateBuf, menuState, 10 );
+    menuStateTemp = menuState_global;
+    itoa( menuStateBuf, menuState_global, 10 );
 
 
     writeToDisplay( "ERROR 404:", 0, 20 );
@@ -646,73 +643,73 @@ void menuHomeBasic( void )
             break;
         case 1:
         case 2:
-            homeBasicAlternate++;
+            homeBasicAlternate_module++;
     }
 
     if ( !BACKLIGHT )
     {
-        homeBasicAlternate = ( timeSecond / 10 ) % 2;
+        homeBasicAlternate_module = ( timeSecond_global / 10 ) % 2;
     }
 
     readTime( );
     writeClockStrings( );
 
-    if ( homeBasicAlternate > 1 )
-        homeBasicAlternate = 0;
+    if ( homeBasicAlternate_module > 1 )
+        homeBasicAlternate_module = 0;
 
     /* Normal, no seconds displayed */
 #ifndef SECONDS_CLOCK
     writeToDisplay( "  ", 0, 0 );
-    writeToDisplay( clockStr, 2, 5 );
+    writeToDisplay( clockStr_global, 2, 5 );
     writeToDisplay( "   ", 7, 0 );
-    writeToDisplay( calendarStr, 10, 0 );
+    writeToDisplay( calendarStr_global, 10, 0 );
     writeToDisplay( "  ", 18, 0 );
 #else
     /* Debug, with seconds displayed */
     char specialClockStr[21];
     specialClockStr[0] = ' ';
-    specialClockStr[1] = ( timeHour / 10 ) + 0x30;
-    specialClockStr[2] = ( timeHour % 10 ) + 0x30;
+    specialClockStr[1] = ( timeHour_global / 10 ) + 0x30;
+    specialClockStr[2] = ( timeHour_global % 10 ) + 0x30;
     specialClockStr[3] = ':';
-    specialClockStr[4] = ( timeMinute / 10 ) + 0x30;
-    specialClockStr[5] = ( timeMinute % 10 ) + 0x30;
+    specialClockStr[4] = ( timeMinute_global / 10 ) + 0x30;
+    specialClockStr[5] = ( timeMinute_global % 10 ) + 0x30;
     specialClockStr[6] = ':';
-    specialClockStr[7] = ( timeSecond / 10 ) + 0x30;
-    specialClockStr[8] = ( timeSecond % 10 ) + 0x30;
+    specialClockStr[7] = ( timeSecond_global / 10 ) + 0x30;
+    specialClockStr[8] = ( timeSecond_global % 10 ) + 0x30;
     specialClockStr[9] = ' ';
     specialClockStr[10] = ' ';
-    specialClockStr[11] = ( timeDay / 10 ) + 0x30;
-    specialClockStr[12] = ( timeDay % 10 ) + 0x30;
+    specialClockStr[11] = ( timeDay_global / 10 ) + 0x30;
+    specialClockStr[12] = ( timeDay_global % 10 ) + 0x30;
     specialClockStr[13] = '/';
-    specialClockStr[14] = ( timeMonth / 10 ) + 0x30;
-    specialClockStr[15] = ( timeMonth % 10 ) + 0x30;
+    specialClockStr[14] = ( timeMonth_global / 10 ) + 0x30;
+    specialClockStr[15] = ( timeMonth_global % 10 ) + 0x30;
     specialClockStr[16] = '/';
-    specialClockStr[17] = ( timeYear / 10 ) + 0x30;
-    specialClockStr[18] = ( timeYear % 10 ) + 0x30;
+    specialClockStr[17] = ( timeYear_global / 10 ) + 0x30;
+    specialClockStr[18] = ( timeYear_global % 10 ) + 0x30;
     specialClockStr[19] = ' ';
     specialClockStr[20] = 0;
     writeToDisplay( specialClockStr, 0, 0 );
     /* End debug clock */
 #endif
 
-    if ( !homeBasicAlternate )
+    if ( !homeBasicAlternate_module )
     {
         char percentRemBuf[BUF_SIZE_INT];
 
-        itoa( percentRemBuf, percentRem, 10 );
+        itoa( percentRemBuf, percentRem_global, 10 );
 
         writeToDisplay( "Remaining:", 20, 15 );
         writeToDisplay( percentRemBuf, 35, -3 );
         writeToDisplay( "% ", 38, 0 );
         writeBarGraph( );
-        writeToDisplay( barGraph, 40, 0 );
+        writeToDisplay( barGraph_module, 40, 0 );
     }
     else
     {
 
         char currentLoadBuf[BUF_SIZE_LONG];
 
-        ultoa( currentLoadBuf, powerLoad, 10 );
+        ultoa( currentLoadBuf, powerLoad_global, 10 );
 
         writeToDisplay( "Current Load:", 20, 0 );
         //        writeToDisplay(itoa(buffer1, currentLoad, 10), 33, -5);
@@ -720,15 +717,15 @@ void menuHomeBasic( void )
         writeToDisplay( " W", 38, 0 );
 
         writeToDisplay( "Time left:", 40, 12 );
-        writeToDisplay( timeRemainingString, 52, 0 );
+        writeToDisplay( timeRemainingString_module, 52, 0 );
     }
 
     //writeToDisplay(barGraph, 40, 0);
     writeToDisplay( "Menu   Swap   Detail", 60, 0 );
 
-    if ( !enablePeriodicUpdate )
+    if ( !enablePeriodicUpdate_global )
     {
-        enablePeriodicUpdate = 1;
+        enablePeriodicUpdate_global = 1;
     }
 }
 
@@ -743,7 +740,7 @@ void menuHomeDetail( void )
     readTime( );
     writeClockStrings( );
 
-    int remainingPower = energyAllocated - energyUsed;
+    int remainingPower = energyAllocated_global - energyUsed_global;
     if ( remainingPower < 0 )
     {
         remainingPower = 0;
@@ -757,9 +754,9 @@ void menuHomeDetail( void )
     char currentLoadBuf[BUF_SIZE_LONG];
 
     itoa( remainingPowerBuf, remainingPower, 10 );
-    ltoa( powerAllocatedBuf, energyAllocated, 10 );
-    itoa( percentRemBuf, percentRem, 10 );
-    ultoa( currentLoadBuf, powerLoad, 10 );
+    ltoa( powerAllocatedBuf, energyAllocated_global, 10 );
+    itoa( percentRemBuf, percentRem_global, 10 );
+    ultoa( currentLoadBuf, powerLoad_global, 10 );
 
 
     writeToDisplay( remainingPowerBuf, 6, -5 );
@@ -771,9 +768,9 @@ void menuHomeDetail( void )
     writeToDisplay( currentLoadBuf, 52, -5 );
     writeToDisplay( " W Menu           Basic", 57, 0 );
 
-    if ( !enablePeriodicUpdate )
+    if ( !enablePeriodicUpdate_global )
     {
-        enablePeriodicUpdate = 1;
+        enablePeriodicUpdate_global = 1;
     }
 }
 
@@ -785,18 +782,18 @@ void menuAlarm( void )
         case 1:
         case 2:
         case 3:
-            menuState = oldMenuState;
-            if ( activeAlarm == 1 )
-                silenceAlarmOne = 1;
-            if ( activeAlarm == 2 )
-                silenceAlarmTwo = 1;
-            alarmToResume = activeAlarm = remainingSets = 0;
+            menuState_global = oldMenuState_global;
+            if ( activeAlarm_global == 1 )
+                silenceAlarmOne_global = 1;
+            if ( activeAlarm_global == 2 )
+                silenceAlarmTwo_global = 1;
+            alarmToResume_global = activeAlarm_global = remainingSets_global = 0;
     }
 
 
     char percentRemBuf[BUF_SIZE_INT];
 
-    itoa( percentRemBuf, percentRem, 10 );
+    itoa( percentRemBuf, percentRem_global, 10 );
 
     writeToDisplay( "Warning: Low power! Only ", 0, 0 );
 
@@ -822,9 +819,9 @@ void menuMain1( void )
     }
 
     writeToDisplay( "Main Menu     1 of 6* Alarm Options       Admin Menu", 0, 60 );
-    writeToDisplay( softKeys0, 60, 0 );
+    writeToDisplay( softKeys0_module, 60, 0 );
 
-    enablePeriodicUpdate = 0;
+    enablePeriodicUpdate_global = 0;
 
 }
 
@@ -839,11 +836,11 @@ void menuMain2( void )
             //com_command_readRemoteHL( );
             break;
         case 3:
-            pwLength = 0;
+            pwLength_module = 0;
     }
 
     writeToDisplay( "Main Menu     2 of 6* Admin Menu          Modules ", 0, 60 );
-    writeToDisplay( softKeys0, 60, 0 );
+    writeToDisplay( softKeys0_module, 60, 0 );
 }
 
 void menuMain3( void )
@@ -858,16 +855,16 @@ void menuMain3( void )
             com_command_readRemoteStat( );
             break;
         case 3:
-            tempIsHigh = isHigh;
-            if ( highAlloc == 0 )
+            tempIsHigh_module = isHigh_module;
+            if ( highAlloc_module == 0 )
             {
-                highAlloc = energyAllocated;
-                lowAlloc = ( energyAllocated * 3 ) / 4;
+                highAlloc_module = energyAllocated_global;
+                lowAlloc_module = ( energyAllocated_global * 3 ) / 4;
             }
     }
 
     writeToDisplay( "Main Menu     3 of 6* Modules             Statistics", 0, 60 );
-    writeToDisplay( softKeys0, 60, 0 );
+    writeToDisplay( softKeys0_module, 60, 0 );
 }
 
 void menuMain4( void )
@@ -882,7 +879,7 @@ void menuMain4( void )
     }
 
     writeToDisplay( "Main Menu     4 of 6* Statistics          Last Power Failure", 0, 60 );
-    writeToDisplay( softKeys0, 60, 0 );
+    writeToDisplay( softKeys0_module, 60, 0 );
 }
 
 void menuMain5( void )
@@ -897,7 +894,7 @@ void menuMain5( void )
     }
 
     writeToDisplay( "Main Menu     5 of 6* Last Power Failure  About", 0, 60 );
-    writeToDisplay( softKeys0, 60, 0 );
+    writeToDisplay( softKeys0_module, 60, 0 );
 }
 
 void menuMain6( void )
@@ -912,7 +909,7 @@ void menuMain6( void )
     }
 
     writeToDisplay( "Main Menu     6 of 6  Last Power Failure* About", 0, 60 );
-    writeToDisplay( softKeys1, 60, 0 );
+    writeToDisplay( softKeys1_module, 60, 0 );
 }
 
 void menuAlarm1( void )
@@ -924,29 +921,29 @@ void menuAlarm1( void )
             com_command_setRemoteAlarm( );
             break;
         case 3:
-            audibleAlarm++;
+            audibleAlarm_global++;
     }
 
     writeToDisplay( "Alarm Options 1 of 3* Audible Alarm  ", 0, 0 );
 
-    if ( audibleAlarm == 1 )
+    if ( audibleAlarm_global == 1 )
     {
         writeToDisplay( "On ", 37, 0 );
-        audibleAlarm = 1;
+        audibleAlarm_global = 1;
     }
     else
     {
         writeToDisplay( "Off", 37, 0 );
-        audibleAlarm = 0;
+        audibleAlarm_global = 0;
     }
 
     writeToDisplay( "  Alarm 1 Power  ", 40, 0 );
 
-    if ( alarm1Enabled )
+    if ( alarm1Enabled_global )
     {
         char alarmOnePowerBuf[BUF_SIZE_INT];
 
-        itoa( alarmOnePowerBuf, alarm1Energy, 10 );
+        itoa( alarmOnePowerBuf, alarm1Energy_global, 10 );
 
         writeToDisplay( alarmOnePowerBuf, 57, -2 );
         writeToDisplay( "%", 59, 0 );
@@ -954,7 +951,7 @@ void menuAlarm1( void )
     else
         writeToDisplay( "Off", 57, 0 );
 
-    writeToDisplay( softKeys0, 60, 0 );
+    writeToDisplay( softKeys0_module, 60, 0 );
 }
 
 void menuAlarm2( void )
@@ -966,16 +963,16 @@ void menuAlarm2( void )
             com_command_setRemoteAlarm( );
             break;
         case 3:
-            tempPercent = alarm1Energy;
+            tempPercent_global = alarm1Energy_global;
     }
 
     writeToDisplay( "Alarm Options 2 of 3* Alarm 1 Power  ", 0, 0 );
 
-    if ( alarm1Enabled )
+    if ( alarm1Enabled_global )
     {
         char alarmOnePowerBuf[ BUF_SIZE_LONG];
 
-        itoa( alarmOnePowerBuf, alarm1Energy, 10 );
+        itoa( alarmOnePowerBuf, alarm1Energy_global, 10 );
 
         writeToDisplay( alarmOnePowerBuf, 37, -2 );
         writeToDisplay( "%", 39, 0 );
@@ -985,11 +982,11 @@ void menuAlarm2( void )
 
     writeToDisplay( "  Alarm 2 Power  ", 40, 0 );
 
-    if ( alarm2Enabled )
+    if ( alarm2Enabled_global )
     {
         char alarmTwoPowerBuf[ BUF_SIZE_INT];
 
-        itoa( alarmTwoPowerBuf, alarm2Energy, 10 );
+        itoa( alarmTwoPowerBuf, alarm2Energy_global, 10 );
 
         writeToDisplay( alarmTwoPowerBuf, 57, -2 );
         writeToDisplay( "%", 59, 0 );
@@ -997,7 +994,7 @@ void menuAlarm2( void )
     else
         writeToDisplay( "Off", 57, 0 );
 
-    writeToDisplay( softKeys0, 60, 0 );
+    writeToDisplay( softKeys0_module, 60, 0 );
 }
 
 void menuAlarm3( void )
@@ -1006,44 +1003,44 @@ void menuAlarm3( void )
     switch ( menuButtonRead( MENU_ALARM_2, 0, 0, MENU_ALARM_2 ) )
     {
         case 1:
-            if ( !alarm1Enabled )
-                alarm1Enabled = 1;
+            if ( !alarm1Enabled_global )
+                alarm1Enabled_global = 1;
             else
             {
-                if ( tempPercent < 20 )
-                    tempPercent++;
-                else if ( tempPercent < 95 )
-                    tempPercent += 5;
+                if ( tempPercent_global < 20 )
+                    tempPercent_global++;
+                else if ( tempPercent_global < 95 )
+                    tempPercent_global += 5;
             }
             break;
 
         case 2:
-            if ( alarm1Enabled )
+            if ( alarm1Enabled_global )
             {
-                if ( tempPercent > 20 )
-                    tempPercent -= 5;
-                else if ( tempPercent > 1 )
-                    tempPercent--;
-                else if ( tempPercent <= 1 )
-                    alarm1Enabled = 0;
+                if ( tempPercent_global > 20 )
+                    tempPercent_global -= 5;
+                else if ( tempPercent_global > 1 )
+                    tempPercent_global--;
+                else if ( tempPercent_global <= 1 )
+                    alarm1Enabled_global = 0;
             }
             break;
 
         case 3:
-            alarm1Energy = tempPercent;
-            alarmOneHit = 0;
+            alarm1Energy_global = tempPercent_global;
+            alarmOneHit_global = 0;
             com_command_setRemoteAlarm( );
     }
 
     writeToDisplay( "Alarm Options 2 of 3* Alarm 1 Power ", 0, 0 );
 
-    writeToDisplay( rightArrow, 36, 0 );
+    writeToDisplay( rightArrow_module, 36, 0 );
 
-    if ( alarm1Enabled )
+    if ( alarm1Enabled_global )
     {
         char tempPercentBuf[BUF_SIZE_INT];
 
-        itoa( tempPercentBuf, tempPercent, 10 );
+        itoa( tempPercentBuf, tempPercent_global, 10 );
 
         writeToDisplay( tempPercentBuf, 37, -2 );
         writeToDisplay( "%", 39, 0 );
@@ -1053,11 +1050,11 @@ void menuAlarm3( void )
 
     writeToDisplay( "  Alarm 2 Power  ", 40, 0 );
 
-    if ( alarm2Enabled )
+    if ( alarm2Enabled_global )
     {
         char alarmTwoPowerBuf[ BUF_SIZE_INT];
 
-        itoa( alarmTwoPowerBuf, alarm2Energy, 10 );
+        itoa( alarmTwoPowerBuf, alarm2Energy_global, 10 );
 
         writeToDisplay( alarmTwoPowerBuf, 57, -2 );
         writeToDisplay( "%", 59, 0 );
@@ -1065,7 +1062,7 @@ void menuAlarm3( void )
     else
         writeToDisplay( "Off", 57, 0 );
 
-    writeToDisplay( softKeys2, 60, 0 );
+    writeToDisplay( softKeys2_module, 60, 0 );
 }
 
 void menuAlarm4( void )
@@ -1077,16 +1074,16 @@ void menuAlarm4( void )
             com_command_setRemoteAlarm( );
             break;
         case 3:
-            tempPercent = alarm2Energy;
+            tempPercent_global = alarm2Energy_global;
     }
 
     writeToDisplay( "Alarm Options 3 of 3  Alarm 1 Power  ", 0, 0 );
 
-    if ( alarm1Enabled )
+    if ( alarm1Enabled_global )
     {
         char alarmOnePowerBuf[ BUF_SIZE_INT];
 
-        itoa( alarmOnePowerBuf, alarm1Energy, 10 );
+        itoa( alarmOnePowerBuf, alarm1Energy_global, 10 );
 
         writeToDisplay( alarmOnePowerBuf, 37, -2 );
         writeToDisplay( "%", 39, 0 );
@@ -1096,11 +1093,11 @@ void menuAlarm4( void )
 
     writeToDisplay( "* Alarm 2 Power  ", 40, 0 );
 
-    if ( alarm2Enabled )
+    if ( alarm2Enabled_global )
     {
         char alarmTwoPowerBuf[ BUF_SIZE_INT];
 
-        itoa( alarmTwoPowerBuf, alarm2Energy, 10 );
+        itoa( alarmTwoPowerBuf, alarm2Energy_global, 10 );
 
         writeToDisplay( alarmTwoPowerBuf, 57, -2 );
         writeToDisplay( "%", 59, 0 );
@@ -1108,7 +1105,7 @@ void menuAlarm4( void )
     else
         writeToDisplay( "Off", 57, 0 );
 
-    writeToDisplay( softKeys1, 60, 0 );
+    writeToDisplay( softKeys1_module, 60, 0 );
 }
 
 void menuAlarm5( void )
@@ -1117,42 +1114,42 @@ void menuAlarm5( void )
     switch ( menuButtonRead( MENU_ALARM_4, 0, 0, MENU_ALARM_4 ) )
     {
         case 1:
-            if ( !alarm2Enabled )
-                alarm2Enabled = 1;
+            if ( !alarm2Enabled_global )
+                alarm2Enabled_global = 1;
             else
             {
-                if ( tempPercent < 20 )
-                    tempPercent++;
-                else if ( tempPercent < 95 )
-                    tempPercent += 5;
+                if ( tempPercent_global < 20 )
+                    tempPercent_global++;
+                else if ( tempPercent_global < 95 )
+                    tempPercent_global += 5;
             }
             break;
 
         case 2:
-            if ( alarm2Enabled )
+            if ( alarm2Enabled_global )
             {
-                if ( tempPercent > 20 )
-                    tempPercent -= 5;
-                else if ( tempPercent > 1 )
-                    tempPercent--;
-                else if ( tempPercent <= 1 )
-                    alarm2Enabled = 0;
+                if ( tempPercent_global > 20 )
+                    tempPercent_global -= 5;
+                else if ( tempPercent_global > 1 )
+                    tempPercent_global--;
+                else if ( tempPercent_global <= 1 )
+                    alarm2Enabled_global = 0;
             }
             break;
 
         case 3:
-            alarm2Energy = tempPercent;
-            alarmTwoHit = 0;
+            alarm2Energy_global = tempPercent_global;
+            alarmTwoHit_global = 0;
             com_command_setRemoteAlarm( );
     }
 
     writeToDisplay( "Alarm Options 3 of 3  Alarm 1 Power  ", 0, 0 );
 
-    if ( alarm1Enabled )
+    if ( alarm1Enabled_global )
     {
         char alarmOnePowerBuf[BUF_SIZE_INT];
 
-        itoa( alarmOnePowerBuf, alarm1Energy, 10 );
+        itoa( alarmOnePowerBuf, alarm1Energy_global, 10 );
 
         writeToDisplay( alarmOnePowerBuf, 37, -2 );
         writeToDisplay( "%", 39, 0 );
@@ -1161,13 +1158,13 @@ void menuAlarm5( void )
         writeToDisplay( "Off", 37, 0 );
 
     writeToDisplay( "* Alarm 2 Power ", 40, 0 );
-    writeToDisplay( rightArrow, 56, 0 );
+    writeToDisplay( rightArrow_module, 56, 0 );
 
-    if ( alarm2Enabled )
+    if ( alarm2Enabled_global )
     {
         char tempPercentBuf[ BUF_SIZE_INT];
 
-        itoa( tempPercentBuf, tempPercent, 10 );
+        itoa( tempPercentBuf, tempPercent_global, 10 );
 
         writeToDisplay( tempPercentBuf, 57, -2 );
         writeToDisplay( "%", 59, 0 );
@@ -1175,7 +1172,7 @@ void menuAlarm5( void )
     else
         writeToDisplay( "Off", 57, 0 );
 
-    writeToDisplay( softKeys2, 60, 0 );
+    writeToDisplay( softKeys2_module, 60, 0 );
 }
 
 void menuStatistics( void )
@@ -1186,8 +1183,8 @@ void menuStatistics( void )
 
     menuButtonRead( MENU_MAIN_4, MENU_MAIN_4, MENU_MAIN_4, MENU_MAIN_4 );
 
-    ltoa( previousDayUsedBuf, previousDayUsed, 10 );
-    ltoa( totalUsedBuf, totalUsed, 10 );
+    ltoa( previousDayUsedBuf, previousDayUsed_global, 10 );
+    ltoa( totalUsedBuf, totalUsed_global, 10 );
 
 
     writeToDisplay( "Yesterday's usage:  ", 0, 0 );
@@ -1204,9 +1201,9 @@ void menuPowerFailTimes( void )
 
     writeToDisplay( "Last Power Failure  ", 0, 0 );
     writeToDisplay( "Lost     ", 20, 0 );
-    writeToDisplay( powerDownTime, 29, 0 );
+    writeToDisplay( powerDownTime_global, 29, 0 );
     writeToDisplay( "Restored ", 40, 0 );
-    writeToDisplay( powerUpTime, 49, 0 );
+    writeToDisplay( powerUpTime_global, 49, 0 );
     writeToDisplay( "Back", 60, 20 );
 }
 
@@ -1215,7 +1212,7 @@ void menuAbout( void )
     menuButtonRead( MENU_MAIN_6, MENU_MAIN_6, MENU_MAIN_6, MENU_MAIN_6 );
 
     writeToDisplay( "Power Code: ", 0, 0 );
-    writeToDisplay( powerBoxCodeVersionString, 12, 8 );
+    writeToDisplay( powerBoxCodeVersionString_global, 12, 8 );
     writeToDisplay( "Disp Code:  ", 20, 0 );
     writeToDisplay( DISPLAY_BOX_CODE_VERSION, 32, 8 );
     writeToDisplay( "  Messiah College      Collaboratory    ", 40, 0 );
@@ -1223,43 +1220,43 @@ void menuAbout( void )
 
 void menuAdminLogin( void )
 {
-    if ( pwLength != 6 )
+    if ( pwLength_module != 6 )
     {
         switch ( menuButtonRead( 0, 0, 0, 0 ) )
         {
             case 0:
-                passwordInput[pwLength++] = '1';
+                passwordInput_module[pwLength_module++] = '1';
                 break;
             case 1:
-                passwordInput[pwLength++] = '2';
+                passwordInput_module[pwLength_module++] = '2';
                 break;
             case 2:
-                passwordInput[pwLength++] = '3';
+                passwordInput_module[pwLength_module++] = '3';
                 break;
             case 3:
-                passwordInput[pwLength++] = '4';
+                passwordInput_module[pwLength_module++] = '4';
         }
     }
-    else if ( passwordInput[0] == passwordSet[0] &&
-              passwordInput[1] == passwordSet[1] &&
-              passwordInput[2] == passwordSet[2] &&
-              passwordInput[3] == passwordSet[3] &&
-              passwordInput[4] == passwordSet[4] &&
-              passwordInput[5] == passwordSet[5] )
+    else if ( passwordInput_module[0] == passwordSet_global[0] &&
+              passwordInput_module[1] == passwordSet_global[1] &&
+              passwordInput_module[2] == passwordSet_global[2] &&
+              passwordInput_module[3] == passwordSet_global[3] &&
+              passwordInput_module[4] == passwordSet_global[4] &&
+              passwordInput_module[5] == passwordSet_global[5] )
     {
-        menuState = MENU_ADMIN_1;
+        menuState_global = MENU_ADMIN_1;
         com_command_readRemoteTime( );
         return;
     }
     else
     {
-        menuState = MENU_HOME_BASIC;
+        menuState_global = MENU_HOME_BASIC;
         return;
     }
 
     writeToDisplay( "Administrator Login", 0, 44 );
 
-    switch ( pwLength )
+    switch ( pwLength_module )
     {
         case 0:
             writeToDisplay( "_ _ _ _ _ _", 44, 0 );
@@ -1301,19 +1298,19 @@ void menuAdmin1( void )
             com_command_readRemoteEnergyAllocation( );
             break;
         case 3:
-            timeSetPos = 1;
+            timeSetPos_global = 1;
 
             // set temporary time variables to what's in the RTCC
             readTime( );
-            tempHour = timeHour;
-            tempMin = timeMinute;
-            tempMonth = timeMonth;
-            tempDay = timeDay;
-            tempYear = timeYear;
+            tempHour_global = timeHour_global;
+            tempMin_global = timeMinute_global;
+            tempMonth_global = timeMonth_global;
+            tempDay_global = timeDay_global;
+            tempYear_global = timeYear_global;
     }
 
     writeToDisplay( "Admin Menu    1 of 6* Set Time/Date       Set Power Alloc", 0, 60 );
-    writeToDisplay( softKeys0, 60, 0 );
+    writeToDisplay( softKeys0_module, 60, 0 );
 }
 
 void menuAdmin2( void )
@@ -1328,13 +1325,13 @@ void menuAdmin2( void )
             com_command_readRemoteEnergy( );
             break;
         case 3:
-            if ( !highAlloc )
-                highAlloc = energyAllocated;
-            tempAlloc = highAlloc;
+            if ( !highAlloc_module )
+                highAlloc_module = energyAllocated_global;
+            tempAlloc_module = highAlloc_module;
     }
 
     writeToDisplay( "Admin Menu    2 of 6* Set Power Alloc     Emergency Options", 0, 60 );
-    writeToDisplay( softKeys0, 60, 0 );
+    writeToDisplay( softKeys0_module, 60, 0 );
 }
 
 void menuAdmin3( void )
@@ -1346,7 +1343,7 @@ void menuAdmin3( void )
     }
 
     writeToDisplay( "Admin Menu    3 of 6* Emergency Options   Change Password", 0, 60 );
-    writeToDisplay( softKeys0, 60, 0 );
+    writeToDisplay( softKeys0_module, 60, 0 );
 }
 
 void menuAdmin4( void )
@@ -1361,16 +1358,16 @@ void menuAdmin4( void )
             com_command_readRemoteResetTime( );
             break;
         case 3:
-            pwLength = 0;
-            newPassword[0] = newPassword[2] = newPassword[4] = newPassword[6] =
-                    newPassword[8] = newPassword[10] = '_';
-            newPassword[1] = newPassword[3] = newPassword[5] = newPassword[7] =
-                    newPassword[9] = ' ';
-            newPassword[11] = 0;
+            pwLength_module = 0;
+            newPassword_module[0] = newPassword_module[2] = newPassword_module[4] = newPassword_module[6] =
+                    newPassword_module[8] = newPassword_module[10] = '_';
+            newPassword_module[1] = newPassword_module[3] = newPassword_module[5] = newPassword_module[7] =
+                    newPassword_module[9] = ' ';
+            newPassword_module[11] = 0;
     }
 
     writeToDisplay( "Admin Menu    4 of 6* Change Password     Change Reset Time", 0, 60 );
-    writeToDisplay( softKeys0, 60, 0 );
+    writeToDisplay( softKeys0_module, 60, 0 );
 }
 
 void menuAdmin5( void )
@@ -1382,12 +1379,12 @@ void menuAdmin5( void )
             com_command_readRemoteRelay( );
             break;
         case 3:
-            tempResetHour = resetTimeHour;
-            tempResetMinute = resetTimeMinute;
+            tempResetHour_global = resetTimeHour_global;
+            tempResetMinute_global = resetTimeMinute_global;
     }
 
     writeToDisplay( "Admin Menu    5 of 6* Change Reset Time   Relay Control", 0, 60 );
-    writeToDisplay( softKeys0, 60, 0 );
+    writeToDisplay( softKeys0_module, 60, 0 );
 }
 
 void menuAdmin6( void )
@@ -1406,7 +1403,7 @@ void menuAdmin6( void )
     }
 
     writeToDisplay( "Admin Menu    6 of 6  Change Reset Time * Relay Control", 0, 60 );
-    writeToDisplay( softKeys1, 60, 0 );
+    writeToDisplay( softKeys1_module, 60, 0 );
 }
 
 void menuSetTime( void )
@@ -1415,111 +1412,111 @@ void menuSetTime( void )
     switch ( menuButtonRead( 0, 0, 0, 0 ) )
     {
         case 0:
-            timeSetPos--;
+            timeSetPos_global--;
 
-            if ( !timeSetPos )
+            if ( !timeSetPos_global )
             {
-                if ( isBooting )
-                    timeSetPos = 1;
+                if ( isBooting_global )
+                    timeSetPos_global = 1;
                 else
-                    menuState = MENU_ADMIN_1;
+                    menuState_global = MENU_ADMIN_1;
             }
             break;
         case 1:
-            switch ( timeSetPos )
+            switch ( timeSetPos_global )
             {
                 case 1:
-                    tempHour = ( tempHour + 1 ) % 24;
+                    tempHour_global = ( tempHour_global + 1 ) % 24;
                     break;
 
                 case 2:
-                    tempMin = ( tempMin + 1 ) % 60;
+                    tempMin_global = ( tempMin_global + 1 ) % 60;
                     break;
 
                 case 3:
-                    tempDay--;
-                    tempDay = ( tempDay + 1 ) % 31;
-                    tempDay++;
+                    tempDay_global--;
+                    tempDay_global = ( tempDay_global + 1 ) % 31;
+                    tempDay_global++;
                     break;
 
                 case 4:
-                    tempMonth--;
-                    tempMonth = ( tempMonth + 1 ) % 12;
-                    tempMonth++;
+                    tempMonth_global--;
+                    tempMonth_global = ( tempMonth_global + 1 ) % 12;
+                    tempMonth_global++;
                     break;
 
                 case 5:
-                    tempYear++;
-                    if ( tempYear > 99 )
-                        tempYear = 14;
+                    tempYear_global++;
+                    if ( tempYear_global > 99 )
+                        tempYear_global = 14;
             }
             break;
         case 2:
-            switch ( timeSetPos )
+            switch ( timeSetPos_global )
             {
                 case 1:
-                    tempHour--;
-                    if ( tempHour < 0 )
+                    tempHour_global--;
+                    if ( tempHour_global < 0 )
                     {
-                        tempHour = 23;
+                        tempHour_global = 23;
                     }
                     break;
 
                 case 2:
-                    tempMin--;
-                    if ( tempMin < 0 )
+                    tempMin_global--;
+                    if ( tempMin_global < 0 )
                     {
-                        tempMin = 59;
+                        tempMin_global = 59;
                     }
                     break;
 
                 case 3:
-                    tempDay--;
-                    if ( tempDay < 1 )
+                    tempDay_global--;
+                    if ( tempDay_global < 1 )
                     {
-                        tempDay = 31;
+                        tempDay_global = 31;
                     }
                     break;
 
                 case 4:
-                    tempMonth--;
-                    if ( tempMonth < 1 )
+                    tempMonth_global--;
+                    if ( tempMonth_global < 1 )
                     {
-                        tempMonth = 12;
+                        tempMonth_global = 12;
                     }
                     break;
 
                 case 5:
-                    tempYear--;
-                    if ( tempYear < 14 )
+                    tempYear_global--;
+                    if ( tempYear_global < 14 )
                     {
-                        tempYear = 99;
+                        tempYear_global = 99;
                     }
             }
             break;
 
         case 3:
-            timeSetPos++;
-            if ( timeSetPos == 6 )
+            timeSetPos_global++;
+            if ( timeSetPos_global == 6 )
             {
-                if ( writeTime( tempYear, tempMonth, tempDay, tempHour, tempMin, 0 ) == 1 )
+                if ( writeTime( tempYear_global, tempMonth_global, tempDay_global, tempHour_global, tempMin_global, 0 ) == 1 )
                 {
                     com_command_setRemoteTime( );
                     //                    lastUpdateSecond = timeSecond; // correct periodic update timing
-                    if ( isBooting )
+                    if ( isBooting_global )
                     {
-                        menuState = MENU_POWER_RESET;
+                        menuState_global = MENU_POWER_RESET;
                         //isBooting = 0;
                         com_command_readRemoteResetTime( );
                     }
                     else
                     {
-                        menuState = MENU_ADMIN_1;
+                        menuState_global = MENU_ADMIN_1;
                     }
                 }
                 else
                 {
-                    menuState = MENU_BAD_DATE;
+                    menuState_global = MENU_BAD_DATE;
                 }
             }
     }
@@ -1533,16 +1530,16 @@ void menuSetTime( void )
     writeTempClockStrings( );
 
     writeToDisplay( "Set Time/Date", 0, 25 );
-    writeToDisplay( tempClockStr, 25, 18 );
-    writeToDisplay( tempCalStr, 43, 17 );
+    writeToDisplay( tempClockStr_global, 25, 18 );
+    writeToDisplay( tempCalStr_global, 43, 17 );
 
-    if ( timeSetPos != 5 )
+    if ( timeSetPos_global != 5 )
     {
         writeToDisplay( "Back  Up  Down  Next", 60, 0 );
     }
     else
     {
-        writeToDisplay( softKeys2, 60, 0 );
+        writeToDisplay( softKeys2_module, 60, 0 );
     }
     /*
     writeToDisplay(tempClockStr, 25, 0);
@@ -1565,66 +1562,66 @@ void menuSetPower( void )
     switch ( menuButtonRead( MENU_ADMIN_2, 0, 0, 0 ) )
     {
         case 1:
-            if ( tempAlloc < 5 )
-                tempAlloc++;
-            else if ( tempAlloc < 50 )
-                tempAlloc += 5;
-            else if ( tempAlloc < 5000 )
-                tempAlloc += 50;
-            else if ( tempAlloc < 10000 )
-                tempAlloc += 100;
-            else if ( tempAlloc < 31999 )
-                tempAlloc += 250;
+            if ( tempAlloc_module < 5 )
+                tempAlloc_module++;
+            else if ( tempAlloc_module < 50 )
+                tempAlloc_module += 5;
+            else if ( tempAlloc_module < 5000 )
+                tempAlloc_module += 50;
+            else if ( tempAlloc_module < 10000 )
+                tempAlloc_module += 100;
+            else if ( tempAlloc_module < 31999 )
+                tempAlloc_module += 250;
             break;
 
         case 2:
-            if ( tempAlloc > 10000 )
-                tempAlloc -= 250;
-            else if ( tempAlloc > 5000 )
-                tempAlloc -= 100;
-            else if ( tempAlloc > 50 )
-                tempAlloc -= 50;
-            else if ( tempAlloc > 5 )
-                tempAlloc -= 5;
-            else if ( tempAlloc > 0 )
-                tempAlloc--;
+            if ( tempAlloc_module > 10000 )
+                tempAlloc_module -= 250;
+            else if ( tempAlloc_module > 5000 )
+                tempAlloc_module -= 100;
+            else if ( tempAlloc_module > 50 )
+                tempAlloc_module -= 50;
+            else if ( tempAlloc_module > 5 )
+                tempAlloc_module -= 5;
+            else if ( tempAlloc_module > 0 )
+                tempAlloc_module--;
 
             // to fix unexpected boundary conditions
-            if ( tempAlloc < 0 || tempAlloc > 32000 )
-                tempAlloc = 0;
+            if ( tempAlloc_module < 0 || tempAlloc_module > 32000 )
+                tempAlloc_module = 0;
             break;
 
         case 3:
             // high/low
-            isHigh = 0xFF;
+            isHigh_module = 0xFF;
 
-            if ( energyUsed < tempAlloc )
+            if ( energyUsed_global < tempAlloc_module )
             {
-                menuState = MENU_ADMIN_2;
-                energyAllocated = tempAlloc;
-                highAlloc = tempAlloc;
-                lowAlloc = ( highAlloc * 3 ) / 4;
+                menuState_global = MENU_ADMIN_2;
+                energyAllocated_global = tempAlloc_module;
+                highAlloc_module = tempAlloc_module;
+                lowAlloc_module = ( highAlloc_module * 3 ) / 4;
             }
             else
             {
-                menuState = MENU_SHUT_OFF_WARNING;
-                oldPowerMenuState = MENU_SET_POWER;
+                menuState_global = MENU_SHUT_OFF_WARNING;
+                oldPowerMenuState_module = MENU_SET_POWER;
             }
-            isHigh = 0xFF;
+            isHigh_module = 0xFF;
             //com_command_setRemoteHL( );
             com_command_setRemoteEnergyAllocation( );
     }
 
     char tempAllocBuf[BUF_SIZE_INT];
 
-    itoa( tempAllocBuf, tempAlloc, 10 );
+    itoa( tempAllocBuf, tempAlloc_module, 10 );
 
 
     writeToDisplay( "Set Power Allocation  ", 0, 0 );
     writeToDisplay( tempAllocBuf, 22, -5 );
     //    writeToDisplay(" Wh per day                      Back  Up  Down  Save", 27, 0);
     writeToDisplay( " Wh per day", 27, 33 );
-    writeToDisplay( softKeys2, 60, 0 );
+    writeToDisplay( softKeys2_module, 60, 0 );
 }
 
 void menuSetResetTime( void )
@@ -1633,36 +1630,36 @@ void menuSetResetTime( void )
     switch ( menuButtonRead( MENU_ADMIN_5, 0, 0, MENU_ADMIN_5 ) )
     {
         case 1:
-            if ( !tempResetMinute )
-                tempResetMinute = 30;
+            if ( !tempResetMinute_global )
+                tempResetMinute_global = 30;
             else
             {
-                tempResetMinute = 0;
-                tempResetHour = ( tempResetHour + 1 ) % 24;
+                tempResetMinute_global = 0;
+                tempResetHour_global = ( tempResetHour_global + 1 ) % 24;
             }
             break;
 
         case 2:
-            if ( tempResetMinute == 30 )
-                tempResetMinute = 0;
+            if ( tempResetMinute_global == 30 )
+                tempResetMinute_global = 0;
             else
             {
-                tempResetMinute = 30;
-                tempResetHour--;
+                tempResetMinute_global = 30;
+                tempResetHour_global--;
 
-                if ( tempResetHour > 23 )
-                    tempResetHour = 23;
+                if ( tempResetHour_global > 23 )
+                    tempResetHour_global = 23;
             }
             break;
 
         case 3:
-            resetTimeHour = tempResetHour;
-            resetTimeMinute = tempResetMinute;
+            resetTimeHour_global = tempResetHour_global;
+            resetTimeMinute_global = tempResetMinute_global;
 
             char rth[20];
             char rtm[20];
-            itoa( rth, tempResetHour, 10 );
-            itoa( rtm, tempResetMinute, 10 );
+            itoa( rth, tempResetHour_global, 10 );
+            itoa( rtm, tempResetMinute_global, 10 );
 
             writeToDisplay( "Resetting Reset Time", 0, 20 );
             writeToDisplay( rth, 20, 20 );
@@ -1674,23 +1671,23 @@ void menuSetResetTime( void )
             com_command_setRemoteResetTime( );
     }
 
-    tempResetTimeString[0] = ( tempResetHour / 10 ) + 0x30;
-    tempResetTimeString[1] = ( tempResetHour % 10 ) + 0x30;
-    tempResetTimeString[2] = ':';
+    tempResetTimeString_module[0] = ( tempResetHour_global / 10 ) + 0x30;
+    tempResetTimeString_module[1] = ( tempResetHour_global % 10 ) + 0x30;
+    tempResetTimeString_module[2] = ':';
     char rtm[20];
 
-    itoa( rtm, tempResetMinute, 10 );
+    itoa( rtm, tempResetMinute_global, 10 );
     if ( rtm[1] == CHAR_NULL )
     {
-        tempResetTimeString[3] = '0';
-        tempResetTimeString[4] = rtm[0];
+        tempResetTimeString_module[3] = '0';
+        tempResetTimeString_module[4] = rtm[0];
     }
     else
     {
-        tempResetTimeString[3] = rtm[0];
-        tempResetTimeString[4] = rtm[1];
+        tempResetTimeString_module[3] = rtm[0];
+        tempResetTimeString_module[4] = rtm[1];
     }
-    tempResetTimeString[5] = CHAR_NULL;
+    tempResetTimeString_module[5] = CHAR_NULL;
 
 
     //    if( !tempResetMinute )
@@ -1701,8 +1698,8 @@ void menuSetResetTime( void )
     //    tempResetTimeString[5] = 0;
 
     writeToDisplay( "Set Reset Time", 0, 27 );
-    writeToDisplay( tempResetTimeString, 27, 33 );
-    writeToDisplay( softKeys2, 60, 0 );
+    writeToDisplay( tempResetTimeString_module, 27, 33 );
+    writeToDisplay( softKeys2_module, 60, 0 );
 }
 
 void menuEmergency1( void )
@@ -1711,35 +1708,35 @@ void menuEmergency1( void )
     switch ( menuButtonRead( MENU_ADMIN_3, MENU_EMERGENCY_2, MENU_EMERGENCY_2, MENU_EMERGENCY_3 ) )
     {
         case 3:
-            emerButtonAllocTemp = emerButtonEnergyAllocate;
+            emerButtonAllocTemp_module = emerButtonEnergyAllocate_global;
     }
 
     writeToDisplay( "Emergency Options   * Emer Button    ", 0, 0 );
 
-    if ( emerButtonEnable > 0 )
+    if ( emerButtonEnable_global > 0 )
     {
         char emerButtonAllocBuf[BUF_SIZE_INT];
 
-        itoa( emerButtonAllocBuf, emerButtonEnergyAllocate, 10 );
+        itoa( emerButtonAllocBuf, emerButtonEnergyAllocate_global, 10 );
 
         writeToDisplay( emerButtonAllocBuf, 37, -3 );
-        emerButtonEnable = 1;
+        emerButtonEnable_global = 1;
     }
     else
     {
         writeToDisplay( "Off", 37, 0 );
-        emerButtonEnable = 0;
+        emerButtonEnable_global = 0;
     }
 
     char emerAllocNowBuf[ BUF_SIZE_INT];
 
-    itoa( emerAllocNowBuf, emerAllocNow, 10 );
+    itoa( emerAllocNowBuf, emerAllocNow_global, 10 );
 
     writeToDisplay( "  Emer Alloc Now  ", 40, 0 );
 
     writeToDisplay( emerAllocNowBuf, 57, -3 );
 
-    writeToDisplay( softKeys0, 60, 0 );
+    writeToDisplay( softKeys0_module, 60, 0 );
 }
 
 void menuEmergency2( void )
@@ -1748,29 +1745,29 @@ void menuEmergency2( void )
 
     writeToDisplay( "Emergency Options     Emer Button    ", 0, 0 );
 
-    if ( emerButtonEnable == 1 )
+    if ( emerButtonEnable_global == 1 )
     {
         char emerButtonAllocBuf[ BUF_SIZE_INT];
 
-        itoa( emerButtonAllocBuf, emerButtonEnergyAllocate, 10 );
+        itoa( emerButtonAllocBuf, emerButtonEnergyAllocate_global, 10 );
 
         writeToDisplay( emerButtonAllocBuf, 37, -3 );
-        emerButtonEnable = 1;
+        emerButtonEnable_global = 1;
     }
     else
     {
         writeToDisplay( "Off", 37, 0 );
-        emerButtonEnable = 0;
+        emerButtonEnable_global = 0;
     }
 
     char emerAllocNowBuf[ BUF_SIZE_INT];
 
-    itoa( emerAllocNowBuf, emerAllocNow, 10 );
+    itoa( emerAllocNowBuf, emerAllocNow_global, 10 );
 
     writeToDisplay( "* Emer Alloc Now ", 40, 0 );
     writeToDisplay( emerAllocNowBuf, 57, -3 );
 
-    writeToDisplay( softKeys0, 60, 0 );
+    writeToDisplay( softKeys0_module, 60, 0 );
 }
 
 void menuEmergency3( void )
@@ -1779,65 +1776,65 @@ void menuEmergency3( void )
     switch ( menuButtonRead( MENU_EMERGENCY_1, 0, 0, MENU_EMERGENCY_1 ) )
     {
         case 1:
-            if ( !emerButtonEnable )
+            if ( !emerButtonEnable_global )
             {
-                emerButtonEnable = 1;
-                emerButtonAllocTemp = 50;
+                emerButtonEnable_global = 1;
+                emerButtonAllocTemp_module = 50;
             }
             else
             {
-                if ( emerButtonAllocTemp < 950 )
-                    emerButtonAllocTemp += 50;
+                if ( emerButtonAllocTemp_module < 950 )
+                    emerButtonAllocTemp_module += 50;
             }
             break;
 
         case 2:
-            if ( emerButtonEnable )
+            if ( emerButtonEnable_global )
             {
-                if ( emerButtonAllocTemp < 100 )
+                if ( emerButtonAllocTemp_module < 100 )
                 {
-                    emerButtonEnable = 0;
-                    emerButtonAllocTemp = 50;
+                    emerButtonEnable_global = 0;
+                    emerButtonAllocTemp_module = 50;
                 }
                 else
-                    emerButtonAllocTemp -= 50;
+                    emerButtonAllocTemp_module -= 50;
             }
             break;
 
         case 3:
-            emerButtonEnergyAllocate = emerButtonAllocTemp;
-            emerAllocSend = 0;
+            emerButtonEnergyAllocate_global = emerButtonAllocTemp_module;
+            emerAllocSend_global = 0;
             com_command_setRemoteEmergency( );
     }
 
     writeToDisplay( "Emergency Options   * Emer Button   ", 0, 0 );
-    writeToDisplay( rightArrow, 36, 0 );
+    writeToDisplay( rightArrow_module, 36, 0 );
 
-    if ( emerButtonEnable > 0 )
+    if ( emerButtonEnable_global > 0 )
     {
         char emerButtonAllocTempBuf[ BUF_SIZE_INT];
 
-        itoa( emerButtonAllocTempBuf, emerButtonAllocTemp, 10 );
+        itoa( emerButtonAllocTempBuf, emerButtonAllocTemp_module, 10 );
 
 
         writeToDisplay( emerButtonAllocTempBuf, 37, -3 );
-        emerButtonEnable = 1;
+        emerButtonEnable_global = 1;
     }
     else
     {
         writeToDisplay( "Off", 37, 0 );
-        emerButtonEnable = 0;
+        emerButtonEnable_global = 0;
     }
 
     char emerAllocNowBuf[ BUF_SIZE_INT];
 
-    itoa( emerAllocNowBuf, emerAllocNow, 10 );
+    itoa( emerAllocNowBuf, emerAllocNow_global, 10 );
 
     writeToDisplay( "  Emer Alloc Now ", 40, 0 );
 
     writeToDisplay( emerAllocNowBuf, 57, -3 );
 
-    writeToDisplay( softKeys2, 60, 0 );
+    writeToDisplay( softKeys2_module, 60, 0 );
 
 }
 
@@ -1847,44 +1844,44 @@ void menuEmergency4( void )
     switch ( menuButtonRead( MENU_EMERGENCY_2, 0, 0, MENU_EMERGENCY_2 ) )
     {
         case 1:
-            if ( emerAllocNow < 950 )
-                emerAllocNow += 50;
+            if ( emerAllocNow_global < 950 )
+                emerAllocNow_global += 50;
             break;
         case 2:
-            if ( emerAllocNow >= 100 )
-                emerAllocNow -= 50;
+            if ( emerAllocNow_global >= 100 )
+                emerAllocNow_global -= 50;
             break;
         case 3:
-            emerAllocSend = emerAllocNow;
+            emerAllocSend_global = emerAllocNow_global;
             com_command_setRemoteAllocationAdd( );
-            emerAllocSend = 0;
+            emerAllocSend_global = 0;
     }
 
     writeToDisplay( "Emergency Options     Emer Button    ", 0, 0 );
 
-    if ( emerButtonEnable == 1 )
+    if ( emerButtonEnable_global == 1 )
     {
         char emerButtonAllocBuf[ BUF_SIZE_INT];
 
-        itoa( emerButtonAllocBuf, emerButtonEnergyAllocate, 10 );
+        itoa( emerButtonAllocBuf, emerButtonEnergyAllocate_global, 10 );
 
         writeToDisplay( emerButtonAllocBuf, 37, -3 );
     }
     else
     {
         writeToDisplay( "Off", 37, 0 );
-        emerButtonEnable = 0;
+        emerButtonEnable_global = 0;
     }
 
     char emerAllocNowBuf[ BUF_SIZE_INT];
 
-    itoa( emerAllocNowBuf, emerAllocNow, 10 );
+    itoa( emerAllocNowBuf, emerAllocNow_global, 10 );
 
     writeToDisplay( "* Emer Alloc Now", 40, 0 );
-    writeToDisplay( rightArrow, 56, 0 );
+    writeToDisplay( rightArrow_module, 56, 0 );
     writeToDisplay( emerAllocNowBuf, 57, -3 );
 
-    writeToDisplay( softKeys2, 60, 0 );
+    writeToDisplay( softKeys2_module, 60, 0 );
 }
 
 void menuModules( void )
@@ -1893,41 +1890,41 @@ void menuModules( void )
     switch ( menuButtonRead( MENU_MAIN_3, 0, 0, 0 ) )
     {
         case 1:
-            tempIsHigh = 0xFF;
+            tempIsHigh_module = 0xFF;
             break;
         case 2:
-            tempIsHigh = 0;
+            tempIsHigh_module = 0;
             break;
         case 3:
-            if ( tempIsHigh )
-                tempAlloc = highAlloc;
+            if ( tempIsHigh_module )
+                tempAlloc_module = highAlloc_module;
             else
-                tempAlloc = lowAlloc;
+                tempAlloc_module = lowAlloc_module;
 
-            if ( energyUsed < tempAlloc )
+            if ( energyUsed_global < tempAlloc_module )
             {
-                menuState = MENU_MAIN_3;
-                isHigh = tempIsHigh;
-                energyAllocated = tempAlloc;
+                menuState_global = MENU_MAIN_3;
+                isHigh_module = tempIsHigh_module;
+                energyAllocated_global = tempAlloc_module;
             }
             else
             {
-                menuState = MENU_SHUT_OFF_WARNING;
-                oldPowerMenuState = MENU_MODULES;
+                menuState_global = MENU_SHUT_OFF_WARNING;
+                oldPowerMenuState_module = MENU_MODULES;
             }
             //com_command_setRemoteHL( );
     }
 
     writeToDisplay( "Modules Placeholder    ", 0, 0 );
-    if ( tempIsHigh )
-        writeToDisplay( rightArrow, 23, 0 );
+    if ( tempIsHigh_module )
+        writeToDisplay( rightArrow_module, 23, 0 );
     else
         writeToDisplay( " ", 23, 0 );
     writeToDisplay( "High               ", 24, 0 );
-    if ( tempIsHigh )
+    if ( tempIsHigh_module )
         writeToDisplay( " ", 43, 0 );
     else
-        writeToDisplay( rightArrow, 43, 0 );
+        writeToDisplay( rightArrow_module, 43, 0 );
     writeToDisplay( "Low             Back  High  Low   OK", 44, 0 );
 }
 
@@ -1978,19 +1975,19 @@ void menuSetRelay( void )
     switch ( relayModeTemp_module )
     {
         case 0: //  off
-            writeToDisplay( rightArrow, 24, 1 );
+            writeToDisplay( rightArrow_module, 24, 1 );
             writeToDisplay( " ", 44, 1 );
             writeToDisplay( " ", 31, 1 );
             break;
         case 1: //  on
             writeToDisplay( " ", 24, 1 );
-            writeToDisplay( rightArrow, 44, 1 );
+            writeToDisplay( rightArrow_module, 44, 1 );
             writeToDisplay( " ", 31, 1 );
             break;
         case 2: //  auto
             writeToDisplay( " ", 24, 1 );
             writeToDisplay( " ", 44, 1 );
-            writeToDisplay( rightArrow, 31, 1 );
+            writeToDisplay( rightArrow_module, 31, 1 );
             break;
     }
 
@@ -2002,7 +1999,7 @@ void menuSetRelay( void )
 void menuBadDate( void )
 {
     if ( menuButtonRead( MENU_SET_TIME, MENU_SET_TIME, MENU_SET_TIME, MENU_SET_TIME ) != -1 )
-        timeSetPos--;
+        timeSetPos_global--;
 
     writeToDisplay( "Invalid date entered", 0, 60 );
     writeToDisplay( "Return", 60, 20 );
@@ -2011,19 +2008,19 @@ void menuBadDate( void )
 void menuShutOffWarning( void )
 {
 
-    switch ( menuButtonRead( oldPowerMenuState, oldPowerMenuState, 0, 0 ) )
+    switch ( menuButtonRead( oldPowerMenuState_module, oldPowerMenuState_module, 0, 0 ) )
     {
         case 2:
         case 3:
-            if ( oldPowerMenuState == MENU_SET_POWER )
-                menuState = MENU_ADMIN_2;
+            if ( oldPowerMenuState_module == MENU_SET_POWER )
+                menuState_global = MENU_ADMIN_2;
             else
             {
-                menuState = MENU_MAIN_3;
-                isHigh = tempIsHigh;
+                menuState_global = MENU_MAIN_3;
+                isHigh_module = tempIsHigh_module;
 
             }
-            energyAllocated = tempAlloc;
+            energyAllocated_global = tempAlloc_module;
             com_command_setRemoteEnergyAllocation( );
     }
 
@@ -2032,25 +2029,25 @@ void menuShutOffWarning( void )
 
 void menuPasswordChange( void )
 {
-    if ( pwLength < 6 )
+    if ( pwLength_module < 6 )
     {
         switch ( menuButtonRead( 0, 0, 0, 0 ) )
         {
             case 0:
-                newPassword[pwLength * 2] = '1';
-                passwordInput[pwLength++] = '1';
+                newPassword_module[pwLength_module * 2] = '1';
+                passwordInput_module[pwLength_module++] = '1';
                 break;
             case 1:
-                newPassword[pwLength * 2] = '2';
-                passwordInput[pwLength++] = '2';
+                newPassword_module[pwLength_module * 2] = '2';
+                passwordInput_module[pwLength_module++] = '2';
                 break;
             case 2:
-                newPassword[pwLength * 2] = '3';
-                passwordInput[pwLength++] = '3';
+                newPassword_module[pwLength_module * 2] = '3';
+                passwordInput_module[pwLength_module++] = '3';
                 break;
             case 3:
-                newPassword[pwLength * 2] = '4';
-                passwordInput[pwLength++] = '4';
+                newPassword_module[pwLength_module * 2] = '4';
+                passwordInput_module[pwLength_module++] = '4';
         }
 
     }
@@ -2059,21 +2056,21 @@ void menuPasswordChange( void )
         switch ( menuButtonRead( 0, 0, 0, MENU_ADMIN_4 ) )
         {
             case 0:
-                pwLength = 0;
+                pwLength_module = 0;
                 //FIX DONE
                 //stringCopy( "_ _ _ _ _ _", newPassword );
-                newPassword[0] = '_';
-                newPassword[1] = ' ';
-                newPassword[2] = '_';
-                newPassword[3] = ' ';
-                newPassword[4] = '_';
-                newPassword[5] = ' ';
-                newPassword[6] = '_';
-                newPassword[7] = ' ';
-                newPassword[8] = '_';
-                newPassword[9] = ' ';
-                newPassword[10] = '_';
-                newPassword[11] = CHAR_NULL;
+                newPassword_module[0] = '_';
+                newPassword_module[1] = ' ';
+                newPassword_module[2] = '_';
+                newPassword_module[3] = ' ';
+                newPassword_module[4] = '_';
+                newPassword_module[5] = ' ';
+                newPassword_module[6] = '_';
+                newPassword_module[7] = ' ';
+                newPassword_module[8] = '_';
+                newPassword_module[9] = ' ';
+                newPassword_module[10] = '_';
+                newPassword_module[11] = CHAR_NULL;
 
 
 
@@ -2082,23 +2079,23 @@ void menuPasswordChange( void )
             case 2:
                 break;
             case 3:
-                passwordSet[0] = passwordInput[0];
-                passwordSet[1] = passwordInput[1];
-                passwordSet[2] = passwordInput[2];
-                passwordSet[3] = passwordInput[3];
-                passwordSet[4] = passwordInput[4];
-                passwordSet[5] = passwordInput[5];
+                passwordSet_global[0] = passwordInput_module[0];
+                passwordSet_global[1] = passwordInput_module[1];
+                passwordSet_global[2] = passwordInput_module[2];
+                passwordSet_global[3] = passwordInput_module[3];
+                passwordSet_global[4] = passwordInput_module[4];
+                passwordSet_global[5] = passwordInput_module[5];
                 com_command_setRemotePassword( );
-                pwLength = 0;
+                pwLength_module = 0;
         }
 
     }
 
     writeToDisplay( "Enter new password:", 0, 44 );
 
-    writeToDisplay( newPassword, 44, 16 );
+    writeToDisplay( newPassword_module, 44, 16 );
 
-    if ( pwLength < 6 )
+    if ( pwLength_module < 6 )
         writeToDisplay( "1     2      3     4", 60, 20 );
     else
         writeToDisplay( "Clear           Save", 60, 0 );
@@ -2112,16 +2109,16 @@ void menuPowerReset( void )
         case 3:
             com_command_doReset( ); // fall through on purpose
         case 0:
-            isBooting = 0;
+            isBooting_global = 0;
     }
 
     writeToDisplay( "Is it after the     reset time?", 0, 46 );
 
     char resetHourBuf[BUF_SIZE_INT];
-    itoa( resetHourBuf, resetTimeHour, 10 );
+    itoa( resetHourBuf, resetTimeHour_global, 10 );
 
 
-    if ( resetTimeHour < 10 )
+    if ( resetTimeHour_global < 10 )
     {
         writeToDisplay( " (", 46, 0 );
         writeToDisplay( resetHourBuf, 48, 0 );
@@ -2133,7 +2130,7 @@ void menuPowerReset( void )
     }
 
     writeToDisplay( ":", 49, 0 );
-    if ( resetTimeMinute )
+    if ( resetTimeMinute_global )
     {
         writeToDisplay( "3", 50, 0 );
     }
@@ -2146,33 +2143,33 @@ void menuPowerReset( void )
 
 void writeBarGraph( void )
 {
-    barGraph[20] = 0;
+    barGraph_module[20] = 0;
     unsigned char counter;
     unsigned char filled;
 
-    filled = percentRem / 5;
+    filled = percentRem_global / 5;
 
     for ( counter = 0; counter < 20; counter++ )
     {
         if ( counter < filled )
-            barGraph[counter] = 0xFF;
+            barGraph_module[counter] = 0xFF;
         else
-            barGraph[counter] = '_';
+            barGraph_module[counter] = '_';
     }
 
-    if ( percentRem < 5 && energyUsed < energyAllocated )
-        barGraph[0] = '|';
+    if ( percentRem_global < 5 && energyUsed_global < energyAllocated_global )
+        barGraph_module[0] = '|';
 }
 
 void calcPercentRem( void )
 {
-    percentRem = ( energyAllocated - energyUsed ) * 100 / energyAllocated;
+    percentRem_global = ( energyAllocated_global - energyUsed_global ) * 100 / energyAllocated_global;
 
-    if ( ( percentRem < 0 ) || ( energyUsed > energyAllocated ) )
-        percentRem = 0;
+    if ( ( percentRem_global < 0 ) || ( energyUsed_global > energyAllocated_global ) )
+        percentRem_global = 0;
 
-    else if ( percentRem > 100 )
-        percentRem = 100;
+    else if ( percentRem_global > 100 )
+        percentRem_global = 100;
 }
 
 void calcTimeRemaining( void )
@@ -2182,42 +2179,42 @@ void calcTimeRemaining( void )
     // timeRemUpdate for running average
     // timeRem1, timeRem2, timeRem3, timeRem4, timeRem5 to store values
 
-    if ( timeSecond != timeRemUpdate )
+    if ( timeSecond_global != timeRemUpdate_module )
     {
 
-        timeRemainingString[2] = timeRemainingString[5] = ':';
-        timeRemainingString[8] = 0;
+        timeRemainingString_module[2] = timeRemainingString_module[5] = ':';
+        timeRemainingString_module[8] = 0;
 
-        timeRemUpdate = timeSecond;
-        timeRem1 = timeRem2;
-        timeRem2 = timeRem3;
-        timeRem3 = timeRem4;
-        timeRem4 = timeRem5;
-        timeRem5 = powerLoad;
+        timeRemUpdate_module = timeSecond_global;
+        timeRem1_module = timeRem2_module;
+        timeRem2_module = timeRem3_module;
+        timeRem3_module = timeRem4_module;
+        timeRem4_module = timeRem5_module;
+        timeRem5_module = powerLoad_global;
 
-        unsigned long timeRemAvg = ( timeRem1 + timeRem2 + timeRem3 + timeRem4 + timeRem5 ) / 5;
+        unsigned long timeRemAvg = ( timeRem1_module + timeRem2_module + timeRem3_module + timeRem4_module + timeRem5_module ) / 5;
 
         if ( !timeRemAvg )
         {
-            timeRemainingString[0] = timeRemainingString[3] = timeRemainingString[6] = '5';
-            timeRemainingString[1] = timeRemainingString[4] = timeRemainingString[7] = '9';
+            timeRemainingString_module[0] = timeRemainingString_module[3] = timeRemainingString_module[6] = '5';
+            timeRemainingString_module[1] = timeRemainingString_module[4] = timeRemainingString_module[7] = '9';
         }
         else
         {
-            long powerRemaining = energyAllocated - energyUsed;
+            long powerRemaining = energyAllocated_global - energyUsed_global;
             unsigned long timeRemaining = ( 3600 * powerRemaining ) / timeRemAvg;
-            timeRemHour = timeRemaining / 3600;
-            timeRemMinute = ( timeRemaining / 60 ) - ( 60 * timeRemHour );
-            timeRemSecond = timeRemaining % 60;
+            timeRemHour_module = timeRemaining / 3600;
+            timeRemMinute_module = ( timeRemaining / 60 ) - ( 60 * timeRemHour_module );
+            timeRemSecond_module = timeRemaining % 60;
 
-            if ( timeRemHour > 59 ) timeRemHour = 59;
+            if ( timeRemHour_module > 59 ) timeRemHour_module = 59;
 
-            timeRemainingString[0] = timeRemHour / 10 + 0x30;
-            timeRemainingString[1] = timeRemHour % 10 + 0x30;
-            timeRemainingString[3] = timeRemMinute / 10 + 0x30;
-            timeRemainingString[4] = timeRemMinute % 10 + 0x30;
-            timeRemainingString[6] = timeRemSecond / 10 + 0x30;
-            timeRemainingString[7] = timeRemSecond % 10 + 0x30;
+            timeRemainingString_module[0] = timeRemHour_module / 10 + 0x30;
+            timeRemainingString_module[1] = timeRemHour_module % 10 + 0x30;
+            timeRemainingString_module[3] = timeRemMinute_module / 10 + 0x30;
+            timeRemainingString_module[4] = timeRemMinute_module % 10 + 0x30;
+            timeRemainingString_module[6] = timeRemSecond_module / 10 + 0x30;
+            timeRemainingString_module[7] = timeRemSecond_module % 10 + 0x30;
         }
     }
 }
@@ -2247,24 +2244,24 @@ void __attribute__( ( interrupt, no_auto_psv ) ) _T1Interrupt( void )
         for ( j = 0; j < NUM_LCD_WIDTH; j++ )
         {
 
-            if ( currentDisplay[lineOffset + j] !=
-                 nextDisplay[lineOffset + j] )
+            if ( currentDisplay_module[lineOffset + j] !=
+                 nextDisplay_module[lineOffset + j] )
             {
 
-                currentDisplay[lineOffset + j] =
-                        nextDisplay[lineOffset + j];
+                currentDisplay_module[lineOffset + j] =
+                        nextDisplay_module[lineOffset + j];
                 matches = 0;
             }
         }
 
-        if ( ( !matches && currentDisplay[lineOffset] != 0 ) )
+        if ( ( !matches && currentDisplay_module[lineOffset] != 0 ) )
         {
 
             char tempArray[NUM_LCD_WIDTH + 1];
             tempArray[NUM_LCD_WIDTH] = 0;
             for ( k = 0; k < NUM_LCD_WIDTH; k++ )
             {
-                tempArray[k] = currentDisplay[lineOffset + k];
+                tempArray[k] = currentDisplay_module[lineOffset + k];
             }
 
             unsigned char index = 0;

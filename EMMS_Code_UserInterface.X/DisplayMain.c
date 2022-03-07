@@ -30,13 +30,11 @@
 // internal only
 
 
-unsigned char commError;
-unsigned char commErrorTime;
-char alarmEnd;
-char alarmPulse;
+char alarmEnd_module;
+char alarmPulse_module;
 
-char numBeeps;
-char numSets;
+char numBeeps_module;
+char numSets_module;
 
 
 /****************
@@ -83,9 +81,9 @@ void debugBacklightFlash( int timeOn );
  */
 int main( void )
 {
-	resetTimeSecond = 59;
-	resetTimeMinute = 9;
-	resetTimeHour = 8;
+	resetTimeSecond_global = 59;
+	resetTimeMinute_global = 9;
+	resetTimeHour_global = 8;
 
 	init( );
 
@@ -94,7 +92,7 @@ int main( void )
 
 	//    initDisplayBox( );
 
-	enablePeriodicUpdate = 1;
+	enablePeriodicUpdate_global = 1;
 
 	while( true )
 	{
@@ -137,11 +135,11 @@ void init( void )
 	//    initDisplayBox( );
 
 	readTime( );
-	tempHour = timeHour;
-	tempMin = timeMinute;
-	tempMonth = timeMonth;
-	tempDay = timeDay;
-	tempYear = timeYear;
+	tempHour_global = timeHour_global;
+	tempMin_global = timeMinute_global;
+	tempMonth_global = timeMonth_global;
+	tempDay_global = timeDay_global;
+	tempYear_global = timeYear_global;
 
 	initVars( );
 }
@@ -152,41 +150,41 @@ void init( void )
 void initVars( void )
 {
 
-	if( menuState != MENU_DEBUG )
-		menuState = MENU_HOME_BASIC;
+	if( menuState_global != MENU_DEBUG )
+		menuState_global = MENU_HOME_BASIC;
 
 	//FIX DONE
 	//    stringCopy( "Unknown ", powerBoxCodeVersionString );
 
-	powerBoxCodeVersionString[0] = 'U';
-	powerBoxCodeVersionString[1] = 'n';
-	powerBoxCodeVersionString[2] = 'k';
-	powerBoxCodeVersionString[3] = 'n';
-	powerBoxCodeVersionString[4] = 'o';
-	powerBoxCodeVersionString[5] = 'w';
-	powerBoxCodeVersionString[6] = 'n';
-	powerBoxCodeVersionString[7] = ' ';
-	powerBoxCodeVersionString[8] = CHAR_NULL;
+	powerBoxCodeVersionString_global[0] = 'U';
+	powerBoxCodeVersionString_global[1] = 'n';
+	powerBoxCodeVersionString_global[2] = 'k';
+	powerBoxCodeVersionString_global[3] = 'n';
+	powerBoxCodeVersionString_global[4] = 'o';
+	powerBoxCodeVersionString_global[5] = 'w';
+	powerBoxCodeVersionString_global[6] = 'n';
+	powerBoxCodeVersionString_global[7] = ' ';
+	powerBoxCodeVersionString_global[8] = CHAR_NULL;
 
 
-	audibleAlarm = 0;
-	alarm1Enabled = 0;
-	alarm2Enabled = 0;
-	alarm1Energy = 0;
-	alarm2Energy = 0;
-	activeAlarm = 0;
-	numBeeps = 4;
-	numSets = 4;
-	tempPercent = 0;
-	emerButtonEnable = 1;
-	emerButtonEnergyAllocate = 250;
-	emerAllocNow = 50;
-	emerAllocSend = 0;
+	audibleAlarm_global = 0;
+	alarm1Enabled_global = 0;
+	alarm2Enabled_global = 0;
+	alarm1Energy_global = 0;
+	alarm2Energy_global = 0;
+	activeAlarm_global = 0;
+	numBeeps_module = 4;
+	numSets_module = 4;
+	tempPercent_global = 0;
+	emerButtonEnable_global = 1;
+	emerButtonEnergyAllocate_global = 250;
+	emerAllocNow_global = 50;
+	emerAllocSend_global = 0;
 
-	resetTimeHour = 0;
-	resetTimeMinute = 0;
-	tempResetHour = 0;
-	tempResetMinute = 0;
+	resetTimeHour_global = 0;
+	resetTimeMinute_global = 0;
+	tempResetHour_global = 0;
+	tempResetMinute_global = 0;
 
 	relayMode_global = 0;  // default to show relay is in off mode
 }
@@ -265,44 +263,44 @@ void enableAlarm( void )
 {
 	static char startNextAlarm;
 
-	if( isBooting ) return;
+	if( isBooting_global ) return;
 
-	if( percentRem > 95 )
+	if( percentRem_global > 95 )
 	{
-		alarmOneHit = alarmTwoHit = 0;
+		alarmOneHit_global = alarmTwoHit_global = 0;
 	}
 
-	if( alarm1Energy && ( percentRem <= alarm1Energy ) && !alarmOneHit && !silenceAlarmOne && !activeAlarm && !alarmToResume )
+	if( alarm1Energy_global && ( percentRem_global <= alarm1Energy_global ) && !alarmOneHit_global && !silenceAlarmOne_global && !activeAlarm_global && !alarmToResume_global )
 	{
 
-		remainingSets = numSets;
-		activeAlarm = 1;
-		alarmOneHit = 1;
+		remainingSets_global = numSets_module;
+		activeAlarm_global = 1;
+		alarmOneHit_global = 1;
 		startAlarm( );
 
 	}
-	else if( alarm2Energy && ( percentRem <= alarm2Energy ) && !alarmTwoHit && !silenceAlarmTwo && !activeAlarm && !alarmToResume )
+	else if( alarm2Energy_global && ( percentRem_global <= alarm2Energy_global ) && !alarmTwoHit_global && !silenceAlarmTwo_global && !activeAlarm_global && !alarmToResume_global )
 	{
 
-		remainingSets = numSets;
-		activeAlarm = 2;
-		alarmTwoHit = 1;
+		remainingSets_global = numSets_module;
+		activeAlarm_global = 2;
+		alarmTwoHit_global = 1;
 		startAlarm( );
 	}
 
-	if( activeAlarm && ( timeSecond == alarmEnd ) )
+	if( activeAlarm_global && ( timeSecond_global == alarmEnd_module ) )
 	{
-		alarmToResume = activeAlarm;
-		activeAlarm = 0;
+		alarmToResume_global = activeAlarm_global;
+		activeAlarm_global = 0;
 		_RB7 = 0;
 
-		if( remainingSets )
+		if( remainingSets_global )
 		{
-			startNextAlarm = ( timeSecond + 59 ) % 60;
-			remainingSets--;
+			startNextAlarm = ( timeSecond_global + 59 ) % 60;
+			remainingSets_global--;
 		}
 	}
-	else if( audibleAlarm && activeAlarm && ( ( timeSecond % 2 ) == alarmPulse ) )
+	else if( audibleAlarm_global && activeAlarm_global && ( ( timeSecond_global % 2 ) == alarmPulse_module ) )
 	{
 		_RB7 = 1;
 	}
@@ -312,32 +310,32 @@ void enableAlarm( void )
 	}
 
 
-	if( percentRem != alarm1Energy )
-		silenceAlarmOne = 0;
-	if( percentRem != alarm2Energy )
-		silenceAlarmTwo = 0;
+	if( percentRem_global != alarm1Energy_global )
+		silenceAlarmOne_global = 0;
+	if( percentRem_global != alarm2Energy_global )
+		silenceAlarmTwo_global = 0;
 
-	if( ( startNextAlarm == timeSecond ) && remainingSets )
+	if( ( startNextAlarm == timeSecond_global ) && remainingSets_global )
 	{
-		activeAlarm = alarmToResume;
+		activeAlarm_global = alarmToResume_global;
 		startAlarm( );
 	}
 }
 
 void startAlarm( void )
 {
-	if( menuState != MENU_ALARM )
-		oldMenuState = menuState;
-	alarmPulse = ( timeSecond + 1 ) % 2;
-	alarmEnd = ( timeSecond + ( 2 * numBeeps ) ) % 60;
-	menuState = MENU_ALARM;
+	if( menuState_global != MENU_ALARM )
+		oldMenuState_global = menuState_global;
+	alarmPulse_module = ( timeSecond_global + 1 ) % 2;
+	alarmEnd_module = ( timeSecond_global + ( 2 * numBeeps_module ) ) % 60;
+	menuState_global = MENU_ALARM;
 
 	if( BACKLIGHT_NORMAL == true )
 	{
 		BACKLIGHT = 1; // turn on backlight
 	}
-	resetTimeSecond = ( timeSecond + 59 ) % 60;
-	resetTimeMinute = ( timeMinute + 9 ) % 60;
+	resetTimeSecond_global = ( timeSecond_global + 59 ) % 60;
+	resetTimeMinute_global = ( timeMinute_global + 9 ) % 60;
 }
 
 void nextDot( void )
@@ -389,7 +387,7 @@ void periodicUpdate( void )
 
 	if( firstRun == true )
 	{
-		if( ( timeSecond % 2 ) == 0 )
+		if( ( timeSecond_global % 2 ) == 0 )
 		{
 			if( alreadyRun == false )
 			{
@@ -452,33 +450,33 @@ void periodicUpdate( void )
 		// are run at the same time
 		// likely due to receiving commands and the buffer running on while it is beinf processed
 
-		if( enablePeriodicUpdate )
+		if( enablePeriodicUpdate_global )
 		{
 			// Refresh power every second
-			if( timeSecond != lastPowerSecond )
+			if( timeSecond_global != lastPowerSecond )
 			{
 				com_command_readRemotePowerData( );
-				lastPowerSecond = timeSecond;
+				lastPowerSecond = timeSecond_global;
 			}
 			// Refresh time and other settings every 10 seconds
-			if( ( ( timeSecond % 10 ) == 0 ) && ( timeSecond != lastOtherSecond ) )
+			if( ( ( timeSecond_global % 10 ) == 0 ) && ( timeSecond_global != lastOtherSecond ) )
 			{
 				com_command_readRemoteTime( );
 				readTime( );
-				lastOtherSecond = timeSecond;
+				lastOtherSecond = timeSecond_global;
 			}
 		}
 		else
 		{
 			// Keep checking, but only every 10 seconds
-			if( timeSecond % 10 == 0 && timeSecond != lastPowerSecond )
+			if( timeSecond_global % 10 == 0 && timeSecond_global != lastPowerSecond )
 			{
 				com_command_readRemotePowerData( );
-				lastPowerSecond = timeSecond;
+				lastPowerSecond = timeSecond_global;
 			}
 		}
 
-		if( timeSecond % 60 == 0 )
+		if( timeSecond_global % 60 == 0 )
 		{
 			// here we should grab all or most of the parameters so that we keep up to date
 
@@ -554,67 +552,67 @@ void initTimer( void )
 void writeClockStrings( void )
 {
 
-	calendarStr[0] = ( timeDay / 10 ) + 0x30;
-	calendarStr[1] = ( timeDay % 10 ) + 0x30;
-	calendarStr[2] = calendarStr[5] = '/';
-	calendarStr[3] = ( timeMonth / 10 ) + 0x30;
-	calendarStr[4] = ( timeMonth % 10 ) + 0x30;
-	calendarStr[6] = ( timeYear / 10 ) + 0x30;
-	calendarStr[7] = ( timeYear % 10 ) + 0x30;
+	calendarStr_global[0] = ( timeDay_global / 10 ) + 0x30;
+	calendarStr_global[1] = ( timeDay_global % 10 ) + 0x30;
+	calendarStr_global[2] = calendarStr_global[5] = '/';
+	calendarStr_global[3] = ( timeMonth_global / 10 ) + 0x30;
+	calendarStr_global[4] = ( timeMonth_global % 10 ) + 0x30;
+	calendarStr_global[6] = ( timeYear_global / 10 ) + 0x30;
+	calendarStr_global[7] = ( timeYear_global % 10 ) + 0x30;
 
-	clockStr[0] = ( timeHour / 10 ) + 0x30;
-	clockStr[1] = ( timeHour % 10 ) + 0x30;
-	clockStr[2] = ':';
-	clockStr[3] = ( timeMinute / 10 ) + 0x30;
-	clockStr[4] = ( timeMinute % 10 ) + 0x30;
+	clockStr_global[0] = ( timeHour_global / 10 ) + 0x30;
+	clockStr_global[1] = ( timeHour_global % 10 ) + 0x30;
+	clockStr_global[2] = ':';
+	clockStr_global[3] = ( timeMinute_global / 10 ) + 0x30;
+	clockStr_global[4] = ( timeMinute_global % 10 ) + 0x30;
 
 
-	calendarStr[8] = clockStr[5] = 0;
+	calendarStr_global[8] = clockStr_global[5] = 0;
 }
 
 void writeTempClockStrings( void )
 {
-	tempClockStr[0] = tempClockStr[3] = tempClockStr[5] = tempClockStr[8] = tempCalStr[0] = tempCalStr[3] = tempCalStr[5] = tempCalStr[8] = tempCalStr[10] = tempCalStr[13] = ' ';
-	tempClockStr[4] = ':';
-	tempCalStr[4] = tempCalStr[9] = '/';
-	tempClockStr[9] = tempCalStr[14] = 0;
+	tempClockStr_global[0] = tempClockStr_global[3] = tempClockStr_global[5] = tempClockStr_global[8] = tempCalStr_global[0] = tempCalStr_global[3] = tempCalStr_global[5] = tempCalStr_global[8] = tempCalStr_global[10] = tempCalStr_global[13] = ' ';
+	tempClockStr_global[4] = ':';
+	tempCalStr_global[4] = tempCalStr_global[9] = '/';
+	tempClockStr_global[9] = tempCalStr_global[14] = 0;
 
-	tempClockStr[1] = ( tempHour / 10 ) + 0x30;
-	tempClockStr[2] = ( tempHour % 10 ) + 0x30;
-	tempClockStr[6] = ( tempMin / 10 ) + 0x30;
-	tempClockStr[7] = ( tempMin % 10 ) + 0x30;
-	tempCalStr[1] = ( tempDay / 10 ) + 0x30;
-	tempCalStr[2] = ( tempDay % 10 ) + 0x30;
-	tempCalStr[6] = ( tempMonth / 10 ) + 0x30;
-	tempCalStr[7] = ( tempMonth % 10 ) + 0x30;
-	tempCalStr[11] = ( tempYear / 10 ) + 0x30;
-	tempCalStr[12] = ( tempYear % 10 ) + 0x30;
+	tempClockStr_global[1] = ( tempHour_global / 10 ) + 0x30;
+	tempClockStr_global[2] = ( tempHour_global % 10 ) + 0x30;
+	tempClockStr_global[6] = ( tempMin_global / 10 ) + 0x30;
+	tempClockStr_global[7] = ( tempMin_global % 10 ) + 0x30;
+	tempCalStr_global[1] = ( tempDay_global / 10 ) + 0x30;
+	tempCalStr_global[2] = ( tempDay_global % 10 ) + 0x30;
+	tempCalStr_global[6] = ( tempMonth_global / 10 ) + 0x30;
+	tempCalStr_global[7] = ( tempMonth_global % 10 ) + 0x30;
+	tempCalStr_global[11] = ( tempYear_global / 10 ) + 0x30;
+	tempCalStr_global[12] = ( tempYear_global % 10 ) + 0x30;
 
-	switch( timeSetPos )
+	switch( timeSetPos_global )
 	{
 		case 1:
-			tempClockStr[0] = 0x7E;
-			tempClockStr[3] = 0x7F;
+			tempClockStr_global[0] = 0x7E;
+			tempClockStr_global[3] = 0x7F;
 			break;
 
 		case 2:
-			tempClockStr[5] = 0x7E;
-			tempClockStr[8] = 0x7F;
+			tempClockStr_global[5] = 0x7E;
+			tempClockStr_global[8] = 0x7F;
 			break;
 
 		case 3:
-			tempCalStr[0] = 0x7E;
-			tempCalStr[3] = 0x7F;
+			tempCalStr_global[0] = 0x7E;
+			tempCalStr_global[3] = 0x7F;
 			break;
 
 		case 4:
-			tempCalStr[5] = 0x7E;
-			tempCalStr[8] = 0x7F;
+			tempCalStr_global[5] = 0x7E;
+			tempCalStr_global[8] = 0x7F;
 			break;
 
 		case 5:
-			tempCalStr[10] = 0x7E;
-			tempCalStr[13] = 0x7F;
+			tempCalStr_global[10] = 0x7E;
+			tempCalStr_global[13] = 0x7F;
 	}
 }
 
@@ -634,42 +632,42 @@ void __attribute__( ( interrupt, no_auto_psv ) ) _T2Interrupt( void )
 	{
 		// _RA4 is pin 10
 		if( !BTN_3 )
-			button3Flag = 0;
-		else if( !button3Flag )
+			button3Flag_global = 0;
+		else if( !button3Flag_global )
 		{// && _RA3 == 1
-			button3Flag = 1;
-			resetTimeSecond = ( timeSecond + 59 ) % 60;
-			resetTimeMinute = ( timeMinute + 9 ) % 60;
+			button3Flag_global = 1;
+			resetTimeSecond_global = ( timeSecond_global + 59 ) % 60;
+			resetTimeMinute_global = ( timeMinute_global + 9 ) % 60;
 		}
 
 		// _RB4 is pin 9
 		if( !BTN_2 )
-			button2Flag = 0;
-		else if( !button2Flag )
+			button2Flag_global = 0;
+		else if( !button2Flag_global )
 		{// && _RB8 == 1
-			button2Flag = 1;
-			resetTimeSecond = ( timeSecond + 59 ) % 60;
-			resetTimeMinute = ( timeMinute + 9 ) % 60;
+			button2Flag_global = 1;
+			resetTimeSecond_global = ( timeSecond_global + 59 ) % 60;
+			resetTimeMinute_global = ( timeMinute_global + 9 ) % 60;
 		}
 
 		// _RA3 is pin 8
 		if( !BTN_1 )
-			button1Flag = 0;
-		else if( !button1Flag )
+			button1Flag_global = 0;
+		else if( !button1Flag_global )
 		{// && _RA4 == 1
-			button1Flag = 1;
-			resetTimeSecond = ( timeSecond + 59 ) % 60;
-			resetTimeMinute = ( timeMinute + 9 ) % 60;
+			button1Flag_global = 1;
+			resetTimeSecond_global = ( timeSecond_global + 59 ) % 60;
+			resetTimeMinute_global = ( timeMinute_global + 9 ) % 60;
 		}
 
 		// _RA2 is pin 7
 		if( !BTN_0 )
-			button0Flag = 0;
-		else if( !button0Flag )
+			button0Flag_global = 0;
+		else if( !button0Flag_global )
 		{// && _RB4 == 1
-			button0Flag = 1;
-			resetTimeSecond = ( timeSecond + 59 ) % 60;
-			resetTimeMinute = ( timeMinute + 9 ) % 60;
+			button0Flag_global = 1;
+			resetTimeSecond_global = ( timeSecond_global + 59 ) % 60;
+			resetTimeMinute_global = ( timeMinute_global + 9 ) % 60;
 		}
 	}
 
@@ -679,17 +677,17 @@ void __attribute__( ( interrupt, no_auto_psv ) ) _T2Interrupt( void )
 		{
 			BACKLIGHT = 1; // turn on backlight
 		}
-		button0Flag = 2;
-		button1Flag = 2;
-		button2Flag = 2;
-		button3Flag = 2;
-		resetTimeSecond = ( timeSecond + 59 ) % 60;
-		resetTimeMinute = ( timeMinute + 9 ) % 60;
+		button0Flag_global = 2;
+		button1Flag_global = 2;
+		button2Flag_global = 2;
+		button3Flag_global = 2;
+		resetTimeSecond_global = ( timeSecond_global + 59 ) % 60;
+		resetTimeMinute_global = ( timeMinute_global + 9 ) % 60;
 	}
 
-	if( ( timeMinute == resetTimeMinute ) && ( timeSecond == resetTimeSecond ) && ( ( menuState != MENU_ALARM ) || ( ( menuState == MENU_ALARM ) && ( remainingSets == 0 ) ) ) && ( menuState != MENU_DEBUG ) && ( !isBooting ) )
+	if( ( timeMinute_global == resetTimeMinute_global ) && ( timeSecond_global == resetTimeSecond_global ) && ( ( menuState_global != MENU_ALARM ) || ( ( menuState_global == MENU_ALARM ) && ( remainingSets_global == 0 ) ) ) && ( menuState_global != MENU_DEBUG ) && ( !isBooting_global ) )
 	{
-		menuState = MENU_HOME_BASIC;
+		menuState_global = MENU_HOME_BASIC;
 		if( BACKLIGHT_NORMAL == true )
 		{
 			BACKLIGHT = 0; // turn on backlight

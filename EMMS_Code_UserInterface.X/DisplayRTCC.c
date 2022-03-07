@@ -16,13 +16,13 @@
  as external
  ****************/
 // external
-unsigned char timeYear;
-unsigned char timeMonth;
-unsigned char timeDay;
-unsigned char timeWeekday;
-unsigned char timeHour;
-unsigned char timeMinute;
-unsigned char timeSecond;
+unsigned char timeYear_global;
+unsigned char timeMonth_global;
+unsigned char timeDay_global;
+//unsigned char timeWeekday;
+unsigned char timeHour_global;
+unsigned char timeMinute_global;
+unsigned char timeSecond_global;
 
 
 
@@ -31,14 +31,20 @@ unsigned char timeSecond;
 
 
 // not sorted yet
-int resetTimeSecond;
+int resetTimeSecond_global;
 
-char clockStr[6], calendarStr[9];
+char clockStr_global[6];
+char calendarStr_global[9];
 
 
-char timeSetPos;
-char tempHour, tempMin, tempMonth, tempDay, tempYear;
-char tempClockStr[10], tempCalStr[15];
+char timeSetPos_global;
+char tempHour_global;
+char tempMin_global;
+char tempMonth_global;
+char tempDay_global;
+char tempYear_global;
+char tempClockStr_global[10];
+char tempCalStr_global[15];
 
 /****************
  FUNCTION PROTOTYPES
@@ -68,45 +74,45 @@ void readTime( void )
 	unsigned int temp;
 
 	_RTCPTR = 0b11;
-	timeYear = RTCVAL; //11
+	timeYear_global = RTCVAL; //11
 	temp = RTCVAL; //10
-	timeMonth = temp >> 8;
-	timeDay = temp & 0xFF;
-	timeHour = RTCVAL & 0xFF; //01
+	timeMonth_global = temp >> 8;
+	timeDay_global = temp & 0xFF;
+	timeHour_global = RTCVAL & 0xFF; //01
 	temp = RTCVAL; //00
-	timeMinute = temp >> 8;
-	timeSecond = temp & 0xFF;
+	timeMinute_global = temp >> 8;
+	timeSecond_global = temp & 0xFF;
 
-	timeYear = BcdToDec( timeYear );
-	timeMonth = BcdToDec( timeMonth );
-	timeDay = BcdToDec( timeDay );
-	timeHour = BcdToDec( timeHour );
-	timeMinute = BcdToDec( timeMinute );
-	timeSecond = BcdToDec( timeSecond );
+	timeYear_global = BcdToDec( timeYear_global );
+	timeMonth_global = BcdToDec( timeMonth_global );
+	timeDay_global = BcdToDec( timeDay_global );
+	timeHour_global = BcdToDec( timeHour_global );
+	timeMinute_global = BcdToDec( timeMinute_global );
+	timeSecond_global = BcdToDec( timeSecond_global );
 }
 
 char writeTime( char newYear, char newMonth, char newDay, char newHour, char newMinute, char newSecond )
 {
 
-	switch( tempMonth )
+	switch( tempMonth_global )
 	{
 		case 4:
 		case 6:
 		case 9:
 		case 11:
-			if( tempDay > 30 )
+			if( tempDay_global > 30 )
 				return -1;
 			break;
 
 		case 2:
-			if( tempYear % 4 )
+			if( tempYear_global % 4 )
 			{
-				if( tempDay > 28 )
+				if( tempDay_global > 28 )
 					return -1;
 			}
 			else
 			{
-				if( tempDay > 29 )
+				if( tempDay_global > 29 )
 					return -1;
 			}
 			break;
@@ -135,7 +141,7 @@ char writeTime( char newYear, char newMonth, char newDay, char newHour, char new
 
 	_RTCWREN = 0; // Disable Writing
 
-	resetTimeSecond = 59;
+	resetTimeSecond_global = 59;
 
 	return 1;
 }
