@@ -1,5 +1,11 @@
 open issues
 
+3/6/2022	TBA
+	Cleanup
+		Cleaned up variables some
+		appended _module and _global to reflect where variable is used
+		removed some unused variables
+
 3/5/2021	TBA
 	Bugfix
 		Relay Control now Off/On/Auto
