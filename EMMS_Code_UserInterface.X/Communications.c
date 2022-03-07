@@ -49,7 +49,7 @@
 
 
 
-bool SPI_transmit_wait;
+bool SPI_transmit_wait_module;
 
 enum receive_status
 {
@@ -65,8 +65,8 @@ struct buffer_struct
     unsigned char read_position;
 };
 
-volatile unsigned char uartBufferLarge[ UART_LARGE_BUFFER_SIZE];
-volatile unsigned char uartBufferLargeCount = 0;
+volatile unsigned char uartBufferLarge_module[ UART_LARGE_BUFFER_SIZE];
+volatile unsigned char uartBufferLargeCount_module = 0;
 
 
 /****************
@@ -590,7 +590,7 @@ bool process_data_parameters( char parameters[PARAMETER_MAX_COUNT][PARAMETER_MAX
         }
         else if ( strmatch( parameters[1], "EnAl" ) == true )
         {
-            energyAllocated = atol( parameters[2] );
+            energyAllocated_global = atol( parameters[2] );
 
             command_builder2( send_buffer, "Conf", "EnAl" );
 
@@ -605,48 +605,48 @@ bool process_data_parameters( char parameters[PARAMETER_MAX_COUNT][PARAMETER_MAX
 
             if ( checkOnOff( parameters[2] ) == true )
             {
-                audibleAlarm = 1;
+                audibleAlarm_global = 1;
             }
             else
             {
-                audibleAlarm = 0;
+                audibleAlarm_global = 0;
             }
 
 
             if ( checkOnOff( parameters[3] ) == true )
             {
-                alarm1Enabled = 1;
+                alarm1Enabled_global = 1;
             }
             else
             {
-                alarm1Enabled = 0;
+                alarm1Enabled_global = 0;
             }
 
-            alarm1Energy = atoi( parameters[4] );
+            alarm1Energy_global = atoi( parameters[4] );
 
 
             if ( checkOnOff( parameters[5] ) == true )
             {
-                alarm2Enabled = 1;
+                alarm2Enabled_global = 1;
             }
             else
             {
-                alarm2Enabled = 0;
+                alarm2Enabled_global = 0;
             }
 
-            alarm2Energy = atoi( parameters[6] );
+            alarm2Energy_global = atoi( parameters[6] );
 
             command_builder2( send_buffer, "Conf", "Alarm" );
 
         }
         else if ( strmatch( parameters[1], "Pass" ) == true )
         {
-            passwordSet[0] = parameters[2][0];
-            passwordSet[1] = parameters[2][1];
-            passwordSet[2] = parameters[2][2];
-            passwordSet[3] = parameters[2][3];
-            passwordSet[4] = parameters[2][4];
-            passwordSet[5] = parameters[2][5];
+            passwordSet_global[0] = parameters[2][0];
+            passwordSet_global[1] = parameters[2][1];
+            passwordSet_global[2] = parameters[2][2];
+            passwordSet_global[3] = parameters[2][3];
+            passwordSet_global[4] = parameters[2][4];
+            passwordSet_global[5] = parameters[2][5];
 
             command_builder2( send_buffer, "Conf", "Pass" );
 
@@ -656,25 +656,25 @@ bool process_data_parameters( char parameters[PARAMETER_MAX_COUNT][PARAMETER_MAX
 
             if ( checkOnOff( parameters[2] ) == true )
             {
-                emerButtonEnable = true;
+                emerButtonEnable_global = true;
             }
             else
             {
-                emerButtonEnable = false;
+                emerButtonEnable_global = false;
             }
 
-            emerButtonEnergyAllocate = atoi( parameters[3] );
+            emerButtonEnergyAllocate_global = atoi( parameters[3] );
 
             command_builder2( send_buffer, "Conf", "Emer" );
         }
         else if ( strmatch( parameters[1], "RstTim" ) == true )
         {
 
-            resetTimeHour = atoi( parameters[2] );
-            resetTimeMinute = atoi( parameters[3] );
+            resetTimeHour_global = atoi( parameters[2] );
+            resetTimeMinute_global = atoi( parameters[3] );
 
-            tempResetHour = resetTimeHour;
-            tempResetMinute = resetTimeMinute;
+            tempResetHour_global = resetTimeHour_global;
+            tempResetMinute_global = resetTimeMinute_global;
 
             command_builder2( send_buffer, "Conf", "RstTim" );
 
@@ -706,8 +706,8 @@ bool process_data_parameters( char parameters[PARAMETER_MAX_COUNT][PARAMETER_MAX
         else if ( strmatch( parameters[1], "Stat" ) == true )
         {
 
-            totalUsed = atol( parameters[2] );
-            previousDayUsed = atol( parameters[2] );
+            totalUsed_global = atol( parameters[2] );
+            previousDayUsed_global = atol( parameters[2] );
 
             command_builder2( send_buffer, "Conf", "Stat" );
 
@@ -718,50 +718,50 @@ bool process_data_parameters( char parameters[PARAMETER_MAX_COUNT][PARAMETER_MAX
             int inx = 0;
             while ( ( inx < 9 ) && ( parameters[2][inx] != CHAR_NULL ) )
             {
-                powerBoxCodeVersionString[inx] = parameters[2][inx];
+                powerBoxCodeVersionString_global[inx] = parameters[2][inx];
                 inx++;
             }
-            powerBoxCodeVersionString[inx] = CHAR_NULL;
+            powerBoxCodeVersionString_global[inx] = CHAR_NULL;
 
             command_builder2( send_buffer, "Conf", "CBver" );
 
         }
         else if ( strmatch( parameters[1], "PwrFail" ) == true )
         {
-            powerUpTime[0] = parameters[2][0];
-            powerUpTime[1] = parameters[2][1];
-            powerUpTime[2] = parameters[2][2];
-            powerUpTime[3] = parameters[2][3];
-            powerUpTime[4] = parameters[2][4];
-            powerUpTime[5] = parameters[2][5];
-            powerUpTime[6] = parameters[2][6];
-            powerUpTime[7] = parameters[2][7];
-            powerUpTime[8] = parameters[2][8];
-            powerUpTime[9] = parameters[2][9];
-            powerUpTime[10] = parameters[2][10];
-            powerUpTime[11] = CHAR_NULL;
+            powerUpTime_global[0] = parameters[2][0];
+            powerUpTime_global[1] = parameters[2][1];
+            powerUpTime_global[2] = parameters[2][2];
+            powerUpTime_global[3] = parameters[2][3];
+            powerUpTime_global[4] = parameters[2][4];
+            powerUpTime_global[5] = parameters[2][5];
+            powerUpTime_global[6] = parameters[2][6];
+            powerUpTime_global[7] = parameters[2][7];
+            powerUpTime_global[8] = parameters[2][8];
+            powerUpTime_global[9] = parameters[2][9];
+            powerUpTime_global[10] = parameters[2][10];
+            powerUpTime_global[11] = CHAR_NULL;
 
-            powerDownTime[0] = parameters[3][0];
-            powerDownTime[1] = parameters[3][1];
-            powerDownTime[2] = parameters[3][2];
-            powerDownTime[3] = parameters[3][3];
-            powerDownTime[4] = parameters[3][4];
-            powerDownTime[5] = parameters[3][5];
-            powerDownTime[6] = parameters[3][6];
-            powerDownTime[7] = parameters[3][7];
-            powerDownTime[8] = parameters[3][8];
-            powerDownTime[9] = parameters[3][9];
-            powerDownTime[10] = parameters[3][10];
-            powerDownTime[11] = CHAR_NULL;
+            powerDownTime_global[0] = parameters[3][0];
+            powerDownTime_global[1] = parameters[3][1];
+            powerDownTime_global[2] = parameters[3][2];
+            powerDownTime_global[3] = parameters[3][3];
+            powerDownTime_global[4] = parameters[3][4];
+            powerDownTime_global[5] = parameters[3][5];
+            powerDownTime_global[6] = parameters[3][6];
+            powerDownTime_global[7] = parameters[3][7];
+            powerDownTime_global[8] = parameters[3][8];
+            powerDownTime_global[9] = parameters[3][9];
+            powerDownTime_global[10] = parameters[3][10];
+            powerDownTime_global[11] = CHAR_NULL;
 
             command_builder2( send_buffer, "Conf", "PwrFail" );
 
         }
         else if ( strmatch( parameters[1], "PwrData" ) == true )
         {
-            energyAllocated = atol( parameters[2] );
-            energyUsed = atol( parameters[3] );
-            powerLoad = atol( parameters[4] );
+            energyAllocated_global = atol( parameters[2] );
+            energyUsed_global = atol( parameters[3] );
+            powerLoad_global = atol( parameters[4] );
 
             command_builder2( send_buffer, "Conf", "PwrData" );
 
@@ -1092,14 +1092,14 @@ bool send_data( struct buffer_struct * send_buffer )
             }
         }
 
-        if ( timeSecond != waitSecond )
+        if ( timeSecond_global != waitSecond )
         {
             wait = false;
         }
 
         if ( data == COMMAND_END_CHAR )
         {
-            waitSecond = timeSecond;
+            waitSecond = timeSecond_global;
             wait = true;
         }
 
@@ -1241,16 +1241,16 @@ bool UART_receive_data_char( char *data )
 
     bool recvGood = false;
 
-    if ( uartBufferLargeCount > 0 )
+    if ( uartBufferLargeCount_module > 0 )
     {
-        *data = uartBufferLarge[0];
+        *data = uartBufferLarge_module[0];
         recvGood = true;
 
-        uartBufferLargeCount--;
+        uartBufferLargeCount_module--;
 
-        for ( int inx = 0; inx < uartBufferLargeCount; inx++ )
+        for ( int inx = 0; inx < uartBufferLargeCount_module; inx++ )
         {
-            uartBufferLarge[ inx] = uartBufferLarge[ inx + 1];
+            uartBufferLarge_module[ inx] = uartBufferLarge_module[ inx + 1];
         }
 
 
@@ -1469,11 +1469,11 @@ void setRemoteTime( struct buffer_struct *send_buffer )
     char timeTimeMMBuf[BUF_SIZE_INT];
     //    char timeTimeSSBuf[BUF_SIZE_INT];
 
-    zeroPad_itoa( timeDateDDBuf, tempDay, 2 );
-    zeroPad_itoa( timeDateMMBuf, tempMonth, 2 );
-    zeroPad_itoa( timeDateYYBuf, tempYear, 2 );
-    zeroPad_itoa( timeTimeHHBuf, tempHour, 2 );
-    zeroPad_itoa( timeTimeMMBuf, tempMin, 2 );
+    zeroPad_itoa( timeDateDDBuf, tempDay_global, 2 );
+    zeroPad_itoa( timeDateMMBuf, tempMonth_global, 2 );
+    zeroPad_itoa( timeDateYYBuf, tempYear_global, 2 );
+    zeroPad_itoa( timeTimeHHBuf, tempHour_global, 2 );
+    zeroPad_itoa( timeTimeMMBuf, tempMin_global, 2 );
     //    zeroPad_itoa( timeTimeSSBuf, tempSecond, 2 );
 
     //    zeroPad_itoa( timeDateDDBuf, timeDay, 2 );
@@ -1548,7 +1548,7 @@ void setRemoteEnergyAllocation( struct buffer_struct *send_buffer )
 {
     char powerAllocatedBuf[BUF_SIZE_LONG];
 
-    ltoa( powerAllocatedBuf, energyAllocated, 10 );
+    ltoa( powerAllocatedBuf, energyAllocated_global, 10 );
 
     command_builder3( send_buffer, "Set", "EnAl", powerAllocatedBuf );
 
@@ -1571,7 +1571,7 @@ void setRemoteAllocationAdd( struct buffer_struct *send_buffer )
 {
     char buf[BUF_SIZE_LONG];
 
-    ltoa( buf, emerAllocSend, 10 );
+    ltoa( buf, emerAllocSend_global, 10 );
     command_builder3( send_buffer, "Set", "AllAdd", buf );
 
     return;
@@ -1620,14 +1620,14 @@ void setRemoteAlarm( struct buffer_struct *send_buffer )
     char alarm1PowerBuf[BUF_SIZE_INT];
     char alarm2PowerBuf[BUF_SIZE_INT];
 
-    fillOnOff( audibleAlarmBuf, audibleAlarm );
-    fillOnOff( alarm1EnabledBuf, alarm1Enabled );
-    fillOnOff( alarm2EnabledBuf, alarm2Enabled );
+    fillOnOff( audibleAlarmBuf, audibleAlarm_global );
+    fillOnOff( alarm1EnabledBuf, alarm1Enabled_global );
+    fillOnOff( alarm2EnabledBuf, alarm2Enabled_global );
 
 
     // using itoa() - variable type is char, make sure it is an int
-    alarm1EnergyTemp = alarm1Energy;
-    alarm2EnergyTemp = alarm2Energy;
+    alarm1EnergyTemp = alarm1Energy_global;
+    alarm2EnergyTemp = alarm2Energy_global;
     itoa( alarm1PowerBuf, alarm1EnergyTemp, 10 );
     itoa( alarm2PowerBuf, alarm2EnergyTemp, 10 );
 
@@ -1669,12 +1669,12 @@ void setRemotePassword( struct buffer_struct *send_buffer )
 {
     char passwordTemp[7];
 
-    passwordTemp[0] = passwordSet[0];
-    passwordTemp[1] = passwordSet[1];
-    passwordTemp[2] = passwordSet[2];
-    passwordTemp[3] = passwordSet[3];
-    passwordTemp[4] = passwordSet[4];
-    passwordTemp[5] = passwordSet[5];
+    passwordTemp[0] = passwordSet_global[0];
+    passwordTemp[1] = passwordSet_global[1];
+    passwordTemp[2] = passwordSet_global[2];
+    passwordTemp[3] = passwordSet_global[3];
+    passwordTemp[4] = passwordSet_global[4];
+    passwordTemp[5] = passwordSet_global[5];
     passwordTemp[6] = CHAR_NULL;
 
     command_builder3( send_buffer, "Set", "Pass", passwordTemp );
@@ -1718,8 +1718,8 @@ void setRemoteEmergency( struct buffer_struct *send_buffer )
     char emerButtonEnableBuf[4];
     char emerButtonEnergyAllocateBuf[BUF_SIZE_INT];
 
-    fillOnOff( emerButtonEnableBuf, emerButtonEnable );
-    itoa( emerButtonEnergyAllocateBuf, emerButtonEnergyAllocate, 10 );
+    fillOnOff( emerButtonEnableBuf, emerButtonEnable_global );
+    itoa( emerButtonEnergyAllocateBuf, emerButtonEnergyAllocate_global, 10 );
 
     command_builder4( send_buffer, "Set", "Emer", emerButtonEnableBuf, emerButtonEnergyAllocateBuf );
 
@@ -1767,11 +1767,11 @@ void setRemoteResetTime( struct buffer_struct *send_buffer )
     char resetTimeMinuteBuf[BUF_SIZE_INT];
 
 
-    resetTimeHourTemp = resetTimeHour;
-    resetTimeMinuteTemp = resetTimeMinute;
+    resetTimeHourTemp = resetTimeHour_global;
+    resetTimeMinuteTemp = resetTimeMinute_global;
 
-    itoa( resetTimeHourBuf, resetTimeHour, 10 );
-    itoa( resetTimeMinuteBuf, resetTimeMinute, 10 );
+    itoa( resetTimeHourBuf, resetTimeHour_global, 10 );
+    itoa( resetTimeMinuteBuf, resetTimeMinute_global, 10 );
 
     //    writeToDisplay( resetTimeHourBuf, 0, 20 );
     //    writeToDisplay( resetTimeMinuteBuf, 20, 20 );
@@ -2075,11 +2075,11 @@ void __attribute__( ( __interrupt__, __no_auto_psv__ ) ) _U2RXInterrupt( void )
 
         tempChar = U2RXREG;
 
-        uartBufferLarge[ uartBufferLargeCount] = tempChar;
-        uartBufferLargeCount++;
-        if ( uartBufferLargeCount >= UART_LARGE_BUFFER_SIZE )
+        uartBufferLarge_module[ uartBufferLargeCount_module] = tempChar;
+        uartBufferLargeCount_module++;
+        if ( uartBufferLargeCount_module >= UART_LARGE_BUFFER_SIZE )
         {
-            uartBufferLargeCount = ( UART_LARGE_BUFFER_SIZE - 1 );
+            uartBufferLargeCount_module = ( UART_LARGE_BUFFER_SIZE - 1 );
         }
 
     }
