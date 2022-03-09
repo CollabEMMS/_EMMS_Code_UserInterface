@@ -651,7 +651,7 @@ void menuHomeBasic( void )
         homeBasicAlternate_module = ( timeSecond_global / 10 ) % 2;
     }
 
-    readTime( );
+    rtccReadTime( );
     writeClockStrings( );
 
     if ( homeBasicAlternate_module > 1 )
@@ -737,7 +737,7 @@ void menuHomeDetail( void )
             com_command_readRemoteAlarm( );
     }
 
-    readTime( );
+    rtccReadTime( );
     writeClockStrings( );
 
     int remainingPower = energyAllocated_global - energyUsed_global;
@@ -1205,6 +1205,8 @@ void menuPowerFailTimes( void )
     writeToDisplay( "Restored ", 40, 0 );
     writeToDisplay( powerUpTime_global, 49, 0 );
     writeToDisplay( "Back", 60, 20 );
+	
+	return;
 }
 
 void menuAbout( void )
@@ -1301,7 +1303,7 @@ void menuAdmin1( void )
             timeSetPos_global = 1;
 
             // set temporary time variables to what's in the RTCC
-            readTime( );
+            rtccReadTime( );
             tempHour_global = timeHour_global;
             tempMin_global = timeMinute_global;
             tempMonth_global = timeMonth_global;

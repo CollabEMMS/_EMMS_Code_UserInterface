@@ -12,7 +12,7 @@ extern unsigned char timeSecond_global;
 
 
 // not sorted yet
-void readTime( void );
+void rtccReadTime( void );
 void writeClockStrings( void );
 void writeTempClockStrings( void );
 char writeTime( char newYear, char newMonth, char newDay, char newHour, char newMinute, char newSecond );
