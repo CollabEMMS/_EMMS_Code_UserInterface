@@ -46,6 +46,7 @@ char numSets_module;
 	 should be marked
  *****************/
 char menuButtonRead( char menu1, char menu2, char menu3, char menu4 );
+void initDefaults( void );
 void init( void );
 
 void initTimer( void );
@@ -81,9 +82,8 @@ void debugBacklightFlash( int timeOn );
  */
 int main( void )
 {
-	resetTimeSecond_global = 59;
-	resetTimeMinute_global = 9;
-	resetTimeHour_global = 8;
+
+	initDefaults( );
 
 	init( );
 
@@ -101,7 +101,7 @@ int main( void )
 		if( !lowPriorityCounter++ )
 		{
 
-			readTime( );
+			rtccReadTime( );
 			periodicUpdate( );
 			calcPercentRem( );
 			calcTimeRemaining( );
@@ -119,6 +119,44 @@ int main( void )
 
 /* Functions ******************************************************************/
 
+/* init_defaults
+ Initializes default values into variables
+ */
+void initDefaults( void )
+{
+	resetTimeSecond_global = 59;
+	resetTimeMinute_global = 9;
+	resetTimeHour_global = 8;
+
+	powerDownTime_global[0] = ' ';
+	powerDownTime_global[1] = ' ';
+	powerDownTime_global[2] = 'N';
+	powerDownTime_global[3] = 'o';
+	powerDownTime_global[4] = ' ';
+	powerDownTime_global[5] = 'D';
+	powerDownTime_global[6] = 'a';
+	powerDownTime_global[7] = 't';
+	powerDownTime_global[8] = 'a';
+	powerDownTime_global[9] = ' ';
+	powerDownTime_global[10] = ' ';
+	powerDownTime_global[11] = CHAR_NULL;
+
+	powerUpTime_global[0] = ' ';
+	powerUpTime_global[1] = ' ';
+	powerUpTime_global[2] = 'N';
+	powerUpTime_global[3] = 'o';
+	powerUpTime_global[4] = ' ';
+	powerUpTime_global[5] = 'D';
+	powerUpTime_global[6] = 'a';
+	powerUpTime_global[7] = 't';
+	powerUpTime_global[8] = 'a';
+	powerUpTime_global[9] = ' ';
+	powerUpTime_global[10] = ' ';
+	powerUpTime_global[11] = CHAR_NULL;
+
+	return;
+}
+
 /* init
  * Calls each individual initialization method
  */
@@ -134,7 +172,7 @@ void init( void )
 	enableInterrupts( );
 	//    initDisplayBox( );
 
-	readTime( );
+	rtccReadTime( );
 	tempHour_global = timeHour_global;
 	tempMin_global = timeMinute_global;
 	tempMonth_global = timeMonth_global;
@@ -186,7 +224,7 @@ void initVars( void )
 	tempResetHour_global = 0;
 	tempResetMinute_global = 0;
 
-	relayMode_global = 0;  // default to show relay is in off mode
+	relayMode_global = 0; // default to show relay is in off mode
 }
 
 /* initPorts
@@ -378,7 +416,9 @@ void nextDot( void )
 
 void periodicUpdate( void )
 {
-
+	
+	
+	
 	static bool firstRun = true;
 	static int firstRunStep = 0;
 	static bool alreadyRun = false;
@@ -448,7 +488,7 @@ void periodicUpdate( void )
 		// problem here is that the commands get tripped over
 		// seems like the power and time get scrambled when both
 		// are run at the same time
-		// likely due to receiving commands and the buffer running on while it is beinf processed
+		// likely due to receiving commands and the buffer running on while it is being processed
 
 		if( enablePeriodicUpdate_global )
 		{
@@ -462,7 +502,7 @@ void periodicUpdate( void )
 			if( ( ( timeSecond_global % 10 ) == 0 ) && ( timeSecond_global != lastOtherSecond ) )
 			{
 				com_command_readRemoteTime( );
-				readTime( );
+				rtccReadTime( );
 				lastOtherSecond = timeSecond_global;
 			}
 		}
@@ -525,7 +565,7 @@ void initTimer( void )
 {
 
 	// timer 1 is for LCD display
-	T1CON = 0x8030; // timer 1 setting
+	T1CON = 0x8030; // timer 1 setting  // 1000 0000  0011 0000
 	PR1 = 0x0500; // 0x2000 is approximately a second
 	//IEC0 = 0b0000000000001000;
 	// 0x0094 is file IEC0. Bit 3 controls timer1 interrupts

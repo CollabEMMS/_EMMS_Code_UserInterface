@@ -54,7 +54,7 @@ char tempCalStr_global[15];
  any functions used internally and externally (prototype here and in the .h file)
 	 should be marked
  *****************/
-void readTime( void );
+void rtccReadTime( void );
 void writeClockStrings( void );
 void writeTempClockStrings( void );
 char writeTime( char newYear, char newMonth, char newDay, char newHour, char newMinute, char newSecond );
@@ -69,7 +69,7 @@ char DecToBcd( char val );
 /* readTime
  * reads time from RTCC, writes to global time variables
  */
-void readTime( void )
+void rtccReadTime( void )
 {
 	unsigned int temp;
 
