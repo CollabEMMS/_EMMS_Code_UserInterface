@@ -9,7 +9,6 @@
 #include "DisplayMain.h"
 #include "DisplayMenu.h"
 #include "DisplayRTCC.h"
-#include "Delays.h"
 
 /****************
  MACROS
