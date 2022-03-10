@@ -18,7 +18,8 @@
 // FOSCSEL
 //#pragma config FNOSC = FRCDIV      Oscillator Select (8MHz FRC oscillator With
 // Postscaler (FRCDIV))
-#pragma config FNOSC = PRI//SOSC
+//#pragma config FNOSC = PRI//SOSC
+#pragma config FNOSC = FRCPLL
 
 #pragma config SOSCSRC = DIG      // SOSC Source Type (Analog Mode for use with
 // crystal)

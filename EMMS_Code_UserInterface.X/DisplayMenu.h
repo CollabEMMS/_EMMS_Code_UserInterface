@@ -64,6 +64,7 @@ extern char alarmTwoHit_global;
 
 
 void initDisplay(void);
+void dispUpdate( void );
 void writeToDisplay(const char*, unsigned char, char);
 
 void calcPercentRem(void);

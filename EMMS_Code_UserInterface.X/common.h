@@ -8,9 +8,12 @@
 #ifndef COMMON_H
 #    define	COMMON_H
 
+#    define FCY 16000000UL
+
 
 //#include <xc.h>
 #    include <p24FV32KA301.h>
+#    include <libpic30.h>
 #    include <stdbool.h>
 
 
