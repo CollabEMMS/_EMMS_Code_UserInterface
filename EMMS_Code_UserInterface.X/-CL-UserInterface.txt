@@ -1,5 +1,21 @@
 open issues
 
+3/9/2022	TBA
+	Cleanup
+		Oscillator now runs at max speed
+			required adjusting lots of things which depended on the oscillator frequency
+			these are now mostly easier to configure since they are now based on a macro
+		Timer 1 converted to a millisecond timer
+			pulled display update out of interrupt
+			changes main loop periodics to run off of new ms timer
+		General cleanup
+			added return; to functions
+			added {} to if and other statements
+		Removed some vestigial functions, comments, variables, etc...
+		Timer2 removed
+			Button presses moved to main loop periodic 
+		
+
 3/6/2022	TBA
 	Cleanup
 		Cleaned up variables some

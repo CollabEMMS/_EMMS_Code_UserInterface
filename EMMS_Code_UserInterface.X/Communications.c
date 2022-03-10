@@ -14,6 +14,8 @@
 /****************
  MACROS
  ****************/
+#define BAUD_UART2 9600
+
 #define BUFFER_LENGTH 250
 
 #define BUF_SIZE_CHAR 5
@@ -45,11 +47,6 @@
  ****************/
 // external
 // internal only
-
-
-
-
-bool SPI_transmit_wait_module;
 
 enum receive_status
 {
@@ -143,9 +140,6 @@ bool strmatch( char* a, char* b );
 int strcmp2( char* a, char* b );
 void strcpy2( char* rcv, char* source );
 
-void resetCommunications( struct buffer_struct * receive_buffer );
-void SPISlaveInit( void );
-
 void initUART( void );
 
 void send_end_of_transmission( struct buffer_struct *send_buffer );
@@ -181,10 +175,11 @@ void communications( bool firstTime )
 
 	if( firstTime == true )
 	{
-		//        SPISlaveInit();
 		initUART( );
 
-		resetCommunications( &send_buffer );
+		send_buffer.read_position = 0;
+		send_buffer.write_position = 0;
+
 		command_builder_external_helper( true, &send_buffer );
 	}
 	else
@@ -305,69 +300,6 @@ bool xSumCheck( char* checkBuffer )
 	return xSumMatches;
 }
 
-void resetCommunications( struct buffer_struct * send_buffer )
-{
-	//FIX
-	// rework this function to do something like periodically update info
-	// later when we see how everything fits together
-
-	//    static int commState = 0;
-
-
-	//    SSP2CON1bits.SSPEN = 0; //disable SPI
-	//    __delay_ms( 1 );
-	//    SSP2CON1bits.SSPEN = 1; //enable SPI
-
-	//    SSP2CON1bits.WCOL = 0;
-	//    SPI_transmit_wait = false;
-
-
-	send_buffer->read_position = 0;
-	send_buffer->write_position = 0;
-
-	// set up command state machine
-	// do we repeat a command if we did not hit END command?
-	//    commState++;
-	//    switch( commState )
-	//    {
-	//    case 1:
-	//	com_command_setVersion( send_buffer );
-	//	break;
-	//    case 2:
-	//	com_command_setPower( send_buffer );
-	//	//            for(int i = 0; i < 2; i++) {
-	//	//            LED_SET = 1;
-	//	//            LED_SET_OR = 1;
-	//	//            LED_SET_PR = 1;
-	//	//            delayMS10(100);
-	//	//            LED_SET = 0;
-	//	//            LED_SET_OR = 0;
-	//	//            LED_SET_PR = 0;
-	//	//            delayMS10(100);
-	//	//            }
-	//
-	//
-	//	break;
-	//    case 3:
-	//	com_command_setEnergyUsed( send_buffer );
-	//	//	break;
-	//	//    case 4:
-	//	//	com_command_setAmps( send_buffer );
-	//	//	break;
-	//	//    case 5:
-	//	//	com_command_readCalibration( send_buffer );
-	//	//	break;
-	//	//    case 6:
-	//	//	com_command_testLED( send_buffer );
-	//	//	break;
-	//    default:
-	//	commState = 0;
-	//	break;
-	//    }
-
-	return;
-}
-
 enum receive_status receive_data( struct buffer_struct * receive_buffer )
 {
 	char data;
@@ -428,7 +360,6 @@ bool process_data( struct buffer_struct *receive_buffer, struct buffer_struct * 
 	end_of_transmission_received = process_data_parameters( parameters, send_buffer );
 
 	return end_of_transmission_received;
-
 }
 
 void process_data_parameterize( char parameters[PARAMETER_MAX_COUNT][PARAMETER_MAX_LENGTH], struct buffer_struct * buffer_to_parameterize )
@@ -1069,7 +1000,7 @@ bool send_data( struct buffer_struct * send_buffer )
 		{
 			if( UART_send_data_char( data ) == true )
 			{
-				delayMSTenths( 5 );
+				__delay_ms( 5 );
 				send_buffer->read_position++;
 				if( send_buffer->read_position >= BUFFER_LENGTH )
 				{
@@ -1141,7 +1072,6 @@ int strcmp2( char* a, char* b )
 	}
 
 	return match;
-
 }
 
 bool checkOnOff( char *toCheck )
@@ -1243,7 +1173,6 @@ bool UART_receive_data_char( char *data )
 	}
 
 	return recvGood;
-
 }
 
 bool UART_send_data_char( char data )
@@ -1258,149 +1187,6 @@ bool UART_send_data_char( char data )
 
 	return sendGood;
 }
-
-//bool UART_send_data( char data )
-//{
-//    bool sendGood = false;
-//
-//    if( SPI_transmit_wait == false )
-//    {
-//	SSP2BUF = data;
-//	SPI_transmit_wait = true;
-//	sendGood = true;
-//    }
-//    else
-//    {
-//	sendGood = false;
-//    }
-//
-//    return sendGood;
-//}
-
-//bool SPI_receive_data( char *data )
-//{
-//
-//    bool recvGood = false;
-//
-//    if( SSP2STATbits.BF == 1 )
-//    {
-//	*data = SSP2BUF;
-//	recvGood = true;
-//	SSP2CON1bits.WCOL = 0;
-//	SPI_transmit_wait = false;
-//    }
-//    else
-//    {
-//	recvGood = false;
-//    }
-//
-//    return recvGood;
-//
-//}
-//
-//bool SPI_send_data( char data )
-//{
-//    bool sendGood = false;
-//
-//    if( SPI_transmit_wait == false )
-//    {
-//	SSP2BUF = data;
-//	SPI_transmit_wait = true;
-//	sendGood = true;
-//    }
-//    else
-//    {
-//	sendGood = false;
-//    }
-//
-//    return sendGood;
-//}
-
-
-
-
-/************************/
-// RESPONSES
-
-//void send_end_of_transmission( struct buffer * send_buffer )
-//{
-//    command_builder1( send_buffer, "END" );
-//
-//    return;
-//}
-//
-//void com_command_testLED( struct buffer * send_buffer )
-//{
-//    command_builder2( send_buffer, "Read", "LEDB" );
-//
-//    return;
-//}
-//
-//void com_command_setPower( struct buffer * send_buffer )
-//{
-//
-//    char temp[12];
-//
-//    //    for(int i = 0; i < 2; i++) {
-//    //            LED_SET = 1;
-//    //            LED_SET_OR = 1;
-//    //            LED_SET_PR = 1;
-//    //            delayMS10(100);
-//    //            LED_SET = 0;
-//    //            LED_SET_OR = 0;
-//    //            LED_SET_PR = 0;
-//    //            delayMS10(100);
-//    //            }
-//
-//    //    ultoa( temp, meterWatts, 10 );
-//    //     ultoa(temp, 100, 10);
-//    command_builder3( send_buffer, "Set", "Watts", temp );
-//
-//    return;
-//}
-//
-//void com_command_setEnergyUsed( struct buffer * send_buffer )
-//{
-//    char temp[12];
-//
-//    //ultoa( temp, meterEnergyUsed, 10 );
-//    //    ultoa(temp, 200, 10);
-//
-//    command_builder3( send_buffer, "Set", "EnUsed", temp );
-//
-//    return;
-//
-//
-//}
-//
-//void com_command_setVolts( struct buffer * send_buffer )
-//{
-//    command_builder3( send_buffer, "Set", "Volts", "222" );
-//
-//    return;
-//}
-//
-//void com_command_setAmps( struct buffer * send_buffer )
-//{
-//    command_builder3( send_buffer, "Set", "Amps", "333" );
-//
-//    return;
-//}
-//
-//void com_command_readCalibration( struct buffer * send_buffer )
-//{
-//    command_builder2( send_buffer, "Read", "Calibration" );
-//
-//    return;
-//}
-//
-//void com_command_setVersion( struct buffer * send_buffer )
-//{
-//    command_builder3( send_buffer, "Set", "PSVersion", "444" );
-//
-//}
-//
-//
 
 void send_end_of_transmission( struct buffer_struct *send_buffer )
 {
@@ -1422,11 +1208,9 @@ void com_command_readRemoteTime( void )
 
 void readRemoteTime( struct buffer_struct *send_buffer )
 {
-
 	command_builder2( send_buffer, "Read", "Time" );
 
 	return;
-
 }
 
 void com_command_setRemoteTime( void )
@@ -1438,7 +1222,6 @@ void com_command_setRemoteTime( void )
 	setRemoteTime( send_buffer );
 
 	return;
-
 }
 
 void setRemoteTime( struct buffer_struct *send_buffer )
@@ -1498,6 +1281,8 @@ void setRemoteTime( struct buffer_struct *send_buffer )
 	//    delayMS( 2500 );
 
 	command_builder4( send_buffer, "Set", "Time", timeDateBuf, timeTimeBuf );
+	
+	return;
 }
 
 void com_command_readRemoteEnergyAllocation( void )
@@ -1509,7 +1294,6 @@ void com_command_readRemoteEnergyAllocation( void )
 	readRemoteEnergyAllocation( send_buffer );
 
 	return;
-
 }
 
 void readRemoteEnergyAllocation( struct buffer_struct *send_buffer )
@@ -1539,7 +1323,6 @@ void setRemoteEnergyAllocation( struct buffer_struct *send_buffer )
 	command_builder3( send_buffer, "Set", "EnAl", powerAllocatedBuf );
 
 	return;
-
 }
 
 void com_command_setRemoteAllocationAdd( void )
@@ -1561,7 +1344,6 @@ void setRemoteAllocationAdd( struct buffer_struct *send_buffer )
 	command_builder3( send_buffer, "Set", "AllAdd", buf );
 
 	return;
-
 }
 
 void com_command_readRemoteAlarm( )
@@ -1666,7 +1448,6 @@ void setRemotePassword( struct buffer_struct *send_buffer )
 	command_builder3( send_buffer, "Set", "Pass", passwordTemp );
 
 	return;
-
 }
 
 void com_command_readRemoteEmergency( void )
@@ -1685,7 +1466,6 @@ void readRemoteEmergency( struct buffer_struct *send_buffer )
 	command_builder2( send_buffer, "Read", "Emer" );
 
 	return;
-
 }
 
 void com_command_setRemoteEmergency( void )
@@ -1710,7 +1490,6 @@ void setRemoteEmergency( struct buffer_struct *send_buffer )
 	command_builder4( send_buffer, "Set", "Emer", emerButtonEnableBuf, emerButtonEnergyAllocateBuf );
 
 	return;
-
 }
 
 void com_command_readRemoteResetTime( void )
@@ -1729,7 +1508,6 @@ void readRemoteResetTime( struct buffer_struct *send_buffer )
 	command_builder2( send_buffer, "Read", "RstTim" );
 
 	return;
-
 }
 
 void com_command_setRemoteResetTime( void )
@@ -1759,15 +1537,9 @@ void setRemoteResetTime( struct buffer_struct *send_buffer )
 	itoa( resetTimeHourBuf, resetTimeHour_global, 10 );
 	itoa( resetTimeMinuteBuf, resetTimeMinute_global, 10 );
 
-	//    writeToDisplay( resetTimeHourBuf, 0, 20 );
-	//    writeToDisplay( resetTimeMinuteBuf, 20, 20 );
-	//    writeToDisplay( " ", 40, 20 );
-	//    writeToDisplay( " ", 60, 20 );
-	//
-	//    delayMS( 1000 );
-
 	command_builder4( send_buffer, "Set", "RstTim", resetTimeHourBuf, resetTimeMinuteBuf );
 
+	return;
 }
 
 void com_command_readRemoteRelay( void )
@@ -1786,7 +1558,6 @@ void readRemoteRelay( struct buffer_struct *send_buffer )
 	command_builder2( send_buffer, "Read", "Relay" );
 
 	return;
-
 }
 
 void com_command_setRemoteRelay( void )
@@ -1838,7 +1609,6 @@ void setRemoteRelay( struct buffer_struct *send_buffer )
 	command_builder3( send_buffer, "Set", "Relay", relayModeBuf );
 
 	return;
-
 }
 
 void com_command_readRemoteStat( void )
@@ -1857,7 +1627,6 @@ void readRemoteStat( struct buffer_struct *send_buffer )
 	command_builder2( send_buffer, "Read", "Stat" );
 
 	return;
-
 }
 
 void com_command_readRemoteCBver( void )
@@ -1876,7 +1645,6 @@ void readRemoteCBver( struct buffer_struct *send_buffer )
 	command_builder2( send_buffer, "Read", "CBver" );
 
 	return;
-
 }
 
 void com_command_readRemotePowerFailTimes( void )
@@ -1888,7 +1656,6 @@ void com_command_readRemotePowerFailTimes( void )
 	readRemotePowerFailTimes( send_buffer );
 
 	return;
-
 }
 
 void readRemotePowerFailTimes( struct buffer_struct *send_buffer )
@@ -1896,7 +1663,6 @@ void readRemotePowerFailTimes( struct buffer_struct *send_buffer )
 	command_builder2( send_buffer, "Read", "PwrFail" );
 
 	return;
-
 }
 
 void com_command_readRemotePowerData( void )
@@ -1915,7 +1681,6 @@ void readRemotePowerData( struct buffer_struct *send_buffer )
 	command_builder2( send_buffer, "Read", "PwrData" );
 
 	return;
-
 }
 
 
@@ -1925,28 +1690,37 @@ void readRemotePowerData( struct buffer_struct *send_buffer )
 
 void com_command_readRemoteEnergy( void )
 {
+
+	return;
 }
 
 void com_command_doReset( void )
 {
-}
 
-// not used anywhere
-//void com_command_readUpdate( void )
-//{
-//}
+	return;
+}
 
 void initUART( void )
 {
-	// FCY = 2 MHz;
-	// BAUD = FCY / 16 / (U2BRG + 1)
-	// Ok to be slightly off
-	// U2BRG = 1;  // baud rate is 62500
-	// U2BRG = 3;  // baud rate is 31250
-	// U2BRG = 6;  // baud rate is 17829
-	U2BRG = 12; // baud rate is 9615
-	// U2BRG = 25; // baud rate is 4800
-	// U2BRG = 50; // baud rate is 2447
+	TRISBbits.TRISB1 = 1; // U2RX
+	TRISBbits.TRISB0 = 0; // U2TX
+
+	//shooting for BAUD_UART (typically 9600))
+	// baud = FCY / ( 16 / (U1BRG + ))
+	//U1BRG = ( FCY / (16 * baud)) - 1
+
+	// do the math one step at a time
+	// to explicitly control the order of operations
+	// otherwise we could have a overflow or underflow
+	// without really knowing it
+	unsigned long tempBaud;
+
+	
+	tempBaud = BAUD_UART2 * 16ul; // must explicitly make unsigned long
+	tempBaud = FCY / tempBaud;
+	tempBaud = tempBaud - 1;
+
+	U2BRG = tempBaud;
 
 
 	U2MODEbits.USIDL = 0b0;
@@ -1961,28 +1735,31 @@ void initUART( void )
 	U2MODEbits.PDSEL = 0b00;
 	U2MODEbits.STSEL = 0b0;
 
-	U2STAbits.UTXISEL0 = 0b0;
-	U2STAbits.UTXISEL1 = 0b0;
+	// we do not need the interrupt on receive
+	// set these bits to just make sure they are in a known state
+	// interesting that the UTXISEL does not exist - we need to set each bit separately
+	U2STAbits.UTXISEL0 = 0b0; // transmit interrupt
+	U2STAbits.UTXISEL1 = 0b0; // Must be 0b0 (large integer implicitly truncated to unsigned type)
+
 	U2STAbits.UTXINV = 0b0;
 	U2STAbits.UTXBRK = 0b0;
-
-	U2STAbits.URXISEL0 = 0b00; // interrupt after one RX character is received
-	//    U2STAbits.URXISEL1 = 0b0; // interrupt after one RX character is received
+	U2STAbits.URXISEL = 0b00; // interrupt after one RX character is received
 	U2STAbits.ADDEN = 0;
 
-	//interrupts
-	IPC7bits.U2RXIP = 1; // set RX interrupt priority (1-7, default 4)
+	// we need the error interrupt to clear errors - without this it does not work
 	IFS4bits.U2ERIF = 0; // clear Error Flag
 	IEC4bits.U2ERIE = 1; // enable Error Interrupt
+
 	IFS1bits.U2TXIF = 0; // clear TX Flag
 	IEC1bits.U2TXIE = 0; // disable TX Interrupt
+
 	IFS1bits.U2RXIF = 0; // clear RX interrupt flag
 	IEC1bits.U2RXIE = 1; // enable RX interrupt
-
 
 	U2MODEbits.UARTEN = 0b1; // turn it on
 	U2STAbits.UTXEN = 0b1; // enable transmit
 
+	return;
 }
 
 void __attribute__( ( __interrupt__, __no_auto_psv__ ) ) _U2RXInterrupt( void )
@@ -2017,6 +1794,8 @@ void __attribute__( ( __interrupt__, __no_auto_psv__ ) ) _U2RXInterrupt( void )
 	}
 
 	_U2RXIF = 0; // clear interrupt flag
+	
+	return;
 }
 
 void __attribute__( ( __interrupt__, __no_auto_psv__ ) ) _U2ErrInterrupt( void )
@@ -2029,70 +1808,6 @@ void __attribute__( ( __interrupt__, __no_auto_psv__ ) ) _U2ErrInterrupt( void )
 	U2STAbits.OERR = 0;
 
 	_U2ERIF = 0; // clear error interrupt flag
+	
+	return;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//void SPISlaveInit( void )
-//{
-//
-//    TRISAbits.TRISA0 = 0; // pin 2 connected as an output for pulse
-//    TRISAbits.TRISA1 = 1; // pin 3 connected as an input for pulse
-//    //    LEDDIR = 0; // pin 25 connected as an output for LED
-//    TRISCbits.TRISC3 = 0; // pin 14 connected as an output for pulse freq.
-//    TRISCbits.TRISC5 = 0; // pin 16 connected as an output for pulse freq.
-//    TRISCbits.TRISC6 = 0; // set pin 17 as an output for MCLR
-//    TRISCbits.TRISC7 = 0; // set pin 18 as an output for pulse freq.
-//    ANSELAbits.ANSA1 = 0b0; // turn off analog to digital conversion
-//
-//    LATCbits.LATC6 = 1; // set the MCLR of the MCP high
-//    LATCbits.LATC3 = 1; // set pin 14 to a 1 to set freq. control F2 for pulse
-//    LATCbits.LATC5 = 1; // set pin 16 to a 1 to set freq. control F1 for pulse
-//    LATCbits.LATC7 = 1; // set pin 18 to a 1 to set freq. control F0 for pulse
-//
-//
-//    SSP2CON1bits.SSPEN = 0; //Synchronous Serial Port Enable bit
-//
-//    ANSELBbits.ANSB0 = 0b0;
-//    ANSELBbits.ANSB1 = 0b0;
-//    ANSELBbits.ANSB2 = 0b0;
-//    ANSELBbits.ANSB3 = 0b0;
-//
-//    TRISBbits.RB0 = 0b1;
-//    TRISBbits.RB1 = 0b1;
-//    TRISBbits.RB2 = 0b1;
-//    TRISBbits.RB3 = 0b0;
-//
-//    SSP2STATbits.SMP = 0;
-//    SSP2STATbits.CKE = 1;
-//
-//    SSP2CON1bits.WCOL = 0; //Write Collision Detect bit
-//    SSP2CON1bits.SSPOV = 0; //Receive Overflow Indicator bit
-//    SSP2CON1bits.SSPEN = 0; //Synchronous Serial Port Enable bit
-//    SSP2CON1bits.CKP = 1; //Clock Polarity Select bit
-//    SSP2CON1bits.SSPM = 0b0100; //Synchronous Serial Port Mode Select bits
-//
-//
-//    SSP2CON3 = 0x00;
-//    SSP2CON3bits.BOEN = 0b0; //Buffer Overwrite Enable bit
-//
-//    SSP2CON1bits.SSPEN = 1; //Synchronous Serial Port Enable bit
-//
-//    //    SPIWatchdogTimerInit();
-//
-//    return;
-//}
-

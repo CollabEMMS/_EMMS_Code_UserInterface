@@ -89,10 +89,15 @@ void rtccReadTime( void )
 	timeHour_global = BcdToDec( timeHour_global );
 	timeMinute_global = BcdToDec( timeMinute_global );
 	timeSecond_global = BcdToDec( timeSecond_global );
+
+	return;
 }
 
 char writeTime( char newYear, char newMonth, char newDay, char newHour, char newMinute, char newSecond )
 {
+	char returnValue;
+
+	returnValue = 1;
 
 	switch( tempMonth_global )
 	{
@@ -101,19 +106,25 @@ char writeTime( char newYear, char newMonth, char newDay, char newHour, char new
 		case 9:
 		case 11:
 			if( tempDay_global > 30 )
+			{
 				return -1;
+			}
 			break;
 
 		case 2:
 			if( tempYear_global % 4 )
 			{
 				if( tempDay_global > 28 )
-					return -1;
+				{
+					returnValue = -1;
+				}
 			}
 			else
 			{
 				if( tempDay_global > 29 )
-					return -1;
+				{
+					returnValue = -1;
+				}
 			}
 			break;
 	}
@@ -143,15 +154,23 @@ char writeTime( char newYear, char newMonth, char newDay, char newHour, char new
 
 	resetTimeSecond_global = 59;
 
-	return 1;
+	return returnValue;
 }
 
 char BcdToDec( char val )
 {
-	return (val / 16 * 10 ) + ( val % 16 );
+	char tempValue;
+
+	tempValue = ( val / 16 * 10 ) + ( val % 16 );
+
+	return tempValue;
 }
 
 char DecToBcd( char val )
 {
-	return (val / 10 * 16 ) + ( val % 10 );
+	char tempValue;
+	
+	tempValue = ( val / 10 * 16 ) + ( val % 10 );
+	
+	return tempValue;
 }

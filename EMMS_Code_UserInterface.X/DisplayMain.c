@@ -19,6 +19,10 @@
 #define BTN_2       _RB4    // Pin 9:  RB4
 #define BTN_3       _RA4    // Pin 10: RA4
 
+// Time window where the oneshots can occur
+// sometimes the program main loop takes more than 1 ms to run and we can inadvertantly skip if we are lookng for an exact match
+#define ONESHOT_WINDOW 25
+
 /****************
  VARIABLES
  these are the globals required by only this c file
@@ -29,6 +33,7 @@
 // external
 // internal only
 
+volatile unsigned long msTimer_module; // toggles to 1 every ms, resets to 0 at about the 0.5ms time
 
 char alarmEnd_module;
 char alarmPulse_module;
@@ -46,8 +51,8 @@ char numSets_module;
 	 should be marked
  *****************/
 char menuButtonRead( char menu1, char menu2, char menu3, char menu4 );
-void initDefaults( void );
 void init( void );
+void initOscillator( void );
 
 void initTimer( void );
 void initPorts( void );
@@ -65,7 +70,7 @@ void enableAlarm( void );
 //void checkCommFailure( void );
 void startAlarm( void );
 
-
+void dispButtonPress( void );
 
 void initRTCCDisplay( void );
 void debugBacklight( bool state );
@@ -83,34 +88,91 @@ void debugBacklightFlash( int timeOn );
 int main( void )
 {
 
-	initDefaults( );
+	initOscillator( );
 
 	init( );
+	initVars( );
+
 
 	communications( true );
-	static unsigned char lowPriorityCounter = 0;
-
-	//    initDisplayBox( );
 
 	enablePeriodicUpdate_global = 1;
 
 	while( true )
 	{
 
-		// Only do these tasks every 100 - 150 ms
-		if( !lowPriorityCounter++ )
+		// oneShot
 		{
+			static bool oneShot = false;
 
-			rtccReadTime( );
-			periodicUpdate( );
-			calcPercentRem( );
-			calcTimeRemaining( );
-			enableAlarm( );
-			//	    checkCommFailure( );
-			//	    resetWDT( );
-			//	    asm( "CLRWDT" ); // reset the watchdog timer in case it is running
-
+			if( ( msTimer_module % 200 ) <= ONESHOT_WINDOW )
+			{
+				if( oneShot == false )
+				{
+					oneShot = true;
+					dispUpdate( );
+				}
+			}
+			else
+			{
+				oneShot = false;
+			}
 		}
+
+		// oneShot
+		{
+			static bool oneShot = false;
+
+			if( ( msTimer_module % 50 ) <= ONESHOT_WINDOW )
+			{
+				if( oneShot == false )
+				{
+					oneShot = true;
+					dispButtonPress( );
+				}
+			}
+			else
+			{
+				oneShot = false;
+			}
+		}
+
+		// oneShot
+		{
+			static bool oneShot = false;
+
+			if( ( msTimer_module % 200 ) <= ONESHOT_WINDOW )
+			{
+				if( oneShot == false )
+				{
+					oneShot = true;
+					rtccReadTime( );
+					periodicUpdate( );
+					calcPercentRem( );
+					calcTimeRemaining( );
+					enableAlarm( );
+				}
+			}
+			else
+			{
+				oneShot = false;
+			}
+		}
+
+		//		// Only do these tasks every 100 - 150 ms
+		//		if( !lowPriorityCounter++ )
+		//		{
+		//
+		//			rtccReadTime( );
+		//			periodicUpdate( );
+		//			calcPercentRem( );
+		//			calcTimeRemaining( );
+		//			enableAlarm( );
+		//			//	    checkCommFailure( );
+		//			//	    resetWDT( );
+		//			//	    asm( "CLRWDT" ); // reset the watchdog timer in case it is running
+		//
+		//		}
 
 		updateMenu( );
 		communications( false );
@@ -122,7 +184,61 @@ int main( void )
 /* init_defaults
  Initializes default values into variables
  */
-void initDefaults( void )
+
+
+/* init
+ * Calls each individual initialization method
+ */
+void init( void )
+{
+	initTimer( );
+	initPorts( );
+	enablePullDownResistors( );
+	initDisplay( );
+	initRTCCDisplay( );
+	enableInterrupts( );
+	rtccReadTime( );
+
+	tempHour_global = timeHour_global;
+	tempMin_global = timeMinute_global;
+	tempMonth_global = timeMonth_global;
+	tempDay_global = timeDay_global;
+	tempYear_global = timeYear_global;
+
+	return;
+}
+
+/* initOscillator
+ * Set oscillator to fastest 16MHz
+ */
+void initOscillator( void )
+{
+	// set clock to fastest available - 16MHz
+
+	// unlock the OSCON high byte
+	OSCCON = 0x78; //0x78 = 0111 1000
+	OSCCON = 0x9A; // 0x9A = 1001 1010
+	// set bits in the OSCCON high byte
+	OSCCONbits.NOSC = 0b001; // set fast RC OSC
+
+
+	// unlock sequence for the OSCCON low byte
+	OSCCON = 0x46; // 0x46 = 0100 0110
+	OSCCON = 0x57; // 0x58 = 0101 0111
+	// set bits in the OSCCON low byte
+	// set the clock switch bit - this must be done immediately after the unlock sequence
+	OSCCONbits.OSWEN = 1;
+
+	// set clock divider to 1:1
+	CLKDIVbits.RCDIV = 0b000;
+
+	return;
+}
+
+/* initVars
+ * Initializes variables to their starting values (usually 0)
+ */
+void initVars( void )
 {
 	resetTimeSecond_global = 59;
 	resetTimeMinute_global = 9;
@@ -154,45 +270,10 @@ void initDefaults( void )
 	powerUpTime_global[10] = ' ';
 	powerUpTime_global[11] = CHAR_NULL;
 
-	return;
-}
-
-/* init
- * Calls each individual initialization method
- */
-void init( void )
-{
-	initTimer( );
-	initPorts( );
-	enablePullDownResistors( );
-	initDisplay( );
-	initRTCCDisplay( );
-	//    initUART( );    now done in the communications code
-
-	enableInterrupts( );
-	//    initDisplayBox( );
-
-	rtccReadTime( );
-	tempHour_global = timeHour_global;
-	tempMin_global = timeMinute_global;
-	tempMonth_global = timeMonth_global;
-	tempDay_global = timeDay_global;
-	tempYear_global = timeYear_global;
-
-	initVars( );
-}
-
-/* initVars
- * Initializes variables to their starting values (usually 0)
- */
-void initVars( void )
-{
-
 	if( menuState_global != MENU_DEBUG )
+	{
 		menuState_global = MENU_HOME_BASIC;
-
-	//FIX DONE
-	//    stringCopy( "Unknown ", powerBoxCodeVersionString );
+	}
 
 	powerBoxCodeVersionString_global[0] = 'U';
 	powerBoxCodeVersionString_global[1] = 'n';
@@ -225,6 +306,8 @@ void initVars( void )
 	tempResetMinute_global = 0;
 
 	relayMode_global = 0; // default to show relay is in off mode
+	
+	return;
 }
 
 /* initPorts
@@ -252,6 +335,8 @@ void initPorts( void )
 
 	// disable int0 interrupt, just in case it initializes enabled
 	_INT0IE = 0;
+	
+	return;
 }
 
 void enablePullDownResistors( void )
@@ -279,6 +364,8 @@ void enablePullDownResistors( void )
 	//_CN11PDE = 1;// pin 18
 	// pin 19 is Vss
 	// pin 20 is Vdd
+	
+	return;
 }
 
 /* enableInterrupts
@@ -287,6 +374,8 @@ void enablePullDownResistors( void )
 void enableInterrupts( void )
 {
 	INTCON1 |= 0b1000000000000000;
+	
+	return;
 }
 
 /* disableInterrupts
@@ -295,6 +384,8 @@ void enableInterrupts( void )
 void disableInterrupts( void )
 {
 	INTCON1 &= 0b0111111111111111;
+	
+	return;
 }
 
 void enableAlarm( void )
@@ -349,21 +440,30 @@ void enableAlarm( void )
 
 
 	if( percentRem_global != alarm1Energy_global )
+	{
 		silenceAlarmOne_global = 0;
+	}
 	if( percentRem_global != alarm2Energy_global )
+	{
 		silenceAlarmTwo_global = 0;
+	}
 
 	if( ( startNextAlarm == timeSecond_global ) && remainingSets_global )
 	{
 		activeAlarm_global = alarmToResume_global;
 		startAlarm( );
 	}
+	
+	return;
 }
 
 void startAlarm( void )
 {
 	if( menuState_global != MENU_ALARM )
+	{
 		oldMenuState_global = menuState_global;
+	}
+
 	alarmPulse_module = ( timeSecond_global + 1 ) % 2;
 	alarmEnd_module = ( timeSecond_global + ( 2 * numBeeps_module ) ) % 60;
 	menuState_global = MENU_ALARM;
@@ -374,51 +474,12 @@ void startAlarm( void )
 	}
 	resetTimeSecond_global = ( timeSecond_global + 59 ) % 60;
 	resetTimeMinute_global = ( timeMinute_global + 9 ) % 60;
+	
+	return;
 }
-
-void nextDot( void )
-{
-	static char count = 0;
-	commDelay( 15000 );
-	writeToDisplay( ".", 12 + count++, 0 );
-}
-
-//void initDisplayBox( void )
-//{
-//    writeToDisplay( "Initializing", 0, 0 );
-//
-//
-//    //    com_command_readRemoteTime( );
-//    //    nextDot( );
-//    //    debugBacklight( true );
-//    //    com_command_readRemoteEnergyAllocation( );
-//    //    nextDot( );
-//    //    com_command_readRemoteAlarm( );
-//    //    nextDot( );
-//    //    com_command_readRemotePassword( );
-//    //    nextDot( );
-//    //    com_command_readRemoteEmergency( );
-//    //    nextDot( );
-//    //    com_command_readRemoteResetTime( );
-//    //    nextDot( );
-//    //    com_command_readRemoteRelay( );
-//    //    nextDot( );
-//    //    com_command_readRemoteStat( );
-//    //    nextDot( );
-//    //    //    com_command_readRemoteHL( );
-//    //    //    nextDot( );
-//    //    com_command_readRemoteCBver( );
-//    //    nextDot( );
-//    //    com_command_readRemotePowerFailTimes( );
-//    //    //    com_command_readRemotePowerDownUpTime( );
-//    //    nextDot( );
-//}
 
 void periodicUpdate( void )
 {
-	
-	
-	
 	static bool firstRun = true;
 	static int firstRunStep = 0;
 	static bool alreadyRun = false;
@@ -522,34 +583,12 @@ void periodicUpdate( void )
 
 		}
 	}
+	
+	return;
 }
-
-//void checkCommFailure( void )
-//{
-//    if( commError > 90 )
-//    {
-//	// no communication received for 1 minute
-//	// display a message and reboot
-//	if( BACKLIGHT_NORMAL == true )
-//	{
-//	    BACKLIGHT = 1; // turn on backlight
-//	}
-//	writeToDisplay( "System will restart in 15 seconds due toa communication linkproblem.", 0, 80 );
-//	for(;; );
-//    }
-//
-//    if( timeSecond != commErrorTime )
-//    {
-//	commError++;
-//	commErrorTime = timeSecond;
-//    }
-//}
-
-// ignore red error marks (caused by some failure regarding macro definition)
 
 void initRTCCDisplay( void )
 {
-
 	//does unlock sequence to enable write to RTCC, sets RTCWEN
 	__builtin_write_RTCWEN( );
 
@@ -559,28 +598,48 @@ void initRTCCDisplay( void )
 	_RTCEN = 1;
 
 	_RTCWREN = 0; // Disable Writing
+	
+	return;
 }
 
 void initTimer( void )
 {
 
-	// timer 1 is for LCD display
-	T1CON = 0x8030; // timer 1 setting  // 1000 0000  0011 0000
-	PR1 = 0x0500; // 0x2000 is approximately a second
-	//IEC0 = 0b0000000000001000;
-	// 0x0094 is file IEC0. Bit 3 controls timer1 interrupts
-	TMR1 = 0;
-	_T1IE = 1;
-	_T1IF = 0;
+	//	// timer 1 is for LCD display
+	//	T1CON = 0x8030; // timer 1 setting  // 1000 0000  0011 0000
+	//	PR1 = 0x0500; // 0x2000 is approximately a second
+	//	//IEC0 = 0b0000000000001000;
+	//	// 0x0094 is file IEC0. Bit 3 controls timer1 interrupts
+	//	TMR1 = 0;
+	//	_T1IE = 1;
+	//	_T1IF = 0;
 
-	// timer 2 is for button press detection
-	T2CON = 0x8030; // timer 2 setting
-	PR2 = 0x0100; // 0x2000 is approximately a second
-	//IEC0 = 0b0000000000001000;
-	// 0x0094 is file IEC0. Bit 3 controls timer2 interrupts
-	TMR2 = 0;
-	_T2IE = 1;
-	_T2IF = 0;
+
+	IEC0bits.T1IE = 0; // disable timer 1 interrupt
+	T1CON = 0; // disable and reset timer to known state
+
+	//	msTimer_module = 0;
+
+	T1CONbits.TCS = 0; // use the instruction cycle clock
+	T1CONbits.T1ECS = 0b00; // use LPRC and clock source
+	T1CONbits.TGATE = 0; // disable gated timer
+	T1CONbits.TCKPS = 0b00; // select 1:256 prescalar
+	T1CONbits.TSYNC = 0; // sync external clock input
+	TMR1 = 0; // clear the timer register
+
+	// set timer to tick at predictable rate using MACRO
+
+	PR1 = ( FCY / 1000 ) - 1; // interrupt at 1ms interval (note the -1, this is to )
+	//	PR1 = 10416U; // interrupt at 1ms interval (note the -1, this is to )
+	// always load TIME -1 to make timer more accurate - one count is added due to timer internals
+	//  16Mhz = 16,000,000   / 1000   = 16,000.  If at 16Mhz we interval every 16,000 clock cycles we get 1ms timer
+
+	IPC0bits.T1IP = 0x04; // interrupt priority level
+	IFS0bits.T1IF = 0; // clear timer interrupt flag
+	IEC0bits.T1IE = 1; // enable interrupt
+	T1CONbits.TON = 1; // enable timer
+
+	return;
 }
 
 /* writeClockStrings
@@ -608,6 +667,8 @@ void writeClockStrings( void )
 
 
 	calendarStr_global[8] = clockStr_global[5] = 0;
+	
+	return;
 }
 
 void writeTempClockStrings( void )
@@ -654,16 +715,42 @@ void writeTempClockStrings( void )
 			tempCalStr_global[10] = 0x7E;
 			tempCalStr_global[13] = 0x7F;
 	}
+	
+	return;
 }
 
 /* Interrupts *****************************************************************/
 
-/* Timer 2 Interrupt
- * Detects button presses
+/* Timer 1 Interrupt
+ * Updates the display with changes made to the nextDisplay array
+ * Updates currentDisplay array with what is now on the display
+ * Only changes lines that are different between nextDisplay and currentDisplay
  */
-void __attribute__( ( interrupt, no_auto_psv ) ) _T2Interrupt( void )
+void __attribute__( ( interrupt, no_auto_psv ) ) _T1Interrupt( void )
 {
+	TMR1 = 0; // reset the accumulator
+	IFS0bits.T1IF = 0; // reset the interrupt flag
 
+	// timer is designed to interrupt at 0.001s (1ms)
+
+	// the following variable must be declared as 'volatile'
+	// this means the value can change unexpectedly, even in the middle
+	// of an operation with the variable
+	// because this interrupt can trigger at any time
+	msTimer_module++; // increment every 1ms
+
+	// control our timer rollover to prevent overflow
+	// not critical that we do this, but it is more controlled than an overflow
+	if( msTimer_module >= 4000000000 )
+	{
+		msTimer_module = 0;
+	}
+
+	return;
+}
+
+void dispButtonPress( void )
+{
 	// clear flag in main loop code by setting to a value other than 0 or 1
 	// pressed = 1
 	// pressed and resolved = 2?
@@ -733,15 +820,9 @@ void __attribute__( ( interrupt, no_auto_psv ) ) _T2Interrupt( void )
 			BACKLIGHT = 0; // turn on backlight
 		}
 	}
-
-	_T2IF = 0; // clear interrupt flag
+	
+	return;
 }
-
-
-
-
-
-//
 
 void debugBacklightToggle( )
 {
@@ -782,7 +863,7 @@ void debugBacklightFlash( int timeOn )
 	if( BACKLIGHT_NORMAL == false )
 	{
 		BACKLIGHT = 1;
-		delayMS( timeOn );
+		__delay_ms( timeOn );
 		BACKLIGHT = 0;
 	}
 
