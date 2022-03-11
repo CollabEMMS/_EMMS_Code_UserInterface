@@ -2421,8 +2421,6 @@ void calcTimeRemaining( void )
 
 void dispUpdate( void )
 {
-	debugBacklightToggle( );
-
 	unsigned char i, j, k;
 
 	// loop through each line
