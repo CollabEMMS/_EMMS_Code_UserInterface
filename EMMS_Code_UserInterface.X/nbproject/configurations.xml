@@ -7,7 +7,6 @@
       <itemPath>common.h</itemPath>
       <itemPath>Communications.h</itemPath>
       <itemPath>DisplayRTCC.h</itemPath>
-      <itemPath>Delays.h</itemPath>
       <itemPath>DisplayMenu.h</itemPath>
       <itemPath>DisplayMain.h</itemPath>
       <itemPath>DisplayMenuMacros.h</itemPath>
@@ -23,7 +22,6 @@
       <itemPath>DisplayConfiguration.c</itemPath>
       <itemPath>DisplayMenu.c</itemPath>
       <itemPath>DisplayRTCC.c</itemPath>
-      <itemPath>Delays.c</itemPath>
       <itemPath>-CL-UserInterface.txt</itemPath>
       <itemPath>Communications.c</itemPath>
     </logicalFolder>

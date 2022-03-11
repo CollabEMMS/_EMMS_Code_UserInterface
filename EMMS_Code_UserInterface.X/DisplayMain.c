@@ -9,7 +9,6 @@
 #include "DisplayRTCC.h"
 #include "DisplayMenu.h"
 #include "DisplayMenuMacros.h"
-#include "Delays.h"
 
 /****************
  MACROS
@@ -62,6 +61,7 @@ void enablePullDownResistors( void );
 void enableInterrupts( void );
 
 void initVars( void );
+void periodicDataUpdate( void );
 
 void periodicUpdate( void );
 //void initDisplayBox( void );
@@ -141,13 +141,31 @@ int main( void )
 		{
 			static bool oneShot = false;
 
+			if( ( msTimer_module % 50 ) <= ONESHOT_WINDOW )
+			{
+				if( oneShot == false )
+				{
+					oneShot = true;
+					periodicDataUpdate( );
+				}
+			}
+			else
+			{
+				oneShot = false;
+			}
+		}
+
+
+		// oneShot
+		{
+			static bool oneShot = false;
+
 			if( ( msTimer_module % 200 ) <= ONESHOT_WINDOW )
 			{
 				if( oneShot == false )
 				{
 					oneShot = true;
 					rtccReadTime( );
-					periodicUpdate( );
 					calcPercentRem( );
 					calcTimeRemaining( );
 					enableAlarm( );
@@ -184,7 +202,6 @@ int main( void )
 /* init_defaults
  Initializes default values into variables
  */
-
 
 /* init
  * Calls each individual initialization method
@@ -306,7 +323,7 @@ void initVars( void )
 	tempResetMinute_global = 0;
 
 	relayMode_global = 0; // default to show relay is in off mode
-	
+
 	return;
 }
 
@@ -335,7 +352,7 @@ void initPorts( void )
 
 	// disable int0 interrupt, just in case it initializes enabled
 	_INT0IE = 0;
-	
+
 	return;
 }
 
@@ -364,7 +381,7 @@ void enablePullDownResistors( void )
 	//_CN11PDE = 1;// pin 18
 	// pin 19 is Vss
 	// pin 20 is Vdd
-	
+
 	return;
 }
 
@@ -374,7 +391,7 @@ void enablePullDownResistors( void )
 void enableInterrupts( void )
 {
 	INTCON1 |= 0b1000000000000000;
-	
+
 	return;
 }
 
@@ -384,7 +401,7 @@ void enableInterrupts( void )
 void disableInterrupts( void )
 {
 	INTCON1 &= 0b0111111111111111;
-	
+
 	return;
 }
 
@@ -453,7 +470,7 @@ void enableAlarm( void )
 		activeAlarm_global = alarmToResume_global;
 		startAlarm( );
 	}
-	
+
 	return;
 }
 
@@ -474,116 +491,121 @@ void startAlarm( void )
 	}
 	resetTimeSecond_global = ( timeSecond_global + 59 ) % 60;
 	resetTimeMinute_global = ( timeMinute_global + 9 ) % 60;
-	
+
 	return;
 }
 
-void periodicUpdate( void )
+void periodicDataUpdate( void )
 {
-	static bool firstRun = true;
-	static int firstRunStep = 0;
-	static bool alreadyRun = false;
-	// every x seconds run one of the init requests
-	// when last request is run we will make it work
+	// need to limit how much can be put into send buffer during one call of this function
 
-	if( firstRun == true )
+
+	// each time this is called we should ask for a new data item.
+	// data to read
+	//		ITEM					FREQUENCY
+	//*		statistics				1
+	//*		module info				1
+	//*		power fail times		1
+	//*		date/time				2
+	//*		energy allocation		2
+	//*		alarm info				2
+	//*		password				2
+	//*		emergency button		2
+	//*		reset time				2
+	//*		relay control			3
+	//*		Power Data				3
+
+	static int messageCounterMain = 0;
+	static int messageCounterRateLow = 0;
+	static int messageCounterRateMedium = 0;
+	static int messageCounterRateHigh = 0;
+
+	if( commBufferEmpty( ) == true )
 	{
-		if( ( timeSecond_global % 2 ) == 0 )
+		messageCounterMain++;
+		if( messageCounterMain >= 1000 )
 		{
-			if( alreadyRun == false )
+			messageCounterMain = 0;
+		}
+
+		// send some messages at a slower rate
+		// this allows the higher priority messages to be sent more often
+
+		if( ( messageCounterMain % 10 ) == 0 )
+		{
+			messageCounterRateLow++;
+
+			switch( messageCounterRateLow )
 			{
-				alreadyRun = true;
+				case 0:
+					// never happens
+					break;
+				case 1:
+					com_command_readRemoteStat( );
+					break;
+				case 2:
+					com_command_readRemoteCBver( );
+					break;
+				case 3:
+					com_command_readRemotePowerFailTimes( );
+					break;
+				default:
+					messageCounterRateHigh = 0;
+			}
+		}
+		else if( ( messageCounterMain % 5 ) == 0 )
+		{
+			messageCounterRateMedium++;
 
-				firstRunStep++;
-				switch( firstRunStep )
-				{
-					case 1:
-						com_command_readRemoteTime( );
-						break;
-					case 2:
-						com_command_readRemoteEnergyAllocation( );
-						break;
-					case 3:
-						com_command_readRemoteAlarm( );
-						break;
-					case 4:
-						com_command_readRemotePassword( );
-						break;
-					case 5:
-						com_command_readRemoteEmergency( );
-						break;
-					case 6:
-						com_command_readRemoteResetTime( );
-						break;
-					case 7:
-						com_command_readRemoteRelay( );
-						break;
-					case 8:
-						com_command_readRemoteStat( );
-						break;
-					case 9:
-						com_command_readRemoteCBver( );
-						break;
-					case 10:
-						com_command_readRemotePowerFailTimes( );
-						break;
-					default:
-						firstRun = false;
-						break;
-				}
+			switch( messageCounterRateMedium )
+			{
+				case 0:
+					// never happens
+					break;
+				case 1:
+					com_command_readRemoteTime( );
+					break;
+				case 2:
+					com_command_readRemoteEnergyAllocation( );
+					break;
+				case 3:
+					com_command_readRemoteAlarm( );
+					break;
+				case 4:
+					com_command_readRemotePassword( );
+					break;
+				case 5:
+					com_command_readRemoteEmergency( );
+					break;
+				case 6:
+					com_command_readRemoteResetTime( );
+					break;
+				case 7:
+					com_command_readRemoteRelay( );
+					break;
 
+				default:
+					messageCounterRateMedium = 0;
 			}
 		}
 		else
 		{
-			alreadyRun = false;
+			messageCounterRateHigh++;
+
+			switch( messageCounterRateHigh )
+			{
+				case 0:
+					// never happens
+					break;
+				case 1:
+					com_command_readRemotePowerData( );
+					break;
+				default:
+					messageCounterRateHigh = 0;
+			}
 		}
 	}
-	else
-	{
 
-		static char lastPowerSecond = 0,
-				lastOtherSecond = 0;
-
-		//FIX
-		// problem here is that the commands get tripped over
-		// seems like the power and time get scrambled when both
-		// are run at the same time
-		// likely due to receiving commands and the buffer running on while it is being processed
-
-		if( enablePeriodicUpdate_global )
-		{
-			// Refresh power every second
-			if( timeSecond_global != lastPowerSecond )
-			{
-				com_command_readRemotePowerData( );
-				lastPowerSecond = timeSecond_global;
-			}
-			// Refresh time and other settings every 10 seconds
-			if( ( ( timeSecond_global % 10 ) == 0 ) && ( timeSecond_global != lastOtherSecond ) )
-			{
-				com_command_readRemoteTime( );
-				rtccReadTime( );
-				lastOtherSecond = timeSecond_global;
-			}
-		}
-		else
-		{
-			// Keep checking, but only every 10 seconds
-			if( timeSecond_global % 10 == 0 && timeSecond_global != lastPowerSecond )
-			{
-				com_command_readRemotePowerData( );
-				lastPowerSecond = timeSecond_global;
-			}
-		}
-
-		if( timeSecond_global % 60 == 0 )
-		{
-			// here we should grab all or most of the parameters so that we keep up to date
-
-		}
-	}
-	
 	return;
 }
 
@@ -598,7 +620,7 @@ void initRTCCDisplay( void )
 	_RTCEN = 1;
 
 	_RTCWREN = 0; // Disable Writing
-	
+
 	return;
 }
 
@@ -667,7 +689,7 @@ void writeClockStrings( void )
 
 
 	calendarStr_global[8] = clockStr_global[5] = 0;
-	
+
 	return;
 }
 
@@ -715,7 +737,7 @@ void writeTempClockStrings( void )
 			tempCalStr_global[10] = 0x7E;
 			tempCalStr_global[13] = 0x7F;
 	}
-	
+
 	return;
 }
 
@@ -820,7 +842,7 @@ void dispButtonPress( void )
 			BACKLIGHT = 0; // turn on backlight
 		}
 	}
-	
+
 	return;
 }
 

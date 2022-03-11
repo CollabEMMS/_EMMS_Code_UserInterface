@@ -7,7 +7,6 @@
 
 #include "Communications.h"
 #include "DisplayRTCC.h"
-#include "Delays.h"
 #include "DisplayMenuMacros.h"
 #include "DisplayMain.h"
 
@@ -2422,8 +2421,6 @@ void calcTimeRemaining( void )
 
 void dispUpdate( void )
 {
-	debugBacklightToggle( );
-
 	unsigned char i, j, k;
 
 	// loop through each line

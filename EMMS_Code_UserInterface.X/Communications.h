@@ -57,5 +57,7 @@ void com_command_readRemoteEnergy( void );
 
 void com_command_doReset( void );
 
+bool commBufferEmpty( void );
+
 #endif
 

@@ -9,12 +9,11 @@
 #include "DisplayMain.h"
 #include "DisplayMenu.h"
 #include "DisplayRTCC.h"
-#include "Delays.h"
 
 /****************
  MACROS
  ****************/
-#define BAUD_UART2 9600
+#define BAUD_UART2 19200
 
 #define BUFFER_LENGTH 250
 
@@ -977,50 +976,29 @@ bool send_data( struct buffer_struct * send_buffer )
 {
 	bool send_end;
 
-
 	if( send_buffer->read_position == send_buffer->write_position )
 	{
 		send_end = true;
 		UART_send_data_char( '\0' );
+		send_buffer->read_position = 0;
+		send_buffer->write_position = 0;
 	}
 	else
 	{
 		send_end = false;
 
-
-		// after end command character, wait until next second before sending next data
-
 		char data;
-		static unsigned char waitSecond;
-		static bool wait = false;
 
 		data = send_buffer->data_buffer[send_buffer->read_position];
 
-		if( wait != true )
+		if( UART_send_data_char( data ) == true )
 		{
-			if( UART_send_data_char( data ) == true )
+			send_buffer->read_position++;
+			if( send_buffer->read_position >= BUFFER_LENGTH )
 			{
-				__delay_ms( 5 );
-				send_buffer->read_position++;
-				if( send_buffer->read_position >= BUFFER_LENGTH )
-				{
-					send_buffer->read_position = 0;
-				}
+				send_buffer->read_position = 0;
 			}
 		}
-
-		if( timeSecond_global != waitSecond )
-		{
-			wait = false;
-		}
-
-		if( data == COMMAND_END_CHAR )
-		{
-			waitSecond = timeSecond_global;
-			wait = true;
-		}
-
-
 	}
 
 	return send_end;
@@ -1195,6 +1173,26 @@ void send_end_of_transmission( struct buffer_struct *send_buffer )
 	return;
 }
 
+bool commBufferEmpty( void )
+{
+	bool bufferEmpty;
+
+	struct buffer_struct *send_buffer;
+
+	send_buffer = command_builder_external_helper( false, NULL );
+
+	if( send_buffer->read_position == send_buffer->write_position )
+	{
+		bufferEmpty = true;
+	}
+	else
+	{
+		bufferEmpty = false;
+	}
+
+	return bufferEmpty;
+}
+
 void com_command_readRemoteTime( void )
 {
 	struct buffer_struct *send_buffer;
@@ -1219,6 +1217,7 @@ void com_command_setRemoteTime( void )
 
 	send_buffer = command_builder_external_helper( false, NULL );
 
+	setRemoteTime( send_buffer );
 	setRemoteTime( send_buffer );
 
 	return;
@@ -1281,7 +1280,7 @@ void setRemoteTime( struct buffer_struct *send_buffer )
 	//    delayMS( 2500 );
 
 	command_builder4( send_buffer, "Set", "Time", timeDateBuf, timeTimeBuf );
-	
+
 	return;
 }
 
@@ -1310,6 +1309,7 @@ void com_command_setRemoteEnergyAllocation( void )
 	send_buffer = command_builder_external_helper( false, NULL );
 
 	setRemoteEnergyAllocation( send_buffer );
+	setRemoteEnergyAllocation( send_buffer );
 
 	return;
 }
@@ -1331,6 +1331,7 @@ void com_command_setRemoteAllocationAdd( void )
 
 	send_buffer = command_builder_external_helper( false, NULL );
 
+	setRemoteAllocationAdd( send_buffer );
 	setRemoteAllocationAdd( send_buffer );
 
 	return;
@@ -1371,6 +1372,7 @@ void com_command_setRemoteAlarm( void )
 
 	send_buffer = command_builder_external_helper( false, NULL );
 
+	setRemoteAlarm( send_buffer );
 	setRemoteAlarm( send_buffer );
 
 	return;
@@ -1429,6 +1431,7 @@ void com_command_setRemotePassword( void )
 	send_buffer = command_builder_external_helper( false, NULL );
 
 	setRemotePassword( send_buffer );
+	setRemotePassword( send_buffer );
 
 	return;
 }
@@ -1475,6 +1478,7 @@ void com_command_setRemoteEmergency( void )
 	send_buffer = command_builder_external_helper( false, NULL );
 
 	setRemoteEmergency( send_buffer );
+	setRemoteEmergency( send_buffer );
 
 	return;
 }
@@ -1516,6 +1520,7 @@ void com_command_setRemoteResetTime( void )
 
 	send_buffer = command_builder_external_helper( false, NULL );
 
+	setRemoteResetTime( send_buffer );
 	setRemoteResetTime( send_buffer );
 
 	return;
@@ -1566,6 +1571,7 @@ void com_command_setRemoteRelay( void )
 
 	send_buffer = command_builder_external_helper( false, NULL );
 
+	setRemoteRelay( send_buffer );
 	setRemoteRelay( send_buffer );
 
 	return;
@@ -1715,7 +1721,7 @@ void initUART( void )
 	// without really knowing it
 	unsigned long tempBaud;
 
-	
+
 	tempBaud = BAUD_UART2 * 16ul; // must explicitly make unsigned long
 	tempBaud = FCY / tempBaud;
 	tempBaud = tempBaud - 1;
@@ -1794,7 +1800,7 @@ void __attribute__( ( __interrupt__, __no_auto_psv__ ) ) _U2RXInterrupt( void )
 	}
 
 	_U2RXIF = 0; // clear interrupt flag
-	
+
 	return;
 }
 
@@ -1808,6 +1814,6 @@ void __attribute__( ( __interrupt__, __no_auto_psv__ ) ) _U2ErrInterrupt( void )
 	U2STAbits.OERR = 0;
 
 	_U2ERIF = 0; // clear error interrupt flag
-	
+
 	return;
 }
