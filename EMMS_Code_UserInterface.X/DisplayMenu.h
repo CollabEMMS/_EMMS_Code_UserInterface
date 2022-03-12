@@ -2,9 +2,9 @@
 #define	DISPLAYMENU_H
 
 
-extern char audibleAlarm_global;
-extern char alarm1Enabled_global;
-extern char alarm2Enabled_global;
+extern bool audibleAlarm_global;
+extern bool alarm1Enabled_global;
+extern bool alarm2Enabled_global;
 extern char alarm1Energy_global;
 extern char alarm2Energy_global;
 
@@ -24,7 +24,7 @@ extern char relayMode_global;
 //extern char relayModeTemp_global;
 
 // not sorted yet
-extern char emerButtonEnable_global;
+extern bool emerButtonEnable_global;
 extern int emerButtonEnergyAllocate_global;
 extern int tempResetHour_global;
 extern int tempResetMinute_global;
@@ -36,7 +36,7 @@ extern char powerBoxCodeVersionString_global[9];
 
 extern unsigned char menuState_global;
 extern unsigned char oldMenuState_global;
-extern unsigned char enablePeriodicUpdate_global;
+extern bool enablePeriodicUpdate_global;
 
 extern char activeAlarm_global;
 extern char silenceAlarmOne_global;
@@ -47,7 +47,7 @@ extern char remainingSets_global;
 
 extern unsigned long powerLoad_global;
 extern unsigned long energyUsed_global;
-extern long energyAllocated_global;
+extern unsigned long energyAllocated_global;
 
 extern char percentRem_global;
 
