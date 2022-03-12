@@ -77,7 +77,7 @@ volatile unsigned char uartBufferLargeCount_module = 0;
 // internal
 
 bool checkOnOff( char *toCheck );
-void fillOnOff( char *buf, int checkValue );
+void fillOnOff( char *buf, bool checkValue );
 void zeroPad_itoa( char *output, int num, int minDigits );
 
 void readRemoteTime( struct buffer_struct *send_buffer );
@@ -85,7 +85,6 @@ void setRemoteTime( struct buffer_struct *send_buffer );
 
 void readRemoteAlarm( struct buffer_struct *send_buffer );
 void setRemoteAlarm( struct buffer_struct *send_buffer );
-
 
 
 void readRemotePassword( struct buffer_struct *send_buffer );
@@ -137,7 +136,7 @@ bool UART_send_data_char( char data );
 
 bool strmatch( char* a, char* b );
 int strcmp2( char* a, char* b );
-void strcpy2( char* rcv, char* source );
+void strcpy2( char* dest, char* source );
 
 void initUART( void );
 
@@ -519,37 +518,12 @@ bool process_data_parameters( char parameters[PARAMETER_MAX_COUNT][PARAMETER_MAX
 			//5	    alarmTwoEnabledBuf On Off;
 			//6	    alarmTwoEnabledBuf INT;
 
-			if( checkOnOff( parameters[2] ) == true )
-			{
-				audibleAlarm_global = 1;
-			}
-			else
-			{
-				audibleAlarm_global = 0;
-			}
+			audibleAlarm_global = checkOnOff( parameters[2] );
 
-
-			if( checkOnOff( parameters[3] ) == true )
-			{
-				alarm1Enabled_global = 1;
-			}
-			else
-			{
-				alarm1Enabled_global = 0;
-			}
-
+			alarm1Enabled_global = checkOnOff( parameters[3] );
 			alarm1Energy_global = atoi( parameters[4] );
 
-
-			if( checkOnOff( parameters[5] ) == true )
-			{
-				alarm2Enabled_global = 1;
-			}
-			else
-			{
-				alarm2Enabled_global = 0;
-			}
-
+			alarm2Enabled_global = checkOnOff( parameters[5] );
 			alarm2Energy_global = atoi( parameters[6] );
 
 			command_builder2( send_buffer, "Conf", "Alarm" );
@@ -569,15 +543,7 @@ bool process_data_parameters( char parameters[PARAMETER_MAX_COUNT][PARAMETER_MAX
 		}
 		else if( strmatch( parameters[1], "Emer" ) == true )
 		{
-
-			if( checkOnOff( parameters[2] ) == true )
-			{
-				emerButtonEnable_global = true;
-			}
-			else
-			{
-				emerButtonEnable_global = false;
-			}
+			emerButtonEnable_global = checkOnOff( parameters[2] );
 
 			emerButtonEnergyAllocate_global = atoi( parameters[3] );
 
@@ -698,10 +664,6 @@ bool process_data_parameters( char parameters[PARAMETER_MAX_COUNT][PARAMETER_MAX
 			//meterEnergyUsed = atol( parameters[2] );
 			//	    com_command_setEnergyUsed( send_buffer );
 		}
-
-
-		//meterEnergyUsed
-
 	}
 	else if( strmatch( parameters[0], "Read" ) == true )
 	{
@@ -729,7 +691,6 @@ bool process_data_parameters( char parameters[PARAMETER_MAX_COUNT][PARAMETER_MAX
 		{
 			setRemoteRelay( send_buffer );
 		}
-		// nothing to read right now
 	}
 	else if( strmatch( parameters[0], "Data" ) == true )
 	{
@@ -1052,6 +1013,22 @@ int strcmp2( char* a, char* b )
 	return match;
 }
 
+void strcpy2( char* dest, char* source )
+{
+	// make sure there is a null termination
+	// make sure not to run out of bounds - there is no checking here
+
+	while( *source != CHAR_NULL )
+	{
+		*dest = *source;
+		dest++;
+		source++;
+	}
+	*dest = CHAR_NULL;
+
+	return;
+}
+
 bool checkOnOff( char *toCheck )
 {
 	bool isOn = false;
@@ -1068,9 +1045,9 @@ bool checkOnOff( char *toCheck )
 	return isOn;
 }
 
-void fillOnOff( char *buf, int checkValue )
+void fillOnOff( char *buf, bool checkValue )
 {
-	if( checkValue == 0 )
+	if( checkValue == false )
 	{
 		buf[0] = 'O';
 		buf[1] = 'f';

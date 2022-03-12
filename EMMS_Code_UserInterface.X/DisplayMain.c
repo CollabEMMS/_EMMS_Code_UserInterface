@@ -18,9 +18,14 @@
 #define BTN_2       _RB4    // Pin 9:  RB4
 #define BTN_3       _RA4    // Pin 10: RA4
 
+#define BUZZER_PIN	_RB7
+
 // Time window where the oneshots can occur
 // sometimes the program main loop takes more than 1 ms to run and we can inadvertantly skip if we are lookng for an exact match
 #define ONESHOT_WINDOW 25
+
+#define BACKLIGHT_TIMEOUT_MINUTES 5
+
 
 /****************
  VARIABLES
@@ -96,7 +101,7 @@ int main( void )
 
 	communications( true );
 
-	enablePeriodicUpdate_global = 1;
+	enablePeriodicUpdate_global = true;
 
 	while( true )
 	{
@@ -257,10 +262,6 @@ void initOscillator( void )
  */
 void initVars( void )
 {
-	resetTimeSecond_global = 59;
-	resetTimeMinute_global = 9;
-	resetTimeHour_global = 8;
-
 	powerDownTime_global[0] = ' ';
 	powerDownTime_global[1] = ' ';
 	powerDownTime_global[2] = 'N';
@@ -303,9 +304,9 @@ void initVars( void )
 	powerBoxCodeVersionString_global[8] = CHAR_NULL;
 
 
-	audibleAlarm_global = 0;
-	alarm1Enabled_global = 0;
-	alarm2Enabled_global = 0;
+	audibleAlarm_global = false;
+	alarm1Enabled_global = false;
+	alarm2Enabled_global = false;
 	alarm1Energy_global = 0;
 	alarm2Energy_global = 0;
 	activeAlarm_global = 0;
@@ -416,18 +417,16 @@ void enableAlarm( void )
 		alarmOneHit_global = alarmTwoHit_global = 0;
 	}
 
-	if( alarm1Energy_global && ( percentRem_global <= alarm1Energy_global ) && !alarmOneHit_global && !silenceAlarmOne_global && !activeAlarm_global && !alarmToResume_global )
+	if( ( alarm1Enabled_global == true ) && ( percentRem_global <= alarm1Energy_global ) && !alarmOneHit_global && !silenceAlarmOne_global && !activeAlarm_global && !alarmToResume_global )
 	{
-
 		remainingSets_global = numSets_module;
 		activeAlarm_global = 1;
 		alarmOneHit_global = 1;
 		startAlarm( );
 
 	}
-	else if( alarm2Energy_global && ( percentRem_global <= alarm2Energy_global ) && !alarmTwoHit_global && !silenceAlarmTwo_global && !activeAlarm_global && !alarmToResume_global )
+	else if( ( alarm2Enabled_global == true ) && ( percentRem_global <= alarm2Energy_global ) && !alarmTwoHit_global && !silenceAlarmTwo_global && !activeAlarm_global && !alarmToResume_global )
 	{
-
 		remainingSets_global = numSets_module;
 		activeAlarm_global = 2;
 		alarmTwoHit_global = 1;
@@ -438,7 +437,7 @@ void enableAlarm( void )
 	{
 		alarmToResume_global = activeAlarm_global;
 		activeAlarm_global = 0;
-		_RB7 = 0;
+		BUZZER_PIN = 0;
 
 		if( remainingSets_global )
 		{
@@ -446,13 +445,13 @@ void enableAlarm( void )
 			remainingSets_global--;
 		}
 	}
-	else if( audibleAlarm_global && activeAlarm_global && ( ( timeSecond_global % 2 ) == alarmPulse_module ) )
+	else if( ( audibleAlarm_global == true ) && activeAlarm_global && ( ( timeSecond_global % 2 ) == alarmPulse_module ) )
 	{
-		_RB7 = 1;
+		BUZZER_PIN = 1;
 	}
 	else
 	{
-		_RB7 = 0;
+		BUZZER_PIN = 0;
 	}
 
 
@@ -550,42 +549,45 @@ void periodicDataUpdate( void )
 					com_command_readRemotePowerFailTimes( );
 					break;
 				default:
-					messageCounterRateHigh = 0;
+					messageCounterRateLow = 0;
 			}
 		}
 		else if( ( messageCounterMain % 5 ) == 0 )
 		{
-			messageCounterRateMedium++;
-
-			switch( messageCounterRateMedium )
+			if( enablePeriodicUpdate_global == true )
 			{
-				case 0:
-					// never happens
-					break;
-				case 1:
-					com_command_readRemoteTime( );
-					break;
-				case 2:
-					com_command_readRemoteEnergyAllocation( );
-					break;
-				case 3:
-					com_command_readRemoteAlarm( );
-					break;
-				case 4:
-					com_command_readRemotePassword( );
-					break;
-				case 5:
-					com_command_readRemoteEmergency( );
-					break;
-				case 6:
-					com_command_readRemoteResetTime( );
-					break;
-				case 7:
-					com_command_readRemoteRelay( );
-					break;
+				messageCounterRateMedium++;
 
-				default:
-					messageCounterRateMedium = 0;
+				switch( messageCounterRateMedium )
+				{
+					case 0:
+						// never happens
+						break;
+					case 1:
+						com_command_readRemoteTime( );
+						break;
+					case 2:
+						com_command_readRemoteEnergyAllocation( );
+						break;
+					case 3:
+						com_command_readRemoteAlarm( );
+						break;
+					case 4:
+						com_command_readRemotePassword( );
+						break;
+					case 5:
+						com_command_readRemoteEmergency( );
+						break;
+					case 6:
+						com_command_readRemoteResetTime( );
+						break;
+					case 7:
+						com_command_readRemoteRelay( );
+						break;
+
+					default:
+						messageCounterRateMedium = 0;
+				}
 			}
 		}
 		else
@@ -773,6 +775,20 @@ void __attribute__( ( interrupt, no_auto_psv ) ) _T1Interrupt( void )
 
 void dispButtonPress( void )
 {
+	static int backlightOutTimeSecond;
+	static int backlightOutTimeMinute;
+
+	static bool firstRun = true;
+
+	if( firstRun == true )
+	{
+		firstRun = false;
+
+		backlightOutTimeSecond = timeSecond_global;
+		backlightOutTimeMinute = ( timeMinute_global + BACKLIGHT_TIMEOUT_MINUTES ) % 60;
+	}
+
+
 	// clear flag in main loop code by setting to a value other than 0 or 1
 	// pressed = 1
 	// pressed and resolved = 2?
@@ -785,8 +801,8 @@ void dispButtonPress( void )
 		else if( !button3Flag_global )
 		{// && _RA3 == 1
 			button3Flag_global = 1;
-			resetTimeSecond_global = ( timeSecond_global + 59 ) % 60;
-			resetTimeMinute_global = ( timeMinute_global + 9 ) % 60;
+			backlightOutTimeSecond = timeSecond_global;
+			backlightOutTimeMinute = ( timeMinute_global + BACKLIGHT_TIMEOUT_MINUTES ) % 60;
 		}
 
 		// _RB4 is pin 9
@@ -795,8 +811,8 @@ void dispButtonPress( void )
 		else if( !button2Flag_global )
 		{// && _RB8 == 1
 			button2Flag_global = 1;
-			resetTimeSecond_global = ( timeSecond_global + 59 ) % 60;
-			resetTimeMinute_global = ( timeMinute_global + 9 ) % 60;
+			backlightOutTimeSecond = timeSecond_global;
+			backlightOutTimeMinute = ( timeMinute_global + BACKLIGHT_TIMEOUT_MINUTES ) % 60;
 		}
 
 		// _RA3 is pin 8
@@ -805,8 +821,8 @@ void dispButtonPress( void )
 		else if( !button1Flag_global )
 		{// && _RA4 == 1
 			button1Flag_global = 1;
-			resetTimeSecond_global = ( timeSecond_global + 59 ) % 60;
-			resetTimeMinute_global = ( timeMinute_global + 9 ) % 60;
+			backlightOutTimeSecond = timeSecond_global;
+			backlightOutTimeMinute = ( timeMinute_global + BACKLIGHT_TIMEOUT_MINUTES ) % 60;
 		}
 
 		// _RA2 is pin 7
@@ -815,8 +831,8 @@ void dispButtonPress( void )
 		else if( !button0Flag_global )
 		{// && _RB4 == 1
 			button0Flag_global = 1;
-			resetTimeSecond_global = ( timeSecond_global + 59 ) % 60;
-			resetTimeMinute_global = ( timeMinute_global + 9 ) % 60;
+			backlightOutTimeSecond = timeSecond_global;
+			backlightOutTimeMinute = ( timeMinute_global + BACKLIGHT_TIMEOUT_MINUTES ) % 60;
 		}
 	}
 
@@ -830,16 +846,21 @@ void dispButtonPress( void )
 		button1Flag_global = 2;
 		button2Flag_global = 2;
 		button3Flag_global = 2;
-		resetTimeSecond_global = ( timeSecond_global + 59 ) % 60;
-		resetTimeMinute_global = ( timeMinute_global + 9 ) % 60;
+		backlightOutTimeSecond = timeSecond_global;
+		backlightOutTimeMinute = ( timeMinute_global + BACKLIGHT_TIMEOUT_MINUTES ) % 60;
 	}
 
-	if( ( timeMinute_global == resetTimeMinute_global ) && ( timeSecond_global == resetTimeSecond_global ) && ( ( menuState_global != MENU_ALARM ) || ( ( menuState_global == MENU_ALARM ) && ( remainingSets_global == 0 ) ) ) && ( menuState_global != MENU_DEBUG ) && ( !isBooting_global ) )
+	if(
+	 ( timeMinute_global == backlightOutTimeMinute ) && ( timeSecond_global == backlightOutTimeSecond )
+	 && ( ( menuState_global != MENU_ALARM ) || ( ( menuState_global == MENU_ALARM ) && ( remainingSets_global == 0 ) ) )
+	 && ( menuState_global != MENU_DEBUG )
+	 && ( !isBooting_global )
+	 )
 	{
 		menuState_global = MENU_HOME_BASIC;
 		if( BACKLIGHT_NORMAL == true )
 		{
-			BACKLIGHT = 0; // turn on backlight
+			BACKLIGHT = 0; // turn off backlight
 		}
 	}
 
