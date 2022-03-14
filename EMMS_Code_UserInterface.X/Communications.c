@@ -23,7 +23,7 @@
 
 
 #define PARAMETER_MAX_COUNT 7
-#define PARAMETER_MAX_LENGTH 15
+#define PARAMETER_MAX_LENGTH 20
 
 //#define CHAR_NULL '\0'
 #define COMMAND_SEND_RECEIVE_PRIMER_CHAR '#' // something to run the SPI clock so data can be received
@@ -79,6 +79,9 @@ volatile unsigned char uartBufferLargeCount_module = 0;
 bool checkOnOff( char *toCheck );
 void fillOnOff( char *buf, bool checkValue );
 void zeroPad_itoa( char *output, int num, int minDigits );
+
+void setModuleInfoThis( struct buffer_struct *send_buffer, int moduleInfoIndex );
+void readModuleInfo( struct buffer_struct *send_buffer, unsigned char moduleNumber, unsigned char moduleInfoNumber );
 
 void readRemoteTime( struct buffer_struct *send_buffer );
 void setRemoteTime( struct buffer_struct *send_buffer );
@@ -664,6 +667,65 @@ bool process_data_parameters( char parameters[PARAMETER_MAX_COUNT][PARAMETER_MAX
 			//meterEnergyUsed = atol( parameters[2] );
 			//	    com_command_setEnergyUsed( send_buffer );
 		}
+		else if( strmatch( parameters[1], "ModInfo" ) == true )
+		{
+			// !Set;Mod;X;Y;____$xsum*
+			//	parameter 0 = Set
+			//	parameter 1 = Mod
+			//	parameter 2 = X module number
+			//				-1 for CB to make determination
+			//				-1 is invalid here and will be ignored if this is not the CB
+			//	parameter 3 = Y info number (0 to 4))
+			//	parameter 4 = info text
+
+			bool commandGood;
+			int moduleNumber;
+			int moduleInfoNumber;
+
+			moduleNumber = atoi( parameters[2] );
+			moduleInfoNumber = atoi( parameters[3] );
+
+			commandGood = false;
+
+			if( ( moduleNumber >= 0 ) && ( moduleNumber < MODULE_COUNT ) )
+			{
+				switch( moduleInfoNumber )
+				{
+					case 0:
+						strcpy2( moduleInfo_global[moduleNumber].info0, parameters[4] );
+						commandGood = true;
+						break;
+					case 1:
+						strcpy2( moduleInfo_global[moduleNumber].info1, parameters[4] );
+						commandGood = true;
+						break;
+					case 2:
+						strcpy2( moduleInfo_global[moduleNumber].info2, parameters[4] );
+						commandGood = true;
+						break;
+					case 3:
+						strcpy2( moduleInfo_global[moduleNumber].info3, parameters[4] );
+						commandGood = true;
+						break;
+					case 4:
+						strcpy2( moduleInfo_global[moduleNumber].info4, parameters[4] );
+						commandGood = true;
+						break;
+				}
+			}
+
+			// only send a confirmation if the module info was actually used
+			// otherwise send an error
+			if( commandGood == true )
+			{
+				command_builder2( send_buffer, "Conf", "ModInfo" );
+			}
+			else
+			{
+				command_builder2( send_buffer, "Err", "ModInfo" );
+			}
+		}
+
 	}
 	else if( strmatch( parameters[0], "Read" ) == true )
 	{
@@ -1168,6 +1230,91 @@ bool commBufferEmpty( void )
 	}
 
 	return bufferEmpty;
+}
+
+void com_command_sendModuleInfoThis( void )
+{
+	struct buffer_struct *send_buffer;
+	static int moduleInfoIndex = 0;
+
+	send_buffer = command_builder_external_helper( false, NULL );
+
+	setModuleInfoThis( send_buffer, moduleInfoIndex );
+	setModuleInfoThis( send_buffer, moduleInfoIndex );
+
+	moduleInfoIndex++;
+	if( moduleInfoIndex >= MODULE_INFO_COUNT )
+	{
+		moduleInfoIndex = 0;
+	}
+
+	return;
+}
+
+void setModuleInfoThis( struct buffer_struct *send_buffer, int moduleInfoIndex )
+{
+	char moduleInfoIndexBuf[BUF_SIZE_INT];
+
+	itoa( moduleInfoIndexBuf, moduleInfoIndex, 10 );
+	//	Set;Mod;0;index;____$*
+
+	switch( moduleInfoIndex )
+	{
+		case 0:
+			command_builder5( send_buffer, "Set", "ModInfo", "-1", moduleInfoIndexBuf, MODULE_INFO_THIS_0 );
+			break;
+		case 1:
+			command_builder5( send_buffer, "Set", "ModInfo", "-1", moduleInfoIndexBuf, MODULE_INFO_THIS_1 );
+			break;
+		case 2:
+			command_builder5( send_buffer, "Set", "ModInfo", "-1", moduleInfoIndexBuf, MODULE_INFO_THIS_2 );
+			break;
+		case 3:
+			command_builder5( send_buffer, "Set", "ModInfo", "-1", moduleInfoIndexBuf, MODULE_INFO_THIS_3 );
+			break;
+		case 4:
+			command_builder5( send_buffer, "Set", "ModInfo", "-1", moduleInfoIndexBuf, MODULE_INFO_THIS_4 );
+			break;
+	}
+
+	return;
+}
+
+void com_command_readModuleInfo( void )
+{
+	struct buffer_struct *send_buffer;
+	static unsigned char moduleNumber = 0;
+	static unsigned char moduleInfoNumber = 0;
+
+	send_buffer = command_builder_external_helper( false, NULL );
+
+	readModuleInfo( send_buffer, moduleNumber, moduleInfoNumber );
+
+	moduleInfoNumber++;
+	if( moduleInfoNumber >= MODULE_INFO_COUNT )
+	{
+		moduleInfoNumber = 0;
+		moduleNumber++;
+		if( moduleNumber >= MODULE_COUNT )
+		{
+			moduleNumber = 0;
+		}
+	}
+
+	return;
+}
+
+void readModuleInfo( struct buffer_struct *send_buffer, unsigned char moduleNumber, unsigned char moduleInfoNumber )
+{
+	char moduleNumberBuf[BUF_SIZE_CHAR];
+	char moduleInfoNumberBuf[BUF_SIZE_CHAR];
+
+	itoa( moduleNumberBuf, moduleNumber, 10 );
+	itoa( moduleInfoNumberBuf, moduleInfoNumber, 10 );
+
+	command_builder4( send_buffer, "Read", "ModInfo", moduleNumberBuf, moduleInfoNumberBuf );
+
+	return;
 }
 
 void com_command_readRemoteTime( void )

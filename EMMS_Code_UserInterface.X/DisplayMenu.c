@@ -2005,62 +2005,50 @@ void menuEmergency4( void )
 void menuModules( void )
 {
 
+	static int moduleIndex = 0;
+
+	// this should be replaced with the modules info
 	switch( menuButtonRead( MENU_MAIN_3, 0, 0, 0 ) )
 	{
 		case 1:
-//			tempIsHigh_module = 0xFF;
+			moduleIndex--;
+			if( moduleIndex < 0 )
+			{
+				moduleIndex = ( MODULE_COUNT - 1 );
+			}
 			break;
 		case 2:
-//			tempIsHigh_module = 0;
+			moduleIndex++;
+			if( moduleIndex >= MODULE_COUNT )
+			{
+				moduleIndex = 0;
+			}
 			break;
 		case 3:
-//			if( tempIsHigh_module )
-//			{
-//				tempAlloc_module = highAlloc_module;
-//			}
-//			else
-//			{
-//				tempAlloc_module = lowAlloc_module;
-//			}
-
-//			if( energyUsed_global < tempAlloc_module )
-//			{
-//				menuState_global = MENU_MAIN_3;
-//				isHigh_module = tempIsHigh_module;
-//				energyAllocated_global = tempAlloc_module;
-//			}
-//			else
-//			{
-//				menuState_global = MENU_SHUT_OFF_WARNING;
-//				oldPowerMenuState_module = MENU_MODULES;
-//			}
-			break;
+			menuState_global = MENU_MAIN_3;
 	}
 
-	writeToDisplay( "Modules Placeholder    ", 0, 0 );
-	
-//	if( tempIsHigh_module )
-//	{
-//		writeToDisplay( rightArrow_module, 23, 0 );
-//	}
-//	else
-//	{
-//		writeToDisplay( " ", 23, 0 );
-//	}
-	
-	writeToDisplay( "High               ", 24, 0 );
-	
-//	if( tempIsHigh_module )
-//	{
-//		writeToDisplay( " ", 43, 0 );
-//	}
-//	else
-//	{
-//		writeToDisplay( rightArrow_module, 43, 0 );
-//	}
-	
-	writeToDisplay( "Low             Back  High  Low   OK", 44, 0 );
-	
+	char moduleIndexBuf[BUF_SIZE_INT];
+
+	itoa( moduleIndexBuf, moduleIndex, 10 );
+
+	writeToDisplay( moduleIndexBuf, 0, 1 );
+	writeToDisplay( "-", 1, 1 );
+	writeToDisplay( moduleInfo_global[moduleIndex].info0, 2, 8 );
+	writeToDisplay( moduleInfo_global[moduleIndex].info1, 10, 10 );
+	writeToDisplay( moduleInfo_global[moduleIndex].info2, 20, 10 );
+	writeToDisplay( moduleInfo_global[moduleIndex].info3, 30, 10 );
+	writeToDisplay( moduleInfo_global[moduleIndex].info4, 40, 20 );
+
+	if( moduleIndex == ( MODULE_COUNT - 1) )
+	{
+		writeToDisplay( softKeys1_module, 60, 0 );
+	}
+	else
+	{
+		writeToDisplay( softKeys0_module, 60, 0 );
+	}
+
 	return;
 }
 

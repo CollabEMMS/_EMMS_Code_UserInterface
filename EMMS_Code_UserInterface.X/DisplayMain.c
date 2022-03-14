@@ -35,6 +35,9 @@
  as external
  ****************/
 // external
+
+struct moduleInfo_struct moduleInfo_global[MODULE_COUNT];
+
 // internal only
 
 volatile unsigned long msTimer_module; // toggles to 1 every ms, resets to 0 at about the 0.5ms time
@@ -325,6 +328,30 @@ void initVars( void )
 
 	relayMode_global = 0; // default to show relay is in off mode
 
+	for( int inx = 0; inx < MODULE_COUNT; inx++ )
+	{
+		for( int jnx = 0; jnx < MODULE_INFO_SIZE_SMALL; jnx++ )
+		{
+			moduleInfo_global[inx].info0[jnx] = CHAR_NULL;
+			moduleInfo_global[inx].info1[jnx] = CHAR_NULL;
+			moduleInfo_global[inx].info2[jnx] = CHAR_NULL;
+			moduleInfo_global[inx].info3[jnx] = CHAR_NULL;
+			moduleInfo_global[inx].info4[jnx] = CHAR_NULL;
+		}
+
+		for( int jnx = MODULE_INFO_SIZE_SMALL; jnx < MODULE_INFO_SIZE_LARGE; jnx++ )
+		{
+			moduleInfo_global[inx].info4[jnx] = CHAR_NULL;
+		}
+
+		moduleInfo_global[inx].info0[0] = 'N';
+		moduleInfo_global[inx].info0[1] = 'o';
+		moduleInfo_global[inx].info0[2] = 'n';
+		moduleInfo_global[inx].info0[3] = 'e';
+		moduleInfo_global[inx].info0[4] = '-';
+		moduleInfo_global[inx].info0[5] = inx + 48;
+	}
+
 	return;
 }
 
@@ -496,9 +523,6 @@ void startAlarm( void )
 
 void periodicDataUpdate( void )
 {
-	// need to limit how much can be put into send buffer during one call of this function
-
-
 	// each time this is called we should ask for a new data item.
 	// data to read
 	//		ITEM					FREQUENCY
@@ -530,7 +554,7 @@ void periodicDataUpdate( void )
 		// send some messages at a slower rate
 		// this allows the higher priority messages to be sent more often
 
-		if( ( messageCounterMain % 10 ) == 0 )
+		if( ( messageCounterMain % 10 ) == 0 )		// every 10th message
 		{
 			messageCounterRateLow++;
 
@@ -548,6 +572,8 @@ void periodicDataUpdate( void )
 				case 3:
 					com_command_readRemotePowerFailTimes( );
 					break;
+				case 4:
+					com_command_sendModuleInfoThis( );
 				default:
 					messageCounterRateLow = 0;
 			}
@@ -583,6 +609,9 @@ void periodicDataUpdate( void )
 						break;
 					case 7:
 						com_command_readRemoteRelay( );
+						break;
+					case 8:
+						com_command_readModuleInfo( );
 						break;
 
 					default:
