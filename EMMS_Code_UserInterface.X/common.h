@@ -17,6 +17,12 @@
 #    include <stdbool.h>
 
 
+#define MODULE_INFO_THIS_0	"User Int"			// name
+#define MODULE_INFO_THIS_1	"Ver: 2.1"			// version
+#define MODULE_INFO_THIS_2	""					// info
+#define MODULE_INFO_THIS_3	""					// info
+#define MODULE_INFO_THIS_4	"Have a nice day!"	// info
+
 
 #    define CHAR_NULL '\0'
 
@@ -29,7 +35,19 @@
 #    define BACKLIGHT_NORMAL true // set to 'true' to use the backlight normally - anything else will allow debugging
 #    define BACKLIGHT   _RB2    // Pin 6:  RB2
 
+#define MODULE_INFO_SIZE_SMALL	11	// 10 + include the null char
+#define MODULE_INFO_SIZE_LARGE	21	// 20 + include the null char
+#define MODULE_COUNT			6	// 6 module info sets: 0=Command Board, 1=UART-1, 2=UART-2, 3=SPI-0, 4=SPI-1, 5=SPI-2
+#define MODULE_INFO_COUNT		5	// 5 info items in each module
 
+struct moduleInfo_struct
+{
+	char info0[MODULE_INFO_SIZE_SMALL];
+	char info1[MODULE_INFO_SIZE_SMALL];
+	char info2[MODULE_INFO_SIZE_SMALL];
+	char info3[MODULE_INFO_SIZE_SMALL];
+	char info4[MODULE_INFO_SIZE_LARGE];
+};
 
 
 #endif	/* COMMON_H */

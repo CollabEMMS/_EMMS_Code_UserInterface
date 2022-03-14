@@ -14,6 +14,7 @@ void debugBacklight( bool state );
 void debugBacklightToggle( );
 void debugBacklightFlash( int timeOn );
 
+extern struct moduleInfo_struct moduleInfo_global[MODULE_COUNT];
 
 #endif	/* DISPLAYMAIN_H */
 
