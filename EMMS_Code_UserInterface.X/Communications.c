@@ -1013,7 +1013,7 @@ bool send_data( struct buffer_struct * send_buffer )
 		char data;
 
 		data = send_buffer->data_buffer[send_buffer->read_position];
-
+		
 		if( UART_send_data_char( data ) == true )
 		{
 			send_buffer->read_position++;
@@ -1196,7 +1196,16 @@ bool UART_send_data_char( char data )
 {
 	bool sendGood = false;
 
-	if( U2STAbits.UTXBF == 0 )
+//	if( U2STAbits.UTXBF == 0 )
+	// The UART TX Buffer has issues
+	// PIC24 Errata (PIC document 80000522) states
+	//		filling the TX buffer full with 4 characters causes problems
+	//			- workaround - only go to 3 characters, not all 4
+	//		UTXBF flag does not work right
+	//			- workaround - use buffer empty flag (TRMT))
+	// our solution - put one character at a time in the transmit buffer
+	//	check to see if the buffer is empty ( TRMT == 1 ) before loading another character
+	if( U2STAbits.TRMT == 1 )
 	{
 		U2TXREG = data;
 		sendGood = true;
@@ -1835,9 +1844,6 @@ void initUART( void )
 	TRISBbits.TRISB1 = 1; // U2RX
 	TRISBbits.TRISB0 = 0; // U2TX
 
-	//shooting for BAUD_UART (typically 9600))
-	// baud = FCY / ( 16 / (U1BRG + ))
-	//U1BRG = ( FCY / (16 * baud)) - 1
 
 	// do the math one step at a time
 	// to explicitly control the order of operations
