@@ -8,6 +8,12 @@ MPLAB X Project
 
 # Changelog
 ### NEXT
+
+
+### v2.1.2
+March 20, 2022<br />
+Tom Austin
+#### Changes
 - Bugfix - Alarm Menu
   - Alarm threshold would show 0 instead of "Off"
   - fixed by removing the AlarmXEnabled variable since it was directly derived from the AlarmXThreshold variable
