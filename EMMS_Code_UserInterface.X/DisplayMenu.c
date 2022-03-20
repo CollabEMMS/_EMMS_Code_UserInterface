@@ -1768,24 +1768,6 @@ void menuSetResetTime( void )
 			{
 				tempResetMinute_global = tempResetMinute_global - ( tempResetMinute_global % 30 );
 			}
-
-
-
-
-//			if( tempResetMinute_global == 30 )
-//			{
-//				tempResetMinute_global = 0;
-//			}
-//			else
-//			{
-//				tempResetMinute_global = 30;
-//				tempResetHour_global -= 1;
-//
-//				if( tempResetHour_global < 0 )
-//				{
-//					tempResetHour_global = 23;
-//				}
-//			}
 			break;
 
 		case 3:
