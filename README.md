@@ -19,6 +19,9 @@ MPLAB X Project
   - it will display the reset time as currently set. It is OK to have non 30 minute mark time 7:45
   - but if this menu changes the reset time then it will be restricted to the 30 minute mark
   - updated the math on time "Up" and "Down" to handle non 30 minute start time
+- Fix - Menu now times out separate from backlight timeout
+  - this allows the menu to reset so the parameters can be collected again
+  - by design parameters are only collected when on the main screens so they do not interfere with setting them in the menus
 
 
 ### v2.1.1
