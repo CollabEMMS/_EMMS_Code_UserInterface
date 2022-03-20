@@ -13,6 +13,9 @@ MPLAB X Project
   - fixed by removing the AlarmXEnabled variable since it was directly derived from the AlarmXThreshold variable
 - Cleanup - removed AlarmXEnabled from the communication commands
 - Tweak - On Module Menu moved the module index to the lower right since that space is used the least
+- Tweak - On the Detail menu changed "Used" to "Left" - better meaning of what is shown
+
+
 
 ### v2.1.1
 March 19, 2022<br />

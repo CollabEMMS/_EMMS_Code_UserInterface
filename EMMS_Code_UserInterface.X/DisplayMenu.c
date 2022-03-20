@@ -783,7 +783,7 @@ void menuHomeDetail( void )
 	// a negative number means someone is likely cheating
 	remainingPower = energyAllocated_global - energyUsed_global;
 
-	writeToDisplay( "Used: ", 0, 0 );
+	writeToDisplay( "Left: ", 0, 0 );
 
 	char remainingPowerBuf[BUF_SIZE_INT];
 	char powerAllocatedBuf[BUF_SIZE_LONG];
