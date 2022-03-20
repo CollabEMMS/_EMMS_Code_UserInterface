@@ -22,6 +22,9 @@ MPLAB X Project
 - Fix - Menu now times out separate from backlight timeout
   - this allows the menu to reset so the parameters can be collected again
   - by design parameters are only collected when on the main screens so they do not interfere with setting them in the menus
+- Feature - Meter Name
+  - Updated About menu to remove outdated version info and show Meter Name
+  - Update communications to handle Meter Name (MName)
 
 
 ### v2.1.1

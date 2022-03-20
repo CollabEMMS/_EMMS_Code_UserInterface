@@ -70,7 +70,7 @@ int emerAllocSend_global;
 char powerDownTime_global[12];
 char powerUpTime_global[12];
 
-char powerBoxCodeVersionString_global[9];
+char meterNameString_global[20];
 
 char passwordInput_module[6];
 char newPassword_module[12];
@@ -1304,11 +1304,10 @@ void menuAbout( void )
 {
 	menuButtonRead( MENU_MAIN_6, MENU_MAIN_6, MENU_MAIN_6, MENU_MAIN_6 );
 
-	writeToDisplay( "Power Code: ", 0, 0 );
-	writeToDisplay( powerBoxCodeVersionString_global, 12, 8 );
-	writeToDisplay( "Disp Code:  ", 20, 0 );
-	writeToDisplay( DISPLAY_BOX_CODE_VERSION, 32, 8 );
-	writeToDisplay( " Messiah University     Collaboratory    ", 40, 0 );
+	writeToDisplay( " Messiah University ", 0, 0);
+	writeToDisplay( "   Collaboratory    ", 20, 0);
+	writeToDisplay( "  EMMS Power Meter  ", 40, 0 );
+	writeToDisplay( meterNameString_global, 60, 20 );
 
 	return;
 }

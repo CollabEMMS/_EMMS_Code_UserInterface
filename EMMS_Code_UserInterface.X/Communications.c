@@ -83,6 +83,8 @@ void zeroPad_itoa( char *output, int num, int minDigits );
 void setModuleInfoThis( struct buffer_struct *send_buffer, int moduleInfoIndex );
 void readModuleInfo( struct buffer_struct *send_buffer, unsigned char moduleNumber, unsigned char moduleInfoNumber );
 
+void readMeterName( struct buffer_struct *send_buffer );
+
 void readRemoteTime( struct buffer_struct *send_buffer );
 void setRemoteTime( struct buffer_struct *send_buffer );
 
@@ -592,19 +594,12 @@ bool process_data_parameters( char parameters[PARAMETER_MAX_COUNT][PARAMETER_MAX
 			command_builder2( send_buffer, "Conf", "Stat" );
 
 		}
-		else if( strmatch( parameters[1], "CBver" ) == true )
+		else if( strmatch( parameters[1], "MName" ) == true )
 		{
 
-			int inx = 0;
-			while( ( inx < 9 ) && ( parameters[2][inx] != CHAR_NULL ) )
-			{
-				powerBoxCodeVersionString_global[inx] = parameters[2][inx];
-				inx++;
-			}
-			powerBoxCodeVersionString_global[inx] = CHAR_NULL;
+			strcpy2( meterNameString_global, parameters[2] );
 
-			command_builder2( send_buffer, "Conf", "CBver" );
-
+			command_builder2( send_buffer, "Conf", "MName" );
 		}
 		else if( strmatch( parameters[1], "PwrFail" ) == true )
 		{
@@ -1008,7 +1003,7 @@ bool send_data( struct buffer_struct * send_buffer )
 		char data;
 
 		data = send_buffer->data_buffer[send_buffer->read_position];
-		
+
 		if( UART_send_data_char( data ) == true )
 		{
 			send_buffer->read_position++;
@@ -1191,7 +1186,7 @@ bool UART_send_data_char( char data )
 {
 	bool sendGood = false;
 
-//	if( U2STAbits.UTXBF == 0 )
+	//	if( U2STAbits.UTXBF == 0 )
 	// The UART TX Buffer has issues
 	// PIC24 Errata (PIC document 80000522) states
 	//		filling the TX buffer full with 4 characters causes problems
@@ -1320,6 +1315,25 @@ void readModuleInfo( struct buffer_struct *send_buffer, unsigned char moduleNumb
 
 	return;
 }
+
+void com_command_readMeterName( void )
+{
+	struct buffer_struct *send_buffer;
+
+	send_buffer = command_builder_external_helper( false, NULL );
+
+	readMeterName( send_buffer );
+
+	return;
+}
+
+void readMeterName( struct buffer_struct *send_buffer )
+{
+	command_builder2( send_buffer, "Read", "MName" );
+
+	return;
+}
+
 
 void com_command_readRemoteTime( void )
 {

@@ -299,15 +299,15 @@ void initVars( void )
 		menuState_global = MENU_HOME_BASIC;
 	}
 
-	powerBoxCodeVersionString_global[0] = 'U';
-	powerBoxCodeVersionString_global[1] = 'n';
-	powerBoxCodeVersionString_global[2] = 'k';
-	powerBoxCodeVersionString_global[3] = 'n';
-	powerBoxCodeVersionString_global[4] = 'o';
-	powerBoxCodeVersionString_global[5] = 'w';
-	powerBoxCodeVersionString_global[6] = 'n';
-	powerBoxCodeVersionString_global[7] = ' ';
-	powerBoxCodeVersionString_global[8] = CHAR_NULL;
+	meterNameString_global[0] = 'N';
+	meterNameString_global[1] = 'o';
+	meterNameString_global[2] = ' ';
+	meterNameString_global[3] = 'D';
+	meterNameString_global[4] = 'a';
+	meterNameString_global[5] = 't';
+	meterNameString_global[6] = 'a';
+	meterNameString_global[7] = ' ';
+	meterNameString_global[8] = CHAR_NULL;
 
 
 	audibleAlarm_global = false;
@@ -595,6 +595,9 @@ void periodicDataUpdate( void )
 					com_command_readRemotePowerFailTimes( );
 					break;
 				case 4:
+					com_command_readMeterName( );
+					break;
+				case 5:
 					com_command_sendModuleInfoThis( );
 				default:
 					messageCounterRateLow = 0;

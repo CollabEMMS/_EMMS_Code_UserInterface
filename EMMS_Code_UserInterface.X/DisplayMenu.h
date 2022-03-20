@@ -30,7 +30,7 @@ extern int tempResetMinute_global;
 extern int emerAllocNow_global;
 extern int emerAllocSend_global;
 
-extern char powerBoxCodeVersionString_global[9];
+extern char meterNameString_global[20];
 
 extern unsigned char menuState_global;
 extern unsigned char oldMenuState_global;
