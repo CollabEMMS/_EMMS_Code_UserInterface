@@ -83,7 +83,7 @@ void zeroPad_itoa( char *output, int num, int minDigits );
 void setModuleInfoThis( struct buffer_struct *send_buffer, int moduleInfoIndex );
 void readModuleInfo( struct buffer_struct *send_buffer, unsigned char moduleNumber, unsigned char moduleInfoNumber );
 
-void readMeterName( struct buffer_struct *send_buffer );
+void readRemoteMeterName( struct buffer_struct *send_buffer );
 
 void readRemoteTime( struct buffer_struct *send_buffer );
 void setRemoteTime( struct buffer_struct *send_buffer );
@@ -1312,18 +1312,18 @@ void readModuleInfo( struct buffer_struct *send_buffer, unsigned char moduleNumb
 	return;
 }
 
-void com_command_readMeterName( void )
+void com_command_readRemoteMeterName( void )
 {
 	struct buffer_struct *send_buffer;
 
 	send_buffer = command_builder_external_helper( false, NULL );
 
-	readMeterName( send_buffer );
+	readRemoteMeterName( send_buffer );
 
 	return;
 }
 
-void readMeterName( struct buffer_struct *send_buffer )
+void readRemoteMeterName( struct buffer_struct *send_buffer )
 {
 	command_builder2( send_buffer, "Read", "MName" );
 
@@ -1764,24 +1764,6 @@ void com_command_readRemoteStat( void )
 void readRemoteStat( struct buffer_struct *send_buffer )
 {
 	command_builder2( send_buffer, "Read", "Stat" );
-
-	return;
-}
-
-void com_command_readRemoteCBver( void )
-{
-	struct buffer_struct *send_buffer;
-
-	send_buffer = command_builder_external_helper( false, NULL );
-
-	readRemoteCBver( send_buffer );
-
-	return;
-}
-
-void readRemoteCBver( struct buffer_struct *send_buffer )
-{
-	command_builder2( send_buffer, "Read", "CBver" );
 
 	return;
 }

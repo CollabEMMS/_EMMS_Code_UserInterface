@@ -45,6 +45,8 @@ char relayModeTemp_module;
 const char softKeys_BackUpDownOK_module[] = "Back  Up  Down    OK";
 const char softKeys_BackUpTopOK_module[] = "Back  Up  Top     OK";
 const char softKeys_BackUpDownSave_module[] = "Back  Up  Down  Save";
+const char softKeys_BackUpDown_module[] = "Back  Up  Down      ";
+const char softKeys_BackUpTop_module[] = "Back  Up  Top       ";
 
 
 bool audibleAlarm_global;
@@ -168,6 +170,7 @@ void menuAdmin3( void );
 void menuAdmin4( void );
 void menuAdmin5( void );
 void menuAdmin6( void );
+void menuAdmin7( void );
 void menuSetTime( void );
 void menuSetPower( void );
 void menuSetResetTime( void );
@@ -452,10 +455,6 @@ void updateMenu( void )
 			menuMain5( );
 			break;
 
-		case MENU_MAIN_6:
-			menuMain6( );
-			break;
-
 		case MENU_ALARM_1:
 			menuAlarm1( );
 			break;
@@ -508,11 +507,15 @@ void updateMenu( void )
 			menuAdmin6( );
 			break;
 
+		case MENU_ADMIN_7:
+			menuAdmin7( );
+			break;
+
 		case MENU_SET_TIME:
 			menuSetTime( );
 			break;
 
-		case MENU_SET_POWER:
+		case MENU_SET_ENERGY_ALLOCATION:
 			menuSetPower( );
 			break;
 
@@ -847,16 +850,18 @@ void menuAlarm( void )
 
 void menuMain1( void )
 {
-	switch( menuButtonRead( MENU_HOME_BASIC, MENU_MAIN_6, MENU_MAIN_2, MENU_ALARM_1 ) )
+	switch( menuButtonRead( MENU_HOME_BASIC, MENU_MAIN_5, MENU_MAIN_2, MENU_ALARM_1 ) )
 	{
 		case 1:
-			com_command_readRemoteCBver( );
+			com_command_readRemoteMeterName( );
 			break;
 		case 2:
 			com_command_readRemotePassword( );
 	}
 
-	writeToDisplay( "Main Menu     1 of 6* Alarm Options       Admin Menu", 0, 60 );
+	writeToDisplay( "Main Menu     1 of 6", 0, 20 );
+	writeToDisplay( "* Alarm Options", 20, 20 );
+	writeToDisplay( "  Admin Menu", 40, 20 );
 	writeToDisplay( softKeys_BackUpDownOK_module, 60, 0 );
 
 	enablePeriodicUpdate_global = false;
@@ -872,13 +877,15 @@ void menuMain2( void )
 			com_command_readRemoteAlarm( );
 			break;
 		case 2:
-			//com_command_readRemoteHL( );
+			com_command_readRemoteStat( );
 			break;
 		case 3:
 			pwLength_module = 0;
 	}
 
-	writeToDisplay( "Main Menu     2 of 6* Admin Menu          Modules ", 0, 60 );
+	writeToDisplay( "Main Menu     2 of 6", 0, 20 );
+	writeToDisplay( "* Admin Menu", 20, 20 );
+	writeToDisplay( "  Statistics", 40, 20 );
 	writeToDisplay( softKeys_BackUpDownOK_module, 60, 0 );
 
 	return;
@@ -887,19 +894,21 @@ void menuMain2( void )
 void menuMain3( void )
 {
 
-	switch( menuButtonRead( MENU_HOME_BASIC, MENU_MAIN_2, MENU_MAIN_4, MENU_MODULES ) )
+	switch( menuButtonRead( MENU_HOME_BASIC, MENU_MAIN_2, MENU_MAIN_4, MENU_STATISTICS ) )
 	{
 		case 1:
 			com_command_readRemotePassword( );
 			break;
 		case 2:
-			com_command_readRemoteStat( );
+			com_command_readRemotePowerFailTimes( );
 			break;
 		case 3:
 			break;
 	}
 
-	writeToDisplay( "Main Menu     3 of 6* Modules             Statistics", 0, 60 );
+	writeToDisplay( "Main Menu     3 of 6", 0, 20 );
+	writeToDisplay( "* Statistics", 20, 20 );
+	writeToDisplay( "  Last Power Failure", 40, 20 );
 	writeToDisplay( softKeys_BackUpDownOK_module, 60, 0 );
 
 	return;
@@ -907,16 +916,18 @@ void menuMain3( void )
 
 void menuMain4( void )
 {
-	switch( menuButtonRead( MENU_HOME_BASIC, MENU_MAIN_3, MENU_MAIN_5, MENU_STATISTICS ) )
+	switch( menuButtonRead( MENU_HOME_BASIC, MENU_MAIN_3, MENU_MAIN_5, MENU_POWERFAILTIMES ) )
 	{
 		case 1:
-			//com_command_readRemoteHL( );
+			com_command_readRemoteStat( );
 			break;
 		case 2:
-			com_command_readRemotePowerFailTimes( );
+			com_command_readRemoteMeterName( );
 	}
 
-	writeToDisplay( "Main Menu     4 of 6* Statistics          Last Power Failure", 0, 60 );
+	writeToDisplay( "Main Menu     5 of 6", 0, 20 );
+	writeToDisplay( "* Last Power Failure", 20, 20 );
+	writeToDisplay( "  About", 40, 20 );
 	writeToDisplay( softKeys_BackUpDownOK_module, 60, 0 );
 
 	return;
@@ -924,24 +935,7 @@ void menuMain4( void )
 
 void menuMain5( void )
 {
-	switch( menuButtonRead( MENU_HOME_BASIC, MENU_MAIN_4, MENU_MAIN_6, MENU_POWERFAILTIMES ) )
-	{
-		case 1:
-			com_command_readRemoteStat( );
-			break;
-		case 2:
-			com_command_readRemoteCBver( );
-	}
-
-	writeToDisplay( "Main Menu     5 of 6* Last Power Failure  About", 0, 60 );
-	writeToDisplay( softKeys_BackUpDownOK_module, 60, 0 );
-
-	return;
-}
-
-void menuMain6( void )
-{
-	switch( menuButtonRead( MENU_HOME_BASIC, MENU_MAIN_5, MENU_MAIN_1, MENU_ABOUT ) )
+	switch( menuButtonRead( MENU_HOME_BASIC, MENU_MAIN_4, MENU_MAIN_1, MENU_ABOUT ) )
 	{
 		case 1:
 			com_command_readRemotePowerFailTimes( );
@@ -950,7 +944,9 @@ void menuMain6( void )
 			com_command_readRemoteAlarm( );
 	}
 
-	writeToDisplay( "Main Menu     6 of 6  Last Power Failure* About", 0, 60 );
+	writeToDisplay( "Main Menu     6 of 6", 0, 20 );
+	writeToDisplay( "  Last Power Failure", 20, 20 );
+	writeToDisplay( "* About", 40, 20 );
 	writeToDisplay( softKeys_BackUpTopOK_module, 60, 0 );
 
 	return;
@@ -1271,7 +1267,7 @@ void menuStatistics( void )
 	char previousDayUsedBuf[BUF_SIZE_LONG];
 	char totalUsedBuf[BUF_SIZE_LONG];
 
-	menuButtonRead( MENU_MAIN_4, MENU_MAIN_4, MENU_MAIN_4, MENU_MAIN_4 );
+	menuButtonRead( MENU_MAIN_3, MENU_MAIN_3, MENU_MAIN_3, MENU_MAIN_3 );
 
 	ltoa( previousDayUsedBuf, previousDayUsed_global, 10 );
 	ltoa( totalUsedBuf, totalUsed_global, 10 );
@@ -1288,7 +1284,7 @@ void menuStatistics( void )
 
 void menuPowerFailTimes( void )
 {
-	menuButtonRead( MENU_MAIN_5, MENU_MAIN_5, MENU_MAIN_5, MENU_MAIN_5 );
+	menuButtonRead( MENU_MAIN_4, MENU_MAIN_4, MENU_MAIN_4, MENU_MAIN_4 );
 
 	writeToDisplay( "Last Power Failure  ", 0, 0 );
 	writeToDisplay( "Lost     ", 20, 0 );
@@ -1302,10 +1298,10 @@ void menuPowerFailTimes( void )
 
 void menuAbout( void )
 {
-	menuButtonRead( MENU_MAIN_6, MENU_MAIN_6, MENU_MAIN_6, MENU_MAIN_6 );
+	menuButtonRead( MENU_MAIN_5, MENU_MAIN_5, MENU_MAIN_5, MENU_MAIN_5 );
 
-	writeToDisplay( " Messiah University ", 0, 0);
-	writeToDisplay( "   Collaboratory    ", 20, 0);
+	writeToDisplay( " Messiah University ", 0, 0 );
+	writeToDisplay( "   Collaboratory    ", 20, 0 );
 	writeToDisplay( "  EMMS Power Meter  ", 40, 0 );
 	writeToDisplay( meterNameString_global, 60, 20 );
 
@@ -1387,10 +1383,11 @@ void menuAdminLogin( void )
 void menuAdmin1( void )
 {
 
-	switch( menuButtonRead( MENU_MAIN_2, MENU_ADMIN_6, MENU_ADMIN_2, MENU_SET_TIME ) )
+	switch( menuButtonRead( MENU_MAIN_2, MENU_ADMIN_7, MENU_ADMIN_2, MENU_SET_TIME ) )
 	{
 		case 1:
-			com_command_readRemoteRelay( );
+			// do nothing
+			// too many module infos to try to read all here
 			break;
 		case 2:
 			com_command_readRemoteEnergyAllocation( );
@@ -1407,7 +1404,9 @@ void menuAdmin1( void )
 			tempYear_global = timeYear_global;
 	}
 
-	writeToDisplay( "Admin Menu    1 of 6* Set Time/Date       Set Power Alloc", 0, 60 );
+	writeToDisplay( "Admin Menu    1 of 7", 0, 20 );
+	writeToDisplay( "* Set Time/Date", 20, 20 );
+	writeToDisplay( "  Set Power Alloc", 40, 20 );
 	writeToDisplay( softKeys_BackUpDownOK_module, 60, 0 );
 
 	return;
@@ -1415,19 +1414,21 @@ void menuAdmin1( void )
 
 void menuAdmin2( void )
 {
-	switch( menuButtonRead( MENU_MAIN_2, MENU_ADMIN_1, MENU_ADMIN_3, MENU_SET_POWER ) )
+	switch( menuButtonRead( MENU_MAIN_2, MENU_ADMIN_1, MENU_ADMIN_3, MENU_SET_ENERGY_ALLOCATION ) )
 	{
 		case 1:
 			com_command_readRemoteTime( );
 			break;
 		case 2:
-			com_command_readRemoteEnergy( );
+			com_command_readRemoteEmergency( );
 			break;
 		case 3:
 			tempAlloc_module = energyAllocated_global;
 	}
 
-	writeToDisplay( "Admin Menu    2 of 6* Set Power Alloc     Emergency Options", 0, 60 );
+	writeToDisplay( "Admin Menu    2 of 7", 0, 20 );
+	writeToDisplay( "* Set Power Alloc", 20, 20 );
+	writeToDisplay( "  Emergency Options", 40, 20 );
 	writeToDisplay( softKeys_BackUpDownOK_module, 60, 0 );
 
 	return;
@@ -1439,9 +1440,15 @@ void menuAdmin3( void )
 	{
 		case 1:
 			com_command_readRemoteEnergyAllocation( );
+			break;
+		case 2:
+			// do nothing, password already read
+			break;
 	}
 
-	writeToDisplay( "Admin Menu    3 of 6* Emergency Options   Change Password", 0, 60 );
+	writeToDisplay( "Admin Menu    3 of 7", 0, 20 );
+	writeToDisplay( "* Emergency Options", 20, 20 );
+	writeToDisplay( "  Change Password", 40, 20 );
 	writeToDisplay( softKeys_BackUpDownOK_module, 60, 0 );
 
 	return;
@@ -1452,7 +1459,7 @@ void menuAdmin4( void )
 	switch( menuButtonRead( MENU_MAIN_2, MENU_ADMIN_3, MENU_ADMIN_5, MENU_PASSWORD_CHANGE ) )
 	{
 		case 1:
-			com_command_readRemoteEnergy( );
+			com_command_readRemoteEmergency( );
 			break;
 		case 2:
 			com_command_readRemoteResetTime( );
@@ -1466,7 +1473,9 @@ void menuAdmin4( void )
 			newPassword_module[11] = 0;
 	}
 
-	writeToDisplay( "Admin Menu    4 of 6* Change Password     Change Reset Time", 0, 60 );
+	writeToDisplay( "Admin Menu    4 of 7", 0, 20 );
+	writeToDisplay( "* Change Password", 20, 20 );
+	writeToDisplay( "  Change Reset Time", 40, 20 );
 	writeToDisplay( softKeys_BackUpDownOK_module, 60, 0 );
 
 	return;
@@ -1476,15 +1485,22 @@ void menuAdmin5( void )
 {
 	switch( menuButtonRead( MENU_MAIN_2, MENU_ADMIN_4, MENU_ADMIN_6, MENU_SET_RESET_TIME ) )
 	{
+		case 1:
+			//do nothing
+			// we already have password
+			break;
 		case 2:
 			com_command_readRemoteRelay( );
 			break;
 		case 3:
 			tempResetHour_global = resetTimeHour_global;
 			tempResetMinute_global = resetTimeMinute_global;
+			break;
 	}
 
-	writeToDisplay( "Admin Menu    5 of 6* Change Reset Time   Relay Control", 0, 60 );
+	writeToDisplay( "Admin Menu    5 of 7", 0, 20 );
+	writeToDisplay( "* Change Reset Time", 20, 20 );
+	writeToDisplay( "  Relay Control", 40, 20 );
 	writeToDisplay( softKeys_BackUpDownOK_module, 60, 0 );
 
 	return;
@@ -1493,19 +1509,42 @@ void menuAdmin5( void )
 void menuAdmin6( void )
 {
 
-	switch( menuButtonRead( MENU_MAIN_2, MENU_ADMIN_5, MENU_ADMIN_1, MENU_SET_RELAY ) )
+	switch( menuButtonRead( MENU_MAIN_2, MENU_ADMIN_5, MENU_ADMIN_7, MENU_SET_RELAY ) )
 	{
 		case 1:
 			com_command_readRemoteResetTime( );
 			break;
 		case 2:
-			com_command_readRemoteTime( );
+			// do nothing
+			// too many module infos to try to read all here
 			break;
 		case 3:
 			relayModeTemp_module = relayMode_global;
 	}
 
-	writeToDisplay( "Admin Menu    6 of 6  Change Reset Time * Relay Control", 0, 60 );
+	writeToDisplay( "Admin Menu    6 of 7", 0, 20 );
+	writeToDisplay( "* Relay Control", 20, 20 );
+	writeToDisplay( "  Module Info  ", 40, 20 );
+	writeToDisplay( softKeys_BackUpDownOK_module, 60, 0 );
+
+	return;
+}
+
+void menuAdmin7( void )
+{
+	switch( menuButtonRead( MENU_MAIN_2, MENU_ADMIN_6, MENU_ADMIN_1, MENU_MODULES ) )
+	{
+		case 1:
+			com_command_readRemoteRelay( );
+			break;
+		case 2:
+			com_command_readRemoteTime( );
+			break;
+	}
+
+	writeToDisplay( "Admin Menu    7 of 7", 0, 20 );
+	writeToDisplay( "  Relay Control", 20, 20 );
+	writeToDisplay( "* Module Info", 40, 20 );
 	writeToDisplay( softKeys_BackUpTopOK_module, 60, 0 );
 
 	return;
@@ -1717,7 +1756,7 @@ void menuSetPower( void )
 			else
 			{
 				menuState_global = MENU_SHUT_OFF_WARNING;
-				oldPowerMenuState_module = MENU_SET_POWER;
+				oldPowerMenuState_module = MENU_SET_ENERGY_ALLOCATION;
 			}
 
 	}
@@ -2015,11 +2054,10 @@ void menuEmergency4( void )
 
 void menuModules( void )
 {
-
 	static int moduleIndex = 0;
 
 	// this should be replaced with the modules info
-	switch( menuButtonRead( MENU_MAIN_3, 0, 0, 0 ) )
+	switch( menuButtonRead( MENU_ADMIN_7, 0, 0, 0 ) )
 	{
 		case 1:
 			moduleIndex--;
@@ -2036,7 +2074,7 @@ void menuModules( void )
 			}
 			break;
 		case 3:
-			menuState_global = MENU_MAIN_3;
+			break;
 	}
 
 	char moduleIndexBuf[BUF_SIZE_INT];
@@ -2049,17 +2087,18 @@ void menuModules( void )
 	writeToDisplay( moduleInfo_global[moduleIndex].info3, 30, 10 );
 	writeToDisplay( moduleInfo_global[moduleIndex].info4, 40, 20 );
 
-	writeToDisplay( moduleIndexBuf, 59, 1 );
-	writeToDisplay( "-", 58, 1 );
-
 	if( moduleIndex == ( MODULE_COUNT - 1 ) )
 	{
-		writeToDisplay( softKeys_BackUpTopOK_module, 60, 0 );
+		writeToDisplay( softKeys_BackUpTop_module, 60, 0 );
 	}
 	else
 	{
-		writeToDisplay( softKeys_BackUpDownOK_module, 60, 0 );
+		writeToDisplay( softKeys_BackUpDown_module, 60, 0 );
 	}
+
+	writeToDisplay( "m:", 77, 1 );
+	writeToDisplay( moduleIndexBuf, 79, 1 );
+
 
 	return;
 }
@@ -2152,7 +2191,7 @@ void menuShutOffWarning( void )
 	{
 		case 2:
 		case 3:
-			if( oldPowerMenuState_module == MENU_SET_POWER )
+			if( oldPowerMenuState_module == MENU_SET_ENERGY_ALLOCATION )
 			{
 				menuState_global = MENU_ADMIN_2;
 			}
@@ -2220,6 +2259,7 @@ void menuPasswordChange( void )
 				break;
 			case 1:
 			case 2:
+				menuState_global = MENU_ADMIN_4;
 				break;
 			case 3:
 				passwordSet_global[0] = passwordInput_module[0];
@@ -2244,7 +2284,7 @@ void menuPasswordChange( void )
 	}
 	else
 	{
-		writeToDisplay( "Clear           Save", 60, 0 );
+		writeToDisplay( "Clear  Cancel  Save", 60, 0 );
 	}
 
 	return;

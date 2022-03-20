@@ -589,15 +589,12 @@ void periodicDataUpdate( void )
 					com_command_readRemoteStat( );
 					break;
 				case 2:
-					com_command_readRemoteCBver( );
-					break;
-				case 3:
 					com_command_readRemotePowerFailTimes( );
 					break;
-				case 4:
-					com_command_readMeterName( );
+				case 3:
+					com_command_readRemoteMeterName( );
 					break;
-				case 5:
+				case 4:
 					com_command_sendModuleInfoThis( );
 				default:
 					messageCounterRateLow = 0;
