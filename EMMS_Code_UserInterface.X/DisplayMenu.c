@@ -120,7 +120,7 @@ unsigned char button2Flag_global;
 unsigned char button3Flag_global;
 
 
-char isBooting_global;
+bool isBooting_global;
 
 bool alarm1Hit_global;
 bool alarm2Hit_global;
@@ -1522,7 +1522,7 @@ void menuSetTime( void )
 
 			if( !timeSetPos_global )
 			{
-				if( isBooting_global )
+				if( isBooting_global == true )
 				{
 					timeSetPos_global = 1;
 				}
@@ -1613,7 +1613,7 @@ void menuSetTime( void )
 				{
 					com_command_setRemoteTime( );
 					//                    lastUpdateSecond = timeSecond; // correct periodic update timing
-					if( isBooting_global )
+					if( isBooting_global == true )
 					{
 						menuState_global = MENU_POWER_RESET;
 						//isBooting = 0;
@@ -2259,7 +2259,7 @@ void menuPowerReset( void )
 		case 3:
 			com_command_doReset( ); // fall through on purpose
 		case 0:
-			isBooting_global = 0;
+			isBooting_global = false;
 	}
 
 	writeToDisplay( "Is it after the     reset time?", 0, 46 );

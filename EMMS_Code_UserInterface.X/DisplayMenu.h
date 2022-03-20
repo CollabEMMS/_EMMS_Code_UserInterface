@@ -54,7 +54,7 @@ extern unsigned char button1Flag_global;
 extern unsigned char button2Flag_global;
 extern unsigned char button3Flag_global;
 
-extern char isBooting_global;
+extern bool isBooting_global;
 
 extern bool alarm1Hit_global;
 extern bool alarm2Hit_global;

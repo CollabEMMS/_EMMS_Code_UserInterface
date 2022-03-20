@@ -25,6 +25,8 @@
 #define ONESHOT_WINDOW 25
 
 #define BACKLIGHT_TIMEOUT_MINUTES 5
+#define MENU_TIMEOUT_SECONDS	10
+
 
 #define ALARM_NUM_SETS	4
 
@@ -461,7 +463,7 @@ void checkAlarm( void )
 
 	}
 	else if(
-			 ( alarm2PercentThreshold_global > 0  )
+			 ( alarm2PercentThreshold_global > 0 )
 			 && ( percentRem_global <= alarm2PercentThreshold_global )
 			 && ( alarm2Hit_global == false )
 			 && ( alarm2Silence_global == false )
@@ -831,6 +833,9 @@ void dispButtonPress( void )
 	static int backlightOutTimeSecond;
 	static int backlightOutTimeMinute;
 
+	static int menuTimeoutSecond = -1;
+	static int menuTimeoutMinute = -1;
+
 	static bool firstRun = true;
 
 	if( firstRun == true )
@@ -856,6 +861,8 @@ void dispButtonPress( void )
 			button3Flag_global = 1;
 			backlightOutTimeSecond = timeSecond_global;
 			backlightOutTimeMinute = ( timeMinute_global + BACKLIGHT_TIMEOUT_MINUTES ) % 60;
+			menuTimeoutSecond = timeSecond_global + MENU_TIMEOUT_SECONDS;
+			menuTimeoutMinute = timeMinute_global;
 		}
 
 		// _RB4 is pin 9
@@ -866,6 +873,8 @@ void dispButtonPress( void )
 			button2Flag_global = 1;
 			backlightOutTimeSecond = timeSecond_global;
 			backlightOutTimeMinute = ( timeMinute_global + BACKLIGHT_TIMEOUT_MINUTES ) % 60;
+			menuTimeoutSecond = timeSecond_global + MENU_TIMEOUT_SECONDS;
+			menuTimeoutMinute = timeMinute_global;
 		}
 
 		// _RA3 is pin 8
@@ -876,6 +885,8 @@ void dispButtonPress( void )
 			button1Flag_global = 1;
 			backlightOutTimeSecond = timeSecond_global;
 			backlightOutTimeMinute = ( timeMinute_global + BACKLIGHT_TIMEOUT_MINUTES ) % 60;
+			menuTimeoutSecond = timeSecond_global + MENU_TIMEOUT_SECONDS;
+			menuTimeoutMinute = timeMinute_global;
 		}
 
 		// _RA2 is pin 7
@@ -886,6 +897,8 @@ void dispButtonPress( void )
 			button0Flag_global = 1;
 			backlightOutTimeSecond = timeSecond_global;
 			backlightOutTimeMinute = ( timeMinute_global + BACKLIGHT_TIMEOUT_MINUTES ) % 60;
+			menuTimeoutSecond = timeSecond_global + MENU_TIMEOUT_SECONDS;
+			menuTimeoutMinute = timeMinute_global;
 		}
 	}
 
@@ -901,13 +914,49 @@ void dispButtonPress( void )
 		button3Flag_global = 2;
 		backlightOutTimeSecond = timeSecond_global;
 		backlightOutTimeMinute = ( timeMinute_global + BACKLIGHT_TIMEOUT_MINUTES ) % 60;
+		menuTimeoutSecond = timeSecond_global + MENU_TIMEOUT_SECONDS;
+		menuTimeoutMinute = timeMinute_global;
+	}
+
+
+	// make sure the timeout seconds and minutes
+	// if the timeout is 3600 or more seconds you need your head checked
+	while( menuTimeoutSecond >= 60 )
+	{
+		menuTimeoutSecond -= 60;
+		menuTimeoutMinute += 1;
+		if( menuTimeoutMinute >= 60 )
+		{
+			menuTimeoutMinute = 0;
+		}
+	}
+
+	backlightOutTimeSecond = 0;
+
+	if( ( timeMinute_global == menuTimeoutMinute ) && ( timeSecond_global == menuTimeoutSecond ) )
+	{
+
+		if(
+		 ( ( menuState_global != MENU_ALARM ) || ( ( menuState_global == MENU_ALARM ) && ( alarmRemainingSets_global == 0 ) ) )
+		 && ( menuState_global != MENU_DEBUG )
+		 && ( isBooting_global == false )
+		 )
+		{
+
+			// valid 'stationary' menus are BASIC and DETAIL
+			// parameters are still collected when on these menus
+			if( menuState_global != MENU_HOME_DETAIL )
+			{
+				menuState_global = MENU_HOME_BASIC;
+			}
+		}
 	}
 
 	if(
 	 ( timeMinute_global == backlightOutTimeMinute ) && ( timeSecond_global == backlightOutTimeSecond )
 	 && ( ( menuState_global != MENU_ALARM ) || ( ( menuState_global == MENU_ALARM ) && ( alarmRemainingSets_global == 0 ) ) )
 	 && ( menuState_global != MENU_DEBUG )
-	 && ( !isBooting_global )
+	 && ( isBooting_global == false )
 	 )
 	{
 		menuState_global = MENU_HOME_BASIC;
