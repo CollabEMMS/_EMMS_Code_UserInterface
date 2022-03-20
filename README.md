@@ -11,7 +11,8 @@ MPLAB X Project
 - Bugfix - Alarm Menu
   - Alarm threshold would show 0 instead of "Off"
   - fixed by removing the AlarmXEnabled variable since it was directly derived from the AlarmXThreshold variable
-- removed AlarmXEnabled from the communication commands
+- Cleanup - removed AlarmXEnabled from the communication commands
+- Tweak - On Module Menu moved the module index to the lower right since that space is used the least
 
 ### v2.1.1
 March 19, 2022<br />

@@ -2038,13 +2038,14 @@ void menuModules( void )
 
 	itoa( moduleIndexBuf, moduleIndex, 10 );
 
-	writeToDisplay( moduleIndexBuf, 0, 1 );
-	writeToDisplay( "-", 1, 1 );
-	writeToDisplay( moduleInfo_global[moduleIndex].info0, 2, 8 );
+	writeToDisplay( moduleInfo_global[moduleIndex].info0, 0, 10 );
 	writeToDisplay( moduleInfo_global[moduleIndex].info1, 10, 10 );
 	writeToDisplay( moduleInfo_global[moduleIndex].info2, 20, 10 );
 	writeToDisplay( moduleInfo_global[moduleIndex].info3, 30, 10 );
 	writeToDisplay( moduleInfo_global[moduleIndex].info4, 40, 20 );
+
+	writeToDisplay( moduleIndexBuf, 59, 1 );
+	writeToDisplay( "-", 58, 1 );
 
 	if( moduleIndex == ( MODULE_COUNT - 1 ) )
 	{
