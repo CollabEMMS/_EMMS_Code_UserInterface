@@ -780,10 +780,6 @@ bool process_data_parameters( char parameters[PARAMETER_MAX_COUNT][PARAMETER_MAX
 		{
 			send_end_of_transmission( send_buffer );
 		}
-		else if( strmatch( parameters[1], "PSVersion" ) == true )
-		{
-			send_end_of_transmission( send_buffer );
-		}
 	}
 
 	// add new parameters as necessary

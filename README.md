@@ -25,6 +25,7 @@ MPLAB X Project
 - Feature - Meter Name
   - Updated About menu to remove outdated version info and show Meter Name
   - Update communications to handle Meter Name (MName)
+- Cleanup - removed vestigial command PSVersion
 
 
 ### v2.1.1
