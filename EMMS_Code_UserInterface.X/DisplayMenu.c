@@ -80,8 +80,6 @@ char homeBasicAlternate_module; // 0 for % remaining, 1 for % load
 
 char barGraph_module[21];
 
-char tempResetTimeString_module[6];
-
 unsigned char timeRemHour_module;
 unsigned char timeRemMinute_module;
 unsigned char timeRemSecond_module;
@@ -1003,7 +1001,7 @@ void menuAlarm1( void )
 		writeToDisplay( "Off", 57, 0 );
 	}
 
-	
+
 	writeToDisplay( softKeys_BackUpDownOK_module, 60, 0 );
 
 	return;
@@ -1070,8 +1068,8 @@ void menuAlarm3( void )
 			{
 				tempPercent_global += 1;
 			}
-			
-			if( tempPercent_global > 95)
+
+			if( tempPercent_global > 95 )
 			{
 				tempPercent_global = 95;
 			}
@@ -1086,7 +1084,7 @@ void menuAlarm3( void )
 			{
 				tempPercent_global -= 1;
 			}
-			
+
 			if( tempPercent_global < 0 )
 			{
 				tempPercent_global = 0;
@@ -1201,8 +1199,8 @@ void menuAlarm5( void )
 			{
 				tempPercent_global += 1;
 			}
-			
-			if( tempPercent_global > 95)
+
+			if( tempPercent_global > 95 )
 			{
 				tempPercent_global = 95;
 			}
@@ -1217,7 +1215,7 @@ void menuAlarm5( void )
 			{
 				tempPercent_global -= 1;
 			}
-			
+
 			if( tempPercent_global < 0 )
 			{
 				tempPercent_global = 0;
@@ -1742,32 +1740,52 @@ void menuSetResetTime( void )
 	switch( menuButtonRead( MENU_ADMIN_5, 0, 0, MENU_ADMIN_5 ) )
 	{
 		case 1:
-			if( !tempResetMinute_global )
+			if( tempResetMinute_global == 0 )
 			{
 				tempResetMinute_global = 30;
 			}
 			else
 			{
 				tempResetMinute_global = 0;
-				tempResetHour_global = ( tempResetHour_global + 1 ) % 24;
+				tempResetHour_global += 1;
+				tempResetHour_global = tempResetHour_global % 24; // essentially subtract 24 if it is >=24 - see modulus operator
 			}
 			break;
 
 		case 2:
-			if( tempResetMinute_global == 30 )
-			{
-				tempResetMinute_global = 0;
-			}
-			else
+			// subtract a minute and then step to the next closest 30 minutes
+			tempResetMinute_global -= 1;
+			if( tempResetMinute_global < 0 )
 			{
 				tempResetMinute_global = 30;
-				tempResetHour_global--;
-
-				if( tempResetHour_global > 23 )
+				tempResetHour_global -= 1;
+				if( tempResetHour_global < 0 )
 				{
 					tempResetHour_global = 23;
 				}
 			}
+			else
+			{
+				tempResetMinute_global = tempResetMinute_global - ( tempResetMinute_global % 30 );
+			}
+
+
+
+
+//			if( tempResetMinute_global == 30 )
+//			{
+//				tempResetMinute_global = 0;
+//			}
+//			else
+//			{
+//				tempResetMinute_global = 30;
+//				tempResetHour_global -= 1;
+//
+//				if( tempResetHour_global < 0 )
+//				{
+//					tempResetHour_global = 23;
+//				}
+//			}
 			break;
 
 		case 3:
@@ -1777,36 +1795,43 @@ void menuSetResetTime( void )
 			com_command_setRemoteResetTime( );
 	}
 
-	tempResetTimeString_module[0] = ( tempResetHour_global / 10 ) + 0x30;
-	tempResetTimeString_module[1] = ( tempResetHour_global % 10 ) + 0x30;
-	tempResetTimeString_module[2] = ':';
-	char rtm[20];
+	char resetTimeHourBuf[ BUF_SIZE_INT ];
+	char resetTimeMinuteBuf[ BUF_SIZE_INT ];
 
-	itoa( rtm, tempResetMinute_global, 10 );
+	itoa( resetTimeHourBuf, tempResetHour_global, 10 );
+	itoa( resetTimeMinuteBuf, tempResetMinute_global, 10 );
 
-	if( rtm[1] == CHAR_NULL )
+	writeToDisplay( "Set Daily Reset Time", 0, 20 );
+
+	writeToDisplay( "", 20, 7 );
+	// make sure to write a leading zero if < 10
+	if( tempResetHour_global < 10 )
 	{
-		tempResetTimeString_module[3] = '0';
-		tempResetTimeString_module[4] = rtm[0];
+		writeToDisplay( "0", 27, 1 );
+		writeToDisplay( resetTimeHourBuf, 28, 1 );
 	}
 	else
 	{
-		tempResetTimeString_module[3] = rtm[0];
-		tempResetTimeString_module[4] = rtm[1];
+		writeToDisplay( resetTimeHourBuf, 27, 2 );
 	}
 
-	tempResetTimeString_module[5] = CHAR_NULL;
+	writeToDisplay( ":", 29, 1 );
 
+	if( tempResetMinute_global == 0 )
+	{
+		writeToDisplay( "00", 30, 2 );
+	}
+	else if( tempResetMinute_global < 10 )
+	{
+		writeToDisplay( "0", 30, 1 );
+	}
+	else
+	{
+		writeToDisplay( resetTimeMinuteBuf, 30, 2 );
+	}
 
-	//    if( !tempResetMinute )
-	//	tempResetTimeString[3] = '0';
-	//    else
-	//	tempResetTimeString[3] = '3';
-	//    tempResetTimeString[4] = '0';
-	//    tempResetTimeString[5] = 0;
-
-	writeToDisplay( "Set Reset Time", 0, 27 );
-	writeToDisplay( tempResetTimeString_module, 27, 33 );
+	writeToDisplay( "", 32, 8 );
+	writeToDisplay( "", 40, 20 );
 	writeToDisplay( softKeys_BackUpDownSave_module, 60, 0 );
 
 	return;
