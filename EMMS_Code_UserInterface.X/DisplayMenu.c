@@ -783,8 +783,6 @@ void menuHomeDetail( void )
 	// a negative number means someone is likely cheating
 	remainingPower = energyAllocated_global - energyUsed_global;
 
-	writeToDisplay( "Left: ", 0, 0 );
-
 	char remainingPowerBuf[BUF_SIZE_INT];
 	char powerAllocatedBuf[BUF_SIZE_LONG];
 	char percentRemBuf[BUF_SIZE_INT];
@@ -796,7 +794,8 @@ void menuHomeDetail( void )
 	ultoa( currentLoadBuf, powerLoad_global, 10 );
 
 
-	writeToDisplay( remainingPowerBuf, 5, -5 );
+	writeToDisplay( "Left:", 0, 0 );
+	writeToDisplay( remainingPowerBuf, 5, -6 );
 	writeToDisplay( "/", 11, 0 );
 	writeToDisplay( powerAllocatedBuf, 12, -5 );
 	writeToDisplay( "Wh Remaining:     ", 17, 0 );
