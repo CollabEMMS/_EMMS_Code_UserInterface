@@ -40,25 +40,10 @@ void com_command_readRemotePowerData( void );
 
 void com_command_setRemoteAllocationAdd( void );
 
-// not yet sorted
-//void com_command_readRemoteVersion(void);
-
-
-//void com_command_readRemoteHL(void);
-//void com_command_setRemoteHL(void);
-
-
-//void com_command_readRemotePowerDownUpTime(void);
-
-
 void com_command_readRemoteEnergyAllocation( void );
 void com_command_setRemoteEnergyAllocation( void );
 
 void com_command_readRemoteEnergy( void );
-
-
-
-//void com_command_readUpdate(void);
 
 void com_command_doReset( void );
 
