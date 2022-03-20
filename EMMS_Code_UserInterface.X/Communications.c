@@ -83,6 +83,8 @@ void zeroPad_itoa( char *output, int num, int minDigits );
 void setModuleInfoThis( struct buffer_struct *send_buffer, int moduleInfoIndex );
 void readModuleInfo( struct buffer_struct *send_buffer, unsigned char moduleNumber, unsigned char moduleInfoNumber );
 
+void readRemoteMeterName( struct buffer_struct *send_buffer );
+
 void readRemoteTime( struct buffer_struct *send_buffer );
 void setRemoteTime( struct buffer_struct *send_buffer );
 
@@ -516,18 +518,13 @@ bool process_data_parameters( char parameters[PARAMETER_MAX_COUNT][PARAMETER_MAX
 		else if( strmatch( parameters[1], "Alarm" ) == true )
 		{
 			//2	    audibleAlarmBuf On Off;
-			//3	    alarmOneEnabledBuf On Off;
-			//4	    alarmOnePowerBuf INT;
-			//5	    alarmTwoEnabledBuf On Off;
-			//6	    alarmTwoEnabledBuf INT;
+			//3	    alarmOnePercentThresholdBuf INT;
+			//4	    alarmTwoPercentThresholdBuf INT;
 
 			audibleAlarm_global = checkOnOff( parameters[2] );
 
-			alarm1Enabled_global = checkOnOff( parameters[3] );
-			alarm1Energy_global = atoi( parameters[4] );
-
-			alarm2Enabled_global = checkOnOff( parameters[5] );
-			alarm2Energy_global = atoi( parameters[6] );
+			alarm1PercentThreshold_global = atoi( parameters[3] );
+			alarm2PercentThreshold_global = atoi( parameters[4] );
 
 			command_builder2( send_buffer, "Conf", "Alarm" );
 
@@ -597,19 +594,12 @@ bool process_data_parameters( char parameters[PARAMETER_MAX_COUNT][PARAMETER_MAX
 			command_builder2( send_buffer, "Conf", "Stat" );
 
 		}
-		else if( strmatch( parameters[1], "CBver" ) == true )
+		else if( strmatch( parameters[1], "MName" ) == true )
 		{
 
-			int inx = 0;
-			while( ( inx < 9 ) && ( parameters[2][inx] != CHAR_NULL ) )
-			{
-				powerBoxCodeVersionString_global[inx] = parameters[2][inx];
-				inx++;
-			}
-			powerBoxCodeVersionString_global[inx] = CHAR_NULL;
+			strcpy2( meterNameString_global, parameters[2] );
 
-			command_builder2( send_buffer, "Conf", "CBver" );
-
+			command_builder2( send_buffer, "Conf", "MName" );
 		}
 		else if( strmatch( parameters[1], "PwrFail" ) == true )
 		{
@@ -787,10 +777,6 @@ bool process_data_parameters( char parameters[PARAMETER_MAX_COUNT][PARAMETER_MAX
 			send_end_of_transmission( send_buffer );
 		}
 		else if( strmatch( parameters[1], "Amps" ) == true )
-		{
-			send_end_of_transmission( send_buffer );
-		}
-		else if( strmatch( parameters[1], "PSVersion" ) == true )
 		{
 			send_end_of_transmission( send_buffer );
 		}
@@ -1013,7 +999,7 @@ bool send_data( struct buffer_struct * send_buffer )
 		char data;
 
 		data = send_buffer->data_buffer[send_buffer->read_position];
-		
+
 		if( UART_send_data_char( data ) == true )
 		{
 			send_buffer->read_position++;
@@ -1196,7 +1182,7 @@ bool UART_send_data_char( char data )
 {
 	bool sendGood = false;
 
-//	if( U2STAbits.UTXBF == 0 )
+	//	if( U2STAbits.UTXBF == 0 )
 	// The UART TX Buffer has issues
 	// PIC24 Errata (PIC document 80000522) states
 	//		filling the TX buffer full with 4 characters causes problems
@@ -1325,6 +1311,25 @@ void readModuleInfo( struct buffer_struct *send_buffer, unsigned char moduleNumb
 
 	return;
 }
+
+void com_command_readRemoteMeterName( void )
+{
+	struct buffer_struct *send_buffer;
+
+	send_buffer = command_builder_external_helper( false, NULL );
+
+	readRemoteMeterName( send_buffer );
+
+	return;
+}
+
+void readRemoteMeterName( struct buffer_struct *send_buffer )
+{
+	command_builder2( send_buffer, "Read", "MName" );
+
+	return;
+}
+
 
 void com_command_readRemoteTime( void )
 {
@@ -1515,26 +1520,21 @@ void setRemoteAlarm( struct buffer_struct *send_buffer )
 {
 
 	char audibleAlarmBuf[4];
-	char alarm1EnabledBuf[4];
-	char alarm2EnabledBuf[4];
 
-	int alarm1EnergyTemp;
-	int alarm2EnergyTemp;
-	char alarm1PowerBuf[BUF_SIZE_INT];
-	char alarm2PowerBuf[BUF_SIZE_INT];
+	int alarm1PercentThresholdTemp;
+	int alarm2PercentThresholdTemp;
+	char alarm1PercentThresholdTempBuf[BUF_SIZE_INT];
+	char alarm2PercentThresholdTempBuf[BUF_SIZE_INT];
 
 	fillOnOff( audibleAlarmBuf, audibleAlarm_global );
-	fillOnOff( alarm1EnabledBuf, alarm1Enabled_global );
-	fillOnOff( alarm2EnabledBuf, alarm2Enabled_global );
-
 
 	// using itoa() - variable type is char, make sure it is an int
-	alarm1EnergyTemp = alarm1Energy_global;
-	alarm2EnergyTemp = alarm2Energy_global;
-	itoa( alarm1PowerBuf, alarm1EnergyTemp, 10 );
-	itoa( alarm2PowerBuf, alarm2EnergyTemp, 10 );
+	alarm1PercentThresholdTemp = alarm1PercentThreshold_global;
+	alarm2PercentThresholdTemp = alarm2PercentThreshold_global;
+	itoa( alarm1PercentThresholdTempBuf, alarm1PercentThresholdTemp, 10 );
+	itoa( alarm2PercentThresholdTempBuf, alarm2PercentThresholdTemp, 10 );
 
-	command_builder7( send_buffer, "Set", "Alarm", audibleAlarmBuf, alarm1EnabledBuf, alarm1PowerBuf, alarm2EnabledBuf, alarm2PowerBuf );
+	command_builder5( send_buffer, "Set", "Alarm", audibleAlarmBuf, alarm1PercentThresholdTempBuf, alarm2PercentThresholdTempBuf );
 
 	return;
 }
@@ -1764,24 +1764,6 @@ void com_command_readRemoteStat( void )
 void readRemoteStat( struct buffer_struct *send_buffer )
 {
 	command_builder2( send_buffer, "Read", "Stat" );
-
-	return;
-}
-
-void com_command_readRemoteCBver( void )
-{
-	struct buffer_struct *send_buffer;
-
-	send_buffer = command_builder_external_helper( false, NULL );
-
-	readRemoteCBver( send_buffer );
-
-	return;
-}
-
-void readRemoteCBver( struct buffer_struct *send_buffer )
-{
-	command_builder2( send_buffer, "Read", "CBver" );
 
 	return;
 }

@@ -7,6 +7,36 @@ MPLAB X Project
 - nothing at this time
 
 # Changelog
+### NEXT
+
+
+### v2.1.2
+March 20, 2022<br />
+Tom Austin
+#### Changes
+- Bugfix - Alarm Menu
+  - Alarm threshold would show 0 instead of "Off"
+  - fixed by removing the AlarmXEnabled variable since it was directly derived from the AlarmXThreshold variable
+- Cleanup - removed AlarmXEnabled from the communication commands
+- Tweak - On Module Menu moved the module index to the lower right since that space is used the least
+- Tweak - On the Detail menu changed "Used" to "Left" - better meaning of what is shown
+- Tweak - adjusted the detail menu top line to avoid formating issues
+- Fix - Reset Time Menu would display the reset time incorrectly at times
+  - it will display the reset time as currently set. It is OK to have non 30 minute mark time 7:45
+  - but if this menu changes the reset time then it will be restricted to the 30 minute mark
+  - updated the math on time "Up" and "Down" to handle non 30 minute start time
+- Fix - Menu now times out separate from backlight timeout
+  - this allows the menu to reset so the parameters can be collected again
+  - by design parameters are only collected when on the main screens so they do not interfere with setting them in the menus
+- Feature - Meter Name
+  - Updated About menu to remove outdated version info and show Meter Name
+  - Update communications to handle Meter Name (MName)
+- Cleanup - removed some items no longer used
+  - PSVersion
+- Moved ModInfo menu to be under the Admin
+  - It could contain some sensitive info
+
+
 ### v2.1.1
 March 19, 2022<br />
 Tom Austin

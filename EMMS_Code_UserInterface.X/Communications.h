@@ -10,6 +10,7 @@ void communications( bool );
 void com_command_sendModuleInfoThis( void );
 void com_command_readModuleInfo( void );;
 
+void com_command_readRemoteMeterName( void );
 
 void com_command_readRemoteTime( void );
 void com_command_setRemoteTime( void );
@@ -31,33 +32,16 @@ void com_command_setRemoteRelay( void );
 
 void com_command_readRemoteStat( void );
 
-void com_command_readRemoteCBver( void );
-
 void com_command_readRemotePowerFailTimes( void );
 
 void com_command_readRemotePowerData( void );
 
 void com_command_setRemoteAllocationAdd( void );
 
-// not yet sorted
-//void com_command_readRemoteVersion(void);
-
-
-//void com_command_readRemoteHL(void);
-//void com_command_setRemoteHL(void);
-
-
-//void com_command_readRemotePowerDownUpTime(void);
-
-
 void com_command_readRemoteEnergyAllocation( void );
 void com_command_setRemoteEnergyAllocation( void );
 
 void com_command_readRemoteEnergy( void );
-
-
-
-//void com_command_readUpdate(void);
 
 void com_command_doReset( void );
 

@@ -42,16 +42,16 @@ char relayMode_global;
 char relayModeTemp_module;
 
 
-const char softKeys0_module[] = "Back  Up  Down    OK";
-const char softKeys1_module[] = "Back  Up  Top     OK";
-const char softKeys2_module[] = "Back  Up  Down  Save";
+const char softKeys_BackUpDownOK_module[] = "Back  Up  Down    OK";
+const char softKeys_BackUpTopOK_module[] = "Back  Up  Top     OK";
+const char softKeys_BackUpDownSave_module[] = "Back  Up  Down  Save";
+const char softKeys_BackUpDown_module[] = "Back  Up  Down      ";
+const char softKeys_BackUpTop_module[] = "Back  Up  Top       ";
 
 
 bool audibleAlarm_global;
-bool alarm1Enabled_global;
-bool alarm2Enabled_global;
-char alarm1Energy_global;
-char alarm2Energy_global;
+char alarm1PercentThreshold_global;
+char alarm2PercentThreshold_global;
 
 bool emerButtonEnable_global;
 
@@ -72,7 +72,7 @@ int emerAllocSend_global;
 char powerDownTime_global[12];
 char powerUpTime_global[12];
 
-char powerBoxCodeVersionString_global[9];
+char meterNameString_global[20];
 
 char passwordInput_module[6];
 char newPassword_module[12];
@@ -81,8 +81,6 @@ unsigned char pwLength_module;
 char homeBasicAlternate_module; // 0 for % remaining, 1 for % load
 
 char barGraph_module[21];
-
-char tempResetTimeString_module[6];
 
 unsigned char timeRemHour_module;
 unsigned char timeRemMinute_module;
@@ -103,13 +101,13 @@ unsigned char menuState_global;
 unsigned char oldMenuState_global;
 bool enablePeriodicUpdate_global;
 
-char activeAlarm_global;
+char alarmActive_global;
 char alarmToResume_global;
 char rightArrow_module[2];
 char tempPercent_global;
-char silenceAlarmOne_global;
-char silenceAlarmTwo_global;
-char remainingSets_global;
+bool alarm1Silence_global;
+bool alarm2Silence_global;
+char alarmRemainingSets_global;
 
 unsigned long powerLoad_global;
 unsigned long energyUsed_global;
@@ -124,10 +122,10 @@ unsigned char button2Flag_global;
 unsigned char button3Flag_global;
 
 
-char isBooting_global;
+bool isBooting_global;
 
-char alarmOneHit_global;
-char alarmTwoHit_global;
+bool alarm1Hit_global;
+bool alarm2Hit_global;
 
 
 
@@ -172,6 +170,7 @@ void menuAdmin3( void );
 void menuAdmin4( void );
 void menuAdmin5( void );
 void menuAdmin6( void );
+void menuAdmin7( void );
 void menuSetTime( void );
 void menuSetPower( void );
 void menuSetResetTime( void );
@@ -456,10 +455,6 @@ void updateMenu( void )
 			menuMain5( );
 			break;
 
-		case MENU_MAIN_6:
-			menuMain6( );
-			break;
-
 		case MENU_ALARM_1:
 			menuAlarm1( );
 			break;
@@ -512,11 +507,15 @@ void updateMenu( void )
 			menuAdmin6( );
 			break;
 
+		case MENU_ADMIN_7:
+			menuAdmin7( );
+			break;
+
 		case MENU_SET_TIME:
 			menuSetTime( );
 			break;
 
-		case MENU_SET_POWER:
+		case MENU_SET_ENERGY_ALLOCATION:
 			menuSetPower( );
 			break;
 
@@ -785,8 +784,6 @@ void menuHomeDetail( void )
 	// a negative number means someone is likely cheating
 	remainingPower = energyAllocated_global - energyUsed_global;
 
-	writeToDisplay( "Used: ", 0, 0 );
-
 	char remainingPowerBuf[BUF_SIZE_INT];
 	char powerAllocatedBuf[BUF_SIZE_LONG];
 	char percentRemBuf[BUF_SIZE_INT];
@@ -798,7 +795,8 @@ void menuHomeDetail( void )
 	ultoa( currentLoadBuf, powerLoad_global, 10 );
 
 
-	writeToDisplay( remainingPowerBuf, 5, -5 );
+	writeToDisplay( "Left:", 0, 0 );
+	writeToDisplay( remainingPowerBuf, 5, -6 );
 	writeToDisplay( "/", 11, 0 );
 	writeToDisplay( powerAllocatedBuf, 12, -5 );
 	writeToDisplay( "Wh Remaining:     ", 17, 0 );
@@ -824,15 +822,18 @@ void menuAlarm( void )
 		case 2:
 		case 3:
 			menuState_global = oldMenuState_global;
-			if( activeAlarm_global == 1 )
+			if( alarmActive_global == 1 )
 			{
-				silenceAlarmOne_global = 1;
+				alarm1Silence_global = true;
 			}
-			if( activeAlarm_global == 2 )
+			if( alarmActive_global == 2 )
 			{
-				silenceAlarmTwo_global = 1;
+				alarm2Silence_global = true;
 			}
-			alarmToResume_global = activeAlarm_global = remainingSets_global = 0;
+			alarmToResume_global = 0;
+			alarmActive_global = 0;
+			alarmRemainingSets_global = 0;
+			break;
 	}
 
 	char percentRemBuf[BUF_SIZE_INT];
@@ -849,17 +850,19 @@ void menuAlarm( void )
 
 void menuMain1( void )
 {
-	switch( menuButtonRead( MENU_HOME_BASIC, MENU_MAIN_6, MENU_MAIN_2, MENU_ALARM_1 ) )
+	switch( menuButtonRead( MENU_HOME_BASIC, MENU_MAIN_5, MENU_MAIN_2, MENU_ALARM_1 ) )
 	{
 		case 1:
-			com_command_readRemoteCBver( );
+			com_command_readRemoteMeterName( );
 			break;
 		case 2:
 			com_command_readRemotePassword( );
 	}
 
-	writeToDisplay( "Main Menu     1 of 6* Alarm Options       Admin Menu", 0, 60 );
-	writeToDisplay( softKeys0_module, 60, 0 );
+	writeToDisplay( "Main Menu     1 of 6", 0, 20 );
+	writeToDisplay( "* Alarm Options", 20, 20 );
+	writeToDisplay( "  Admin Menu", 40, 20 );
+	writeToDisplay( softKeys_BackUpDownOK_module, 60, 0 );
 
 	enablePeriodicUpdate_global = false;
 
@@ -874,14 +877,16 @@ void menuMain2( void )
 			com_command_readRemoteAlarm( );
 			break;
 		case 2:
-			//com_command_readRemoteHL( );
+			com_command_readRemoteStat( );
 			break;
 		case 3:
 			pwLength_module = 0;
 	}
 
-	writeToDisplay( "Main Menu     2 of 6* Admin Menu          Modules ", 0, 60 );
-	writeToDisplay( softKeys0_module, 60, 0 );
+	writeToDisplay( "Main Menu     2 of 6", 0, 20 );
+	writeToDisplay( "* Admin Menu", 20, 20 );
+	writeToDisplay( "  Statistics", 40, 20 );
+	writeToDisplay( softKeys_BackUpDownOK_module, 60, 0 );
 
 	return;
 }
@@ -889,61 +894,48 @@ void menuMain2( void )
 void menuMain3( void )
 {
 
-	switch( menuButtonRead( MENU_HOME_BASIC, MENU_MAIN_2, MENU_MAIN_4, MENU_MODULES ) )
+	switch( menuButtonRead( MENU_HOME_BASIC, MENU_MAIN_2, MENU_MAIN_4, MENU_STATISTICS ) )
 	{
 		case 1:
 			com_command_readRemotePassword( );
 			break;
 		case 2:
-			com_command_readRemoteStat( );
+			com_command_readRemotePowerFailTimes( );
 			break;
 		case 3:
 			break;
 	}
 
-	writeToDisplay( "Main Menu     3 of 6* Modules             Statistics", 0, 60 );
-	writeToDisplay( softKeys0_module, 60, 0 );
+	writeToDisplay( "Main Menu     3 of 6", 0, 20 );
+	writeToDisplay( "* Statistics", 20, 20 );
+	writeToDisplay( "  Last Power Failure", 40, 20 );
+	writeToDisplay( softKeys_BackUpDownOK_module, 60, 0 );
 
 	return;
 }
 
 void menuMain4( void )
 {
-	switch( menuButtonRead( MENU_HOME_BASIC, MENU_MAIN_3, MENU_MAIN_5, MENU_STATISTICS ) )
+	switch( menuButtonRead( MENU_HOME_BASIC, MENU_MAIN_3, MENU_MAIN_5, MENU_POWERFAILTIMES ) )
 	{
 		case 1:
-			//com_command_readRemoteHL( );
+			com_command_readRemoteStat( );
 			break;
 		case 2:
-			com_command_readRemotePowerFailTimes( );
+			com_command_readRemoteMeterName( );
 	}
 
-	writeToDisplay( "Main Menu     4 of 6* Statistics          Last Power Failure", 0, 60 );
-	writeToDisplay( softKeys0_module, 60, 0 );
+	writeToDisplay( "Main Menu     5 of 6", 0, 20 );
+	writeToDisplay( "* Last Power Failure", 20, 20 );
+	writeToDisplay( "  About", 40, 20 );
+	writeToDisplay( softKeys_BackUpDownOK_module, 60, 0 );
 
 	return;
 }
 
 void menuMain5( void )
 {
-	switch( menuButtonRead( MENU_HOME_BASIC, MENU_MAIN_4, MENU_MAIN_6, MENU_POWERFAILTIMES ) )
-	{
-		case 1:
-			com_command_readRemoteStat( );
-			break;
-		case 2:
-			com_command_readRemoteCBver( );
-	}
-
-	writeToDisplay( "Main Menu     5 of 6* Last Power Failure  About", 0, 60 );
-	writeToDisplay( softKeys0_module, 60, 0 );
-
-	return;
-}
-
-void menuMain6( void )
-{
-	switch( menuButtonRead( MENU_HOME_BASIC, MENU_MAIN_5, MENU_MAIN_1, MENU_ABOUT ) )
+	switch( menuButtonRead( MENU_HOME_BASIC, MENU_MAIN_4, MENU_MAIN_1, MENU_ABOUT ) )
 	{
 		case 1:
 			com_command_readRemotePowerFailTimes( );
@@ -952,8 +944,10 @@ void menuMain6( void )
 			com_command_readRemoteAlarm( );
 	}
 
-	writeToDisplay( "Main Menu     6 of 6  Last Power Failure* About", 0, 60 );
-	writeToDisplay( softKeys1_module, 60, 0 );
+	writeToDisplay( "Main Menu     6 of 6", 0, 20 );
+	writeToDisplay( "  Last Power Failure", 20, 20 );
+	writeToDisplay( "* About", 40, 20 );
+	writeToDisplay( softKeys_BackUpTopOK_module, 60, 0 );
 
 	return;
 }
@@ -989,11 +983,11 @@ void menuAlarm1( void )
 
 	writeToDisplay( "  Alarm 1 Power  ", 40, 0 );
 
-	if( alarm1Enabled_global == true )
+	if( alarm1PercentThreshold_global > 0 )
 	{
 		char alarmOnePowerBuf[BUF_SIZE_INT];
 
-		itoa( alarmOnePowerBuf, alarm1Energy_global, 10 );
+		itoa( alarmOnePowerBuf, alarm1PercentThreshold_global, 10 );
 
 		writeToDisplay( alarmOnePowerBuf, 57, -2 );
 		writeToDisplay( "%", 59, 0 );
@@ -1003,7 +997,8 @@ void menuAlarm1( void )
 		writeToDisplay( "Off", 57, 0 );
 	}
 
-	writeToDisplay( softKeys0_module, 60, 0 );
+
+	writeToDisplay( softKeys_BackUpDownOK_module, 60, 0 );
 
 	return;
 }
@@ -1016,16 +1011,16 @@ void menuAlarm2( void )
 			com_command_setRemoteAlarm( );
 			break;
 		case 3:
-			tempPercent_global = alarm1Energy_global;
+			tempPercent_global = alarm1PercentThreshold_global;
 	}
 
 	writeToDisplay( "Alarm Options 2 of 3* Alarm 1 Power  ", 0, 0 );
 
-	if( alarm1Enabled_global == true )
+	if( alarm1PercentThreshold_global > 0 )
 	{
 		char alarmOnePowerBuf[ BUF_SIZE_LONG];
 
-		itoa( alarmOnePowerBuf, alarm1Energy_global, 10 );
+		itoa( alarmOnePowerBuf, alarm1PercentThreshold_global, 10 );
 
 		writeToDisplay( alarmOnePowerBuf, 37, -2 );
 		writeToDisplay( "%", 39, 0 );
@@ -1037,11 +1032,11 @@ void menuAlarm2( void )
 
 	writeToDisplay( "  Alarm 2 Power  ", 40, 0 );
 
-	if( alarm2Enabled_global == true )
+	if( alarm2PercentThreshold_global > 0 )
 	{
 		char alarmTwoPowerBuf[ BUF_SIZE_INT];
 
-		itoa( alarmTwoPowerBuf, alarm2Energy_global, 10 );
+		itoa( alarmTwoPowerBuf, alarm2PercentThreshold_global, 10 );
 
 		writeToDisplay( alarmTwoPowerBuf, 57, -2 );
 		writeToDisplay( "%", 59, 0 );
@@ -1051,7 +1046,7 @@ void menuAlarm2( void )
 		writeToDisplay( "Off", 57, 0 );
 	}
 
-	writeToDisplay( softKeys0_module, 60, 0 );
+	writeToDisplay( softKeys_BackUpDownOK_module, 60, 0 );
 
 	return;
 }
@@ -1061,32 +1056,40 @@ void menuAlarm3( void )
 	switch( menuButtonRead( MENU_ALARM_2, 0, 0, MENU_ALARM_2 ) )
 	{
 		case 1:
-			if( alarm1Enabled_global == false )
-				alarm1Enabled_global = 1;
+			if( tempPercent_global >= 20 )
+			{
+				tempPercent_global += 5;
+			}
 			else
 			{
-				if( tempPercent_global < 20 )
-					tempPercent_global++;
-				else if( tempPercent_global < 95 )
-					tempPercent_global += 5;
+				tempPercent_global += 1;
+			}
+
+			if( tempPercent_global > 95 )
+			{
+				tempPercent_global = 95;
 			}
 			break;
 
 		case 2:
-			if( alarm1Enabled_global == true )
+			if( tempPercent_global > 20 )
 			{
-				if( tempPercent_global > 20 )
-					tempPercent_global -= 5;
-				else if( tempPercent_global > 1 )
-					tempPercent_global--;
-				else if( tempPercent_global <= 1 )
-					alarm1Enabled_global = 0;
+				tempPercent_global -= 5;
+			}
+			else
+			{
+				tempPercent_global -= 1;
+			}
+
+			if( tempPercent_global < 0 )
+			{
+				tempPercent_global = 0;
 			}
 			break;
 
 		case 3:
-			alarm1Energy_global = tempPercent_global;
-			alarmOneHit_global = 0;
+			alarm1PercentThreshold_global = tempPercent_global;
+			alarm1Hit_global = false;
 			com_command_setRemoteAlarm( );
 	}
 
@@ -1094,7 +1097,7 @@ void menuAlarm3( void )
 
 	writeToDisplay( rightArrow_module, 36, 0 );
 
-	if( alarm1Enabled_global == true )
+	if( tempPercent_global > 0 )
 	{
 		char tempPercentBuf[BUF_SIZE_INT];
 
@@ -1110,11 +1113,11 @@ void menuAlarm3( void )
 
 	writeToDisplay( "  Alarm 2 Power  ", 40, 0 );
 
-	if( alarm2Enabled_global == true )
+	if( alarm2PercentThreshold_global > true )
 	{
 		char alarmTwoPowerBuf[ BUF_SIZE_INT];
 
-		itoa( alarmTwoPowerBuf, alarm2Energy_global, 10 );
+		itoa( alarmTwoPowerBuf, alarm2PercentThreshold_global, 10 );
 
 		writeToDisplay( alarmTwoPowerBuf, 57, -2 );
 		writeToDisplay( "%", 59, 0 );
@@ -1124,7 +1127,7 @@ void menuAlarm3( void )
 		writeToDisplay( "Off", 57, 0 );
 	}
 
-	writeToDisplay( softKeys2_module, 60, 0 );
+	writeToDisplay( softKeys_BackUpDownSave_module, 60, 0 );
 
 	return;
 }
@@ -1138,16 +1141,16 @@ void menuAlarm4( void )
 			com_command_setRemoteAlarm( );
 			break;
 		case 3:
-			tempPercent_global = alarm2Energy_global;
+			tempPercent_global = alarm2PercentThreshold_global;
 	}
 
 	writeToDisplay( "Alarm Options 3 of 3  Alarm 1 Power  ", 0, 0 );
 
-	if( alarm1Enabled_global == true )
+	if( alarm1PercentThreshold_global > 0 )
 	{
 		char alarmOnePowerBuf[ BUF_SIZE_INT];
 
-		itoa( alarmOnePowerBuf, alarm1Energy_global, 10 );
+		itoa( alarmOnePowerBuf, alarm1PercentThreshold_global, 10 );
 
 		writeToDisplay( alarmOnePowerBuf, 37, -2 );
 		writeToDisplay( "%", 39, 0 );
@@ -1159,11 +1162,11 @@ void menuAlarm4( void )
 
 	writeToDisplay( "* Alarm 2 Power  ", 40, 0 );
 
-	if( alarm2Enabled_global == true )
+	if( alarm2PercentThreshold_global > 0 )
 	{
 		char alarmTwoPowerBuf[ BUF_SIZE_INT];
 
-		itoa( alarmTwoPowerBuf, alarm2Energy_global, 10 );
+		itoa( alarmTwoPowerBuf, alarm2PercentThreshold_global, 10 );
 
 		writeToDisplay( alarmTwoPowerBuf, 57, -2 );
 		writeToDisplay( "%", 59, 0 );
@@ -1173,7 +1176,7 @@ void menuAlarm4( void )
 		writeToDisplay( "Off", 57, 0 );
 	}
 
-	writeToDisplay( softKeys1_module, 60, 0 );
+	writeToDisplay( softKeys_BackUpTopOK_module, 60, 0 );
 
 	return;
 }
@@ -1184,54 +1187,50 @@ void menuAlarm5( void )
 	switch( menuButtonRead( MENU_ALARM_4, 0, 0, MENU_ALARM_4 ) )
 	{
 		case 1:
-			if( alarm2Enabled_global == false )
+			if( tempPercent_global >= 20 )
 			{
-				alarm2Enabled_global = true;
+				tempPercent_global += 5;
 			}
 			else
 			{
-				if( tempPercent_global < 20 )
-				{
-					tempPercent_global++;
-				}
-				else if( tempPercent_global < 95 )
-				{
-					tempPercent_global += 5;
-				}
+				tempPercent_global += 1;
+			}
+
+			if( tempPercent_global > 95 )
+			{
+				tempPercent_global = 95;
 			}
 			break;
 
 		case 2:
-			if( alarm2Enabled_global == true )
+			if( tempPercent_global > 20 )
 			{
-				if( tempPercent_global > 20 )
-				{
-					tempPercent_global -= 5;
-				}
-				else if( tempPercent_global > 1 )
-				{
-					tempPercent_global--;
-				}
-				else if( tempPercent_global <= 1 )
-				{
-					alarm2Enabled_global = false;
-				}
+				tempPercent_global -= 5;
+			}
+			else
+			{
+				tempPercent_global -= 1;
+			}
+
+			if( tempPercent_global < 0 )
+			{
+				tempPercent_global = 0;
 			}
 			break;
 
 		case 3:
-			alarm2Energy_global = tempPercent_global;
-			alarmTwoHit_global = 0;
+			alarm2PercentThreshold_global = tempPercent_global;
+			alarm2Hit_global = false;
 			com_command_setRemoteAlarm( );
 	}
 
 	writeToDisplay( "Alarm Options 3 of 3  Alarm 1 Power  ", 0, 0 );
 
-	if( alarm1Enabled_global == true )
+	if( alarm1PercentThreshold_global > 0 )
 	{
 		char alarmOnePowerBuf[BUF_SIZE_INT];
 
-		itoa( alarmOnePowerBuf, alarm1Energy_global, 10 );
+		itoa( alarmOnePowerBuf, alarm1PercentThreshold_global, 10 );
 
 		writeToDisplay( alarmOnePowerBuf, 37, -2 );
 		writeToDisplay( "%", 39, 0 );
@@ -1244,7 +1243,7 @@ void menuAlarm5( void )
 	writeToDisplay( "* Alarm 2 Power ", 40, 0 );
 	writeToDisplay( rightArrow_module, 56, 0 );
 
-	if( alarm2Enabled_global == true )
+	if( tempPercent_global > 0 )
 	{
 		char tempPercentBuf[ BUF_SIZE_INT];
 
@@ -1258,7 +1257,7 @@ void menuAlarm5( void )
 		writeToDisplay( "Off", 57, 0 );
 	}
 
-	writeToDisplay( softKeys2_module, 60, 0 );
+	writeToDisplay( softKeys_BackUpDownSave_module, 60, 0 );
 
 	return;
 }
@@ -1268,7 +1267,7 @@ void menuStatistics( void )
 	char previousDayUsedBuf[BUF_SIZE_LONG];
 	char totalUsedBuf[BUF_SIZE_LONG];
 
-	menuButtonRead( MENU_MAIN_4, MENU_MAIN_4, MENU_MAIN_4, MENU_MAIN_4 );
+	menuButtonRead( MENU_MAIN_3, MENU_MAIN_3, MENU_MAIN_3, MENU_MAIN_3 );
 
 	ltoa( previousDayUsedBuf, previousDayUsed_global, 10 );
 	ltoa( totalUsedBuf, totalUsed_global, 10 );
@@ -1285,7 +1284,7 @@ void menuStatistics( void )
 
 void menuPowerFailTimes( void )
 {
-	menuButtonRead( MENU_MAIN_5, MENU_MAIN_5, MENU_MAIN_5, MENU_MAIN_5 );
+	menuButtonRead( MENU_MAIN_4, MENU_MAIN_4, MENU_MAIN_4, MENU_MAIN_4 );
 
 	writeToDisplay( "Last Power Failure  ", 0, 0 );
 	writeToDisplay( "Lost     ", 20, 0 );
@@ -1299,13 +1298,12 @@ void menuPowerFailTimes( void )
 
 void menuAbout( void )
 {
-	menuButtonRead( MENU_MAIN_6, MENU_MAIN_6, MENU_MAIN_6, MENU_MAIN_6 );
+	menuButtonRead( MENU_MAIN_5, MENU_MAIN_5, MENU_MAIN_5, MENU_MAIN_5 );
 
-	writeToDisplay( "Power Code: ", 0, 0 );
-	writeToDisplay( powerBoxCodeVersionString_global, 12, 8 );
-	writeToDisplay( "Disp Code:  ", 20, 0 );
-	writeToDisplay( DISPLAY_BOX_CODE_VERSION, 32, 8 );
-	writeToDisplay( " Messiah University     Collaboratory    ", 40, 0 );
+	writeToDisplay( " Messiah University ", 0, 0 );
+	writeToDisplay( "   Collaboratory    ", 20, 0 );
+	writeToDisplay( "  EMMS Power Meter  ", 40, 0 );
+	writeToDisplay( meterNameString_global, 60, 20 );
 
 	return;
 }
@@ -1385,10 +1383,11 @@ void menuAdminLogin( void )
 void menuAdmin1( void )
 {
 
-	switch( menuButtonRead( MENU_MAIN_2, MENU_ADMIN_6, MENU_ADMIN_2, MENU_SET_TIME ) )
+	switch( menuButtonRead( MENU_MAIN_2, MENU_ADMIN_7, MENU_ADMIN_2, MENU_SET_TIME ) )
 	{
 		case 1:
-			com_command_readRemoteRelay( );
+			// do nothing
+			// too many module infos to try to read all here
 			break;
 		case 2:
 			com_command_readRemoteEnergyAllocation( );
@@ -1405,28 +1404,32 @@ void menuAdmin1( void )
 			tempYear_global = timeYear_global;
 	}
 
-	writeToDisplay( "Admin Menu    1 of 6* Set Time/Date       Set Power Alloc", 0, 60 );
-	writeToDisplay( softKeys0_module, 60, 0 );
+	writeToDisplay( "Admin Menu    1 of 7", 0, 20 );
+	writeToDisplay( "* Set Time/Date", 20, 20 );
+	writeToDisplay( "  Set Power Alloc", 40, 20 );
+	writeToDisplay( softKeys_BackUpDownOK_module, 60, 0 );
 
 	return;
 }
 
 void menuAdmin2( void )
 {
-	switch( menuButtonRead( MENU_MAIN_2, MENU_ADMIN_1, MENU_ADMIN_3, MENU_SET_POWER ) )
+	switch( menuButtonRead( MENU_MAIN_2, MENU_ADMIN_1, MENU_ADMIN_3, MENU_SET_ENERGY_ALLOCATION ) )
 	{
 		case 1:
 			com_command_readRemoteTime( );
 			break;
 		case 2:
-			com_command_readRemoteEnergy( );
+			com_command_readRemoteEmergency( );
 			break;
 		case 3:
 			tempAlloc_module = energyAllocated_global;
 	}
 
-	writeToDisplay( "Admin Menu    2 of 6* Set Power Alloc     Emergency Options", 0, 60 );
-	writeToDisplay( softKeys0_module, 60, 0 );
+	writeToDisplay( "Admin Menu    2 of 7", 0, 20 );
+	writeToDisplay( "* Set Power Alloc", 20, 20 );
+	writeToDisplay( "  Emergency Options", 40, 20 );
+	writeToDisplay( softKeys_BackUpDownOK_module, 60, 0 );
 
 	return;
 }
@@ -1437,10 +1440,16 @@ void menuAdmin3( void )
 	{
 		case 1:
 			com_command_readRemoteEnergyAllocation( );
+			break;
+		case 2:
+			// do nothing, password already read
+			break;
 	}
 
-	writeToDisplay( "Admin Menu    3 of 6* Emergency Options   Change Password", 0, 60 );
-	writeToDisplay( softKeys0_module, 60, 0 );
+	writeToDisplay( "Admin Menu    3 of 7", 0, 20 );
+	writeToDisplay( "* Emergency Options", 20, 20 );
+	writeToDisplay( "  Change Password", 40, 20 );
+	writeToDisplay( softKeys_BackUpDownOK_module, 60, 0 );
 
 	return;
 }
@@ -1450,7 +1459,7 @@ void menuAdmin4( void )
 	switch( menuButtonRead( MENU_MAIN_2, MENU_ADMIN_3, MENU_ADMIN_5, MENU_PASSWORD_CHANGE ) )
 	{
 		case 1:
-			com_command_readRemoteEnergy( );
+			com_command_readRemoteEmergency( );
 			break;
 		case 2:
 			com_command_readRemoteResetTime( );
@@ -1464,8 +1473,10 @@ void menuAdmin4( void )
 			newPassword_module[11] = 0;
 	}
 
-	writeToDisplay( "Admin Menu    4 of 6* Change Password     Change Reset Time", 0, 60 );
-	writeToDisplay( softKeys0_module, 60, 0 );
+	writeToDisplay( "Admin Menu    4 of 7", 0, 20 );
+	writeToDisplay( "* Change Password", 20, 20 );
+	writeToDisplay( "  Change Reset Time", 40, 20 );
+	writeToDisplay( softKeys_BackUpDownOK_module, 60, 0 );
 
 	return;
 }
@@ -1474,16 +1485,23 @@ void menuAdmin5( void )
 {
 	switch( menuButtonRead( MENU_MAIN_2, MENU_ADMIN_4, MENU_ADMIN_6, MENU_SET_RESET_TIME ) )
 	{
+		case 1:
+			//do nothing
+			// we already have password
+			break;
 		case 2:
 			com_command_readRemoteRelay( );
 			break;
 		case 3:
 			tempResetHour_global = resetTimeHour_global;
 			tempResetMinute_global = resetTimeMinute_global;
+			break;
 	}
 
-	writeToDisplay( "Admin Menu    5 of 6* Change Reset Time   Relay Control", 0, 60 );
-	writeToDisplay( softKeys0_module, 60, 0 );
+	writeToDisplay( "Admin Menu    5 of 7", 0, 20 );
+	writeToDisplay( "* Change Reset Time", 20, 20 );
+	writeToDisplay( "  Relay Control", 40, 20 );
+	writeToDisplay( softKeys_BackUpDownOK_module, 60, 0 );
 
 	return;
 }
@@ -1491,20 +1509,43 @@ void menuAdmin5( void )
 void menuAdmin6( void )
 {
 
-	switch( menuButtonRead( MENU_MAIN_2, MENU_ADMIN_5, MENU_ADMIN_1, MENU_SET_RELAY ) )
+	switch( menuButtonRead( MENU_MAIN_2, MENU_ADMIN_5, MENU_ADMIN_7, MENU_SET_RELAY ) )
 	{
 		case 1:
 			com_command_readRemoteResetTime( );
 			break;
 		case 2:
-			com_command_readRemoteTime( );
+			// do nothing
+			// too many module infos to try to read all here
 			break;
 		case 3:
 			relayModeTemp_module = relayMode_global;
 	}
 
-	writeToDisplay( "Admin Menu    6 of 6  Change Reset Time * Relay Control", 0, 60 );
-	writeToDisplay( softKeys1_module, 60, 0 );
+	writeToDisplay( "Admin Menu    6 of 7", 0, 20 );
+	writeToDisplay( "* Relay Control", 20, 20 );
+	writeToDisplay( "  Module Info  ", 40, 20 );
+	writeToDisplay( softKeys_BackUpDownOK_module, 60, 0 );
+
+	return;
+}
+
+void menuAdmin7( void )
+{
+	switch( menuButtonRead( MENU_MAIN_2, MENU_ADMIN_6, MENU_ADMIN_1, MENU_MODULES ) )
+	{
+		case 1:
+			com_command_readRemoteRelay( );
+			break;
+		case 2:
+			com_command_readRemoteTime( );
+			break;
+	}
+
+	writeToDisplay( "Admin Menu    7 of 7", 0, 20 );
+	writeToDisplay( "  Relay Control", 20, 20 );
+	writeToDisplay( "* Module Info", 40, 20 );
+	writeToDisplay( softKeys_BackUpTopOK_module, 60, 0 );
 
 	return;
 }
@@ -1519,7 +1560,7 @@ void menuSetTime( void )
 
 			if( !timeSetPos_global )
 			{
-				if( isBooting_global )
+				if( isBooting_global == true )
 				{
 					timeSetPos_global = 1;
 				}
@@ -1610,7 +1651,7 @@ void menuSetTime( void )
 				{
 					com_command_setRemoteTime( );
 					//                    lastUpdateSecond = timeSecond; // correct periodic update timing
-					if( isBooting_global )
+					if( isBooting_global == true )
 					{
 						menuState_global = MENU_POWER_RESET;
 						//isBooting = 0;
@@ -1646,7 +1687,7 @@ void menuSetTime( void )
 	}
 	else
 	{
-		writeToDisplay( softKeys2_module, 60, 0 );
+		writeToDisplay( softKeys_BackUpDownSave_module, 60, 0 );
 	}
 	/*
 	writeToDisplay(tempClockStr, 25, 0);
@@ -1715,7 +1756,7 @@ void menuSetPower( void )
 			else
 			{
 				menuState_global = MENU_SHUT_OFF_WARNING;
-				oldPowerMenuState_module = MENU_SET_POWER;
+				oldPowerMenuState_module = MENU_SET_ENERGY_ALLOCATION;
 			}
 
 	}
@@ -1727,7 +1768,7 @@ void menuSetPower( void )
 	writeToDisplay( "Set Power Allocation  ", 0, 0 );
 	writeToDisplay( tempAllocBuf, 22, -5 );
 	writeToDisplay( " Wh per day", 27, 33 );
-	writeToDisplay( softKeys2_module, 60, 0 );
+	writeToDisplay( softKeys_BackUpDownSave_module, 60, 0 );
 
 	return;
 }
@@ -1737,31 +1778,33 @@ void menuSetResetTime( void )
 	switch( menuButtonRead( MENU_ADMIN_5, 0, 0, MENU_ADMIN_5 ) )
 	{
 		case 1:
-			if( !tempResetMinute_global )
+			if( tempResetMinute_global == 0 )
 			{
 				tempResetMinute_global = 30;
 			}
 			else
 			{
 				tempResetMinute_global = 0;
-				tempResetHour_global = ( tempResetHour_global + 1 ) % 24;
+				tempResetHour_global += 1;
+				tempResetHour_global = tempResetHour_global % 24; // essentially subtract 24 if it is >=24 - see modulus operator
 			}
 			break;
 
 		case 2:
-			if( tempResetMinute_global == 30 )
-			{
-				tempResetMinute_global = 0;
-			}
-			else
+			// subtract a minute and then step to the next closest 30 minutes
+			tempResetMinute_global -= 1;
+			if( tempResetMinute_global < 0 )
 			{
 				tempResetMinute_global = 30;
-				tempResetHour_global--;
-
-				if( tempResetHour_global > 23 )
+				tempResetHour_global -= 1;
+				if( tempResetHour_global < 0 )
 				{
 					tempResetHour_global = 23;
 				}
+			}
+			else
+			{
+				tempResetMinute_global = tempResetMinute_global - ( tempResetMinute_global % 30 );
 			}
 			break;
 
@@ -1772,37 +1815,44 @@ void menuSetResetTime( void )
 			com_command_setRemoteResetTime( );
 	}
 
-	tempResetTimeString_module[0] = ( tempResetHour_global / 10 ) + 0x30;
-	tempResetTimeString_module[1] = ( tempResetHour_global % 10 ) + 0x30;
-	tempResetTimeString_module[2] = ':';
-	char rtm[20];
+	char resetTimeHourBuf[ BUF_SIZE_INT ];
+	char resetTimeMinuteBuf[ BUF_SIZE_INT ];
 
-	itoa( rtm, tempResetMinute_global, 10 );
+	itoa( resetTimeHourBuf, tempResetHour_global, 10 );
+	itoa( resetTimeMinuteBuf, tempResetMinute_global, 10 );
 
-	if( rtm[1] == CHAR_NULL )
+	writeToDisplay( "Set Daily Reset Time", 0, 20 );
+
+	writeToDisplay( "", 20, 7 );
+	// make sure to write a leading zero if < 10
+	if( tempResetHour_global < 10 )
 	{
-		tempResetTimeString_module[3] = '0';
-		tempResetTimeString_module[4] = rtm[0];
+		writeToDisplay( "0", 27, 1 );
+		writeToDisplay( resetTimeHourBuf, 28, 1 );
 	}
 	else
 	{
-		tempResetTimeString_module[3] = rtm[0];
-		tempResetTimeString_module[4] = rtm[1];
+		writeToDisplay( resetTimeHourBuf, 27, 2 );
 	}
 
-	tempResetTimeString_module[5] = CHAR_NULL;
+	writeToDisplay( ":", 29, 1 );
 
+	if( tempResetMinute_global == 0 )
+	{
+		writeToDisplay( "00", 30, 2 );
+	}
+	else if( tempResetMinute_global < 10 )
+	{
+		writeToDisplay( "0", 30, 1 );
+	}
+	else
+	{
+		writeToDisplay( resetTimeMinuteBuf, 30, 2 );
+	}
 
-	//    if( !tempResetMinute )
-	//	tempResetTimeString[3] = '0';
-	//    else
-	//	tempResetTimeString[3] = '3';
-	//    tempResetTimeString[4] = '0';
-	//    tempResetTimeString[5] = 0;
-
-	writeToDisplay( "Set Reset Time", 0, 27 );
-	writeToDisplay( tempResetTimeString_module, 27, 33 );
-	writeToDisplay( softKeys2_module, 60, 0 );
+	writeToDisplay( "", 32, 8 );
+	writeToDisplay( "", 40, 20 );
+	writeToDisplay( softKeys_BackUpDownSave_module, 60, 0 );
 
 	return;
 }
@@ -1840,7 +1890,7 @@ void menuEmergency1( void )
 
 	writeToDisplay( emerAllocNowBuf, 57, -3 );
 
-	writeToDisplay( softKeys0_module, 60, 0 );
+	writeToDisplay( softKeys_BackUpDownOK_module, 60, 0 );
 
 	return;
 }
@@ -1873,7 +1923,7 @@ void menuEmergency2( void )
 	writeToDisplay( "* Emer Alloc Now ", 40, 0 );
 	writeToDisplay( emerAllocNowBuf, 57, -3 );
 
-	writeToDisplay( softKeys0_module, 60, 0 );
+	writeToDisplay( softKeys_BackUpDownOK_module, 60, 0 );
 
 	return;
 }
@@ -1945,7 +1995,7 @@ void menuEmergency3( void )
 
 	writeToDisplay( emerAllocNowBuf, 57, -3 );
 
-	writeToDisplay( softKeys2_module, 60, 0 );
+	writeToDisplay( softKeys_BackUpDownSave_module, 60, 0 );
 
 	return;
 }
@@ -1997,18 +2047,17 @@ void menuEmergency4( void )
 	writeToDisplay( rightArrow_module, 56, 0 );
 	writeToDisplay( emerAllocNowBuf, 57, -3 );
 
-	writeToDisplay( softKeys2_module, 60, 0 );
+	writeToDisplay( softKeys_BackUpDownSave_module, 60, 0 );
 
 	return;
 }
 
 void menuModules( void )
 {
-
 	static int moduleIndex = 0;
 
 	// this should be replaced with the modules info
-	switch( menuButtonRead( MENU_MAIN_3, 0, 0, 0 ) )
+	switch( menuButtonRead( MENU_ADMIN_7, 0, 0, 0 ) )
 	{
 		case 1:
 			moduleIndex--;
@@ -2025,29 +2074,31 @@ void menuModules( void )
 			}
 			break;
 		case 3:
-			menuState_global = MENU_MAIN_3;
+			break;
 	}
 
 	char moduleIndexBuf[BUF_SIZE_INT];
 
 	itoa( moduleIndexBuf, moduleIndex, 10 );
 
-	writeToDisplay( moduleIndexBuf, 0, 1 );
-	writeToDisplay( "-", 1, 1 );
-	writeToDisplay( moduleInfo_global[moduleIndex].info0, 2, 8 );
+	writeToDisplay( moduleInfo_global[moduleIndex].info0, 0, 10 );
 	writeToDisplay( moduleInfo_global[moduleIndex].info1, 10, 10 );
 	writeToDisplay( moduleInfo_global[moduleIndex].info2, 20, 10 );
 	writeToDisplay( moduleInfo_global[moduleIndex].info3, 30, 10 );
 	writeToDisplay( moduleInfo_global[moduleIndex].info4, 40, 20 );
 
-	if( moduleIndex == ( MODULE_COUNT - 1) )
+	if( moduleIndex == ( MODULE_COUNT - 1 ) )
 	{
-		writeToDisplay( softKeys1_module, 60, 0 );
+		writeToDisplay( softKeys_BackUpTop_module, 60, 0 );
 	}
 	else
 	{
-		writeToDisplay( softKeys0_module, 60, 0 );
+		writeToDisplay( softKeys_BackUpDown_module, 60, 0 );
 	}
+
+	writeToDisplay( "m:", 77, 1 );
+	writeToDisplay( moduleIndexBuf, 79, 1 );
+
 
 	return;
 }
@@ -2140,7 +2191,7 @@ void menuShutOffWarning( void )
 	{
 		case 2:
 		case 3:
-			if( oldPowerMenuState_module == MENU_SET_POWER )
+			if( oldPowerMenuState_module == MENU_SET_ENERGY_ALLOCATION )
 			{
 				menuState_global = MENU_ADMIN_2;
 			}
@@ -2208,6 +2259,7 @@ void menuPasswordChange( void )
 				break;
 			case 1:
 			case 2:
+				menuState_global = MENU_ADMIN_4;
 				break;
 			case 3:
 				passwordSet_global[0] = passwordInput_module[0];
@@ -2232,7 +2284,7 @@ void menuPasswordChange( void )
 	}
 	else
 	{
-		writeToDisplay( "Clear           Save", 60, 0 );
+		writeToDisplay( "Clear  Cancel  Save", 60, 0 );
 	}
 
 	return;
@@ -2246,7 +2298,7 @@ void menuPowerReset( void )
 		case 3:
 			com_command_doReset( ); // fall through on purpose
 		case 0:
-			isBooting_global = 0;
+			isBooting_global = false;
 	}
 
 	writeToDisplay( "Is it after the     reset time?", 0, 46 );

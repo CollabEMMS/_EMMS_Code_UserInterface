@@ -5,7 +5,7 @@
 extern unsigned char timeYear_global;
 extern unsigned char timeMonth_global;
 extern unsigned char timeDay_global;
-//extern unsigned char timeWeekday;
+
 extern unsigned char timeHour_global;
 extern unsigned char timeMinute_global;
 extern unsigned char timeSecond_global;
