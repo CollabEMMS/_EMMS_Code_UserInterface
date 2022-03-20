@@ -27,6 +27,8 @@ MPLAB X Project
   - Update communications to handle Meter Name (MName)
 - Cleanup - removed some items no longer used
   - PSVersion
+- Moved ModInfo menu to be under the Admin
+  - It could contain some sensitive info
 
 
 ### v2.1.1
