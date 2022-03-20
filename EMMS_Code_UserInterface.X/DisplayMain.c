@@ -26,6 +26,7 @@
 
 #define BACKLIGHT_TIMEOUT_MINUTES 5
 
+#define ALARM_NUM_SETS	4
 
 /****************
  VARIABLES
@@ -46,8 +47,6 @@ char alarmEnd_module;
 char alarmPulse_module;
 
 char numBeeps_module;
-char numSets_module;
-
 
 /****************
  FUNCTION PROTOTYPES
@@ -73,7 +72,7 @@ void periodicDataUpdate( void );
 
 void periodicUpdate( void );
 //void initDisplayBox( void );
-void enableAlarm( void );
+void checkAlarm( void );
 
 //void checkCommFailure( void );
 void startAlarm( void );
@@ -176,7 +175,10 @@ int main( void )
 					rtccReadTime( );
 					calcPercentRem( );
 					calcTimeRemaining( );
-					enableAlarm( );
+					if( isBooting_global == false )
+					{
+						checkAlarm( );
+					}
 				}
 			}
 			else
@@ -308,13 +310,10 @@ void initVars( void )
 
 
 	audibleAlarm_global = false;
-	alarm1Enabled_global = false;
-	alarm2Enabled_global = false;
-	alarm1Energy_global = 0;
-	alarm2Energy_global = 0;
-	activeAlarm_global = 0;
+	alarm1PercentThreshold_global = 0;
+	alarm2PercentThreshold_global = 0;
+	alarmActive_global = 0;
 	numBeeps_module = 4;
-	numSets_module = 4;
 	tempPercent_global = 0;
 	emerButtonEnable_global = 1;
 	emerButtonEnergyAllocate_global = 250;
@@ -433,46 +432,66 @@ void disableInterrupts( void )
 	return;
 }
 
-void enableAlarm( void )
+void checkAlarm( void )
 {
-	static char startNextAlarm;
+	// TODO clean up Alarm function
+	// clean this function up
 
-	if( isBooting_global ) return;
+	static char startNextAlarm = 0;
 
 	if( percentRem_global > 95 )
 	{
-		alarmOneHit_global = alarmTwoHit_global = 0;
+		alarm1Hit_global = false;
+		alarm2Hit_global = false;
 	}
 
-	if( ( alarm1Enabled_global == true ) && ( percentRem_global <= alarm1Energy_global ) && !alarmOneHit_global && !silenceAlarmOne_global && !activeAlarm_global && !alarmToResume_global )
+	if(
+	 ( alarm1PercentThreshold_global > 0 )
+	 && ( percentRem_global <= alarm1PercentThreshold_global )
+	 && ( alarm1Hit_global == false )
+	 && ( alarm1Silence_global == false )
+	 && ( alarmActive_global > 0 )
+	 && ( alarmToResume_global == 0 )
+	 )
 	{
-		remainingSets_global = numSets_module;
-		activeAlarm_global = 1;
-		alarmOneHit_global = 1;
+		alarmRemainingSets_global = ALARM_NUM_SETS;
+		alarmActive_global = 1;
+		alarm1Hit_global = true;
 		startAlarm( );
 
 	}
-	else if( ( alarm2Enabled_global == true ) && ( percentRem_global <= alarm2Energy_global ) && !alarmTwoHit_global && !silenceAlarmTwo_global && !activeAlarm_global && !alarmToResume_global )
+	else if(
+			 ( alarm2PercentThreshold_global > 0  )
+			 && ( percentRem_global <= alarm2PercentThreshold_global )
+			 && ( alarm2Hit_global == false )
+			 && ( alarm2Silence_global == false )
+			 && ( alarmActive_global > 0 )
+			 && ( alarmToResume_global == 0 )
+			 )
 	{
-		remainingSets_global = numSets_module;
-		activeAlarm_global = 2;
-		alarmTwoHit_global = 1;
+		alarmRemainingSets_global = ALARM_NUM_SETS;
+		alarmActive_global = 2;
+		alarm2Hit_global = true;
 		startAlarm( );
 	}
 
-	if( activeAlarm_global && ( timeSecond_global == alarmEnd_module ) )
+	if( ( alarmActive_global > 0 ) && ( timeSecond_global == alarmEnd_module ) )
 	{
-		alarmToResume_global = activeAlarm_global;
-		activeAlarm_global = 0;
+		alarmToResume_global = alarmActive_global;
+		alarmActive_global = 0;
 		BUZZER_PIN = 0;
 
-		if( remainingSets_global )
+		if( alarmRemainingSets_global > 0 )
 		{
 			startNextAlarm = ( timeSecond_global + 59 ) % 60;
-			remainingSets_global--;
+			alarmRemainingSets_global--;
 		}
 	}
-	else if( ( audibleAlarm_global == true ) && activeAlarm_global && ( ( timeSecond_global % 2 ) == alarmPulse_module ) )
+	else if(
+			 ( audibleAlarm_global == true )
+			 && ( alarmActive_global > 0 )
+			 && ( ( timeSecond_global % 2 ) == alarmPulse_module )
+			 )
 	{
 		BUZZER_PIN = 1;
 	}
@@ -482,18 +501,19 @@ void enableAlarm( void )
 	}
 
 
-	if( percentRem_global != alarm1Energy_global )
+	if( percentRem_global != alarm1PercentThreshold_global )
 	{
-		silenceAlarmOne_global = 0;
+		alarm1Silence_global = false;
 	}
-	if( percentRem_global != alarm2Energy_global )
+	if( percentRem_global != alarm2PercentThreshold_global )
 	{
-		silenceAlarmTwo_global = 0;
+		alarm2Silence_global = false;
 	}
 
-	if( ( startNextAlarm == timeSecond_global ) && remainingSets_global )
+	if( ( startNextAlarm == timeSecond_global ) && alarmRemainingSets_global )
 	{
-		activeAlarm_global = alarmToResume_global;
+
+		alarmActive_global = alarmToResume_global;
 		startAlarm( );
 	}
 
@@ -513,6 +533,7 @@ void startAlarm( void )
 
 	if( BACKLIGHT_NORMAL == true )
 	{
+
 		BACKLIGHT = 1; // turn on backlight
 	}
 	resetTimeSecond_global = ( timeSecond_global + 59 ) % 60;
@@ -554,7 +575,7 @@ void periodicDataUpdate( void )
 		// send some messages at a slower rate
 		// this allows the higher priority messages to be sent more often
 
-		if( ( messageCounterMain % 10 ) == 0 )		// every 10th message
+		if( ( messageCounterMain % 10 ) == 0 ) // every 10th message
 		{
 			messageCounterRateLow++;
 
@@ -625,6 +646,7 @@ void periodicDataUpdate( void )
 
 			switch( messageCounterRateHigh )
 			{
+
 				case 0:
 					// never happens
 					break;
@@ -643,6 +665,7 @@ void periodicDataUpdate( void )
 void initRTCCDisplay( void )
 {
 	//does unlock sequence to enable write to RTCC, sets RTCWEN
+
 	__builtin_write_RTCWEN( );
 
 	RCFGCAL = 0b0010001100000000;
@@ -666,7 +689,6 @@ void initTimer( void )
 	//	TMR1 = 0;
 	//	_T1IE = 1;
 	//	_T1IF = 0;
-
 
 	IEC0bits.T1IE = 0; // disable timer 1 interrupt
 	T1CON = 0; // disable and reset timer to known state
@@ -744,6 +766,7 @@ void writeTempClockStrings( void )
 
 	switch( timeSetPos_global )
 	{
+
 		case 1:
 			tempClockStr_global[0] = 0x7E;
 			tempClockStr_global[3] = 0x7F;
@@ -796,6 +819,7 @@ void __attribute__( ( interrupt, no_auto_psv ) ) _T1Interrupt( void )
 	// not critical that we do this, but it is more controlled than an overflow
 	if( msTimer_module >= 4000000000 )
 	{
+
 		msTimer_module = 0;
 	}
 
@@ -881,7 +905,7 @@ void dispButtonPress( void )
 
 	if(
 	 ( timeMinute_global == backlightOutTimeMinute ) && ( timeSecond_global == backlightOutTimeSecond )
-	 && ( ( menuState_global != MENU_ALARM ) || ( ( menuState_global == MENU_ALARM ) && ( remainingSets_global == 0 ) ) )
+	 && ( ( menuState_global != MENU_ALARM ) || ( ( menuState_global == MENU_ALARM ) && ( alarmRemainingSets_global == 0 ) ) )
 	 && ( menuState_global != MENU_DEBUG )
 	 && ( !isBooting_global )
 	 )
@@ -889,6 +913,7 @@ void dispButtonPress( void )
 		menuState_global = MENU_HOME_BASIC;
 		if( BACKLIGHT_NORMAL == true )
 		{
+
 			BACKLIGHT = 0; // turn off backlight
 		}
 	}
@@ -906,6 +931,7 @@ void debugBacklightToggle( )
 		}
 		else
 		{
+
 			BACKLIGHT = 1;
 		}
 	}
@@ -923,6 +949,7 @@ void debugBacklight( bool state )
 		}
 		else
 		{
+
 			BACKLIGHT = 0;
 		}
 	}

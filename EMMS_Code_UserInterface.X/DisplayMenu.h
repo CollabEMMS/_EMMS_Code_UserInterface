@@ -3,10 +3,8 @@
 
 
 extern bool audibleAlarm_global;
-extern bool alarm1Enabled_global;
-extern bool alarm2Enabled_global;
-extern char alarm1Energy_global;
-extern char alarm2Energy_global;
+extern char alarm1PercentThreshold_global;
+extern char alarm2PercentThreshold_global;
 
 extern char passwordSet_global[6];
 
@@ -38,12 +36,12 @@ extern unsigned char menuState_global;
 extern unsigned char oldMenuState_global;
 extern bool enablePeriodicUpdate_global;
 
-extern char activeAlarm_global;
-extern char silenceAlarmOne_global;
-extern char silenceAlarmTwo_global;
+extern char alarmActive_global;
+extern bool alarm1Silence_global;
+extern bool alarm2Silence_global;
 extern char tempPercent_global;
 extern char alarmToResume_global;
-extern char remainingSets_global;
+extern char alarmRemainingSets_global;
 
 extern unsigned long powerLoad_global;
 extern unsigned long energyUsed_global;
@@ -58,8 +56,8 @@ extern unsigned char button3Flag_global;
 
 extern char isBooting_global;
 
-extern char alarmOneHit_global;
-extern char alarmTwoHit_global;
+extern bool alarm1Hit_global;
+extern bool alarm2Hit_global;
 
 
 
