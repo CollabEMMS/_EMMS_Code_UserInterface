@@ -2082,9 +2082,9 @@ void menuModules( void )
 	itoa( moduleIndexBuf, moduleIndex, 10 );
 
 	writeToDisplay( moduleInfo_global[moduleIndex].info0, 0, 10 );
-	writeToDisplay( moduleInfo_global[moduleIndex].info1, 10, 10 );
+	writeToDisplay( moduleInfo_global[moduleIndex].info1, 10, -10 );
 	writeToDisplay( moduleInfo_global[moduleIndex].info2, 20, 10 );
-	writeToDisplay( moduleInfo_global[moduleIndex].info3, 30, 10 );
+	writeToDisplay( moduleInfo_global[moduleIndex].info3, 30, -10 );
 	writeToDisplay( moduleInfo_global[moduleIndex].info4, 40, 20 );
 
 	if( moduleIndex == ( MODULE_COUNT - 1 ) )
