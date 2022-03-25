@@ -45,6 +45,7 @@ char relayModeTemp_module;
 const char softKeys_BackUpDownOK_module[] = "Back  Up  Down    OK";
 const char softKeys_BackUpTopOK_module[] = "Back  Up  Top     OK";
 const char softKeys_BackUpDownSave_module[] = "Back  Up  Down  Save";
+const char softKeys_BackUpDownNext_module[] = "Back  Up  Down  Next";
 const char softKeys_BackUpDown_module[] = "Back  Up  Down      ";
 const char softKeys_BackUpTop_module[] = "Back  Up  Top       ";
 
@@ -137,6 +138,7 @@ void initDisplay( void );
 void dspSetP1( unsigned char );
 void writeToDisplay( const char*, unsigned char, char );
 void dspWriteMessage( char* );
+void menuNumToCharZero( char number, char *outString );
 
 void updateMenu( void );
 void menuError( void );
@@ -401,6 +403,27 @@ void writeToDisplay( const char *message, unsigned char location, char width )
 			}
 		}
 	}
+
+	return;
+}
+
+void menuNumToCharZero( char number, char *outString )
+{
+	char temp[ BUF_SIZE_CHAR ];
+
+	itoa( temp, number, 10 );
+
+	if( number < 10 )
+	{
+		outString[0] = '0';
+		outString[1] = temp[0];
+	}
+	else
+	{
+		outString[0] = temp[0];
+		outString[1] = temp[1];
+	}
+	outString[2] = CHAR_NULL;
 
 	return;
 }
@@ -673,56 +696,70 @@ void menuHomeBasic( void )
 		case 1:
 		case 2:
 			homeBasicAlternate_module++;
+			if( homeBasicAlternate_module > 1 )
+			{
+				homeBasicAlternate_module = 0;
+			}
 	}
 
+	// when backlight if off switch between information displays
 	if( !BACKLIGHT )
 	{
 		homeBasicAlternate_module = ( timeSecond_global / 10 ) % 2;
 	}
 
 	rtccReadTime( );
-	writeClockStrings( );
 
-	if( homeBasicAlternate_module > 1 )
-	{
-		homeBasicAlternate_module = 0;
-	}
+	char tempNumberBuf[3];
+	
+#ifdef SECONDS_CLOCK
+	
+	menuNumToCharZero( timeHour_global, tempNumberBuf );
+	writeToDisplay(tempNumberBuf, 0, 2 );
+	
+	writeToDisplay( ":", 2, 1 );
+	
+	menuNumToCharZero( timeMinute_global, tempNumberBuf );
+	writeToDisplay(tempNumberBuf, 3, 2 );
 
-	/* Normal, no seconds displayed */
-#ifndef SECONDS_CLOCK
-	writeToDisplay( "  ", 0, 0 );
-	writeToDisplay( clockStr_global, 2, 5 );
-	writeToDisplay( "   ", 7, 0 );
-	writeToDisplay( calendarStr_global, 10, 0 );
-	writeToDisplay( "  ", 18, 0 );
+	writeToDisplay( ":", 5, 1 );
+	
+	menuNumToCharZero( timeSecond_global, tempNumberBuf );
+	writeToDisplay(tempNumberBuf, 6, 2 );
+	
+	writeToDisplay( "  ", 8, 2 );
+
 #else
-	/* Debug, with seconds displayed */
-	char specialClockStr[21];
-	specialClockStr[0] = ' ';
-	specialClockStr[1] = ( timeHour_global / 10 ) + 0x30;
-	specialClockStr[2] = ( timeHour_global % 10 ) + 0x30;
-	specialClockStr[3] = ':';
-	specialClockStr[4] = ( timeMinute_global / 10 ) + 0x30;
-	specialClockStr[5] = ( timeMinute_global % 10 ) + 0x30;
-	specialClockStr[6] = ':';
-	specialClockStr[7] = ( timeSecond_global / 10 ) + 0x30;
-	specialClockStr[8] = ( timeSecond_global % 10 ) + 0x30;
-	specialClockStr[9] = ' ';
-	specialClockStr[10] = ' ';
-	specialClockStr[11] = ( timeDay_global / 10 ) + 0x30;
-	specialClockStr[12] = ( timeDay_global % 10 ) + 0x30;
-	specialClockStr[13] = '/';
-	specialClockStr[14] = ( timeMonth_global / 10 ) + 0x30;
-	specialClockStr[15] = ( timeMonth_global % 10 ) + 0x30;
-	specialClockStr[16] = '/';
-	specialClockStr[17] = ( timeYear_global / 10 ) + 0x30;
-	specialClockStr[18] = ( timeYear_global % 10 ) + 0x30;
-	specialClockStr[19] = ' ';
-	specialClockStr[20] = 0;
-	writeToDisplay( specialClockStr, 0, 0 );
-	/* End debug clock */
+	writeToDisplay( "  ", 0, 2 );
+	
+	menuNumToCharZero( timeHour_global, tempNumberBuf );
+	writeToDisplay(tempNumberBuf, 2, 2 );
+	
+	writeToDisplay( ":", 4, 1 );
+	
+	menuNumToCharZero( timeMinute_global, tempNumberBuf );
+	writeToDisplay(tempNumberBuf, 5, 2 );
+	
+	writeToDisplay( "   ", 7, 3 );
+
+	
 #endif
 
+	menuNumToCharZero( timeDay_global, tempNumberBuf );
+	writeToDisplay(tempNumberBuf, 10, 2 );
+
+	writeToDisplay( "/", 12,1 );
+	
+	menuNumToCharZero( timeMonth_global, tempNumberBuf );
+	writeToDisplay(tempNumberBuf, 13, 2 );
+
+	writeToDisplay( "/", 15,1 );
+
+	writeToDisplay( "20", 16,2 );
+	menuNumToCharZero( timeYear_global, tempNumberBuf );
+	writeToDisplay(tempNumberBuf, 18, 2 );
+
+	
 	if( !homeBasicAlternate_module )
 	{
 		char percentRemBuf[BUF_SIZE_INT];
@@ -742,7 +779,6 @@ void menuHomeBasic( void )
 		ultoa( currentLoadBuf, powerLoad_global, 10 );
 
 		writeToDisplay( "Current Load:", 20, 0 );
-		//        writeToDisplay(itoa(buffer1, currentLoad, 10), 33, -5);
 		writeToDisplay( currentLoadBuf, 33, -5 );
 		writeToDisplay( " W", 38, 0 );
 
@@ -750,7 +786,6 @@ void menuHomeBasic( void )
 		writeToDisplay( timeRemainingString_module, 52, 0 );
 	}
 
-	//writeToDisplay(barGraph, 40, 0);
 	writeToDisplay( "Menu   Swap   Detail", 60, 0 );
 
 	// allow parameters to be updated
@@ -767,8 +802,6 @@ void menuHomeDetail( void )
 			com_command_readRemoteAlarm( );
 	}
 
-	rtccReadTime( );
-	writeClockStrings( );
 
 	long remainingPower;
 
@@ -814,7 +847,7 @@ void menuAlarm( void )
 		case 1:
 		case 2:
 		case 3:
-			menuState_global = MENU_HOME_BASIC;	// this is also set in the alarm function
+			menuState_global = MENU_HOME_BASIC; // this is also set in the alarm function
 			alarmSilence_global = true;
 			break;
 	}
@@ -1658,33 +1691,81 @@ void menuSetTime( void )
 	// 4 - day
 	// 5 - year
 
-	writeTempClockStrings( );
+	char tempNumberBuf[3];
 
-	writeToDisplay( "Set Time/Date", 0, 25 );
-	writeToDisplay( tempClockStr_global, 25, 18 );
-	writeToDisplay( tempCalStr_global, 43, 17 );
+	writeToDisplay( "Set Time/Date", 0, 20 );
+
+	// "      12 : 35       "
+	//  012345678901234567890
+	writeToDisplay( "     ", 20, 5 );
+
+	menuNumToCharZero( tempHour_global, tempNumberBuf );
+	writeToDisplay( tempNumberBuf, 26, 2 );
+
+	writeToDisplay( " : ", 28, 3 );
+
+	menuNumToCharZero( tempMin_global, tempNumberBuf );
+	writeToDisplay( tempNumberBuf, 31, 2 );
+
+	writeToDisplay( "       ", 33, 7 );
+
+
+	// "   25 / 03 / 2022   "
+	//  012345678901234567890
+	writeToDisplay( "   ", 40, 3 );
+
+	menuNumToCharZero( tempDay_global, tempNumberBuf );
+	writeToDisplay( tempNumberBuf, 43, 2 );
+
+	writeToDisplay( " / ", 45, 3 );
+
+	menuNumToCharZero( tempMonth_global, tempNumberBuf );
+	writeToDisplay( tempNumberBuf, 48, 2 );
+
+	writeToDisplay( " / ", 50, 3 );
+
+	writeToDisplay( "20", 53, 3 );
+	menuNumToCharZero( tempYear_global, tempNumberBuf );
+	writeToDisplay( tempNumberBuf, 55, 2 );
+
+	writeToDisplay( "   ", 57, 3 );
+
+	// draw the marker showing what field is current
+	switch( timeSetPos_global )
+	{
+		case 1:
+			writeToDisplay( DISPLAY_STRING_ARROW_RIGHT, 25, 1 );
+			writeToDisplay( DISPLAY_STRING_ARROW_LEFT, 28, 1 );
+			break;
+
+		case 2:
+			writeToDisplay( DISPLAY_STRING_ARROW_RIGHT, 30, 1 );
+			writeToDisplay( DISPLAY_STRING_ARROW_LEFT, 33, 1 );
+			break;
+
+		case 3:
+			writeToDisplay( DISPLAY_STRING_ARROW_RIGHT, 42, 1 );
+			writeToDisplay( DISPLAY_STRING_ARROW_LEFT, 45, 1 );
+			break;
+
+		case 4:
+			writeToDisplay( DISPLAY_STRING_ARROW_RIGHT, 47, 1 );
+			writeToDisplay( DISPLAY_STRING_ARROW_LEFT, 50, 1 );
+			break;
+
+		case 5:
+			writeToDisplay( DISPLAY_STRING_ARROW_RIGHT, 52, 1 );
+			writeToDisplay( DISPLAY_STRING_ARROW_LEFT, 57, 1 );
+	}
 
 	if( timeSetPos_global != 5 )
 	{
-		writeToDisplay( "Back  Up  Down  Next", 60, 0 );
+		writeToDisplay( softKeys_BackUpDownNext_module, 60, 20 );
 	}
 	else
 	{
-		writeToDisplay( softKeys_BackUpDownSave_module, 60, 0 );
+		writeToDisplay( softKeys_BackUpDownSave_module, 60, 20 );
 	}
-	/*
-	writeToDisplay(tempClockStr, 25, 0);
-	writeToDisplay("         ", 34, 0);
-	writeToDisplay(tempCalStr, 43, 0);
-
-	if (timeSetPos != 5) {
-	writeToDisplay("   Back  Up  Down  Next", 57, 0);
-	} else {
-	writeToDisplay("   Back  Up  Down  Save", 57, 0);
-	}
-	 */
-	// when done use writeTime(newYear, newMonth, newDay, newHour, newMinute)
-	// seconds, weekday are zeroed...
 
 	return;
 }

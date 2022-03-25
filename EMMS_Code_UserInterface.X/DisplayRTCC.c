@@ -43,8 +43,6 @@ char tempMin_global;
 char tempMonth_global;
 char tempDay_global;
 char tempYear_global;
-char tempClockStr_global[10];
-char tempCalStr_global[15];
 
 /****************
  FUNCTION PROTOTYPES
@@ -56,7 +54,7 @@ char tempCalStr_global[15];
  *****************/
 void rtccReadTime( void );
 void writeClockStrings( void );
-void writeTempClockStrings( void );
+//void writeTempClockStrings( void );
 char writeTime( char newYear, char newMonth, char newDay, char newHour, char newMinute, char newSecond );
 
 char BcdToDec( char val );

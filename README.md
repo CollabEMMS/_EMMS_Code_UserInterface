@@ -15,7 +15,7 @@ MPLAB X Project
 - main loop oneshots might not run as expected
   - if a previous oneshot lined up with a subsequent one it might prevent the subsequent one from firing if the runtime took too long
   - change to use explicit time to run so the function is never skipped
-
+- cleaned up extra global variables and functions for showing time / date on main screens
 
 ### v2.1.2
 March 20, 2022<br />
