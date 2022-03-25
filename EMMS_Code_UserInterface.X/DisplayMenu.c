@@ -35,8 +35,8 @@
 
 char passwordSet_global[6];
 
-long previousDayUsed_global = 0;
-long totalUsed_global = 0;
+long energyPreviousDayUsed_global = 0;
+long energyLifetimeUsed_global = 0;
 
 char relayMode_global;
 char relayModeTemp_module;
@@ -1280,20 +1280,20 @@ void menuAlarm5( void )
 
 void menuStatistics( void )
 {
-	char previousDayUsedBuf[BUF_SIZE_LONG];
-	char totalUsedBuf[BUF_SIZE_LONG];
+	char energyPreviousDayUsedBuf[BUF_SIZE_LONG];
+	char energyLifetimeUsedBuf[BUF_SIZE_LONG];
 
 	menuButtonRead( MENU_MAIN_3, MENU_MAIN_3, MENU_MAIN_3, MENU_MAIN_3 );
 
-	ltoa( previousDayUsedBuf, previousDayUsed_global, 10 );
-	ltoa( totalUsedBuf, totalUsed_global, 10 );
+	ltoa( energyPreviousDayUsedBuf, energyPreviousDayUsed_global, 10 );
+	ltoa( energyLifetimeUsedBuf, energyLifetimeUsed_global, 10 );
 
-	writeToDisplay( "Yesterday's usage:  ", 0, 0 );
-	writeToDisplay( previousDayUsedBuf, 20, -17 );
-	writeToDisplay( " Wh", 37, 0 );
-	writeToDisplay( "Total usage:", 40, 20 );
-	writeToDisplay( totalUsedBuf, 60, -17 );
-	writeToDisplay( " Wh", 77, 0 );
+	writeToDisplay( "Yesterday's Use:", 0, 20 );
+	writeToDisplay( energyPreviousDayUsedBuf, 20, -17 );
+	writeToDisplay( " Wh", 37, 3 );
+	writeToDisplay( "Lifetime Total Use:", 40, 20 );
+	writeToDisplay( energyLifetimeUsedBuf, 60, -17 );
+	writeToDisplay( " Wh", 77, 3 );
 
 	return;
 }

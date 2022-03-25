@@ -12,8 +12,8 @@ extern int resetTimeHour_global;
 extern int resetTimeMinute_global;
 extern int resetTimeSecond_global;
 
-extern long totalUsed_global;
-extern long previousDayUsed_global;
+extern long energyLifetimeUsed_global;
+extern long energyPreviousDayUsed_global;
 
 extern char powerDownTime_global[12];
 extern char powerUpTime_global[12];

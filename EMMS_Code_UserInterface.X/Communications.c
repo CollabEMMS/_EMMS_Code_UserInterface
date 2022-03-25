@@ -588,8 +588,8 @@ bool process_data_parameters( char parameters[PARAMETER_MAX_COUNT][PARAMETER_MAX
 		else if( strmatch( parameters[1], "Stat" ) == true )
 		{
 
-			totalUsed_global = atol( parameters[2] );
-			previousDayUsed_global = atol( parameters[2] );
+			energyLifetimeUsed_global = atol( parameters[2] );
+			energyPreviousDayUsed_global = atol( parameters[3] );
 
 			command_builder2( send_buffer, "Conf", "Stat" );
 

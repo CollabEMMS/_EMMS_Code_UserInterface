@@ -16,6 +16,9 @@ MPLAB X Project
   - if a previous oneshot lined up with a subsequent one it might prevent the subsequent one from firing if the runtime took too long
   - change to use explicit time to run so the function is never skipped
 - cleaned up extra global variables and functions for showing time / date on main screens
+- statistics menu was showing wrong values
+  - communications was reading parameter[2] twice - now reads [2] and [3]
+  - menu text was misleading - now fixed to Yesterday & Lifetime
 
 ### v2.1.2
 March 20, 2022<br />
