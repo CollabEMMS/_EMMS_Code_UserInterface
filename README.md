@@ -12,6 +12,10 @@ MPLAB X Project
 - ModInfo menu - right justified right info elements
 - Alarms - rewrote whole alarm system since old one was not working quite right
   - remove many global variables as well
+- main loop oneshots might not run as expected
+  - if a previous oneshot lined up with a subsequent one it might prevent the subsequent one from firing if the runtime took too long
+  - change to use explicit time to run so the function is never skipped
+
 
 ### v2.1.2
 March 20, 2022<br />

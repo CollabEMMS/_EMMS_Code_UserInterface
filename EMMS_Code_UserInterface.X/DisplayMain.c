@@ -20,9 +20,8 @@
 
 #define BUZZER_PIN	_RB7
 
-// Time window where the oneshots can occur
-// sometimes the program main loop takes more than 1 ms to run and we can inadvertantly skip if we are lookng for an exact match
-#define ONESHOT_WINDOW 25
+#define TIMER_ROLLOVER			4000000000	// maximum timer value before we force a rollover back to 0
+#define TIMER_ROLLOVER_CHECK	100000000	// if the difference between the timer and our check is greater than this then our check time has rolled over and we need to wait
 
 #define BACKLIGHT_TIMEOUT_MINUTES	5
 #define MENU_TIMEOUT_SECONDS		60
@@ -110,80 +109,93 @@ int main( void )
 	while( true )
 	{
 
-		// oneShot
+
+		// in the following, code blocks {} are used
+		// to encapsulate the nextRunTime variable
+		// why
+		// - otherwise we would need to declare separately named
+		// nextRunTime variables outside the while(true) loop
+		// the nextRunTime variables are local to each block
+		// and self contained which makes the code leaner
+		//
+		// in the test to see if the timer is triggered we need to check for timer rollover
+		// if the difference is really large then we rolled over and need to wait until the internal timer rolls over as well
+
+
+		// isolate nextRunTime block
 		{
-			static bool oneShot = false;
+			static unsigned long nextRunTime = 0;
 
-			if( ( msTimer_module % 200 ) <= ONESHOT_WINDOW )
+			if( ( msTimer_module > nextRunTime ) && ( ( msTimer_module - nextRunTime ) < TIMER_ROLLOVER_CHECK ) )
 			{
-				if( oneShot == false )
+				nextRunTime = msTimer_module + 200;
+				if( nextRunTime >= TIMER_ROLLOVER )
 				{
-					oneShot = true;
-					dispUpdate( );
+					nextRunTime -= TIMER_ROLLOVER;
 				}
-			}
-			else
-			{
-				oneShot = false;
-			}
-		}
 
-		// oneShot
+				dispUpdate( );
+
+			}
+
+		} // isolate nextRunTime block
+
+		// isolate nextRunTime block
 		{
-			static bool oneShot = false;
+			static unsigned long nextRunTime = 0;
 
-			if( ( msTimer_module % 50 ) <= ONESHOT_WINDOW )
+			if( ( msTimer_module > nextRunTime ) && ( ( msTimer_module - nextRunTime ) < TIMER_ROLLOVER_CHECK ) )
 			{
-				if( oneShot == false )
+				nextRunTime = msTimer_module + 50;
+				if( nextRunTime >= TIMER_ROLLOVER )
 				{
-					oneShot = true;
-					dispButtonPress( );
+					nextRunTime -= TIMER_ROLLOVER;
 				}
-			}
-			else
-			{
-				oneShot = false;
-			}
-		}
 
-		// oneShot
+				dispButtonPress( );
+
+			}
+
+		} // isolate nextRunTime block
+
+
+		// isolate nextRunTime block
 		{
-			static bool oneShot = false;
+			static unsigned long nextRunTime = 0;
 
-			if( ( msTimer_module % 50 ) <= ONESHOT_WINDOW )
+			if( ( msTimer_module > nextRunTime ) && ( ( msTimer_module - nextRunTime ) < TIMER_ROLLOVER_CHECK ) )
 			{
-				if( oneShot == false )
+				nextRunTime = msTimer_module + 50;
+				if( nextRunTime >= TIMER_ROLLOVER )
 				{
-					oneShot = true;
-					periodicDataUpdate( );
+					nextRunTime -= TIMER_ROLLOVER;
 				}
-			}
-			else
-			{
-				oneShot = false;
-			}
-		}
 
+				periodicDataUpdate( );
 
-		// oneShot
+			}
+
+		} // isolate nextRunTime block
+
+		// isolate nextRunTime block
 		{
-			static bool oneShot = false;
+			static unsigned long nextRunTime = 0;
 
-			if( ( msTimer_module % 200 ) <= ONESHOT_WINDOW )
+			if( ( msTimer_module > nextRunTime ) && ( ( msTimer_module - nextRunTime ) < TIMER_ROLLOVER_CHECK ) )
 			{
-				if( oneShot == false )
+				nextRunTime = msTimer_module + 200;
+				if( nextRunTime >= TIMER_ROLLOVER )
 				{
-					oneShot = true;
-					rtccReadTime( );
-					calcPercentRem( );
-					calcTimeRemaining( );
+					nextRunTime -= TIMER_ROLLOVER;
 				}
+
+				rtccReadTime( );
+				calcPercentRem( );
+				calcTimeRemaining( );
+
 			}
-			else
-			{
-				oneShot = false;
-			}
-		}
+
+		} // isolate nextRunTime block
 
 		checkAlarm( );
 		updateMenu( );
@@ -918,7 +930,7 @@ void __attribute__( ( interrupt, no_auto_psv ) ) _T1Interrupt( void )
 
 	// control our timer rollover to prevent overflow
 	// not critical that we do this, but it is more controlled than an overflow
-	if( msTimer_module >= 4000000000 )
+	if( msTimer_module >= TIMER_ROLLOVER )
 	{
 
 		msTimer_module = 0;
