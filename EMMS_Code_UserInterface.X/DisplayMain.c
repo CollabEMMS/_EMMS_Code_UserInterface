@@ -28,11 +28,11 @@
 #define MENU_TIMEOUT_SECONDS		60
 
 
-#define ALARM_1_TIMEOUT_SECONDS		15		// length of time for alarm to go off in seconds	
+#define ALARM_1_TIMEOUT_SECONDS		60		// length of time for alarm to go off in seconds	
 #define ALARM_1_ON_TIME_MS			100
 #define ALARM_1_OFF_TIME_MS			750
 
-#define ALARM_2_TIMEOUT_SECONDS		15		// length of time for alarm to go off in seconds	
+#define ALARM_2_TIMEOUT_SECONDS		60		// length of time for alarm to go off in seconds	
 #define ALARM_2_ON_TIME_MS			250
 #define ALARM_2_OFF_TIME_MS			250
 
