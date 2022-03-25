@@ -521,7 +521,7 @@ bool process_data_parameters( char parameters[PARAMETER_MAX_COUNT][PARAMETER_MAX
 			//3	    alarmOnePercentThresholdBuf INT;
 			//4	    alarmTwoPercentThresholdBuf INT;
 
-			audibleAlarm_global = checkOnOff( parameters[2] );
+			alarmAudible_global = checkOnOff( parameters[2] );
 
 			alarm1PercentThreshold_global = atoi( parameters[3] );
 			alarm2PercentThreshold_global = atoi( parameters[4] );
@@ -1526,7 +1526,7 @@ void setRemoteAlarm( struct buffer_struct *send_buffer )
 	char alarm1PercentThresholdTempBuf[BUF_SIZE_INT];
 	char alarm2PercentThresholdTempBuf[BUF_SIZE_INT];
 
-	fillOnOff( audibleAlarmBuf, audibleAlarm_global );
+	fillOnOff( audibleAlarmBuf, alarmAudible_global );
 
 	// using itoa() - variable type is char, make sure it is an int
 	alarm1PercentThresholdTemp = alarm1PercentThreshold_global;

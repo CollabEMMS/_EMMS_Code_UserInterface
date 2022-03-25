@@ -14,5 +14,7 @@ void debugBacklightFlash( int timeOn );
 
 extern struct moduleInfo_struct moduleInfo_global[MODULE_COUNT];
 
+extern bool alarmSilence_global;
+
 #endif	/* DISPLAYMAIN_H */
 

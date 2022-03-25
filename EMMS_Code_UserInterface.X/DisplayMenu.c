@@ -49,7 +49,7 @@ const char softKeys_BackUpDown_module[] = "Back  Up  Down      ";
 const char softKeys_BackUpTop_module[] = "Back  Up  Top       ";
 
 
-bool audibleAlarm_global;
+bool alarmAudible_global;
 char alarm1PercentThreshold_global;
 char alarm2PercentThreshold_global;
 
@@ -101,13 +101,8 @@ unsigned char menuState_global;
 unsigned char oldMenuState_global;
 bool enablePeriodicUpdate_global;
 
-char alarmActive_global;
-char alarmToResume_global;
+char tempMenuAlarmPercent_global;
 char rightArrow_module[2];
-char tempPercent_global;
-bool alarm1Silence_global;
-bool alarm2Silence_global;
-char alarmRemainingSets_global;
 
 unsigned long powerLoad_global;
 unsigned long energyUsed_global;
@@ -124,8 +119,6 @@ unsigned char button3Flag_global;
 
 bool isBooting_global;
 
-bool alarm1Hit_global;
-bool alarm2Hit_global;
 
 
 
@@ -821,18 +814,8 @@ void menuAlarm( void )
 		case 1:
 		case 2:
 		case 3:
-			menuState_global = oldMenuState_global;
-			if( alarmActive_global == 1 )
-			{
-				alarm1Silence_global = true;
-			}
-			if( alarmActive_global == 2 )
-			{
-				alarm2Silence_global = true;
-			}
-			alarmToResume_global = 0;
-			alarmActive_global = 0;
-			alarmRemainingSets_global = 0;
+			menuState_global = MENU_HOME_BASIC;	// this is also set in the alarm function
+			alarmSilence_global = true;
 			break;
 	}
 
@@ -840,10 +823,12 @@ void menuAlarm( void )
 
 	itoa( percentRemBuf, percentRem_global, 10 );
 
-	writeToDisplay( "Warning: Low power! Only ", 0, 0 );
-
+	writeToDisplay( "Warning: Low power! ", 0, 20 );
+	writeToDisplay( "Only ", 20, 5 );
 	writeToDisplay( percentRemBuf, 25, -2 );
-	writeToDisplay( "% remaining.                         Clear Alarm     ", 27, 0 );
+	writeToDisplay( "% remaining.", 27, 13 );
+	writeToDisplay( "", 40, 20 );
+	writeToDisplay( "    Clear Alarm     ", 60, 20 );
 
 	return;
 }
@@ -960,19 +945,19 @@ void menuAlarm1( void )
 			com_command_setRemoteAlarm( );
 			break;
 		case 3:
-			if( audibleAlarm_global == true )
+			if( alarmAudible_global == true )
 			{
-				audibleAlarm_global = false;
+				alarmAudible_global = false;
 			}
 			else
 			{
-				audibleAlarm_global = true;
+				alarmAudible_global = true;
 			}
 	}
 
 	writeToDisplay( "Alarm Options 1 of 3* Audible Alarm  ", 0, 0 );
 
-	if( audibleAlarm_global == true )
+	if( alarmAudible_global == true )
 	{
 		writeToDisplay( "On ", 37, 0 );
 	}
@@ -1011,7 +996,7 @@ void menuAlarm2( void )
 			com_command_setRemoteAlarm( );
 			break;
 		case 3:
-			tempPercent_global = alarm1PercentThreshold_global;
+			tempMenuAlarmPercent_global = alarm1PercentThreshold_global;
 	}
 
 	writeToDisplay( "Alarm Options 2 of 3* Alarm 1 Power  ", 0, 0 );
@@ -1056,40 +1041,39 @@ void menuAlarm3( void )
 	switch( menuButtonRead( MENU_ALARM_2, 0, 0, MENU_ALARM_2 ) )
 	{
 		case 1:
-			if( tempPercent_global >= 20 )
+			if( tempMenuAlarmPercent_global >= 20 )
 			{
-				tempPercent_global += 5;
+				tempMenuAlarmPercent_global += 5;
 			}
 			else
 			{
-				tempPercent_global += 1;
+				tempMenuAlarmPercent_global += 1;
 			}
 
-			if( tempPercent_global > 95 )
+			if( tempMenuAlarmPercent_global > 95 )
 			{
-				tempPercent_global = 95;
+				tempMenuAlarmPercent_global = 95;
 			}
 			break;
 
 		case 2:
-			if( tempPercent_global > 20 )
+			if( tempMenuAlarmPercent_global > 20 )
 			{
-				tempPercent_global -= 5;
+				tempMenuAlarmPercent_global -= 5;
 			}
 			else
 			{
-				tempPercent_global -= 1;
+				tempMenuAlarmPercent_global -= 1;
 			}
 
-			if( tempPercent_global < 0 )
+			if( tempMenuAlarmPercent_global < 0 )
 			{
-				tempPercent_global = 0;
+				tempMenuAlarmPercent_global = 0;
 			}
 			break;
 
 		case 3:
-			alarm1PercentThreshold_global = tempPercent_global;
-			alarm1Hit_global = false;
+			alarm1PercentThreshold_global = tempMenuAlarmPercent_global;
 			com_command_setRemoteAlarm( );
 	}
 
@@ -1097,11 +1081,11 @@ void menuAlarm3( void )
 
 	writeToDisplay( rightArrow_module, 36, 0 );
 
-	if( tempPercent_global > 0 )
+	if( tempMenuAlarmPercent_global > 0 )
 	{
 		char tempPercentBuf[BUF_SIZE_INT];
 
-		itoa( tempPercentBuf, tempPercent_global, 10 );
+		itoa( tempPercentBuf, tempMenuAlarmPercent_global, 10 );
 
 		writeToDisplay( tempPercentBuf, 37, -2 );
 		writeToDisplay( "%", 39, 0 );
@@ -1141,7 +1125,7 @@ void menuAlarm4( void )
 			com_command_setRemoteAlarm( );
 			break;
 		case 3:
-			tempPercent_global = alarm2PercentThreshold_global;
+			tempMenuAlarmPercent_global = alarm2PercentThreshold_global;
 	}
 
 	writeToDisplay( "Alarm Options 3 of 3  Alarm 1 Power  ", 0, 0 );
@@ -1187,40 +1171,39 @@ void menuAlarm5( void )
 	switch( menuButtonRead( MENU_ALARM_4, 0, 0, MENU_ALARM_4 ) )
 	{
 		case 1:
-			if( tempPercent_global >= 20 )
+			if( tempMenuAlarmPercent_global >= 20 )
 			{
-				tempPercent_global += 5;
+				tempMenuAlarmPercent_global += 5;
 			}
 			else
 			{
-				tempPercent_global += 1;
+				tempMenuAlarmPercent_global += 1;
 			}
 
-			if( tempPercent_global > 95 )
+			if( tempMenuAlarmPercent_global > 95 )
 			{
-				tempPercent_global = 95;
+				tempMenuAlarmPercent_global = 95;
 			}
 			break;
 
 		case 2:
-			if( tempPercent_global > 20 )
+			if( tempMenuAlarmPercent_global > 20 )
 			{
-				tempPercent_global -= 5;
+				tempMenuAlarmPercent_global -= 5;
 			}
 			else
 			{
-				tempPercent_global -= 1;
+				tempMenuAlarmPercent_global -= 1;
 			}
 
-			if( tempPercent_global < 0 )
+			if( tempMenuAlarmPercent_global < 0 )
 			{
-				tempPercent_global = 0;
+				tempMenuAlarmPercent_global = 0;
 			}
 			break;
 
 		case 3:
-			alarm2PercentThreshold_global = tempPercent_global;
-			alarm2Hit_global = false;
+			alarm2PercentThreshold_global = tempMenuAlarmPercent_global;
 			com_command_setRemoteAlarm( );
 	}
 
@@ -1243,11 +1226,11 @@ void menuAlarm5( void )
 	writeToDisplay( "* Alarm 2 Power ", 40, 0 );
 	writeToDisplay( rightArrow_module, 56, 0 );
 
-	if( tempPercent_global > 0 )
+	if( tempMenuAlarmPercent_global > 0 )
 	{
 		char tempPercentBuf[ BUF_SIZE_INT];
 
-		itoa( tempPercentBuf, tempPercent_global, 10 );
+		itoa( tempPercentBuf, tempMenuAlarmPercent_global, 10 );
 
 		writeToDisplay( tempPercentBuf, 57, -2 );
 		writeToDisplay( "%", 59, 0 );

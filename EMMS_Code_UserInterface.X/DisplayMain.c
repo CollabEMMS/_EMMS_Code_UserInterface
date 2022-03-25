@@ -24,10 +24,18 @@
 // sometimes the program main loop takes more than 1 ms to run and we can inadvertantly skip if we are lookng for an exact match
 #define ONESHOT_WINDOW 25
 
-#define BACKLIGHT_TIMEOUT_MINUTES 5
-#define MENU_TIMEOUT_SECONDS	60
+#define BACKLIGHT_TIMEOUT_MINUTES	5
+#define MENU_TIMEOUT_SECONDS		60
 
-#define ALARM_NUM_SETS	4
+
+#define ALARM_1_TIMEOUT_SECONDS		15		// length of time for alarm to go off in seconds	
+#define ALARM_1_ON_TIME_MS			100
+#define ALARM_1_OFF_TIME_MS			750
+
+#define ALARM_2_TIMEOUT_SECONDS		15		// length of time for alarm to go off in seconds	
+#define ALARM_2_ON_TIME_MS			250
+#define ALARM_2_OFF_TIME_MS			250
+
 
 /****************
  VARIABLES
@@ -44,10 +52,7 @@ struct moduleInfo_struct moduleInfo_global[MODULE_COUNT];
 
 volatile unsigned long msTimer_module; // toggles to 1 every ms, resets to 0 at about the 0.5ms time
 
-char alarmEnd_module;
-char alarmPulse_module;
-
-char numBeeps_module;
+bool alarmSilence_global;
 
 /****************
  FUNCTION PROTOTYPES
@@ -72,11 +77,7 @@ void initVars( void );
 void periodicDataUpdate( void );
 
 void periodicUpdate( void );
-//void initDisplayBox( void );
 void checkAlarm( void );
-
-//void checkCommFailure( void );
-void startAlarm( void );
 
 void dispButtonPress( void );
 
@@ -176,10 +177,6 @@ int main( void )
 					rtccReadTime( );
 					calcPercentRem( );
 					calcTimeRemaining( );
-					if( isBooting_global == false )
-					{
-						checkAlarm( );
-					}
 				}
 			}
 			else
@@ -188,21 +185,7 @@ int main( void )
 			}
 		}
 
-		//		// Only do these tasks every 100 - 150 ms
-		//		if( !lowPriorityCounter++ )
-		//		{
-		//
-		//			rtccReadTime( );
-		//			periodicUpdate( );
-		//			calcPercentRem( );
-		//			calcTimeRemaining( );
-		//			enableAlarm( );
-		//			//	    checkCommFailure( );
-		//			//	    resetWDT( );
-		//			//	    asm( "CLRWDT" ); // reset the watchdog timer in case it is running
-		//
-		//		}
-
+		checkAlarm( );
 		updateMenu( );
 		communications( false );
 	}
@@ -310,12 +293,10 @@ void initVars( void )
 	meterNameString_global[8] = CHAR_NULL;
 
 
-	audibleAlarm_global = false;
+	alarmAudible_global = false;
 	alarm1PercentThreshold_global = 0;
 	alarm2PercentThreshold_global = 0;
-	alarmActive_global = 0;
-	numBeeps_module = 4;
-	tempPercent_global = 0;
+	tempMenuAlarmPercent_global = 0;
 	emerButtonEnable_global = 1;
 	emerButtonEnergyAllocate_global = 250;
 	emerAllocNow_global = 50;
@@ -435,110 +416,229 @@ void disableInterrupts( void )
 
 void checkAlarm( void )
 {
-	// TODO clean up Alarm function
-	// clean this function up
 
-	static char startNextAlarm = 0;
+	static bool alarm1Active = false;
+	static unsigned char alarm1EndTimeSecond = 0;
+	static unsigned char alarm1EndTimeMinute = 0;
+	static unsigned long alarm1TimeTurnOn = 0;
+	static unsigned long alarm1TimeTurnOff = 0;
+	static bool alarm1Silence = false;
 
-	if( percentRem_global > 95 )
+	static bool alarm2Active = false;
+	static unsigned char alarm2EndTimeSecond = 0;
+	static unsigned char alarm2EndTimeMinute = 0;
+	static unsigned long alarm2TimeTurnOn = 0;
+	static unsigned long alarm2TimeTurnOff = 0;
+	static bool alarm2Silence = false;
+
+	if( alarm1PercentThreshold_global > 0 )
 	{
-		alarm1Hit_global = false;
-		alarm2Hit_global = false;
-	}
+		if( ( alarm2Active == false ) || ( alarm2Silence == true ) )
+		{
+			if( ( percentRem_global <= alarm1PercentThreshold_global ) )
+			{
+				if( alarm1Active == false )
+				{
+					alarm1Active = true;
+					alarm1EndTimeSecond = timeSecond_global + ALARM_1_TIMEOUT_SECONDS;
+					alarm1EndTimeMinute = timeMinute_global;
+					while( alarm1EndTimeSecond >= 60 )
+					{
+						alarm1EndTimeMinute++;
+						alarm1EndTimeSecond -= 60;
+					}
 
+					menuState_global = MENU_ALARM;
+					if( BACKLIGHT_NORMAL == true )
+					{
+						BACKLIGHT = 1; // turn on backlight
+					}
+				} //	if( alarm1Active == false )
+				else
+				{
+					if( alarm1Silence == false )
+					{
+						if( ( ( timeMinute_global == alarm1EndTimeMinute ) && ( timeSecond_global >= alarm1EndTimeSecond ) ) || ( alarmSilence_global == true ) )
+						{
+							alarmSilence_global = false;
+							alarm1Silence = true;
+							alarm1TimeTurnOn = 0;
+							alarm1TimeTurnOff = 0;
+							menuState_global = MENU_HOME_BASIC;
+						}
+					}
+				} // else --				if( alarm1Active == false )
+			} //		if( ( percentRem_global <= alarm1PercentThreshold_global )
+			else
+			{
+				if( ( alarm1Active == true ) && ( alarm1Silence == false ) )
+				{
+					menuState_global = MENU_HOME_BASIC;
+				}
+				alarm1Active = false;
+				alarm1Silence = false;
+			} //	else ---	if( ( percentRem_global <= alarm1PercentThreshold_global )
+
+			if( alarm1Active == true )
+			{
+				if( ( alarm1Silence == true ) || ( alarmAudible_global == false ) )
+				{
+					BUZZER_PIN = 0;
+				}
+				else
+				{
+					// oneShot
+					{
+						static bool oneShot = false;
+
+						if( msTimer_module > alarm1TimeTurnOn )
+						{
+							if( oneShot == false )
+							{
+								oneShot = true;
+								alarm1TimeTurnOff = msTimer_module + ALARM_1_ON_TIME_MS;
+								BUZZER_PIN = 1;
+							}
+						}
+						else
+						{
+							oneShot = false;
+						}
+					} // oneShot
+
+					// oneShot
+					{
+						static bool oneShot = false;
+
+						if( msTimer_module > alarm1TimeTurnOff )
+						{
+							if( oneShot == false )
+							{
+								oneShot = true;
+								alarm1TimeTurnOn = msTimer_module + ALARM_1_OFF_TIME_MS;
+								BUZZER_PIN = 0;
+							}
+						}
+						else
+						{
+							oneShot = false;
+						}
+					} // oneShot
+				}
+			} //			if( alarm1Active == true )
+		} // 			if( ( alarm2Active == false ) || ( ( alarm2Active == true ) && ( alarm2Silence == true ) ) )
+	} //		if( alarm1PercentThreshold_global > 0 )
+
+
+	if( alarm2PercentThreshold_global > 0 )
+	{
+		if( ( alarm1Active == false ) || ( alarm1Silence == true ) )
+		{
+			if( ( percentRem_global <= alarm2PercentThreshold_global ) )
+			{
+				if( alarm2Active == false )
+				{
+					alarm2Active = true;
+					alarm2EndTimeSecond = timeSecond_global + ALARM_2_TIMEOUT_SECONDS;
+					alarm2EndTimeMinute = timeMinute_global;
+					while( alarm2EndTimeSecond >= 60 )
+					{
+						alarm2EndTimeMinute++;
+						alarm2EndTimeSecond -= 60;
+					}
+
+					menuState_global = MENU_ALARM;
+					if( BACKLIGHT_NORMAL == true )
+					{
+						BACKLIGHT = 1; // turn on backlight
+					}
+				} //	if( alarm2Active == false )
+				else
+				{
+					if( alarm2Silence == false )
+					{
+						if( ( ( timeMinute_global == alarm2EndTimeMinute ) && ( timeSecond_global >= alarm2EndTimeSecond ) ) || ( alarmSilence_global == true ) )
+						{
+							alarmSilence_global = false;
+							alarm2Silence = true;
+							alarm2TimeTurnOn = 0;
+							alarm2TimeTurnOff = 0;
+							menuState_global = MENU_HOME_BASIC;
+						}
+					}
+				} // else --				if( alarm2Active == false )
+			} //		if( ( percentRem_global <= alarm2PercentThreshold_global )
+			else
+			{
+				if( ( alarm2Active == true ) && ( alarm2Silence == false ) )
+				{
+					menuState_global = MENU_HOME_BASIC;
+				}
+				alarm2Active = false;
+				alarm2Silence = false;
+			} //	else ---	if( ( percentRem_global <= alarm2PercentThreshold_global )
+
+			if( alarm2Active == true )
+			{
+				if( ( alarm2Silence == true ) || ( alarmAudible_global == false ) )
+				{
+					BUZZER_PIN = 0;
+				}
+				else
+				{
+					// oneShot
+					{
+						static bool oneShot = false;
+
+						if( msTimer_module > alarm2TimeTurnOn )
+						{
+							if( oneShot == false )
+							{
+								oneShot = true;
+								alarm2TimeTurnOff = msTimer_module + ALARM_2_ON_TIME_MS;
+								BUZZER_PIN = 1;
+							}
+						}
+						else
+						{
+							oneShot = false;
+						}
+					} // oneShot
+
+					// oneShot
+					{
+						static bool oneShot = false;
+
+						if( msTimer_module > alarm2TimeTurnOff )
+						{
+							if( oneShot == false )
+							{
+								oneShot = true;
+								alarm2TimeTurnOn = msTimer_module + ALARM_2_OFF_TIME_MS;
+								BUZZER_PIN = 0;
+							}
+						}
+						else
+						{
+							oneShot = false;
+						}
+					} // oneShot
+				}
+			} //			if( alarm2Active == true )
+		} // 			if( ( alarm1Active == false ) || ( ( alarm1Active == true ) && ( alarm1Silence == true ) ) )
+	} //		if( alarm2PercentThreshold_global > 0 )
+
+	// make sure the buzzer is turned off if nothing causes it to be on
 	if(
-	 ( alarm1PercentThreshold_global > 0 )
-	 && ( percentRem_global <= alarm1PercentThreshold_global )
-	 && ( alarm1Hit_global == false )
-	 && ( alarm1Silence_global == false )
-	 && ( alarmActive_global > 0 )
-	 && ( alarmToResume_global == 0 )
+	 (
+	 ( ( alarm1Active == false ) || ( alarm1Silence == true ) )
+	 && ( ( alarm2Active == false ) || ( alarm2Silence == true ) )
+	 )
+	 || ( alarmAudible_global == false )
 	 )
 	{
-		alarmRemainingSets_global = ALARM_NUM_SETS;
-		alarmActive_global = 1;
-		alarm1Hit_global = true;
-		startAlarm( );
-
-	}
-	else if(
-			 ( alarm2PercentThreshold_global > 0 )
-			 && ( percentRem_global <= alarm2PercentThreshold_global )
-			 && ( alarm2Hit_global == false )
-			 && ( alarm2Silence_global == false )
-			 && ( alarmActive_global > 0 )
-			 && ( alarmToResume_global == 0 )
-			 )
-	{
-		alarmRemainingSets_global = ALARM_NUM_SETS;
-		alarmActive_global = 2;
-		alarm2Hit_global = true;
-		startAlarm( );
-	}
-
-	if( ( alarmActive_global > 0 ) && ( timeSecond_global == alarmEnd_module ) )
-	{
-		alarmToResume_global = alarmActive_global;
-		alarmActive_global = 0;
-		BUZZER_PIN = 0;
-
-		if( alarmRemainingSets_global > 0 )
-		{
-			startNextAlarm = ( timeSecond_global + 59 ) % 60;
-			alarmRemainingSets_global--;
-		}
-	}
-	else if(
-			 ( audibleAlarm_global == true )
-			 && ( alarmActive_global > 0 )
-			 && ( ( timeSecond_global % 2 ) == alarmPulse_module )
-			 )
-	{
-		BUZZER_PIN = 1;
-	}
-	else
-	{
 		BUZZER_PIN = 0;
 	}
-
-
-	if( percentRem_global != alarm1PercentThreshold_global )
-	{
-		alarm1Silence_global = false;
-	}
-	if( percentRem_global != alarm2PercentThreshold_global )
-	{
-		alarm2Silence_global = false;
-	}
-
-	if( ( startNextAlarm == timeSecond_global ) && alarmRemainingSets_global )
-	{
-
-		alarmActive_global = alarmToResume_global;
-		startAlarm( );
-	}
-
-	return;
-}
-
-void startAlarm( void )
-{
-	if( menuState_global != MENU_ALARM )
-	{
-		oldMenuState_global = menuState_global;
-	}
-
-	alarmPulse_module = ( timeSecond_global + 1 ) % 2;
-	alarmEnd_module = ( timeSecond_global + ( 2 * numBeeps_module ) ) % 60;
-	menuState_global = MENU_ALARM;
-
-	if( BACKLIGHT_NORMAL == true )
-	{
-
-		BACKLIGHT = 1; // turn on backlight
-	}
-	resetTimeSecond_global = ( timeSecond_global + 59 ) % 60;
-	resetTimeMinute_global = ( timeMinute_global + 9 ) % 60;
 
 	return;
 }
@@ -936,7 +1036,7 @@ void dispButtonPress( void )
 	{
 
 		if(
-		 ( ( menuState_global != MENU_ALARM ) || ( ( menuState_global == MENU_ALARM ) && ( alarmRemainingSets_global == 0 ) ) )
+		 ( ( menuState_global != MENU_ALARM ) || ( menuState_global == MENU_ALARM ) )
 		 && ( menuState_global != MENU_DEBUG )
 		 && ( isBooting_global == false )
 		 )
@@ -953,7 +1053,7 @@ void dispButtonPress( void )
 
 	if(
 	 ( timeMinute_global == backlightOutTimeMinute ) && ( timeSecond_global == backlightOutTimeSecond )
-	 && ( ( menuState_global != MENU_ALARM ) || ( ( menuState_global == MENU_ALARM ) && ( alarmRemainingSets_global == 0 ) ) )
+	 && ( ( menuState_global != MENU_ALARM ) || ( menuState_global == MENU_ALARM ) )
 	 && ( menuState_global != MENU_DEBUG )
 	 && ( isBooting_global == false )
 	 )
