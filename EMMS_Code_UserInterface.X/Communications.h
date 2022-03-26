@@ -41,10 +41,6 @@ void com_command_setRemoteAllocationAdd( void );
 void com_command_readRemoteEnergyAllocation( void );
 void com_command_setRemoteEnergyAllocation( void );
 
-void com_command_readRemoteEnergy( void );
-
-void com_command_doReset( void );
-
 bool commBufferEmpty( void );
 
 #endif

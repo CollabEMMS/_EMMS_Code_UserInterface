@@ -18,27 +18,31 @@
 
 //							"          "  10 character spacing reference - do not exceed or the system will crash
 #define MODULE_INFO_THIS_0	"User Int"		// 10 chars max name
-#define MODULE_INFO_THIS_1	"2.1.2"			// 10 chars max version
+#define MODULE_INFO_THIS_1	"v2.1.3"		// 10 chars max version
 #define MODULE_INFO_THIS_2	""				// 10 chars max info
 #define MODULE_INFO_THIS_3	""				// 10 chars max info
 #define MODULE_INFO_THIS_4	""				// 20 chars max info (only 18 will show on UI)
 
 
-#    define CHAR_NULL '\0'
+#define CHAR_NULL '\0'
 
-#    define BUF_SIZE_CHAR 5
-#    define BUF_SIZE_INT 7
-#    define BUF_SIZE_LONG 12
+#define BUF_SIZE_CHAR 5
+#define BUF_SIZE_INT 7
+#define BUF_SIZE_LONG 12
 
 
 // can be used for debugging
-#    define BACKLIGHT_NORMAL true // set to 'true' to use the backlight normally - anything else will allow debugging
-#    define BACKLIGHT   _RB2    // Pin 6:  RB2
+#define BACKLIGHT_NORMAL true // set to 'true' to use the backlight normally - anything else will allow debugging
+#define BACKLIGHT   _RB2    // Pin 6:  RB2
 
 #define MODULE_INFO_SIZE_SMALL	11	// 10 + include the null char
 #define MODULE_INFO_SIZE_LARGE	21	// 20 + include the null char
 #define MODULE_COUNT			6	// 6 module info sets: 0=Command Board, 1=UART-1, 2=UART-2, 3=SPI-0, 4=SPI-1, 5=SPI-2
 #define MODULE_INFO_COUNT		5	// 5 info items in each module
+
+
+#define DISPLAY_STRING_ARROW_RIGHT	"\x7E"	// display character for right arrow
+#define DISPLAY_STRING_ARROW_LEFT	"\x7F"	// display character for left arrow
 
 struct moduleInfo_struct
 {

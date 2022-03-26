@@ -2,7 +2,7 @@
 #define	DISPLAYMENU_H
 
 
-extern bool audibleAlarm_global;
+extern bool alarmAudible_global;
 extern char alarm1PercentThreshold_global;
 extern char alarm2PercentThreshold_global;
 
@@ -12,8 +12,8 @@ extern int resetTimeHour_global;
 extern int resetTimeMinute_global;
 extern int resetTimeSecond_global;
 
-extern long totalUsed_global;
-extern long previousDayUsed_global;
+extern long energyLifetimeUsed_global;
+extern long energyPreviousDayUsed_global;
 
 extern char powerDownTime_global[12];
 extern char powerUpTime_global[12];
@@ -36,12 +36,7 @@ extern unsigned char menuState_global;
 extern unsigned char oldMenuState_global;
 extern bool enablePeriodicUpdate_global;
 
-extern char alarmActive_global;
-extern bool alarm1Silence_global;
-extern bool alarm2Silence_global;
-extern char tempPercent_global;
-extern char alarmToResume_global;
-extern char alarmRemainingSets_global;
+extern char tempMenuAlarmPercent_global;
 
 extern unsigned long powerLoad_global;
 extern unsigned long energyUsed_global;
@@ -55,10 +50,6 @@ extern unsigned char button2Flag_global;
 extern unsigned char button3Flag_global;
 
 extern bool isBooting_global;
-
-extern bool alarm1Hit_global;
-extern bool alarm2Hit_global;
-
 
 
 void initDisplay(void);

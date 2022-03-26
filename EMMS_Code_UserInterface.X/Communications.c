@@ -15,7 +15,7 @@
  ****************/
 #define BAUD_UART2 19200
 
-#define BUFFER_LENGTH 250
+#define BUFFER_LENGTH 150
 
 #define BUF_SIZE_CHAR 5
 #define BUF_SIZE_INT 7
@@ -23,7 +23,7 @@
 
 
 #define PARAMETER_MAX_COUNT 7
-#define PARAMETER_MAX_LENGTH 20
+#define PARAMETER_MAX_LENGTH 21	// include NULL_CHAR
 
 //#define CHAR_NULL '\0'
 #define COMMAND_SEND_RECEIVE_PRIMER_CHAR '#' // something to run the SPI clock so data can be received
@@ -213,23 +213,6 @@ void communications( bool firstTime )
 		}
 
 		no_more_to_send = send_data( &send_buffer );
-
-		// dont need this - port is never closed
-
-		//	static bool last_state_active = false;
-		//	if( PORTBbits.SS2 == 0b1 )
-		//	{
-		//	    last_state_active = false;
-		//	}
-		//	else
-		//	{
-		//	    if( last_state_active == false )
-		//	    {
-		//		resetCommunications( &send_buffer );
-		//	    }
-		//
-		//	    last_state_active = true;
-		//	}
 
 	}
 
@@ -443,12 +426,6 @@ bool process_data_parameters( char parameters[PARAMETER_MAX_COUNT][PARAMETER_MAX
 	{
 		if( strmatch( parameters[1], "Time" ) == true )
 		{
-			//	    //DEBUG TOM
-			//	    writeToDisplay( parameters[0], 0, 40 );
-			//	    writeToDisplay( parameters[1], 20, 40 );
-			//	    writeToDisplay( parameters[2], 40, 40 );
-			//	    writeToDisplay( parameters[3], 60, 40 );
-			//	    delayMS( 10000 );
 
 			char timeDayBuf[3];
 			char timeMonthBuf[3];
@@ -521,7 +498,7 @@ bool process_data_parameters( char parameters[PARAMETER_MAX_COUNT][PARAMETER_MAX
 			//3	    alarmOnePercentThresholdBuf INT;
 			//4	    alarmTwoPercentThresholdBuf INT;
 
-			audibleAlarm_global = checkOnOff( parameters[2] );
+			alarmAudible_global = checkOnOff( parameters[2] );
 
 			alarm1PercentThreshold_global = atoi( parameters[3] );
 			alarm2PercentThreshold_global = atoi( parameters[4] );
@@ -588,8 +565,8 @@ bool process_data_parameters( char parameters[PARAMETER_MAX_COUNT][PARAMETER_MAX
 		else if( strmatch( parameters[1], "Stat" ) == true )
 		{
 
-			totalUsed_global = atol( parameters[2] );
-			previousDayUsed_global = atol( parameters[2] );
+			energyLifetimeUsed_global = atol( parameters[2] );
+			energyPreviousDayUsed_global = atol( parameters[3] );
 
 			command_builder2( send_buffer, "Conf", "Stat" );
 
@@ -640,22 +617,6 @@ bool process_data_parameters( char parameters[PARAMETER_MAX_COUNT][PARAMETER_MAX
 
 			command_builder2( send_buffer, "Conf", "PwrData" );
 
-		}
-
-			// the following parameter is too long
-			// max length is defined as 10
-		else if( strmatch( parameters[1], "Calibrate" ) == true )
-		{
-			// set the calibration value for the current sense, if required
-		}
-		else if( strmatch( parameters[1], "EnUsed" ) == true )
-		{
-			// set the Energy used
-			// this likely means that the command board had a stored power used greater than we have here.
-			// this happens when the power is lost - current sense starts at 0, command board stores in EEPROM
-
-			//meterEnergyUsed = atol( parameters[2] );
-			//	    com_command_setEnergyUsed( send_buffer );
 		}
 		else if( strmatch( parameters[1], "ModInfo" ) == true )
 		{
@@ -719,44 +680,36 @@ bool process_data_parameters( char parameters[PARAMETER_MAX_COUNT][PARAMETER_MAX
 	}
 	else if( strmatch( parameters[0], "Read" ) == true )
 	{
-		if( strmatch( parameters[1], "Time" ) == true )
-		{
-			setRemoteTime( send_buffer );
-		}
-		if( strmatch( parameters[1], "EnAl" ) == true )
-		{
-			setRemoteEnergyAllocation( send_buffer );
-		}
-		if( strmatch( parameters[1], "Alarm" ) == true )
-		{
-			setRemoteAlarm( send_buffer );
-		}
-		else if( strmatch( parameters[1], "Pass" ) == true )
-		{
-			setRemotePassword( send_buffer );
-		}
-		else if( strmatch( parameters[1], "Emer" ) == true )
-		{
-			setRemoteEmergency( send_buffer );
-		}
-		else if( strmatch( parameters[1], "Relay" ) == true )
-		{
-			setRemoteRelay( send_buffer );
-		}
-	}
-	else if( strmatch( parameters[0], "Data" ) == true )
-	{
-		if( strmatch( parameters[1], "LEDB" ) == true )
-		{
-			if( strmatch( parameters[2], "On" ) == true )
-			{
-				command_builder3( send_buffer, "Set", "LEDB", "Off" );
-			}
-			else if( strmatch( parameters[2], "Off" ) == true )
-			{
-				command_builder3( send_buffer, "Set", "LEDB", "On" );
-			}
-		}
+		// nothing is ever read from the UI
+		// it does send Set commands though, which are not used here
+	
+		//TODO delete once verified
+		// the below is commented for now until we verify things work right without it
+		
+//		if( strmatch( parameters[1], "Time" ) == true )
+//		{
+//			setRemoteTime( send_buffer );
+//		}
+//		else if( strmatch( parameters[1], "EnAl" ) == true )
+//		{
+//			setRemoteEnergyAllocation( send_buffer );
+//		}
+//		else if( strmatch( parameters[1], "Alarm" ) == true )
+//		{
+//			setRemoteAlarm( send_buffer );
+//		}
+//		else if( strmatch( parameters[1], "Pass" ) == true )
+//		{
+//			setRemotePassword( send_buffer );
+//		}
+//		else if( strmatch( parameters[1], "Emer" ) == true )
+//		{
+//			setRemoteEmergency( send_buffer );
+//		}
+//		else if( strmatch( parameters[1], "Relay" ) == true )
+//		{
+//			setRemoteRelay( send_buffer );
+//		}
 	}
 	else if( strmatch( parameters[0], "Conf" ) == true )
 	{
@@ -1526,7 +1479,7 @@ void setRemoteAlarm( struct buffer_struct *send_buffer )
 	char alarm1PercentThresholdTempBuf[BUF_SIZE_INT];
 	char alarm2PercentThresholdTempBuf[BUF_SIZE_INT];
 
-	fillOnOff( audibleAlarmBuf, audibleAlarm_global );
+	fillOnOff( audibleAlarmBuf, alarmAudible_global );
 
 	// using itoa() - variable type is char, make sure it is an int
 	alarm1PercentThresholdTemp = alarm1PercentThreshold_global;
@@ -1804,22 +1757,6 @@ void readRemotePowerData( struct buffer_struct *send_buffer )
 	return;
 }
 
-
-//TODO Fix Functions
-// These functions are retained because they are called from within the menu system
-// need to figure out what they are intended to do and make them do it
-
-void com_command_readRemoteEnergy( void )
-{
-
-	return;
-}
-
-void com_command_doReset( void )
-{
-
-	return;
-}
 
 void initUART( void )
 {

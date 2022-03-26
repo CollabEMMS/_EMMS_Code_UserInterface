@@ -8,7 +8,26 @@ MPLAB X Project
 
 # Changelog
 ### NEXT
+- none yet
 
+### v2.1.3
+March 26, 2022<br />
+Tom Austin
+#### Changes
+- increased MAX_PARAMETER_LENGTH to account for ModInfo and NULL_CHAR
+- ModInfo menu - right justified right info elements
+- Alarms - rewrote whole alarm system since old one was not working quite right
+  - remove many global variables as well
+- main loop oneshots might not run as expected
+  - if a previous oneshot lined up with a subsequent one it might prevent the subsequent one from firing if the runtime took too long
+  - change to use explicit time to run so the function is never skipped
+- cleaned up extra global variables and functions for showing time / date on main screens
+- statistics menu was showing wrong values
+  - communications was reading parameter[2] twice - now reads [2] and [3]
+  - menu text was misleading - now fixed to Yesterday & Lifetime
+- some general cleanup
+  - removed some communication items which were not used (like all Read commands)
+  - cleaned up a few vestigial items
 
 ### v2.1.2
 March 20, 2022<br />
