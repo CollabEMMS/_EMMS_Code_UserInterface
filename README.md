@@ -8,6 +8,12 @@ MPLAB X Project
 
 # Changelog
 ### NEXT
+- none yet
+
+### v2.1.3
+March 26, 2022<br />
+Tom Austin
+#### Changes
 - increased MAX_PARAMETER_LENGTH to account for ModInfo and NULL_CHAR
 - ModInfo menu - right justified right info elements
 - Alarms - rewrote whole alarm system since old one was not working quite right
