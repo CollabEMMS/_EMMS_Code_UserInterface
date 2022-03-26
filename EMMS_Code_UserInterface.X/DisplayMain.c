@@ -708,6 +708,7 @@ void periodicDataUpdate( void )
 					break;
 				case 4:
 					com_command_sendModuleInfoThis( );
+					break;
 				default:
 					messageCounterRateLow = 0;
 			}

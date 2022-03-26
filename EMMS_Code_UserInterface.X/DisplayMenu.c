@@ -2360,7 +2360,9 @@ void menuPowerReset( void )
 	switch( menuButtonRead( MENU_HOME_BASIC, 0, 0, MENU_HOME_BASIC ) )
 	{
 		case 3:
-			com_command_doReset( ); // fall through on purpose
+			//com_command_doReset( );	// this function did nothng so it is removed
+			// it remains as a comment in case one day it dawns on us why it was here in the first place
+			// fall through on purpose
 		case 0:
 			isBooting_global = false;
 	}

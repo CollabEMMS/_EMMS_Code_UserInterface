@@ -15,7 +15,7 @@
  ****************/
 #define BAUD_UART2 19200
 
-#define BUFFER_LENGTH 250
+#define BUFFER_LENGTH 150
 
 #define BUF_SIZE_CHAR 5
 #define BUF_SIZE_INT 7
@@ -213,23 +213,6 @@ void communications( bool firstTime )
 		}
 
 		no_more_to_send = send_data( &send_buffer );
-
-		// dont need this - port is never closed
-
-		//	static bool last_state_active = false;
-		//	if( PORTBbits.SS2 == 0b1 )
-		//	{
-		//	    last_state_active = false;
-		//	}
-		//	else
-		//	{
-		//	    if( last_state_active == false )
-		//	    {
-		//		resetCommunications( &send_buffer );
-		//	    }
-		//
-		//	    last_state_active = true;
-		//	}
 
 	}
 
@@ -1804,22 +1787,6 @@ void readRemotePowerData( struct buffer_struct *send_buffer )
 	return;
 }
 
-
-//TODO Fix Functions
-// These functions are retained because they are called from within the menu system
-// need to figure out what they are intended to do and make them do it
-
-void com_command_readRemoteEnergy( void )
-{
-
-	return;
-}
-
-void com_command_doReset( void )
-{
-
-	return;
-}
 
 void initUART( void )
 {
