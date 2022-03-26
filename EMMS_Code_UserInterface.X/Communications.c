@@ -426,12 +426,6 @@ bool process_data_parameters( char parameters[PARAMETER_MAX_COUNT][PARAMETER_MAX
 	{
 		if( strmatch( parameters[1], "Time" ) == true )
 		{
-			//	    //DEBUG TOM
-			//	    writeToDisplay( parameters[0], 0, 40 );
-			//	    writeToDisplay( parameters[1], 20, 40 );
-			//	    writeToDisplay( parameters[2], 40, 40 );
-			//	    writeToDisplay( parameters[3], 60, 40 );
-			//	    delayMS( 10000 );
 
 			char timeDayBuf[3];
 			char timeMonthBuf[3];
@@ -624,22 +618,6 @@ bool process_data_parameters( char parameters[PARAMETER_MAX_COUNT][PARAMETER_MAX
 			command_builder2( send_buffer, "Conf", "PwrData" );
 
 		}
-
-			// the following parameter is too long
-			// max length is defined as 10
-		else if( strmatch( parameters[1], "Calibrate" ) == true )
-		{
-			// set the calibration value for the current sense, if required
-		}
-		else if( strmatch( parameters[1], "EnUsed" ) == true )
-		{
-			// set the Energy used
-			// this likely means that the command board had a stored power used greater than we have here.
-			// this happens when the power is lost - current sense starts at 0, command board stores in EEPROM
-
-			//meterEnergyUsed = atol( parameters[2] );
-			//	    com_command_setEnergyUsed( send_buffer );
-		}
 		else if( strmatch( parameters[1], "ModInfo" ) == true )
 		{
 			// !Set;Mod;X;Y;____$xsum*
@@ -702,44 +680,36 @@ bool process_data_parameters( char parameters[PARAMETER_MAX_COUNT][PARAMETER_MAX
 	}
 	else if( strmatch( parameters[0], "Read" ) == true )
 	{
-		if( strmatch( parameters[1], "Time" ) == true )
-		{
-			setRemoteTime( send_buffer );
-		}
-		if( strmatch( parameters[1], "EnAl" ) == true )
-		{
-			setRemoteEnergyAllocation( send_buffer );
-		}
-		if( strmatch( parameters[1], "Alarm" ) == true )
-		{
-			setRemoteAlarm( send_buffer );
-		}
-		else if( strmatch( parameters[1], "Pass" ) == true )
-		{
-			setRemotePassword( send_buffer );
-		}
-		else if( strmatch( parameters[1], "Emer" ) == true )
-		{
-			setRemoteEmergency( send_buffer );
-		}
-		else if( strmatch( parameters[1], "Relay" ) == true )
-		{
-			setRemoteRelay( send_buffer );
-		}
-	}
-	else if( strmatch( parameters[0], "Data" ) == true )
-	{
-		if( strmatch( parameters[1], "LEDB" ) == true )
-		{
-			if( strmatch( parameters[2], "On" ) == true )
-			{
-				command_builder3( send_buffer, "Set", "LEDB", "Off" );
-			}
-			else if( strmatch( parameters[2], "Off" ) == true )
-			{
-				command_builder3( send_buffer, "Set", "LEDB", "On" );
-			}
-		}
+		// nothing is ever read from the UI
+		// it does send Set commands though, which are not used here
+	
+		//TODO delete once verified
+		// the below is commented for now until we verify things work right without it
+		
+//		if( strmatch( parameters[1], "Time" ) == true )
+//		{
+//			setRemoteTime( send_buffer );
+//		}
+//		else if( strmatch( parameters[1], "EnAl" ) == true )
+//		{
+//			setRemoteEnergyAllocation( send_buffer );
+//		}
+//		else if( strmatch( parameters[1], "Alarm" ) == true )
+//		{
+//			setRemoteAlarm( send_buffer );
+//		}
+//		else if( strmatch( parameters[1], "Pass" ) == true )
+//		{
+//			setRemotePassword( send_buffer );
+//		}
+//		else if( strmatch( parameters[1], "Emer" ) == true )
+//		{
+//			setRemoteEmergency( send_buffer );
+//		}
+//		else if( strmatch( parameters[1], "Relay" ) == true )
+//		{
+//			setRemoteRelay( send_buffer );
+//		}
 	}
 	else if( strmatch( parameters[0], "Conf" ) == true )
 	{

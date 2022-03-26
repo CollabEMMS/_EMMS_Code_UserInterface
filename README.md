@@ -19,6 +19,9 @@ MPLAB X Project
 - statistics menu was showing wrong values
   - communications was reading parameter[2] twice - now reads [2] and [3]
   - menu text was misleading - now fixed to Yesterday & Lifetime
+- some general cleanup
+  - removed some communication items which were not used (like all Read commands)
+  - cleaned up a few vestigial items
 
 ### v2.1.2
 March 20, 2022<br />
