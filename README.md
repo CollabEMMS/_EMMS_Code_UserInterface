@@ -9,6 +9,8 @@ MPLAB X Project
 # Changelog
 ### NEXT
 - none yet
+- When password change is about to be saved the "Save" was not on the far right and the previous character showed
+
 
 ### v2.1.3
 March 26, 2022<br />

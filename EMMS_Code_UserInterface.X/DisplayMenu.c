@@ -2348,7 +2348,7 @@ void menuPasswordChange( void )
 	}
 	else
 	{
-		writeToDisplay( "Clear  Cancel  Save", 60, 0 );
+		writeToDisplay( "Clear  Cancel   Save", 60, 20 );
 	}
 
 	return;
