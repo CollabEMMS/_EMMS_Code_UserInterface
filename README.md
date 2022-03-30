@@ -10,6 +10,14 @@ MPLAB X Project
 ### NEXT
 - none yet
 
+
+### v2.1.4
+March 29, 2022<br />
+Tom Austin
+#### Changes
+- When password change is about to be saved the "Save" was not on the far right and the previous character showed
+
+
 ### v2.1.3
 March 26, 2022<br />
 Tom Austin
