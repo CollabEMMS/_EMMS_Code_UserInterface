@@ -10,9 +10,11 @@ MPLAB X Project
 ### NEXT
 - none yet
 
+### v2.1.5
+April 8, 2022<br />
+Tom Austin
+#### Changes
 - Fixed Set Time where arrow stayed on the hour setting
-
-
 
 ### v2.1.4
 March 29, 2022<br />
