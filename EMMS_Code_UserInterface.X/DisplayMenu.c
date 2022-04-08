@@ -1697,7 +1697,7 @@ void menuSetTime( void )
 
 	// "      12 : 35       "
 	//  012345678901234567890
-	writeToDisplay( "     ", 20, 5 );
+	writeToDisplay( "      ", 20, 6 );
 
 	menuNumToCharZero( tempHour_global, tempNumberBuf );
 	writeToDisplay( tempNumberBuf, 26, 2 );
@@ -1756,6 +1756,7 @@ void menuSetTime( void )
 		case 5:
 			writeToDisplay( DISPLAY_STRING_ARROW_RIGHT, 52, 1 );
 			writeToDisplay( DISPLAY_STRING_ARROW_LEFT, 57, 1 );
+            break;
 	}
 
 	if( timeSetPos_global != 5 )
